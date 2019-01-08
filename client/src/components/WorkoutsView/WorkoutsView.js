@@ -1,4 +1,6 @@
 import React from 'react';
+import SideNav from '../SideNav';
+import EditWorkout from './EditWorkout';
 
 class WorkoutsView extends React.Component {
     constructor(props) {
@@ -6,7 +8,10 @@ class WorkoutsView extends React.Component {
         this.state = {  }
     }
     render() { 
-        return ( <div>workoutsview</div> );
+        return ( <div>workoutsview
+            <SideNav />
+            <EditWorkout/>
+        </div> );
     }
 }
  
