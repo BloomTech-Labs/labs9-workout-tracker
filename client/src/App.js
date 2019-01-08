@@ -24,10 +24,10 @@ class App extends Component {
     axios
       .get(`${url}/user/info/1`)
       .then(response => {
-        this.setState({ user:response.data });
+        this.setState({ user: response.data });
       })
       .catch(err => {
-        return `Error: ${err}`;
+        return `Message: ${err}`;
       });
   }
 
