@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
         tbl.string('name').notNullable();
         tbl.string('email').unique();
         tbl.integer('phone');
-        tbl.string('password');
         tbl.boolean('recieves_text').defaultTo(false);
         tbl.boolean('recieves_email').defaultTo(false);
         tbl.timestamps(true, true);

@@ -2,7 +2,7 @@ const faker = require('faker')
 
 const usersArray = [];
 
-for (let i = 0; i < 249; i++) {
+for (let i = 250; i < 499; i++) {
   const userObj = {
     id: i,
     name: faker.name.findName(),
