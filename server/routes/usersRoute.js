@@ -9,7 +9,7 @@ router.get('/info/:id', (req, res) => {
             if(userInfo.length === 0) {
                 res.status(404).json({message: "That user doesnt exist"});
             }
-            res.status(200).json(userInfo);
+            res.status(200).json(userInfo[0]);
         })
         .catch(error => {
             res.status(500).json({error, "Well this is embarrassing": "Something went wrong"})
