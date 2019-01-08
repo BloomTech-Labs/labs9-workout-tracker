@@ -1,4 +1,5 @@
 import React from "react";
+import SideNav from "./SideNav";
 
 class BillingView extends React.Component {
   constructor(props) {
@@ -6,7 +7,12 @@ class BillingView extends React.Component {
     this.state = {};
   }
   render() {
-    return <div>BillingView</div>;
+    return (
+      <div>
+        BillingView
+        <SideNav />
+      </div>
+    );
   }
 }
 

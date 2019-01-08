@@ -1,4 +1,9 @@
 import React from "react";
+import SideNav from '../SideNav';
+import Calendar from './Calendar';
+import ScheduleWorkoutList from './ScheduleWorkout/ScheduleWorkoutList';
+import AddWorkout from './AddWorkout';
+import WorkoutDetails from './WorkoutDetails';
 
 class ScheduleView extends React.Component {
   constructor(props) {
@@ -6,7 +11,13 @@ class ScheduleView extends React.Component {
     this.state = {};
   }
   render() {
-    return <div>ScheduleView</div>;
+    return <div>ScheduleView
+      <SideNav/>
+      <Calendar/>
+      <ScheduleWorkoutList/>
+      <AddWorkout/>
+      <WorkoutDetails/>
+      </div>;
   }
 }
 
