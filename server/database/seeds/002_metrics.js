@@ -1,8 +1,8 @@
 const metricsArr = [];
 
-const randomMetric = (Math.random() * 10) + 1
+const randomMetric = () => (Math.random() * 10) + 1;
 
-for (let i = 0; i < 249; i++) {
+for (let i = 0; i < 99; i++) {
   const userMetrics = {
     id: i,
     weight: randomMetric(),
@@ -16,6 +16,8 @@ for (let i = 0; i < 249; i++) {
   };
   metricsArr.push(userMetrics)
 }
+
+console.log('metrics length: ', metricsArr.length);
 
 exports.seed = function(knex, Promise) {
 

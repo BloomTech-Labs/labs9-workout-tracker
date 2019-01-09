@@ -2,7 +2,7 @@ const faker = require('faker')
 
 const usersArray = [];
 
-for (let i = 0; i < 249; i++) {
+for (let i = 0; i < 99; i++) {
   const userObj = {
     id: i,
     name: faker.name.findName(),
@@ -12,6 +12,8 @@ for (let i = 0; i < 249; i++) {
 
   usersArray.push(userObj)
 }
+
+console.log('users length: ', usersArray.length);
 
 exports.seed = function(knex, Promise) {
   return knex('users').insert(usersArray);
