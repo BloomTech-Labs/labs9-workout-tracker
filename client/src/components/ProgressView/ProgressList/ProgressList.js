@@ -1,12 +1,15 @@
 import React from "react";
 import ProgressListItem from "./ProgressListItem";
+import styled from "styled-components";
+
+const ProgressListStyle = styled.div``;
 
 const ProgressList = () => {
   return (
-    <div>
+    <ProgressListStyle>
       ProgressList
       <ProgressListItem />
-    </div>
+    </ProgressListStyle>
   );
 };
 

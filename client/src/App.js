@@ -7,11 +7,21 @@ import ProgressView from "./components/ProgressView/ProgressView";
 import WorkoutsView from "./components/WorkoutsView/WorkoutsView";
 import SettingsView from "./components/SettingsView.js";
 import BillingView from "./components/BillingView.js";
+import styled from "styled-components";
 
 import "./App.css";
 
 const url = `https://labs9-workout-tracker.herokuapp.com/api`;
-// const url = `http://localhost9001`;
+
+const StyledApp = styled.div`
+  text-align: center;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  border: 1px solid black;
+  font-size: 62.5%;
+  font-size: 1.2rem;
+`;
 
 class App extends Component {
   constructor() {
@@ -34,7 +44,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <StyledApp>
         <p>{this.state.user.name}</p>
         <p>{this.state.user.email}</p>
         <p>{this.state.user.phone}</p>
@@ -44,7 +54,7 @@ class App extends Component {
         <Route exact path="/workouts" component={WorkoutsView} />
         <Route exact path="/settings" component={SettingsView} />
         <Route exact path="/billing" component={BillingView} />
-      </div>
+      </StyledApp>
     );
   }
 }

@@ -1,4 +1,7 @@
 import React from "react";
+import styled from "styled-components";
+
+const ProgressTrackerStyle = styled.div``;
 
 class ProgressTracker extends React.Component {
   constructor(props) {
@@ -6,7 +9,7 @@ class ProgressTracker extends React.Component {
     this.state = {};
   }
   render() {
-    return <div>Progress Tracker</div>;
+    return <ProgressTrackerStyle>Progress Tracker</ProgressTrackerStyle>;
   }
 }
 

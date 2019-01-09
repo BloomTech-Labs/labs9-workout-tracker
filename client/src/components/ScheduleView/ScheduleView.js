@@ -1,9 +1,15 @@
 import React from "react";
-import SideNav from '../SideNav';
-import Calendar from './Calendar';
-import ScheduleWorkoutList from './ScheduleWorkout/ScheduleWorkoutList';
-import AddWorkout from './AddWorkout';
-import WorkoutDetails from './WorkoutDetails';
+import SideNav from "../SideNav";
+import Calendar from "./Calendar";
+import ScheduleWorkoutList from "./ScheduleWorkout/ScheduleWorkoutList";
+import AddWorkout from "./AddWorkout";
+import WorkoutDetails from "./WorkoutDetails";
+import styled from "styled-components";
+
+const ScheduleViewStyle = styled.div`
+  width: 100%;
+  max-width: 880px;
+`;
 
 class ScheduleView extends React.Component {
   constructor(props) {
@@ -11,13 +17,15 @@ class ScheduleView extends React.Component {
     this.state = {};
   }
   render() {
-    return <div>ScheduleView
-      <SideNav/>
-      <Calendar/>
-      <ScheduleWorkoutList/>
-      <AddWorkout/>
-      <WorkoutDetails/>
-      </div>;
+    return (
+      <ScheduleViewStyle>
+        <SideNav />
+        <Calendar />
+        <ScheduleWorkoutList />
+        <AddWorkout />
+        <WorkoutDetails />
+      </ScheduleViewStyle>
+    );
   }
 }
 

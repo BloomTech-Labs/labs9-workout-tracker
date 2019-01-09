@@ -1,7 +1,10 @@
 import React from "react";
+import styled from "styled-components";
+
+const SubmitProgressStyle = styled.div``;
 
 const SubmitProgress = () => {
-  return <div>SubmitProgress</div>;
+  return <SubmitProgressStyle>SubmitProgress</SubmitProgressStyle>;
 };
 
 export default SubmitProgress;

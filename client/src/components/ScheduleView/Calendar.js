@@ -1,4 +1,7 @@
 import React from "react";
+import styled from "styled-components";
+
+const CalendarStyle = styled.div``;
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -6,7 +9,7 @@ class Calendar extends React.Component {
     this.state = {};
   }
   render() {
-    return <div>Calendar</div>;
+    return <CalendarStyle>Calendar</CalendarStyle>;
   }
 }
 
