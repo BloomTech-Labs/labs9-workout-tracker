@@ -10,7 +10,6 @@
 
 # production
 /build
-*.sqlite3
 
 # misc
 .DS_Store
