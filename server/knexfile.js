@@ -1,6 +1,4 @@
-// Update with your config settings.
-
-
+require('dotenv').config();
 const localPgConnection = {
   host: 'localhost',
   database: 'keep',
@@ -11,7 +9,6 @@ const localPgConnection = {
 const dbConnection = process.env.DATABASE_URL || localPgConnection;
 
 module.exports = {
-
   development: {
     client: 'sqlite3',
     connection: {
@@ -21,7 +18,6 @@ module.exports = {
     migrations: { directory: './database/migrations'},
     seeds: { directory: './database/seeds'},
   },
-
   production: {
     client: 'pg',
     connection: dbConnection,
@@ -31,9 +27,5 @@ module.exports = {
     },
     migrations: { directory: './database/migrations'},
     seeds: { directory: './database/seeds'},
-    connection: {
-      filename: './database/dev.sqlite3'
-    },
-  },
-
+  }
 };
