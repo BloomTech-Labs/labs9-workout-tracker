@@ -12,3 +12,4 @@ for(let i = 0; i < 49; i++) {
 exports.seed = function(knex, Promise) {
       return knex('category').insert(categoryArr);
 };
+ 
