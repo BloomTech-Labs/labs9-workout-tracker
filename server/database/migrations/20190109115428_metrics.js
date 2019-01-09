@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
         tbl.decimal('arm_left')
         tbl.decimal('leg_right')
         tbl.decimal('leg-left')
-        tbl.timestamp('date')
+        tbl.timestamp('date').defaultTo(knex.fn.now());
         tbl.integer('user_id').unsigned().references('id').inTable('users').notNullable()
     })
 };
