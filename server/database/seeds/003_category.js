@@ -1,9 +1,9 @@
 const categoryArr = [];
 
-for(let i = 0; i < 99; i++) {
+for(let i = 0; i < 49; i++) {
   const category = {
     id: i,
-    name: 'Upperbody',
+    name: 'Legs',
     user_id: i,
   }
   categoryArr.push(category)

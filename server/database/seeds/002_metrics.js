@@ -2,7 +2,7 @@ const metricsArr = [];
 
 const randomMetric = () => (Math.random() * 10) + 1;
 
-for (let i = 0; i < 99; i++) {
+for (let i = 0; i < 49; i++) {
   const userMetrics = {
     id: i,
     weight: randomMetric(),

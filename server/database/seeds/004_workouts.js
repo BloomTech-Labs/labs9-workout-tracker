@@ -1,6 +1,6 @@
 const workoutArray = [];
 
-for (let i = 0; i< 99; i ++) {
+for (let i = 0; i< 49; i ++) {
   const workout = {
     id: i,
     user_id: i,
