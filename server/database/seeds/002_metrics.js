@@ -17,8 +17,6 @@ for (let i = 0; i < 99; i++) {
   metricsArr.push(userMetrics)
 }
 
-console.log('metrics length: ', metricsArr.length);
-
 exports.seed = function(knex, Promise) {
 
   return knex('metrics').insert(metricsArr);

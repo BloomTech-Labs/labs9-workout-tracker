@@ -9,8 +9,6 @@ for(let i = 0; i < 99; i++) {
   categoryArr.push(category)
 }
 
-console.log('category length: ', categoryArr.length);
-
 exports.seed = function(knex, Promise) {
       return knex('category').insert(categoryArr);
 };

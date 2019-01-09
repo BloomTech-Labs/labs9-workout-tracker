@@ -13,8 +13,6 @@ for (let i = 0; i < 99; i++) {
   usersArray.push(userObj)
 }
 
-console.log('users length: ', usersArray.length);
-
 exports.seed = function(knex, Promise) {
   return knex('users').insert(usersArray);
 };
