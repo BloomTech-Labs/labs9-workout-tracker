@@ -10,7 +10,8 @@ import BillingView from "./components/BillingView.js";
 
 import "./App.css";
 
-const url = `http://localhost:9001/api`;
+// const url = `https://server-cskcdphrra.now.sh`;
+const url = `http://localhost9001`;
 
 class App extends Component {
   constructor() {
