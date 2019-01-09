@@ -8,7 +8,39 @@ router.get('/info/:id', async (req, res) => {
         if(userInfo.length === 0) {
             res.status(404).json({message: "That user doesnt exist"});
         }
-        res.status(200).json(userInfo[0]);
+        userId = userInfo[0].id;
+        
+        const metrics = await db('metrics').where('user_id', '=', userId)
+
+        const workouts = await db('workouts').where('user_id', '=', userId)
+        let workoutsArray = [];
+        for (const workout of workouts) {
+            const exercises = await db('exercises').where('workout_id', '=', workouts[0].id)
+            const workObj = {
+                ...workout,
+                exercises: [...exercises]
+            }
+            workoutsArray.push(workObj)
+        }
+
+        const sWorkouts = await db('schedule_workouts').where('user_id', '=', userId)
+        let sWorkoutsArray = [];
+        for (const workout of sWorkouts) {
+            const exercises = await db('schedule_exercises').where('schedule_workout_id', '=', sWorkouts[0].id)
+            const workObj = {
+                ...workout,
+                exercises: [...exercises]
+            }
+            sWorkoutsArray.push(workObj)
+        }
+        
+        userObj = {
+            ...userInfo[0],
+            metrics: {...metrics[0]},
+            workouts: workoutsArray,
+            scheduleWorkouts: sWorkoutsArray
+        }
+        res.status(200).json(userObj);
     } catch(error) {
         res.status(500).json({error, "Well this is embarrassing": "Something went wrong"})
     }
