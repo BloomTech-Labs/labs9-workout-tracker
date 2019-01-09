@@ -10,7 +10,8 @@ import BillingView from "./components/BillingView.js";
 
 import "./App.css";
 
-const url = `http://localhost:9001/api`;
+const url = `https://labs9-workout-tracker.herokuapp.com/api`;
+// const url = `http://localhost9001`;
 
 class App extends Component {
   constructor() {
@@ -35,6 +36,8 @@ class App extends Component {
     return (
       <div className="App">
         <p>{this.state.user.name}</p>
+        <p>{this.state.user.email}</p>
+        <p>{this.state.user.phone}</p>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/schedule" component={ScheduleView} />
         <Route exact path="/progress" component={ProgressView} />
