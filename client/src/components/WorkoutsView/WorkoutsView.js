@@ -2,6 +2,12 @@ import React from "react";
 import SideNav from "../SideNav";
 import EditWorkout from "./EditWorkout";
 import WorkoutCategoryList from "./WorkoutCategoryList";
+import styled from "styled-components";
+
+const WorkoutsViewStyle = styled.div`
+  width: 100%;
+  max-width: 880px;
+`;
 
 class WorkoutsView extends React.Component {
   constructor(props) {
@@ -10,12 +16,11 @@ class WorkoutsView extends React.Component {
   }
   render() {
     return (
-      <div>
-        workoutsview
+      <WorkoutsViewStyle>
         <SideNav />
         <EditWorkout />
         <WorkoutCategoryList />
-      </div>
+      </WorkoutsViewStyle>
     );
   }
 }

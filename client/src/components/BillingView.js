@@ -1,5 +1,11 @@
 import React from "react";
 import SideNav from "./SideNav";
+import styled from "styled-components";
+
+const BillingViewStyle = styled.div`
+  width: 100%;
+  max-width: 880px;
+`;
 
 class BillingView extends React.Component {
   constructor(props) {
@@ -8,10 +14,10 @@ class BillingView extends React.Component {
   }
   render() {
     return (
-      <div>
+      <BillingViewStyle>
         BillingView
         <SideNav />
-      </div>
+      </BillingViewStyle>
     );
   }
 }

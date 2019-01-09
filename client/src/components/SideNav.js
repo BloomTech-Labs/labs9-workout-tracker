@@ -1,7 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const NavStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid blue;
+  width: 20%;
+`;
 
 const SideNav = () => {
-  return <div>SideNav</div>;
+  return (
+    <NavStyle>
+      <Link to="/">Home</Link>
+      <Link to="/schedule">Schedule</Link>
+      <Link to="/workouts">Workouts</Link>
+      <Link to="/progress">Progress</Link>
+      <Link to="/billing">Billing</Link>
+      <Link to="/settings">Settings</Link>
+    </NavStyle>
+  );
 };
 
 export default SideNav;
