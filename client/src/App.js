@@ -21,118 +21,32 @@ const StyledApp = styled.div`
   border: 1px solid black;
   font-size: 62.5%;
   font-size: 1.2rem;
+  height: 100vh;
 `;
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      users: [
-        {
-          id: 1,
-          name: "Elvis",
-          email: "jlstan06@yahoo.com",
-          phone: "859-598-8979",
-          receives_text: true,
-          recieves_email: false,
-          created_at: "", //timestamp obj
-          updated_at: "",
-          metrics: [
-            {
-              id: 1,
-              created_at: "", //timestamp obj
-              updated_at: "",
-              user_id: 1,
-              dateLogged: "",
-              weight: 2,
-              hips: 2,
-              waist: 2,
-              arm_right: 2,
-              arm_left: 2,
-              leg_left: 2,
-              leg_right: 2
-            }
-          ],
-          workouts: [
-            {
-              id: 1,
-              title: "",
-              user_id: 1,
-              category_id: 1,
-              exercises: [
-                {
-                  id: 1,
-                  workout_id: 1,
-                  name: "",
-                  sets: 2, //string or number
-                  reps: 2,
-                  weight: 2
-                }
-              ],
-              category: {
-                id: 1,
-                user_id: 1,
-                name: ""
-              }
-            }
-          ],
-          schedule_workouts: [
-            {
-              id: 1,
-              date: "",
-              completed: false,
-              percentage: 0,
-              title: "",
-              user_id: 1,
-              category_id: 1,
-              schedule_exercises: [
-                {
-                  id: 1,
-                  schedule_workout_id: 1,
-                  name: "",
-                  sets: 2, //string or number
-                  reps: 2,
-                  weight: 2,
-                  completed: false
-                }
-              ],
-              category: {
-                id: 1,
-                user_id: 1,
-                name: ""
-              }
-            }
-          ]
-        }
-      ]
+      user: {}
     };
   }
 
-  allUsers() {
-    return this.state.users.map(user => {
-      return (
-        <p>
-          {user.name} {user.email} {user.phone}
-        </p>
-      );
-    });
+  componentDidMount() {
+    axios
+      .get(`${url}/user/info/1`)
+      .then(response => {
+        this.setState({ user: response.data });
+      })
+      .catch(err => {
+        return `Message: ${err}`;
+      });
   }
-
-  // componentDidMount() {
-  //   axios
-  //     .get(`${url}/user/info/1`)
-  //     .then(response => {
-  //       this.setState({ user: response.data });
-  //     })
-  //     .catch(err => {
-  //       return `Message: ${err}`;
-  //     });
-  // }
 
   render() {
     return (
       <StyledApp>
-        <div>{this.allUsers()}</div>
+        {/* <div>{this.state.user.name}</div> */}
         <Route exact path="/" component={LandingPage} />
         <Route
           exact
@@ -144,7 +58,7 @@ class App extends Component {
         <Route
           exact
           path="/progress"
-          render={props => <ProgressView {...props} metrics="" />}
+          render={props => <ProgressView {...props} user={this.state.user} />}
         />
 
         <Route
@@ -160,3 +74,80 @@ class App extends Component {
 }
 
 export default App;
+
+//user: {
+//   id: 1,
+//   name: "Elvis",
+//   email: "jlstan06@yahoo.com",
+//   phone: "859-598-8979",
+//   receives_text: true,
+//   recieves_email: false,
+//   created_at: "", //timestamp obj
+//   updated_at: "",
+//   metrics: [
+//     {
+//       id: 1,
+//       created_at: "", //timestamp obj
+//       updated_at: "",
+//       user_id: 1,
+//       dateLogged: "",
+//       weight: 2,
+//       hips: 2,
+//       waist: 2,
+//       arm_right: 2,
+//       arm_left: 2,
+//       leg_left: 2,
+//       leg_right: 2
+//     }
+//   ],
+//   workouts: [
+//     {
+//       id: 1,
+//       title: "",
+//       user_id: 1,
+//       category_id: 1,
+//       exercises: [
+//         {
+//           id: 1,
+//           workout_id: 1,
+//           name: "",
+//           sets: 2, //string or number
+//           reps: 2,
+//           weight: 2
+//         }
+//       ],
+//       category: {
+//         id: 1,
+//         user_id: 1,
+//         name: ""
+//       }
+//     }
+//   ],
+//   schedule_workouts: [
+//     {
+//       id: 1,
+//       date: "",
+//       completed: false,
+//       percentage: 0,
+//       title: "",
+//       user_id: 1,
+//       category_id: 1,
+//       schedule_exercises: [
+//         {
+//           id: 1,
+//           schedule_workout_id: 1,
+//           name: "",
+//           sets: 2, //string or number
+//           reps: 2,
+//           weight: 2,
+//           completed: false
+//         }
+//       ],
+//       category: {
+//         id: 1,
+//         user_id: 1,
+//         name: ""
+//       }
+//     }
+//   ]
+//}

@@ -44,7 +44,11 @@ class SettingsView extends React.Component {
           <LabelStyle>
             <LabelDivStyle>
               <p>Email:</p>
-              <InputStyle type="text" name="email" />
+              <InputStyle
+                type="text"
+                name="email"
+                placeholder="user@example.com"
+              />
             </LabelDivStyle>
             <LabelDivStyle>
               <p>Phone:</p>

@@ -25,8 +25,8 @@ class WorkoutsView extends React.Component {
     return (
       <WorkoutsViewStyle>
         <SideNav />
-        <EditWorkout />
-        <WorkoutCategoryList />
+        <EditWorkout workouts={this.props.user.workouts} />
+        <WorkoutCategoryList workouts={this.props.user.workouts} />
       </WorkoutsViewStyle>
     );
   }
