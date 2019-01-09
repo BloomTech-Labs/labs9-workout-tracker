@@ -4,7 +4,9 @@ exports.up = function(knex, Promise) {
     tbl.increments()
     tbl.date('date')
     tbl.boolean('completed').defaultTo(false)
-    tbl.integer('workout_id').unsigned().references('id').inTable('workouts').notNullable();
+    tbl.integer('percentage').defaultTo(0)
+    tbl.string('title')
+    tbl.integer('user_id').unsigned().references('id').inTable('users').notNullable();
   })
 };
 

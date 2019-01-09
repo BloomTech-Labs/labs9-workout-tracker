@@ -15,8 +15,9 @@ for (let i = 0; i < 49; i++) {
 
   const dateString = `${d.getFullYear()}-${month}-${day}`
   scheduleWorkouts = {
-    workout_id: i,
-    date: dateString
+    user_id: i,
+    title: 'Deadlift Day #1',
+    date: dateString,
     
   }
   scheduleWorkoutsArr.push(scheduleWorkouts)
