@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         tbl.increments();
         tbl.string('name').notNullable();
         tbl.string('email').unique();
-        tbl.integer('phone');
+        tbl.string('phone');
         tbl.boolean('recieves_text').defaultTo(false);
         tbl.boolean('recieves_email').defaultTo(false);
         tbl.timestamps(true, true);
