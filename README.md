@@ -44,7 +44,7 @@ Specifies the commands that are executed by the app on startup for heroku deploy
 #### User Info
 GET `/api/user/info/:id`
 
-Gets basic info user info by id passed by an id parameter
+Gets all the info of user info by id passed by an id parameter
 
 Response includes basic user object of Users table
 

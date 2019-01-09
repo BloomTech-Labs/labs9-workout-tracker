@@ -15,10 +15,12 @@ router.get('/info/:id', async (req, res) => {
         const workouts = await db('workouts').where('user_id', '=', userId)
         let workoutsArray = [];
         for (const workout of workouts) {
-            const exercises = await db('exercises').where('workout_id', '=', workouts[0].id)
+            const exercises = await db('exercises').where('workout_id', '=', workout.id)
+            const category = await db('category').where('id', '=', workout.category_id)
             const workObj = {
                 ...workout,
-                exercises: [...exercises]
+                exercises: [...exercises],
+                category: category[0]
             }
             workoutsArray.push(workObj)
         }
@@ -26,17 +28,19 @@ router.get('/info/:id', async (req, res) => {
         const sWorkouts = await db('schedule_workouts').where('user_id', '=', userId)
         let sWorkoutsArray = [];
         for (const workout of sWorkouts) {
-            const exercises = await db('schedule_exercises').where('schedule_workout_id', '=', sWorkouts[0].id)
+            const exercises = await db('schedule_exercises').where('schedule_workout_id', '=', workout.id)
+            const category = await db('category').where('id', '=', workout.category_id)
             const workObj = {
                 ...workout,
-                exercises: [...exercises]
+                exercises: [...exercises],
+                category: category[0]
             }
             sWorkoutsArray.push(workObj)
         }
         
         userObj = {
             ...userInfo[0],
-            metrics: {...metrics[0]},
+            metrics: [...metrics],
             workouts: workoutsArray,
             scheduleWorkouts: sWorkoutsArray
         }
