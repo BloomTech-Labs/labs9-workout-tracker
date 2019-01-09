@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     tbl.boolean('completed').defaultTo(false)
     tbl.integer('percentage').defaultTo(0)
     tbl.string('title')
+    tbl.integer('category_id').unsigned().references('id').inTable('category').notNullable();
     tbl.integer('user_id').unsigned().references('id').inTable('users').notNullable();
   })
 };

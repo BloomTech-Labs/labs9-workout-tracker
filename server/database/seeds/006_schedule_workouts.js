@@ -18,6 +18,7 @@ for (let i = 0; i < 49; i++) {
     user_id: i,
     title: 'Deadlift Day #1',
     date: dateString,
+    category_id: 1
     
   }
   scheduleWorkoutsArr.push(scheduleWorkouts)
