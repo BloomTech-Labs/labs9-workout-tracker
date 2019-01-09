@@ -27,9 +27,5 @@ module.exports = {
     },
     migrations: { directory: './database/migrations'},
     seeds: { directory: './database/seeds'},
-    connection: {
-      filename: './database/dev.sqlite3'
-    },
-  },
-
+  }
 };
