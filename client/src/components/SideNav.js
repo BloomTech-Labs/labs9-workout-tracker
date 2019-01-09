@@ -7,6 +7,7 @@ const NavStyle = styled.div`
   flex-direction: column;
   border: 1px solid blue;
   width: 20%;
+  margin-left: 2%;
 `;
 
 const SideNav = () => {

@@ -6,6 +6,7 @@ const SettingsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
+  padding-bottom: 100px;
 `;
 
 const LabelStyle = styled.label`
@@ -24,7 +25,7 @@ const InputStyle = styled.input`
 `;
 
 const FormStyle = styled.form`
-  width: 50%;
+  width: 40%;
   margin-left: 5%;
 `;
 

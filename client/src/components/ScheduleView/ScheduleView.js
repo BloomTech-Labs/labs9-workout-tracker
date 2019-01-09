@@ -14,8 +14,19 @@ const ScheduleViewStyle = styled.div`
 class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      workouts: [],
+      schedule_workouts: []
+    };
   }
+
+  componentDidMount() {
+    this.setState({
+      workouts: this.props.workouts,
+      schedule_workouts: this.props.schedule_workouts
+    });
+  }
+
   render() {
     return (
       <ScheduleViewStyle>

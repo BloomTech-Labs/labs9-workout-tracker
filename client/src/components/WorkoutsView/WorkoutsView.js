@@ -12,8 +12,15 @@ const WorkoutsViewStyle = styled.div`
 class WorkoutsView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      workouts: []
+    };
   }
+
+  componentDidMount() {
+    this.setState({ workouts: this.props.workouts });
+  }
+
   render() {
     return (
       <WorkoutsViewStyle>
