@@ -23,24 +23,25 @@ const NavStyle = styled.div`
 const StyledLink = styled(NavLink)`
   width: 100px;
   line-height: 51px;
-  color: white;
+  color: ${props => props.theme.darkWhite};
   text-decoration: none;
   text-align: center;
   font-size: 26px;
   font-family: ${props => props.theme.roboto};
   font-weight: 500;
   &.active {
-    border-bottom: solid 2px ${props => props.theme.white};
+    border-bottom: solid 2px ${props => props.theme.accent};
   }
   &:hover {
-    border-bottom: solid 2px ${props => props.theme.white};
+    /* border-bottom: solid 2px ${props => props.theme.accent}; */
+    color: ${props => props.theme.accent};
   }
 `
 
 const Logo = styled(Link)`
   font-size: 25px;
   font-weight: 800;
-  color: ${props => props.theme.white};
+  color: ${props => props.theme.accent};
   text-decoration: none;
   user-select: none;
 `

@@ -30,7 +30,13 @@ Specifies the commands that are executed by the app on startup for heroku deploy
 # Frontend
 
 ## Photo Credits
-Photos on the website taken from [Unsplash](https://unsplash.com/) and are credited to the following: Maddi Bazzocco, John Arano, rawpixel, Kate Trysh, karl S, Cindy Koops, Victor Freitas, FitNish Media, Alora Griffiths, Sam Sabourin, Hipcravo, John Fornander, and Toralf Thomassen.
+Photos on the website taken from  - 
+[Pexels](https://www.pexels.com/photo/barbell-on-the-floor-1552252/)
+[Pexels](https://www.pexels.com/photo/man-carrying-barbel-791763/)
+[Pexels](https://www.pexels.com/photo/rope-jumping-ropes-human-training-28080/)
+
+Pexels License - Free for personal and commercial use; no attribution required.
+
 
 # Backend
 

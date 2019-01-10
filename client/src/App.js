@@ -158,30 +158,49 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <div>
-            <Route path="/" render={props => <Navigation {...props}/>} />
             <StyledApp>
               <Route exact path="/" component={LandingPage} />
               <Route
                 exact
                 path="/schedule"
                 render={props => (
-                  <ScheduleView {...props} workouts={this.state.user.workouts} scheduleWorkouts={this.state.user.scheduleWorkouts} />
+                  <>
+                    <Navigation {...props}/>
+                    <ScheduleView {...props} workouts={this.state.user.workouts} scheduleWorkouts={this.state.user.scheduleWorkouts} />
+                  </>
                 )}
               />
               <Route
                 exact
                 path="/progress"
-                render={props => <ProgressView {...props} user={this.state.user} />}
+                render={props => (
+                  <>
+                    <Navigation {...props}/>
+                    <ProgressView {...props} user={this.state.user} />
+                  </>
+                )}
               />
 
               <Route
                 exact
                 path="/workouts"
                 render={props => (
-                  <WorkoutsView {...props} workouts={this.state.user.workouts} />
+                  <>
+                    <Navigation {...props}/>
+                    <WorkoutsView {...props} workouts={this.state.user.workouts} />
+                  </>
                 )}
               />
-              <Route exact path="/settings" component={SettingsView} />
+              <Route 
+                exact 
+                path="/settings" 
+                render={props => (
+                  <>
+                    <Navigation {...props}/>
+                    <SettingsView {...props} workouts={this.state.user.workouts} />
+                  </>
+                )}
+              />
             </StyledApp>
         </div>
       </ThemeProvider>
@@ -201,6 +220,7 @@ const StyledApp = styled.div`
   font-size: 1.2rem;
   height: 100vh;
   position: relative;
+  background-color: ${props => props.theme.white};
 `;
 
 
