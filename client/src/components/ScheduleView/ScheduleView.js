@@ -1,5 +1,4 @@
 import React from "react";
-import SideNav from "../SideNav";
 import Calendar from "./Calendar";
 import ScheduleWorkoutList from "./ScheduleWorkout/ScheduleWorkoutList";
 import AddWorkout from "./AddWorkout";
@@ -26,7 +25,6 @@ class ScheduleView extends React.Component {
   render() {
     return (
       <ScheduleViewStyle>
-        <SideNav />
         <Calendar dateSelected={this.state.dateSelected} selectDate={this.selectDate}/>
         <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} />
         {
@@ -50,5 +48,6 @@ const ScheduleViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
+  font-family: 'Anton', sans-serif;
 `;
 export default ScheduleView;

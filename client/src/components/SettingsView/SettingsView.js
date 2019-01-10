@@ -1,5 +1,4 @@
 import React from "react";
-import SideNav from "./SideNav";
 import styled from "styled-components";
 
 const SettingsViewStyle = styled.div`
@@ -39,7 +38,6 @@ class SettingsView extends React.Component {
   render() {
     return (
       <SettingsViewStyle>
-        <SideNav />
         <FormStyle>
           <LabelStyle>
             <LabelDivStyle>
