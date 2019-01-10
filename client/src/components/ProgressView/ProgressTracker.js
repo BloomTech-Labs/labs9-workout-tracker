@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const ProgressTrackerStyle = styled.div`
-  border: 1px solid red
+  border: 1px solid red;
   height: 200px;
 `;
 

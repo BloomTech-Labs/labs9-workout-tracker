@@ -27,6 +27,11 @@ Used to run knex migrations and seeds for postgress database
 Specifies the commands that are executed by the app on startup for heroku deployment
 
 
+# Frontend
+
+## Photo Credits
+Photos on the website taken from [Unsplash](https://unsplash.com/) and are credited to the following: Maddi Bazzocco, John Arano, rawpixel, Kate Trysh, karl S, Cindy Koops, Victor Freitas, FitNish Media, Alora Griffiths, Sam Sabourin, Hipcravo, John Fornander, and Toralf Thomassen.
+
 # Backend
 
 ## Scripts
@@ -147,3 +152,4 @@ Data Structure:
         }, 
       ]
     };```
+

@@ -1,13 +1,8 @@
 import React from "react";
-import SideNav from "../SideNav";
 import SubmitProgress from "./SubmitProgress";
 import ProgressTracker from "./ProgressTracker";
 import ProgressList from "./ProgressList/ProgressList";
-import styled from "styled-components";
-
-const ProgressViewStyle = styled.div`
-  display: flex;
-`;
+import { ProgressViewStyle } from './ProgressStyle';
 
 class ProgressView extends React.Component {
   constructor(props) {
@@ -26,7 +21,6 @@ class ProgressView extends React.Component {
   render() {
     return (
       <ProgressViewStyle>
-        <SideNav />
         <SubmitProgress user={this.props.user} />
         <div>
           <ProgressTracker metrics={this.props.user.metrics} />

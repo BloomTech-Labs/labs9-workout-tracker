@@ -1,5 +1,4 @@
 import React from "react";
-import SideNav from "./SideNav";
 import styled from "styled-components";
 
 const BillingViewStyle = styled.div`
@@ -33,7 +32,6 @@ class BillingView extends React.Component {
   render() {
     return (
       <BillingViewStyle>
-        <SideNav />
         <Div>
           <FormStyle>
             <InputStyle type="text" placeholder="CC#" name="ccnumber" />
