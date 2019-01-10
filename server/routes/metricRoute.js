@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../database/dbConfig");
 const router = express.Router();
 
+//Get all metrics
 router.get("/metrics/all", async (req, res) => {
   try {
     const allMetrics = await db("metrics");
@@ -14,6 +15,7 @@ router.get("/metrics/all", async (req, res) => {
   }
 });
 
+//GET Metric set
 router.get("/metrics/:id", async (req, res) => {
   try {
     //grab the user ID from the user's DB
@@ -31,31 +33,7 @@ router.get("/metrics/:id", async (req, res) => {
   }
 });
 
-//needs to be refactored to async
-// router.post("/metrics/:id", (req, res) => {
-//   const userInfo = db("users")
-//     .where("id", "=", req.params.id)
-//     .then(user => {
-//       res.status(200).json(user);
-//     });
-//   let userId = userInfo.id;
-
-//   const metricObj = ({
-//     weight,
-//     hips,
-//     waist,
-//     arm_right,
-//     arm_left,
-//     leg_right,
-//     leg_left,
-//     date
-//   } = req.body);
-//   db("metrics")
-//     .insert({ ...metricObj, user_id: userId })
-//     .then(metric => res.status(201).json(metric))
-//     .catch(err => res.status(400).json({ err, error: "Error posting" }));
-// });
-
+//Create new set of metrics
 router.post("/metrics/:id", async (req, res) => {
   try {
     const userInfo = await db("users").where("id", "=", req.params.id);
@@ -79,9 +57,25 @@ router.post("/metrics/:id", async (req, res) => {
     console.log(insertObj);
     const addMetric = await db("metrics").insert(insertObj);
     console.log(addMetric);
-    res.status(201).json( insertObj );
+    res.status(201).json(insertObj);
   } catch (error) {
     res.status(500).json({ error });
+  }
+});
+
+//Delete metrics
+router.delete("/metrics/:id", async (req, res) => {
+  try {
+    const deleteMetricData = await db("metrics")
+      .where("id", "=", req.params.id)
+      .del();
+    {
+      deleteMetricData === 0
+        ? res.status(404).json({ message: "Those metrics do not exist" })
+        : res.status(200).json({ deleteMetricData });
+    }
+  } catch (error) {
+    res.status(500).json(error, "error message");
   }
 });
 
