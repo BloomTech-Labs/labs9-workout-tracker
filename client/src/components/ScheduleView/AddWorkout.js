@@ -7,7 +7,7 @@ const AddWorkout = (props) => {
     <form>
       <div>{props.workouts.map(workout => {
         return (
-          <p>Add workout {workout.category.name}</p>
+          <p key={workout.id}>Add workout {workout.category.name}</p>
         )
       })}</div>
     </form>
