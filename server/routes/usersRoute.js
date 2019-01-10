@@ -1,8 +1,8 @@
 const express = require("express");
 const db = require("../database/dbConfig");
 const router = express.Router();
-const knex = require("../database/dbConfig.js");
 
+//Get single User
 router.get("/info/:id", async (req, res) => {
   try {
     const userInfo = await db("users").where("id", "=", req.params.id);
@@ -73,6 +73,7 @@ router.get("/info/:id", async (req, res) => {
   }
 });
 
+//Create new User
 router.post("/", async (req, res) => {
   const UserData = req.body;
   console.log(req.body);
@@ -96,6 +97,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+//Delete User
 router.delete("/delete/:id", async (req, res) => {
   const userId = req.params.id;
 
@@ -118,18 +120,28 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.put("/edit/:userId", async (req, res) => {
-  const changes = req.body;
-  const { userId } = req.params;
+//Edit User
+router.put("/edit/:id", async (req, res) => {
+  const { name, email, phone } = req.body;
+  const { id } = req.params;
 
-  if (!changes.name || !changes.email || !changes.phone) {
+  if (
+    !{ name, email, phone }.name ||
+    !{ name, email, phone }.email ||
+    !{ name, email, phone }.phone
+  ) {
     res
       .status(400)
       .json({ errorMessage: "Please provide a name/email/phone for the user" });
   }
 
   try {
-    const updateduserCount = await db("users").update(userId, changes);
+    console.log("id is: ", id);
+    // console.log("changes are: ", changes);
+    const updateduserCount = await db("users")
+      .where("id", "=", req.params.id)
+      .update({ email, phone, name });
+
     {
       updateduserCount === 0
         ? res
@@ -138,7 +150,7 @@ router.put("/edit/:userId", async (req, res) => {
         : res.status(200).json({ updateduserCount });
     }
   } catch (error) {
-    console.log("the req.params.userId is... ", req.params.userId);
+    console.log("the req.params.id is... ", req.params.id);
     console.log("the error is... ", error);
     res.status(500).json(error);
   }
