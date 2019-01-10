@@ -9,7 +9,7 @@ const ScheduleWorkoutList = (props) => {
       <ScheduleWorkoutListStyle>
          {props.scheduleWorkouts.map(scheduleWorkout => {
            return (
-             <ListItem scheduleWorkout={scheduleWorkout}/>
+             <ListItem key={scheduleWorkout.id} scheduleWorkout={scheduleWorkout}/>
            )
          })} 
       </ScheduleWorkoutListStyle>
