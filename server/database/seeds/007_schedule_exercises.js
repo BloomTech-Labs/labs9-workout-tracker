@@ -1,6 +1,6 @@
 const exerciseArr = []
 
-for(let i = 0; i < 49; i++) {
+for(let i = 1; i < 35; i++) {
   const exercise1 = {
     name: 'Deadlift',
     schedule_workout_id: i,
