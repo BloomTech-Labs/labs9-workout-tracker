@@ -7,29 +7,17 @@ import styled from "styled-components";
 const WorkoutsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
+  display: flex;
 `;
 
-class WorkoutsView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      workouts: []
-    };
-  }
-
-  componentDidMount() {
-    this.setState({ workouts: this.props.workouts });
-  }
-
-  render() {
-    return (
-      <WorkoutsViewStyle>
-        <SideNav />
-        <EditWorkout workouts={this.props.user.workouts} />
-        <WorkoutCategoryList workouts={this.props.user.workouts} />
-      </WorkoutsViewStyle>
-    );
-  }
-}
+const WorkoutsView = props => {
+  return (
+    <WorkoutsViewStyle>
+      <SideNav />
+      <EditWorkout workouts={props.workouts} />
+      <WorkoutCategoryList workouts={props.workouts} />
+    </WorkoutsViewStyle>
+  );
+};
 
 export default WorkoutsView;

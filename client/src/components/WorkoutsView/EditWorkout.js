@@ -9,7 +9,7 @@ const EditWorkoutStyle = styled.div`
 const EditWorkoutSubmitForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 100%;
 `;
 
 const EditWorkout = props => {
@@ -17,6 +17,11 @@ const EditWorkout = props => {
     <EditWorkoutStyle>
       <EditWorkoutSubmitForm>
         <input type="text" placeholder="title" />
+        <button>Add Workout</button>
+        <input type="text" placeholder="Workout Name" />
+        <input type="text" placeholder="Weight" />
+        <input type="text" placeholder="Sets" />
+        <input type="text" placeholder="Reps" />
 
         <button>Submit</button>
       </EditWorkoutSubmitForm>
