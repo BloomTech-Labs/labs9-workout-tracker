@@ -3,10 +3,13 @@ import dateFns from "date-fns";
 import "./Calendar.css";
 
 class Calendar extends React.Component {
-  state = {
-    currentMonth: new Date(),
-    selectedDate: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentMonth: new Date(),
+      selectedDate: null
+    };
+  }
 
   renderHeader() {
     const dateFormat = "MMMM YYYY";
@@ -29,7 +32,7 @@ class Calendar extends React.Component {
   }
 
   renderDays() {
-    const dateFormat = "dddd";
+    const dateFormat = "ddd";
     const days = [];
 
     let startDate = dateFns.startOfWeek(this.state.currentMonth);
@@ -73,7 +76,7 @@ class Calendar extends React.Component {
                 : ""
             }`}
             key={day}
-            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+            onClick={() => {this.onDateClick(dateFns.parse(cloneDay)); this.props.selectDate()}}
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>

@@ -63,3 +63,87 @@ Response:
 }
 ```
 
+Data Structure:
+```
+   user: {
+          id: 1,
+          name: "Elvis",
+          email: "jlstan06@yahoo.com",
+          phone: "859-598-8979",
+          receives_text: true,
+          recieves_email: false,
+          created_at: "", 
+          updated_at: '',
+          metrics: [
+            {
+            id: 1,
+            created_at: "", 
+            updated_at: '',
+            user_id: 1,
+            dateLogged: "",
+            weight: 2,
+            hips: 2,
+            waist: 2,
+            arm_right: 2,
+            arm_left: 2,
+            leg_left: 2,
+            leg_right: 2
+          }
+          ],
+          workouts: [
+            {
+              id:1,
+              title:'',
+              user_id:1,
+              category_id:1,
+              exercises: [
+                {
+                  id: 1,
+                  workout_id:1,
+                  name: "",
+                  sets: 2, 
+                  reps: 2,
+                  weight:2,
+                }
+              ],
+              category: 
+                {
+                  id: 1,
+                  user_id:1,
+                  name: "",
+                }
+            }
+
+          ],
+          schedule_workouts: [
+            {
+              id:1,
+              date: '',
+              completed: false,
+              percentage: 0,
+              title:'',
+              user_id:1,
+              category_id:1,
+              schedule_exercises: [
+                {
+                  id: 1,
+                  schedule_workout_id: 1,
+                  name: "",
+                  sets: 2, 
+                  reps: 2,
+                  weight:2,
+                  completed:false
+                }
+              ],
+              category: 
+                {
+                  id: 1,
+                  user_id:1,
+                  name: "",
+                }
+            }
+
+          ],
+        }, 
+      ]
+    };```
