@@ -9,12 +9,21 @@ const BillingViewStyle = styled.div`
 `;
 
 const Div = styled.div`
-  border: 1px solid black;
+  margin: 20px;
+  height: auto;
 `;
 
-const FormStyle = styled.form``;
+const FormStyle = styled.form`
+  border: 1px solid black;
+  margin-bottom: 30px;
+`;
 
-const Button = styled.button``;
+const InputStyle = styled.input``;
+
+const Button = styled.button`
+  height: 40px;
+  width: 30%;
+`;
 
 class BillingView extends React.Component {
   constructor(props) {
@@ -26,9 +35,12 @@ class BillingView extends React.Component {
       <BillingViewStyle>
         <SideNav />
         <Div>
-          <FormStyle />
-
-          <Button value="Buy Now" />
+          <FormStyle>
+            <InputStyle type="text" placeholder="CC#" name="ccnumber" />
+            <InputStyle type="text" placeholder="EXP" name="expiration" />
+            <InputStyle type="text" placeholder="CVV" name="cvv" />
+          </FormStyle>
+          <Button>Buy Now</Button>
         </Div>
       </BillingViewStyle>
     );

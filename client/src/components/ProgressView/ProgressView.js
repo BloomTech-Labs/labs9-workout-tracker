@@ -28,8 +28,10 @@ class ProgressView extends React.Component {
       <ProgressViewStyle>
         <SideNav />
         <SubmitProgress user={this.props.user} />
-        <ProgressTracker metrics={this.props.user.metrics} />
-        <ProgressList metrics={this.props.user.metrics} />
+        <div>
+          <ProgressTracker metrics={this.props.user.metrics} />
+          <ProgressList metrics={this.props.user.metrics} />
+        </div>
       </ProgressViewStyle>
     );
   }
