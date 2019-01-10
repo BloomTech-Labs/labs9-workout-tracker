@@ -79,7 +79,7 @@ router.post("/metrics/:id", async (req, res) => {
     console.log(insertObj);
     const addMetric = await db("metrics").insert(insertObj);
     console.log(addMetric);
-    res.status(201).json( insertObj );
+    res.status(201).json(insertObj);
   } catch (error) {
     res.status(500).json({ error });
   }
