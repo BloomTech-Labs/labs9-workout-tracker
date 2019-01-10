@@ -4,16 +4,16 @@ import styled from "styled-components";
 
 const ScheduleWorkoutListStyle = styled.div``;
 
-class ScheduleWorkoutList extends React.Component {
-  state = {};
-  render() {
+const ScheduleWorkoutList = (props) => {
     return (
       <ScheduleWorkoutListStyle>
-        Schedule Workout List
-        <ListItem />
+         {props.scheduleWorkouts.map(scheduleWorkout => {
+           return (
+             <ListItem scheduleWorkout={scheduleWorkout}/>
+           )
+         })} 
       </ScheduleWorkoutListStyle>
     );
-  }
 }
 
 export default ScheduleWorkoutList;

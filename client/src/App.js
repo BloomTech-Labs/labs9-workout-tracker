@@ -164,7 +164,7 @@ class App extends Component {
           exact
           path="/schedule"
           render={props => (
-            <ScheduleView {...props} workouts="" schedule_workouts="" />
+            <ScheduleView {...props} workouts={this.state.user.workouts} scheduleWorkouts={this.state.user.scheduleWorkouts} />
           )}
         />
         <Route

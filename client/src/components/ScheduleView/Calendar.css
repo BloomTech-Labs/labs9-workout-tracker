@@ -1,11 +1,7 @@
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300, 400, 700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-.App {
-    font-family: sans-serif;
-    text-align: center;
-  }
   
   .icon {
     font-family: "Material Icons", serif;
@@ -119,7 +115,8 @@
   .calendar {
     display: block;
     position: relative;
-    width: 100%;
+    width: 90%;
+    height:412px;
     background: var(--neutral-color);
     border: 1px solid var(--border-color);
   }
@@ -127,8 +124,6 @@
   .calendar .header {
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 115%;
-    padding: 1.5em 0;
     border-bottom: 1px solid var(--border-color);
   }
   
@@ -162,7 +157,7 @@
   
   .calendar .body .cell {
     position: relative;
-    height: 5em;
+    height: 3.5em;
     border-right: 1px solid var(--border-color);
     overflow: hidden;
     cursor: pointer;
@@ -195,7 +190,7 @@
   
   .calendar .body .cell .number {
     position: absolute;
-    font-size: 82.5%;
+    font-size: 62.5%;
     line-height: 1;
     top: 0.75em;
     right: 0.75em;
