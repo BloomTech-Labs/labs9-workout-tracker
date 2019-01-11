@@ -48,6 +48,7 @@ const ScheduleViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
-  font-family: 'Anton', sans-serif;
+  position: absolute;
+  top: 74px;
 `;
 export default ScheduleView;

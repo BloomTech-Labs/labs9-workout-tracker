@@ -9,4 +9,5 @@ export const theme = {
     white: '#fafafa',
     roboto: "'Roboto', sans-serif",
     opensans: "'Open Sans', sans-serif",
+    containingWidth: '960px',
 }
