@@ -214,13 +214,13 @@ const StyledApp = styled.div`
   text-align: center;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
   border: 1px solid black;
   font-size: 62.5%;
   font-size: 1.2rem;
   height: 100vh;
   position: relative;
   background-color: ${props => props.theme.white};
+  font-family: ${props => props.theme.opensans};
 `;
 
 

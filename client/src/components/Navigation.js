@@ -23,7 +23,7 @@ const NavStyle = styled.div`
 const StyledLink = styled(NavLink)`
   width: 100px;
   line-height: 51px;
-  color: ${props => props.theme.darkWhite};
+  color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
   font-size: 26px;
