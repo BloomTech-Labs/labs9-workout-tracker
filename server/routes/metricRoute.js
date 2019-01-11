@@ -16,7 +16,7 @@ router.get("/metrics/all", async (req, res) => {
 });
 
 //GET Metric set
-router.get("/metrics/:id", async (req, res) => {
+router.get("/metrics/get/:id", async (req, res) => {
   try {
     //grab the user ID from the user's DB
     const userInfo = await db("users").where("id", "=", req.params.id);
@@ -34,7 +34,7 @@ router.get("/metrics/:id", async (req, res) => {
 });
 
 //Create new set of metrics
-router.post("/metrics/:id", async (req, res) => {
+router.post("/metrics/create/:id", async (req, res) => {
   try {
     const userInfo = await db("users").where("id", "=", req.params.id);
     let userId = userInfo[0].id;
@@ -64,7 +64,7 @@ router.post("/metrics/:id", async (req, res) => {
 });
 
 //Delete metrics
-router.delete("/metrics/:id", async (req, res) => {
+router.delete("/metrics/delete/:id", async (req, res) => {
   try {
     const deleteMetricData = await db("metrics")
       .where("id", "=", req.params.id)
@@ -72,7 +72,7 @@ router.delete("/metrics/:id", async (req, res) => {
     {
       deleteMetricData === 0
         ? res.status(404).json({ message: "Those metrics do not exist" })
-        : res.status(200).json({ deleteMetricData });
+        : res.status(200).json({ deleteMetricData })
     }
   } catch (error) {
     res.status(500).json(error, "error message");
