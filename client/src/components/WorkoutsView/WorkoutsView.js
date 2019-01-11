@@ -7,6 +7,8 @@ const WorkoutsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
+  position: absolute;
+  top: 74px;
 `;
 
 const WorkoutsView = props => {

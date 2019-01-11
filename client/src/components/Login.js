@@ -5,6 +5,8 @@ import styled from 'styled-components'
 const Div = styled.div`
   margin: 20px;
   height: auto;
+  position: absolute;
+  top: 74px;
 `;
 
 const FormStyle = styled.form`

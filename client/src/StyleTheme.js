@@ -1,13 +1,13 @@
 // import styled, { ThemeProvider } from 'styled-components';
 
 export const theme = {
-    primaryDarkest: '#005073',
-    primaryDark: '#107dac',
-    primary: '#189ad3',
-    primaryLight: '#1ebbd7',
-    primaryLighter: '#71c7ec',
-    accent: '#f09825',
+    primaryDark: '#2B3A42',
+    primary: '#405865',
+    primaryLight: '#BED3DD',
+    accent: '#FD8F25',
+    themeWhite: '#F0F0E0',
+    white: '#fafafa',
     roboto: "'Roboto', sans-serif",
     opensans: "'Open Sans', sans-serif",
-    white: '#fafafa',
+    containingWidth: '960px',
 }

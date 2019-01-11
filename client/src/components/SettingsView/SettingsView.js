@@ -6,6 +6,8 @@ const SettingsViewStyle = styled.div`
   max-width: 880px;
   display: flex;
   padding-bottom: 100px;
+  position: absolute;
+  top: 74px;
 `;
 
 const LabelStyle = styled.label`

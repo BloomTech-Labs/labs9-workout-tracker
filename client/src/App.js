@@ -5,7 +5,9 @@ import LandingPage from "./components/LandingPageView/LandingPage";
 import ScheduleView from "./components/ScheduleView/ScheduleView";
 import ProgressView from "./components/ProgressView/ProgressView";
 import WorkoutsView from "./components/WorkoutsView/WorkoutsView";
-import SettingsView from "./components/SettingsView/SettingsView.js";
+import SettingsView from "./components/SettingsView/SettingsView";
+import Login from './components/Login'
+import Register from './components/Register'
 import Navigation from './components/Navigation';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from './StyleTheme';
@@ -158,30 +160,40 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <div>
-            <Route path="/" render={props => <Navigation {...props}/>} />
+            <Route path="/" render={props => (<Navigation {...props}/>)} />
             <StyledApp>
               <Route exact path="/" component={LandingPage} />
               <Route
                 exact
                 path="/schedule"
-                render={props => (
-                  <ScheduleView {...props} workouts={this.state.user.workouts} scheduleWorkouts={this.state.user.scheduleWorkouts} />
-                )}
+                render={props => (<ScheduleView {...props} workouts={this.state.user.workouts} scheduleWorkouts={this.state.user.scheduleWorkouts} />)}
               />
               <Route
                 exact
                 path="/progress"
-                render={props => <ProgressView {...props} user={this.state.user} />}
+                render={props => (<ProgressView {...props} user={this.state.user} />)}
               />
 
               <Route
                 exact
                 path="/workouts"
-                render={props => (
-                  <WorkoutsView {...props} workouts={this.state.user.workouts} />
-                )}
+                render={props => (<WorkoutsView {...props} workouts={this.state.user.workouts} />)}
               />
-              <Route exact path="/settings" component={SettingsView} />
+              <Route 
+                exact 
+                path="/settings" 
+                render={props => (<SettingsView {...props} workouts={this.state.user.workouts} />)}
+              />
+              <Route 
+                exact 
+                path="/login" 
+                render={props => (<Login {...props}/>)}
+              />
+              <Route 
+                exact 
+                path="/register" 
+                render={props => (<Register {...props}/>)}
+              />
             </StyledApp>
         </div>
       </ThemeProvider>
@@ -194,13 +206,14 @@ export default App;
 const StyledApp = styled.div`
   text-align: center;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
-  border: 1px solid black;
   font-size: 62.5%;
   font-size: 1.2rem;
   height: 100vh;
   position: relative;
+  background-color: transparent;
+  padding: 0 30px;
+  font-family: ${props => props.theme.opensans};
 `;
 
 
