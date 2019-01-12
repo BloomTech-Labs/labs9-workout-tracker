@@ -63,3 +63,24 @@ Response:
 }
 ```
 
+POST `/api/user/`
+
+Creates a new user by id passed by an id parameter
+
+Response includes basic user object of Users table
+
+Response:
+
+```
+{
+  "id": 0,
+  "name": "Filiberto Altenwerth",
+  "email": "Kyleigh.Kassulke68@gmail.com",
+  "phone": "467-472-9061",
+  "recieves_text": 0,
+  "recieves_email": 0,
+  "created_at": "2019-01-08 21:14:07",
+  "updated_at": "2019-01-08 21:14:07"
+}
+```
+
