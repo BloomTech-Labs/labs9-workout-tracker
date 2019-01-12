@@ -1,4 +1,4 @@
-# Workout Tracker
+# fitmetrix
 
 ## Team
 |   [**Elvis Ibarra**](https://github.com/ielvisd)  |   [**Joseph Stanfield**](https://github.com/CookieMonsta89)   |    [**Matt Wright**](https://github.com/mattwright42)    |   [**William DiFulvio**](https://github.com/Wdifulvio523)  |     [**Christopher Cedeno**](https://github.com/reynld)
@@ -25,6 +25,17 @@ Used to run knex migrations and seeds for postgress database
 ## Procfile
 
 Specifies the commands that are executed by the app on startup for heroku deployment
+
+
+# Frontend
+
+## Photo Credits
+Photos on the website taken from  - 
+[Pexels](https://www.pexels.com/photo/barbell-on-the-floor-1552252/)
+[Pexels](https://www.pexels.com/photo/man-carrying-barbel-791763/)
+[Pexels](https://www.pexels.com/photo/rope-jumping-ropes-human-training-28080/)
+
+Pexels License - Free for personal and commercial use; no attribution required.
 
 
 # Backend
@@ -177,6 +188,7 @@ Response:
 }
 ```
 POST `/api/user/`
+
 
 Gets the id of the posted user
 
@@ -336,3 +348,88 @@ Response:
   "user_id": 1
 }
 ```
+=======
+Data Structure:
+```
+   user: {
+          id: 1,
+          name: "Elvis",
+          email: "jlstan06@yahoo.com",
+          phone: "859-598-8979",
+          receives_text: true,
+          recieves_email: false,
+          created_at: "", 
+          updated_at: '',
+          metrics: [
+            {
+            id: 1,
+            created_at: "", 
+            updated_at: '',
+            user_id: 1,
+            dateLogged: "",
+            weight: 2,
+            hips: 2,
+            waist: 2,
+            arm_right: 2,
+            arm_left: 2,
+            leg_left: 2,
+            leg_right: 2
+          }
+          ],
+          workouts: [
+            {
+              id:1,
+              title:'',
+              user_id:1,
+              category_id:1,
+              exercises: [
+                {
+                  id: 1,
+                  workout_id:1,
+                  name: "",
+                  sets: 2, 
+                  reps: 2,
+                  weight:2,
+                }
+              ],
+              category: 
+                {
+                  id: 1,
+                  user_id:1,
+                  name: "",
+                }
+            }
+
+          ],
+          schedule_workouts: [
+            {
+              id:1,
+              date: '',
+              completed: false,
+              percentage: 0,
+              title:'',
+              user_id:1,
+              category_id:1,
+              schedule_exercises: [
+                {
+                  id: 1,
+                  schedule_workout_id: 1,
+                  name: "",
+                  sets: 2, 
+                  reps: 2,
+                  weight:2,
+                  completed:false
+                }
+              ],
+              category: 
+                {
+                  id: 1,
+                  user_id:1,
+                  name: "",
+                }
+            }
+
+          ],
+        }, 
+      ]
+    };```

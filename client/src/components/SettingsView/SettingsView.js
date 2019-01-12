@@ -1,11 +1,13 @@
 import React from "react";
-import SideNav from "./SideNav";
 import styled from "styled-components";
 
 const SettingsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
+  padding-bottom: 100px;
+  position: absolute;
+  top: 74px;
 `;
 
 const LabelStyle = styled.label`
@@ -24,7 +26,7 @@ const InputStyle = styled.input`
 `;
 
 const FormStyle = styled.form`
-  width: 50%;
+  width: 40%;
   margin-left: 5%;
 `;
 
@@ -38,12 +40,15 @@ class SettingsView extends React.Component {
   render() {
     return (
       <SettingsViewStyle>
-        <SideNav />
         <FormStyle>
           <LabelStyle>
             <LabelDivStyle>
               <p>Email:</p>
-              <InputStyle type="text" name="email" />
+              <InputStyle
+                type="text"
+                name="email"
+                placeholder="user@example.com"
+              />
             </LabelDivStyle>
             <LabelDivStyle>
               <p>Phone:</p>

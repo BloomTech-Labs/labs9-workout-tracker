@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const ProgressTrackerStyle = styled.div``;
+const ProgressTrackerStyle = styled.div`
+  border: 1px solid red;
+  height: 200px;
+`;
 
-class ProgressTracker extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return <ProgressTrackerStyle>Progress Tracker</ProgressTrackerStyle>;
-  }
-}
+const ProgressTracker = props => {
+  return <ProgressTrackerStyle>Progress Tracker</ProgressTrackerStyle>;
+};
 
 export default ProgressTracker;

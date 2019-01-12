@@ -1,10 +1,7 @@
 import React from "react";
 
-class WorkoutTitleList extends React.Component {
-  state = {};
-  render() {
-    return <div>WorkoutTitle List</div>;
-  }
-}
+const WorkoutTitleList = props => {
+  return <div>{props.exerciseObj.name}</div>;
+};
 
 export default WorkoutTitleList;

@@ -1,5 +1,4 @@
 import React from "react";
-import SideNav from "../SideNav";
 import EditWorkout from "./EditWorkout";
 import WorkoutCategoryList from "./WorkoutCategoryList";
 import styled from "styled-components";
@@ -7,22 +6,18 @@ import styled from "styled-components";
 const WorkoutsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
+  display: flex;
+  position: absolute;
+  top: 74px;
 `;
 
-class WorkoutsView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <WorkoutsViewStyle>
-        <SideNav />
-        <EditWorkout />
-        <WorkoutCategoryList />
-      </WorkoutsViewStyle>
-    );
-  }
-}
+const WorkoutsView = props => {
+  return (
+    <WorkoutsViewStyle>
+      <EditWorkout workouts={props.workouts} />
+      <WorkoutCategoryList workouts={props.workouts} />
+    </WorkoutsViewStyle>
+  );
+};
 
 export default WorkoutsView;
