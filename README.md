@@ -63,17 +63,292 @@ Response:
 
 ```
 {
-  "id": 0,
-  "name": "Filiberto Altenwerth",
-  "email": "Kyleigh.Kassulke68@gmail.com",
-  "phone": "467-472-9061",
+  "id": 1,
+  "name": "Adonis Windler",
+  "email": "Lucinda.DuBuque@yahoo.com",
+  "phone": "574.166.4961",
   "recieves_text": 0,
   "recieves_email": 0,
-  "created_at": "2019-01-08 21:14:07",
-  "updated_at": "2019-01-08 21:14:07"
+  "created_at": "2019-01-10 17:13:09",
+  "updated_at": "2019-01-10 17:13:09",
+  "metrics": [
+    {
+      "id": 1,
+      "created_at": "2019-01-10 17:13:09",
+      "updated_at": "2019-01-10 17:13:09",
+      "weight": 5.948854770374069,
+      "hips": 8.213643664668455,
+      "waist": 1.4806847756526245,
+      "arm_right": 7.022097727831248,
+      "arm_left": 2.635112317202456,
+      "leg_right": 2.611580422143979,
+      "leg_left": 1.8865857463905291,
+      "date": "2019-01-10 17:13:09",
+      "user_id": 1
+    },
+    {
+      "id": 54,
+      "created_at": "2019-01-10 18:57:52",
+      "updated_at": "2019-01-10 18:57:52",
+      "weight": 200,
+      "hips": 33,
+      "waist": 33,
+      "arm_right": 22,
+      "arm_left": 22,
+      "leg_right": 22,
+      "leg_left": 22,
+      "date": "2019-01-10 18:57:52",
+      "user_id": 1
+    }
+  ],
+  "workouts": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "category_id": 1,
+      "title": "Deadlift Day #1",
+      "exercises": [
+        {
+          "id": 4,
+          "workout_id": 1,
+          "name": "Deadlift",
+          "weight": 315,
+          "sets": 5,
+          "reps": 5
+        },
+        {
+          "id": 5,
+          "workout_id": 1,
+          "name": "Squats",
+          "weight": 275,
+          "sets": 5,
+          "reps": 5
+        },
+        {
+          "id": 6,
+          "workout_id": 1,
+          "name": "Lunges",
+          "weight": 25,
+          "sets": 3,
+          "reps": 24
+        }
+      ],
+      "category": {
+        "id": 1,
+        "name": "Legs",
+        "user_id": 1
+      }
+    }
+  ],
+  "scheduleWorkouts": [
+    {
+      "id": 2,
+      "date": "2019-01-04",
+      "completed": 0,
+      "percentage": 0,
+      "title": "Deadlift Day #1",
+      "category_id": 1,
+      "user_id": 1,
+      "exercises": [
+        {
+          "id": 4,
+          "schedule_workout_id": 2,
+          "name": "Deadlift",
+          "weight": 315,
+          "sets": 5,
+          "reps": 5,
+          "completed": 0
+        },
+        {
+          "id": 5,
+          "schedule_workout_id": 2,
+          "name": "Squats",
+          "weight": 275,
+          "sets": 5,
+          "reps": 5,
+          "completed": 0
+        },
+        {
+          "id": 6,
+          "schedule_workout_id": 2,
+          "name": "Lunges",
+          "weight": 25,
+          "sets": 3,
+          "reps": 24,
+          "completed": 0
+        }
+      ],
+      "category": {
+        "id": 1,
+        "name": "Legs",
+        "user_id": 1
+      }
+    }
+  ]
+}
+```
+POST `/api/user/`
+
+
+Gets the id of the posted user
+
+Response includes an object with the user id 
+
+Response:
+
+```
+[
+  53
+]
+```
+
+DELETE `/api/user/delete/:id`
+
+Deletes the user with given id in req.params
+
+Response includes an object with the deleteduserCount of 1
+
+Response:
+
+```
+{
+  "deleteduserCount": 1
 }
 ```
 
+PUT `/api/user/edit/52`
+
+Edits the user with given id in req.params
+
+Response includes an object with the updateduserCount of 1
+
+Response:
+
+```
+{
+  "updateduserCount": 1
+}
+```
+
+### Metrics Routes
+
+#### Metrics Info
+GET `/api/progress/metrics/all`
+
+Gets all the metrics for all users
+
+Response includes basic metrics objects from metrics table
+
+Response:
+
+```
+[
+  {
+    "id": 0,
+    "created_at": "2019-01-10 17:13:09",
+    "updated_at": "2019-01-10 17:13:09",
+    "weight": 10.079924625003855,
+    "hips": 3.355836598475216,
+    "waist": 8.609838928827488,
+    "arm_right": 6.5808771055066675,
+    "arm_left": 7.311579244382037,
+    "leg_right": 7.546573227382904,
+    "leg_left": 9.951484413530151,
+    "date": "2019-01-10 17:13:09",
+    "user_id": 0
+  },
+  {
+    "id": 1,
+    "created_at": "2019-01-10 17:13:09",
+    "updated_at": "2019-01-10 17:13:09",
+    "weight": 5.948854770374069,
+    "hips": 8.213643664668455,
+    "waist": 1.4806847756526245,
+    "arm_right": 7.022097727831248,
+    "arm_left": 2.635112317202456,
+    "leg_right": 2.611580422143979,
+    "leg_left": 1.8865857463905291,
+    "date": "2019-01-10 17:13:09",
+    "user_id": 1
+  }
+]
+```
+GET `/api/progress/metrics/get/:id`
+
+Gets the metrics of the given user id in req.params
+
+Response includes an object with the user metrics
+
+Response:
+
+```
+[
+  {
+    "id": 1,
+    "created_at": "2019-01-10 17:13:09",
+    "updated_at": "2019-01-10 17:13:09",
+    "weight": 5.948854770374069,
+    "hips": 8.213643664668455,
+    "waist": 1.4806847756526245,
+    "arm_right": 7.022097727831248,
+    "arm_left": 2.635112317202456,
+    "leg_right": 2.611580422143979,
+    "leg_left": 1.8865857463905291,
+    "date": "2019-01-10 17:13:09",
+    "user_id": 1
+  },
+  {
+    "id": 54,
+    "created_at": "2019-01-10 18:57:52",
+    "updated_at": "2019-01-10 18:57:52",
+    "weight": 200,
+    "hips": 33,
+    "waist": 33,
+    "arm_right": 22,
+    "arm_left": 22,
+    "leg_right": 22,
+    "leg_left": 22,
+    "date": "2019-01-10 18:57:52",
+    "user_id": 1
+  }
+]
+```
+
+DELETE `/api/progress/metrics/delete/:id`
+
+Deletes the metric with given metric id in req.params
+
+Response includes an object with the deleteMetricData of 1
+
+Response:
+
+```
+{
+  "deleteMetricData": 1
+}
+```
+
+POST `/api/progress/metrics/create/:id`
+
+Adds a metric for the given user id in req.params
+
+Response includes a metric object with the user id 
+
+Response:
+
+```
+{
+  "weight": 220,
+  "hips": 33,
+  "waist": 33,
+  "arm_right": 22,
+  "arm_left": 22,
+  "leg_right": 22,
+  "leg_left": 22,
+  "user_id": 1
+}
+```
+=======
 Data Structure:
 ```
    user: {
@@ -158,4 +433,3 @@ Data Structure:
         }, 
       ]
     };```
-
