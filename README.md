@@ -328,6 +328,11 @@ Response:
 }
 ```
 
+POST `/api/user/`
+
+Creates a new user by id passed by an id parameter
+
+Response includes basic user object of Users table
 POST `/api/progress/metrics/create/:id`
 
 Adds a metric for the given user id in req.params

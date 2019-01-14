@@ -17,6 +17,8 @@ router.get("/all", async (req, res) => {
   }
 });
 
+
+//Create new category for a specific user
 router.post("/create/:id", async (req, res) => {
     const categoryData = req.body;
     console.log(categoryData)
