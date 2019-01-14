@@ -36,16 +36,18 @@ router.get("/:id", async (req, res) => {
 // Create new set of workouts
 router.post("/:id", async (req, res) => {
   try {
+    //Grab user_id from user table
     const userInfo = await db("users").where("id", "=", req.params.id);
     let userId = userInfo[0].id;
-
+    //Create Object from req.body data and user_id
     const insertObj = {
       title: req.body.title,
       category_id: req.body.category_id,
       user_id: userId
     };
-
+    //Insert Obj into workout table to create the workout ID
     const addWorkout = await db("workouts").insert(insertObj);
+    
     const workout = {
       ...insertObj,
       id: addWorkout[0]
