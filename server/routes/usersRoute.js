@@ -2,6 +2,19 @@ const express = require("express");
 const db = require("../database/dbConfig");
 const router = express.Router();
 
+router.get("/all", async (req, res) => {
+  try {
+    const allUsers = await db("users");
+    console.log("All the users are", allUsers);
+    res.status(200).json(allUsers);
+  } catch (error) {
+    res.status(500).json({
+      "Well this is embarrassing": "Something went wrong",
+      error
+    });
+  }
+});
+
 //Get single User
 router.get("/info/:id", async (req, res) => {
   try {
