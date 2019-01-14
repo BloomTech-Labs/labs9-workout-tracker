@@ -38,43 +38,62 @@ router.post("/:id", async (req, res) => {
   try {
     const userInfo = await db("users").where("id", "=", req.params.id);
     let userId = userInfo[0].id;
-    //Here is the confusion. What needs to be in req.body here? Workouts migration should have exercises 
-    const workoutObj = { title, category_id, exercises } = req.body;
-    console.log("workoutObj:  ", workoutObj)
+
     const insertObj = {
-      ...workoutObj,
-      user_id: userId,
+      title: req.body.title,
+      category_id: req.body.category_id,
+      user_id: userId
     };
-    console.log("insertObj: ", insertObj);
+
     const addWorkout = await db("workouts").insert(insertObj);
-    console.log("addWorkout: ", addWorkout);
+    const workout = {
+      ...insertObj,
+      id: addWorkout[0]
+    };
+
+    console.log("workout: ", workout);
+    const exercisesArr = req.body.exercises;
+    console.log(exercisesArr);
+    for (let exercise of exercisesArr) {
+      const exerciseObj = {
+        ...exercise,
+        workout_id: workout.id
+      };
+      console.log("exerciseObj: ", exerciseObj);
+      const addExercises = await db("exercises").insert(exerciseObj);
+    }
+    const completeExercises = await db("exercises").where(
+      "workout_id",
+      "=",
+      workout.id
+    );
+    insertObj.exercises = completeExercises;
     res.status(201).json(insertObj);
   } catch (error) {
     res.status(500).json({ error });
   }
 });
 
-
 // EDIT set of workouts
 router.put("/edit/:id", async (req, res) => {
-  const workoutObj = { title, category_id, exercises } = req.body;
-  console.log("workoutObj:", workoutObj)
+  const workoutObj = ({ title, category_id, exercises } = req.body);
+  console.log("workoutObj:", workoutObj);
   try {
     const updatedWorkout = await db("workouts")
-    .where("id", "=", req.params.id)
-    .update(workoutObj);
-  {
-    updatedWorkout === 0
-    ? res
-        .status(404)
-        .json({ message: "The workout with the specified ID does not exist." })
-    : res.status(200).json(workoutObj);
-
-  }  
+      .where("id", "=", req.params.id)
+      .update(workoutObj);
+    {
+      updatedWorkout === 0
+        ? res.status(404).json({
+            message: "The workout with the specified ID does not exist."
+          })
+        : res.status(200).json(workoutObj);
+    }
   } catch (error) {
     console.log("the req.params.id is... ", req.params.id);
     console.log("the error is... ", error);
-    res.status(500).json(error);  }
+    res.status(500).json(error);
+  }
 });
 
 module.exports = router;
