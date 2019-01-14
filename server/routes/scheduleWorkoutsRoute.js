@@ -36,4 +36,17 @@ router.get("/:id", async (req, res) => {
   });
 
 
+  //CREATE new SchedWorkout set
+  // Create new set of workouts
+  
+// router.post("/:id", async (req, res) => {
+//     try {
+      
+//       }
+//          catch (error) {
+//       res.status(500).json({ error });
+//     }
+//   });
+
+
 module.exports = router;

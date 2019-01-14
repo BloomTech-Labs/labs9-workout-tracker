@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "test": "jest --watch --verbose"
+    "test": "jest --watch --verbose",
+    "updateCoverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",

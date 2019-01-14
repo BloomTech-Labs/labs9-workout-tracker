@@ -8,6 +8,7 @@ router.get("/info/:id", async (req, res) => {
     const userInfo = await db("users").where("id", "=", req.params.id);
     if (userInfo.length === 0) {
       res.status(404).json({ message: "That user doesnt exist" });
+      return;
     }
     userId = userInfo[0].id;
 
@@ -70,30 +71,6 @@ router.get("/info/:id", async (req, res) => {
     res
       .status(500)
       .json({ error, "Well this is embarrassing": "Something went wrong" });
-  }
-});
-
-//Create new User
-router.post("/", async (req, res) => {
-  const UserData = req.body;
-  console.log(req.body);
-  if (!UserData.name || !UserData.email || !UserData.phone) {
-    res
-      .status(422)
-      .json({ errorMessage: "Please provide a name, email, and phone number" });
-  } else if (!db("users").where("id", "=", req.params.id)) {
-    res.status(405).json({ errorMessage: "Duplicate User Titles Not Allowed" });
-  } else {
-    try {
-      const newUser = await db("users").insert(UserData);
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(500).json({
-        error:
-          "There was an error while saving the user to the database. The error is ",
-        error
-      });
-    }
   }
 });
 
