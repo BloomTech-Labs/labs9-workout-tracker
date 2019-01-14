@@ -16,6 +16,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "faker": "^4.1.0",
+    "firebase-admin": "^6.5.0",
     "helmet": "^3.15.0",
     "knex": "^0.16.3",
     "knex-cleaner": "^1.1.4",
