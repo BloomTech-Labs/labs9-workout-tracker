@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "test": "jest --watch --verbose"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,11 @@
     "sqlite3": "^4.0.4"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
+    "supertest": "^3.3.0"
+  },
+  "jest": {
+    "testEnvirnoment": "node"
   }
 }
