@@ -26,7 +26,7 @@ class App extends Component {
 
   componentDidMount() {
     var config = {
-      apiKey: process.env.REACT_APP_FIREBASE_KEY,
+      apiKey: "AIzaSyAQRB_UBjCXzDmxluLuDiM-VUjEoi9HjnQ",
       authDomain: "fitmetrix-57cce.firebaseapp.com",
       databaseURL: "https://fitmetrix-57cce.firebaseio.com",
       projectId: "fitmetrix-57cce",

@@ -1,18 +1,32 @@
 import React, { useState } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
+import axios from "axios";
 
 const Register = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const registerUser = e => {
     e.preventDefault();
     // Initialize Firebase
-    console.log("email: ", email, "password: ", password);
+    console.log("email: ", email, "password: ", password, "name: ", name);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        res.user
+          .getIdToken()
+          .then(token => {
+            axios.post(
+              "http://localhost:9001/auth/register",
+              { email, name },
+              { headers: { Authorization: token } }
+            );
+          })
+          .catch();
+      })
       .catch(function(error) {
         var errorCode = error.code;
         console.log(errorCode);
@@ -29,6 +43,12 @@ const Register = props => {
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+        />
+        <InputStyle
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={e => setName(e.target.value)}
         />
         <InputStyle
           type="password"

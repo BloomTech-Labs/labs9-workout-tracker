@@ -20,7 +20,7 @@ router.post("/register", async (req, res) => {
   try {
     const userObj = { ...req.body, id: req.id };
     const addUser = await db("users").insert(userObj);
-    res.status(200).json({ message: "Succesfully Registered"});
+    res.status(200).json({ message: "Succesfully Registered" });
   } catch (error) {
     console.log(error);
     res.status(500).json({
