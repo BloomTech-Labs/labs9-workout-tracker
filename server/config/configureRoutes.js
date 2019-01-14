@@ -3,6 +3,7 @@ const userRoute = require("../routes/usersRoute");
 const metricRoute = require("../routes/metricRoute");
 const workoutsRoute = require("../routes/workoutsRoute");
 const categoryRoute = require("../routes/categoriesRoute");
+const authRoute = require("../routes/authRoute");
 
 module.exports = server => {
   server.use("/alive", defaultRoute);
@@ -10,4 +11,5 @@ module.exports = server => {
   server.use("/api/progress", metricRoute);
   server.use("/api/workouts", workoutsRoute);
   server.use("/api/categories", categoryRoute);
+  server.use("/auth", authRoute);
 };
