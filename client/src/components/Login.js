@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Div = styled.div`
   margin: 20px;
@@ -23,20 +23,20 @@ const Button = styled.button`
 
 class SignIn extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
   render() {
     return (
       <Div>
         <FormStyle>
-            <InputStyle type="text" placeholder="Email" name="email" />
-            <InputStyle type="text" placeholder="Password" name="password" />
-          </FormStyle>>
+          <InputStyle type="text" placeholder="Email" name="email" />
+          <InputStyle type="password" placeholder="Password" name="password" />
+        </FormStyle>
         <Button>Sign In</Button>
       </Div>
-    )
+    );
   }
 }
 
-export default SignIn
+export default SignIn;
