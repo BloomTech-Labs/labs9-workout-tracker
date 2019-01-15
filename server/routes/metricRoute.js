@@ -72,7 +72,7 @@ router.delete("/metrics/delete/:id", async (req, res) => {
     {
       deleteMetricData === 0
         ? res.status(404).json({ message: "Those metrics do not exist" })
-        : res.status(200).json({ deleteMetricData })
+        : res.status(200).json({ deleteMetricData });
     }
   } catch (error) {
     res.status(500).json(error, "error message");
@@ -80,4 +80,3 @@ router.delete("/metrics/delete/:id", async (req, res) => {
 });
 
 module.exports = router;
-
