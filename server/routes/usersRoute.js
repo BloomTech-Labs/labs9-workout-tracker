@@ -2,6 +2,8 @@ const express = require("express");
 const db = require("../database/dbConfig");
 const router = express.Router();
 
+
+//Get all users
 router.get("/all", async (req, res) => {
   try {
     const allUsers = await db("users");

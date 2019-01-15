@@ -7,11 +7,12 @@ const ScheduleWorkoutListStyle = styled.div``;
 const ScheduleWorkoutList = (props) => {
     return (
       <ScheduleWorkoutListStyle>
-         {props.scheduleWorkouts.map(scheduleWorkout => {
+         {
+           props.scheduleWorkouts && props.scheduleWorkouts.map(scheduleWorkout => {
            return (
              <ListItem key={scheduleWorkout.id} scheduleWorkout={scheduleWorkout}/>
-           )
-         })} 
+           )})
+         } 
       </ScheduleWorkoutListStyle>
     );
 }

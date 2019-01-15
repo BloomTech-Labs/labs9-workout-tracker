@@ -11,19 +11,21 @@ const WorkoutDetails = (props) => {
     Another choice is to create another component after mapping through schedule workouts, 
     and mapping through the exercises array on that component -wd */}
 
-    {props.scheduleWorkouts.map(scheduleWorkout => {
-    return (
-      <div key={scheduleWorkout.id}>
-        
-        <p>{scheduleWorkout.category.name}</p>
-        {scheduleWorkout.exercises.map(exercise => {
-          return (
-            <p key={exercise.id}>{exercise.name}</p>
-          )
-        })}
-      </div>
-    )
-  })}</WorkoutDetailsStyle>;
+    {
+      props.scheduleWorkouts && props.scheduleWorkouts.map(scheduleWorkout => {
+        return (
+          <div key={scheduleWorkout.id}>
+            
+            <p>{scheduleWorkout.category.name}</p>
+            {
+              scheduleWorkout.exercises && scheduleWorkout.exercises.map(exercise => {
+              return (
+                <p key={exercise.id}>{exercise.name}</p>
+              )
+            })}
+          </div>
+        )})
+    }</WorkoutDetailsStyle>;
 };
 
 const WorkoutDetailsStyle = styled.div``;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
-import axios from 'axios';
+import axios from "axios";
 
 const Login = props => {
   const [email, setEmail] = useState("");
@@ -19,19 +19,28 @@ const Login = props => {
         res.user
           .getIdToken()
           .then(idToken => {
-              console.log(idToken);
-              axios.post('http://localhost:9001/auth/user', {idToken})
-                .then(res => {
-                  console.log(res)
-                })
-                .catch(err => {
-                  console.log(err)
-                });
-            }
-          )
+            console.log(idToken);
+            window.localStorage.setItem("login_token", idToken);
+            axios
+              .post(
+                "http://localhost:9001/auth/login",
+                {},
+                { headers: { Authorization: idToken } }
+              )
+              .then(res => {
+                console.log(res.data);
+                props.dispatch({ type: "userModel", payload: res.data });
+                props.history.push("/schedule");
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
           .catch(err => console.log(err));
       })
-      .catch((error) => {console.log(error.code, error.message)});
+      .catch(error => {
+        console.log(error.code, error.message);
+      });
   };
 
   return (
