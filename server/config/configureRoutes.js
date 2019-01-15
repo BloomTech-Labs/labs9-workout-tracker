@@ -6,6 +6,7 @@ const categoryRoute = require("../routes/categoriesRoute");
 const authRoute = require("../routes/authRoute");
 const categoriesRoute = require("../routes/categoriesRoute");
 const scheduleWorkoutsRoute = require("../routes/scheduleWorkoutsRoute");
+const stripeRoute = require("../routes/stripeRoutes");
 
 const authenticate = require("./authenticate");
 
@@ -18,4 +19,5 @@ module.exports = server => {
   server.use("/api/categories", authenticate, categoryRoute);
   server.use("/api/categories", authenticate, categoriesRoute);
   server.use("/api/schedule", authenticate, scheduleWorkoutsRoute);
+  server.use("/api/settings/payment", stripeRoute);
 };
