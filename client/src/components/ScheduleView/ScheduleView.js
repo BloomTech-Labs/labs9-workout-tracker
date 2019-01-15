@@ -16,6 +16,10 @@ class ScheduleView extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   selectDate() {
     console.log(this)
     console.log(this.state)
@@ -25,6 +29,7 @@ class ScheduleView extends React.Component {
   render() {
     return (
       <ScheduleViewStyle>
+        {this.props.user.email}
         <Calendar dateSelected={this.state.dateSelected} selectDate={this.selectDate}/>
         <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} />
         {

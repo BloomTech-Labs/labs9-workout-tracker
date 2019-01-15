@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { useReducer, useEffect } from "react";
 import { Route } from "react-router-dom";
+
 // import axios from "axios";
 import LandingPage from "./components/LandingPageView/LandingPage";
 import ScheduleView from "./components/ScheduleView/ScheduleView";
@@ -14,90 +15,90 @@ import { theme } from "./StyleTheme";
 import firebase from "firebase";
 import userData from "./mockData";
 
-// const url = `https://labs9-workout-tracker.herokuapp.com/api`;
+const App = props => {
+  const initialState = {
+    user: {}
+  };
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      user: userData
-    };
-  }
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "userModel":
+        return { ...state, user: action.payload };
+      default:
+        // A reducer must always return a valid state.
+        // Alternatively you can throw an error if an invalid action is dispatched.
+        return state;
+    }
+  };
 
-  componentDidMount() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
     var config = {
-      apiKey: process.env.REACT_APP_FIREBASE_KEY,
+      apiKey: "AIzaSyAQRB_UBjCXzDmxluLuDiM-VUjEoi9HjnQ",
       authDomain: "fitmetrix-57cce.firebaseapp.com",
       databaseURL: "https://fitmetrix-57cce.firebaseio.com",
       projectId: "fitmetrix-57cce",
       storageBucket: "fitmetrix-57cce.appspot.com",
       messagingSenderId: "771224902694"
     };
-
     firebase.initializeApp(config);
+  }, []);
 
-    // axios
-    //   .get(`${url}/user/info/1`)
-    //   .then(response => {
-    //     this.setState({ user: response.data });
-    //   })
-    //   .catch(err => {
-    //     return `Message: ${err}`;
-    //   });
-  }
+  return (
+    <ThemeProvider theme={theme}>
+      <div>
+        <Route path="/" render={props => <Navigation {...props} />} />
+        <StyledApp>
+          <Route exact path="/" render={props => <LandingPage {...props} />} />
+          <Route
+            exact
+            path="/login"
+            render={props => <Login {...props} dispatch={dispatch} />}
+          />
+          <Route
+            exact
+            path="/register"
+            render={props => <Register {...props} dispatch={dispatch} />}
+          />
+          <Route
+            exact
+            path="/schedule"
+            render={props => (
+              <ScheduleView
+                {...props}
+                workouts={state.user.workouts}
+                scheduleWorkouts={state.user.scheduleWorkouts}
+                user={state.user}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/progress"
+            render={props => <ProgressView {...props} user={state.user} />}
+          />
 
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <div>
-          <Route path="/" render={props => <Navigation {...props} />} />
-          <StyledApp>
-            <Route exact path="/" component={LandingPage} />
-            <Route
-              exact
-              path="/schedule"
-              render={props => (
-                <ScheduleView
-                  {...props}
-                  workouts={this.state.user.workouts}
-                  scheduleWorkouts={this.state.user.scheduleWorkouts}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/progress"
-              render={props => (
-                <ProgressView {...props} user={this.state.user} />
-              )}
-            />
-
-            <Route
-              exact
-              path="/workouts"
-              render={props => (
-                <WorkoutsView {...props} workouts={this.state.user.workouts} />
-              )}
-            />
-            <Route
-              exact
-              path="/settings"
-              render={props => (
-                <SettingsView {...props} workouts={this.state.user.workouts} />
-              )}
-            />
-            <Route exact path="/login" render={props => <Login {...props} />} />
-            <Route
-              exact
-              path="/register"
-              render={props => <Register {...props} />}
-            />
-          </StyledApp>
-        </div>
-      </ThemeProvider>
-    );
-  }
-}
+          <Route
+            exact
+            path="/workouts"
+            render={props => (
+              <WorkoutsView {...props} workouts={state.user.workouts} />
+            )}
+          />
+          <Route
+            exact
+            path="/settings"
+            render={props => (
+              <SettingsView {...props} workouts={state.user.workouts} />
+            )}
+          />
+        </StyledApp>
+      </div>
+    </ThemeProvider>
+  );
+};
 
 export default App;
 
