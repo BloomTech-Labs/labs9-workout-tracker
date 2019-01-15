@@ -26,12 +26,12 @@ describe('metricAll', () => {
 /////testing metric by id
 ////api/progress/metrics/get/:id
 
-describe('metricById', () => {
-  describe('/api/progress/metrics/get/:id', () => {
-    it ('should return GET metric by id', async () => {
-      const metricId = 1;
-      const res = await request(server).get(`/api/progress/metrics/${metricId}`);
-      expect(res.body).toEqual({ leg_left:8.165567216506876 })
-    } )
-  })
-})
+// describe('metricById', () => {
+//   describe('/api/progress/metrics/get/:id', () => {
+//     it ('should return GET metric by id', async () => {
+//       const metricId = 1;
+//       const res = await request(server).get(`/api/progress/metrics/${metricId}`);
+//       expect(res.body).toEqual({ leg_left:8.165567216506876 })
+//     } )
+//   })
+// })
