@@ -25,6 +25,9 @@ router.get("/:id", async (req, res) => {
     const workoutInfo = await db("workouts").where("user_id", "=", userId);
     //workouts return as an array
     res.status(200).json(workoutInfo);
+    
+    //I believe we need to add the exercises that come with the workout here
+
   } catch (error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",
@@ -76,20 +79,46 @@ router.post("/:id", async (req, res) => {
   }
 });
 
-// EDIT set of workouts
+// EDIT set of workouts --------------------------------------
+
 router.put("/edit/:id", async (req, res) => {
-  const workoutObj = ({ title, category_id, exercises } = req.body);
-  console.log("workoutObj:", workoutObj);
+  //Grab workout ID from req.params.id
+  const workoutID = req.params.id;
   try {
-    const updatedWorkout = await db("workouts")
-      .where("id", "=", req.params.id)
-      .update(workoutObj);
+    //Grab workout that matches ID in order to update it
+    const workoutInfo = await db("workouts").where("id", "=", workoutID)
+    
+    //This should be the workout
+    console.log("workout to edit: ", workoutInfo)
+    
+    //pull the userID off the workout
+    workoutUserID = workoutInfo[0].user_id
+    
+    //Create object from req.body data and user_id
+    const editWorkout = {
+      title: req.body.title,
+      category_id: req.body.category_id,
+      user_id: workoutUserID
+    } 
+    
+    //Update workouts table with new editWorkout object
+    const updatedWorkout = await db('workouts')
+    .where('id', '=', req.params.id)
+    .update(editWorkout)
+
+    const workout = {
+      ...editWorkout, 
+      id: updatedWorkout[0]
+    };
+    console.log("workout: ", workout);
+
+    //Return editworkout object
     {
       updatedWorkout === 0
-        ? res.status(404).json({
-            message: "The workout with the specified ID does not exist."
-          })
-        : res.status(200).json(workoutObj);
+        ? res
+            .status(404)
+            .json({ message: "The workout with the specified ID does not exist." })
+        : res.status(200).json( editWorkout );
     }
   } catch (error) {
     console.log("the req.params.id is... ", req.params.id);
