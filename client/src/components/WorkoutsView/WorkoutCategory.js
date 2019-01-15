@@ -7,7 +7,7 @@ const WorkoutCategoryStyle = styled.div``;
 const WorkoutCategory = props => {
   return (
     <WorkoutCategoryStyle>
-      {props.workoutObj.title}
+      {props.workoutObj && props.workoutObj.title}
       {props.workoutObj !== undefined
         ? props.workoutObj.exercises.map(exerciseObj => {
             console.log(exerciseObj);

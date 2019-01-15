@@ -20,11 +20,30 @@ router.post("/register", async (req, res) => {
   try {
     const userObj = { ...req.body, id: req.id };
     const addUser = await db("users").insert(userObj);
-    res.status(200).json({ message: "Succesfully Registered"});
+    console.log(addUser);
+    res.status(200).json({ message: "Succesfully Registered" });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: "There was an error while authenticating the user",
+      error: "There was an error while registering the user",
+      error
+    });
+  }
+});
+
+//Register user
+router.post("/login", async (req, res) => {
+  try {
+    const id = req.id;
+
+    const userObj = await db("users").where("id", "=", id);
+    console.log(userObj);
+
+    res.status(200).json(userObj[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: "There was an error while loggin in",
       error
     });
   }

@@ -5,11 +5,12 @@ import styled from "styled-components";
 const AddWorkout = (props) => {
   return <AddWorkoutStyle>
     <form>
-      <div>{props.workouts.map(workout => {
-        return (
-          <p key={workout.id}>Add workout {workout.category.name}</p>
-        )
-      })}</div>
+      <div>{
+        props.workouts && props.workouts.map(workout => {
+          return (
+            <p key={workout.id}>Add workout {workout.category.name}</p>
+          )
+        })}</div>
     </form>
     </AddWorkoutStyle>;
 };
