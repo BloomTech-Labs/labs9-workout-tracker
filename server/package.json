@@ -7,7 +7,7 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "test": "jest --watch --verbose",
-    "updateCoverage": "jest --coverage"
+    "test-coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -26,11 +26,12 @@
     "sqlite3": "^4.0.4"
   },
   "devDependencies": {
+    "firebase": "^5.7.3",
     "jest": "^23.6.0",
     "nodemon": "^1.18.9",
     "supertest": "^3.3.0"
   },
   "jest": {
-    "testEnvirnoment": "node"
+    "testEnvironment": "node"
   }
 }
