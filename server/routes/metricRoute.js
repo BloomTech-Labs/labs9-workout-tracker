@@ -15,7 +15,7 @@ router.get("/metrics/all", async (req, res) => {
   }
 });
 
-//GET Metric set
+//GET Metric set by user ID
 router.get("/metrics/get/:id", async (req, res) => {
   try {
     //grab the user ID from the user's DB
@@ -72,12 +72,76 @@ router.delete("/metrics/delete/:id", async (req, res) => {
     {
       deleteMetricData === 0
         ? res.status(404).json({ message: "Those metrics do not exist" })
-        : res.status(200).json({ deleteMetricData })
+        : res.status(200).json({ deleteMetricData });
     }
   } catch (error) {
     res.status(500).json(error, "error message");
   }
 });
 
-module.exports = router;
+//Edit set of metrics by ID
+router.put("/metrics/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    weight,
+    hips,
+    waist,
+    arm_right,
+    arm_left,
+    leg_right,
+    leg_left,
+    date
+  } = req.body;
+  const { user_id } = req.id;
 
+  if (
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .weight ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .hips ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .waist ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .arm_right ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .arm_left ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .leg_right ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .leg_left ||
+    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
+      .date
+  ) {
+    res.status(400).json({
+      errorMessage: "Please provide an input for all metric fields for the user"
+    });
+  }
+
+  try {
+    // console.log("changes are: ", changes);
+    const updateduserCount = await db("metrics")
+      .where("id", "=", req.params.id)
+      .update({
+        weight,
+        hips,
+        waist,
+        arm_right,
+        arm_left,
+        leg_right,
+        leg_left,
+        date
+      });
+
+    {
+      updateduserCount === 0
+        ? res
+            .status(404)
+            .json({ message: "The user with the specified ID does not exist." })
+        : res.status(200).json({ updateduserCount });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+module.exports = router;

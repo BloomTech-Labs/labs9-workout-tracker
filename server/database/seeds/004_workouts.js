@@ -12,7 +12,12 @@
 // }
 
 exports.seed = function(knex, Promise) {
-    return knex('workouts').insert([
-      {id: 0, user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62", category_id: 0, title: "Deadlift Day #1"}
-    ]);
+  return knex("workouts").insert([
+    {
+      id: 0,
+      user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62",
+      category_id: 0,
+      title: "Deadlift Day #1"
+    }
+  ]);
 };

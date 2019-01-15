@@ -28,9 +28,9 @@
 // }
 
 exports.seed = function(knex, Promise) {
-  return knex('exercises').insert([
-    {name: 'Deadlift', workout_id: 0, sets: 5, reps: 5, weight: 315},
-    {name: 'Squats', workout_id: 0, sets: 3, reps: 8, weight: 275},
-    {name: 'Lunges', workout_id: 0, sets: 3, reps: 12, weight: 25}
+  return knex("exercises").insert([
+    { id: 0, name: "Deadlift", workout_id: 0, sets: 5, reps: 5, weight: 315 },
+    { id: 1, name: "Squats", workout_id: 0, sets: 3, reps: 8, weight: 275 },
+    { id: 2, name: "Lunges", workout_id: 0, sets: 3, reps: 12, weight: 25 }
   ]);
 };

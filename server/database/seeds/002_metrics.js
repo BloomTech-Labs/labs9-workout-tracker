@@ -1,6 +1,6 @@
 const metricsArr = [];
 
-const randomMetric = () => (Math.random() * 10) + 1;
+const randomMetric = () => Math.random() * 10 + 1;
 
 // for (let i = 0; i < 49; i++) {
 //   const userMetrics = {
@@ -18,8 +18,7 @@ const randomMetric = () => (Math.random() * 10) + 1;
 // }
 
 exports.seed = function(knex, Promise) {
-
-  return knex('metrics').insert([
+  return knex("metrics").insert([
     {
       id: 0,
       weight: randomMetric(),
@@ -32,5 +31,4 @@ exports.seed = function(knex, Promise) {
       user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62"
     }
   ]);
-
 };
