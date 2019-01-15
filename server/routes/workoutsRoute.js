@@ -7,8 +7,38 @@ router.get("/all", async (req, res) => {
   try {
     const allworkouts = await db
       .select("*")
-      .from("exercises")
-      .leftJoin("workouts", "exercises.workout_id", "workouts.id");
+      .from("workouts")
+      .leftJoin("exercises", "workouts.id", "exercises.workout_id")
+      .reduce((workout, current) => {
+        const { user_id, category_id, title, workout_id } = current;
+
+        workout = {
+          ...workout,
+          user_id,
+          category_id,
+          title,
+          id: workout_id
+        };
+
+        const { name, weight, sets, reps, id } = current;
+
+        const newEx = {
+          name,
+          weight,
+          sets,
+          reps,
+          id,
+          workout_id
+        };
+
+        if (workout.exercises) {
+          workout.exercises.push(newEx);
+        } else {
+          workout.exercises = [newEx];
+        }
+
+        return workout;
+}, {});
 
     res.status(200).json(allworkouts);
     //I believe we need to add the workouts that come with the workout here
