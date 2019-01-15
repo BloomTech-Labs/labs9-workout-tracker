@@ -1,48 +1,40 @@
 import React from "react";
-import styled from "styled-components";
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
 
-const BillingViewStyle = styled.div`
-  width: 100%;
-  max-width: 880px;
-  display: flex;
-`;
+const StripeButton = () => {
+  const publishableKey = "pk_test_UoZqVOHUhJfAEAvXBPJyzYNZ";
+   
+  const onToken = token => {
+    const body = {
+      amount:500,
+      token: token
+  };
+  axios
+      .post("http://localhost:9001/api/settings/payment", body)
+      .then(response => {
+        console.log(response);
+        alert("Payment Success");
+      })
+      .catch(error => {
+        console.log("Payment Error: ", error);
+        alert("Payment Error");
+      });
+  };
 
-const Div = styled.div`
-  margin: 20px;
-  height: auto;
-`;
+  return (
+    <StripeCheckout
+      label="Upgrade" //Component button text
+      name="fitmetrix" //Modal Header
+      description="Upgrade to a premium account today."
+      panelLabel="Upgrade" //Submit button in modal
+      amount={500} //Amount in cents $5.00
+      token={onToken}
+      stripeKey={publishableKey}
+      image="https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" //Pop-in header image
+      billingAddress={false} //asks for less info. Delete to ask for billing address
+    />
+  );
+};
+export default StripeButton;
 
-const FormStyle = styled.form`
-  border: 1px solid black;
-  margin-bottom: 30px;
-`;
-
-const InputStyle = styled.input``;
-
-const Button = styled.button`
-  height: 40px;
-  width: 30%;
-`;
-
-class BillingView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <BillingViewStyle>
-        <Div>
-          <FormStyle>
-            <InputStyle type="text" placeholder="CC#" name="ccnumber" />
-            <InputStyle type="text" placeholder="EXP" name="expiration" />
-            <InputStyle type="text" placeholder="CVV" name="cvv" />
-          </FormStyle>
-          <Button>Buy Now</Button>
-        </Div>
-      </BillingViewStyle>
-    );
-  }
-}
-
-export default BillingView;
