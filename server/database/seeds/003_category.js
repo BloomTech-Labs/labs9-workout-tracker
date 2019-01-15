@@ -10,8 +10,7 @@ const categoryArr = [];
 // }
 
 exports.seed = function(knex, Promise) {
-      return knex('category').insert([
-        {id: 0, name: 'Legs', user_id:"w5iY6dJDISWE17ZbaO72QZWLTi62"}
-      ]);
+  return knex("category").insert([
+    { id: 0, name: "Legs", user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62" }
+  ]);
 };
- 

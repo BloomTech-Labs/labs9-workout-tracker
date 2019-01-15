@@ -1,4 +1,4 @@
-const scheduleWorkoutsArr = []
+const scheduleWorkoutsArr = [];
 
 const getDate = () => {
   const d = new Date();
@@ -6,15 +6,15 @@ const getDate = () => {
   let day = d.getDay();
 
   if (day < 10) {
-    day = '0' + day;
-  }
-  
-  if (month < 10) {
-    month = '0' + month;
+    day = "0" + day;
   }
 
-  return `${d.getFullYear()}-${month}-${day}`
-}
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  return `${d.getFullYear()}-${month}-${day}`;
+};
 
 // for (let i = 0; i < 49; i++) {
 //   const d = new Date();
@@ -24,7 +24,7 @@ const getDate = () => {
 //   if (day < 10) {
 //     day = '0' + day;
 //   }
-  
+
 //   if (month < 10) {
 //     month = '0' + month;
 //   }
@@ -35,13 +35,19 @@ const getDate = () => {
 //     title: 'Deadlift Day #1',
 //     date: dateString,
 //     category_id: 1
-    
+
 //   }
 //   scheduleWorkoutsArr.push(scheduleWorkouts)
 // }
 
 exports.seed = function(knex, Promise) {
-  return knex('schedule_workouts').insert([
-    { user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62", title: "Deadlift Day #1", date: getDate(), category_id: 0 }
+  return knex("schedule_workouts").insert([
+    {
+      id: 0,
+      user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62",
+      title: "Deadlift Day #1",
+      date: getDate(),
+      category_id: 0
+    }
   ]);
 };
