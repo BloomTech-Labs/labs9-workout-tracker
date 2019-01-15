@@ -11,7 +11,7 @@ const StripeButton = () => {
       token: token
   };
   axios
-      .post("http://localhost:9002/api/settings/payment", body)
+      .post("http://localhost:9001/api/settings/payment", body)
       .then(response => {
         console.log(response);
         alert("Payment Success");
@@ -31,7 +31,7 @@ const StripeButton = () => {
       amount={500} //Amount in cents $5.00
       token={onToken}
       stripeKey={publishableKey}
-      // image="https://www.vidhub.co" //Pop-in header image
+      image="https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" //Pop-in header image
       billingAddress={false} //asks for less info. Delete to ask for billing address
     />
   );

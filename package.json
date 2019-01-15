@@ -5,6 +5,8 @@
     "postinstall": "npm install --prefix server && npm install -g knex",
     "heroku-postbuild": "cd server && knex migrate:latest && knex seed:run"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-stripe-checkout": "^2.6.3"
+  },
   "devDependencies": {}
 }
