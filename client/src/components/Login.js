@@ -20,14 +20,17 @@ const Login = props => {
           .getIdToken()
           .then(idToken => {
             console.log(idToken);
+            window.localStorage.setItem("login_token", idToken);
             axios
               .post(
-                "http://localhost:9001/auth/user",
+                "http://localhost:9001/auth/login",
                 {},
                 { headers: { Authorization: idToken } }
               )
               .then(res => {
-                console.log(res);
+                console.log(res.data);
+                props.dispatch({ type: "userModel", payload: res.data });
+                props.history.push("/schedule");
               })
               .catch(err => {
                 console.log(err);

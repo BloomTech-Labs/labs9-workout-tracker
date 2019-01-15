@@ -7,8 +7,8 @@ const ListItem = (props) => {
 };
 
 const ListItemStyle = styled.div`
-border:1px solid pink
-min-height:400px
+  border:1px solid pink;
+  min-height:400px;
 `;
 
 export default ListItem;

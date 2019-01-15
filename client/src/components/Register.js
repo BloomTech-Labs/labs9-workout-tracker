@@ -25,6 +25,7 @@ const Register = props => {
               { headers: { Authorization: token } }
             );
           })
+          .then(props.history.push("/login"))
           .catch();
       })
       .catch(function(error) {
