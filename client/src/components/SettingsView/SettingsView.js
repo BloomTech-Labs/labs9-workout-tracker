@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import StripeButton from './BillingView.js';
 
 const SettingsViewStyle = styled.div`
   width: 100%;
@@ -71,6 +72,7 @@ class SettingsView extends React.Component {
           </LabelStyle>
           <input type="submit" value="Save" />
         </FormStyle>
+        <StripeButton />
       </SettingsViewStyle>
     );
   }
