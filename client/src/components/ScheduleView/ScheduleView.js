@@ -1,7 +1,6 @@
 import React from "react";
 import Calendar from "./Calendar";
 import ScheduleWorkoutList from "./ScheduleWorkout/ScheduleWorkoutList";
-import AddWorkout from "./AddWorkout";
 import WorkoutDetails from "./WorkoutDetails";
 import styled from "styled-components";
 
@@ -30,20 +29,11 @@ class ScheduleView extends React.Component {
     return (
       <ScheduleViewStyle>
         {this.props.user.email}
-        <Calendar dateSelected={this.state.dateSelected} selectDate={this.selectDate}/>
-        <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} />
-        {
-          this.state.dateSelected === true ?
-          <AddWorkout
-            workouts={this.props.workouts}
-            scheduleWorkouts={this.props.scheduleWorkouts}
-          />
-          :
-          null
-        }
+        <Calendar dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.scheduleWorkouts} />
+        {/* <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} />
         <WorkoutDetails
           scheduleWorkouts={this.props.scheduleWorkouts}
-        />
+        /> */}
       </ScheduleViewStyle>
     );
   }
