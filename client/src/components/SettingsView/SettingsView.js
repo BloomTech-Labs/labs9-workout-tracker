@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useReducer, useEffect } from "react";
 import styled from "styled-components";
 import StripeButton from './BillingView.js';
+import axios from "axios";
 
 const SettingsViewStyle = styled.div`
   width: 100%;
@@ -35,10 +36,40 @@ class SettingsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ""
-    };
+      user: {},
+      email: '',
+      phone: '',
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
+      
+componentDidMount() {
+  this.setState({user: this.props.user})
+}
+
+
+handleInputChange = e => {
+  this.setState({ [e.target.name]: e.target.value });
+}; 
+
+handleSaveInfo = e => {
+  e.preventDefault();
+  axios
+.put("http://localhost:9001/api/user/edit", {
+  email: this.state.email,
+  phone: this.state.phone
+})
+.then(response => {
+  this.setState({email: '', phone: ''})
+})
+.catch(err => err)  
+
+}
+
+// const token = window.localStorage.getItem("login_token");
+
   render() {
+
     return (
       <SettingsViewStyle>
         <FormStyle>
@@ -48,34 +79,30 @@ class SettingsView extends React.Component {
               <InputStyle
                 type="text"
                 name="email"
+                value={this.state.email}
                 placeholder="user@example.com"
-              />
+                onChange={this.handleInputChange}
+                />
             </LabelDivStyle>
             <LabelDivStyle>
               <p>Phone:</p>
-              <InputStyle type="text" name="phone" />
+              <InputStyle type="text" name="phone" value={this.state.phone} onChange={this.handleInputChange}  />
             </LabelDivStyle>
             <LabelDivStyle>
-              <input type="checkbox" />
+              <input type="checkbox" name="email_box" value={this.props.recieves_email} />
               <p>Emails?</p>
-              <input type="checkbox" />
+              <input type="checkbox" name="text_box" value={this.props.recieves_text} />
               <p>Texts?</p>
-            </LabelDivStyle>
-            <LabelDivStyle>
-              <p>Old Password:</p>
-              <InputStyle type="password" name="oldpassword" />
-            </LabelDivStyle>
-            <LabelDivStyle>
-              <p>New Password:</p>
-              <InputStyle type="password" name="newpassword" />
-            </LabelDivStyle>
+            </LabelDivStyle>           
           </LabelStyle>
-          <input type="submit" value="Save" />
+          <button  value="Save" onClick={this.handleSaveInfo}>Submit</button>
         </FormStyle>
         <StripeButton />
       </SettingsViewStyle>
     );
   }
 }
-
-export default SettingsView;
+  
+  
+  
+  export default SettingsView;
