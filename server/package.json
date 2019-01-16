@@ -23,7 +23,8 @@
     "knex-cleaner": "^1.1.4",
     "morgan": "^1.9.1",
     "pg": "^7.7.1",
-    "sqlite3": "^4.0.4"
+    "sqlite3": "^4.0.4",
+    "stripe": "^6.20.0"
   },
   "devDependencies": {
     "firebase": "^5.7.3",

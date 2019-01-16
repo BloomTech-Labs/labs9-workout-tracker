@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
     tbl.boolean("recieves_text").defaultTo(false);
     tbl.boolean("recieves_email").defaultTo(false);
     tbl.timestamps(true, true);
+    tbl.boolean("premium").defaultTo(false);
   });
 };
 

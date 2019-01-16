@@ -148,7 +148,7 @@ router.delete("/delete/:id", async (req, res) => {
       .delete(catId);
 
     //Return success message
-    res.send(200, "Category has been deleted");
+    res.send(200).json({ message: "Category has been deleted" });
   } catch (error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",

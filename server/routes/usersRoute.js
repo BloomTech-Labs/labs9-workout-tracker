@@ -2,7 +2,6 @@ const express = require("express");
 const db = require("../database/dbConfig");
 const router = express.Router();
 
-
 //Get all users
 router.get("/all", async (req, res) => {
   try {
@@ -18,15 +17,80 @@ router.get("/all", async (req, res) => {
 });
 
 //Get single User
-router.get("/info/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const userInfo = await db("users").where("id", "=", req.params.id);
-    if (userInfo.length === 0) {
-      res.status(404).json({ message: "That user doesnt exist" });
-      return;
-    }
-    userId = userInfo[0].id;
+    //Sets a userID from the userInfo & then finds that user's metrics and workouts with that userID
 
+    // const user = db('users')
+    // .join('workouts as w','w.id', 'workouts.user_id',)
+    // .join('metrics as m', 'm.user_id', 'metrics.user_id')
+    // .join('exercises as e', 'e.workout_id', 'workout.id')
+    // .select('u.name', 'workouts.title', 'metrics.weight')
+    // .then(user => {
+    //            user.map((user) => {
+    //            console.log(user);
+    //            })
+    // //        })
+    // res.status(200).json(user);
+    //   } catch (error) {
+    //     res
+    //       .status(500)
+    //       .json({ error, "Well this is embarrassing": "Something went wrong" });
+    //   }
+    // });
+
+    // .then(user => {
+    //            user.map((user) => {
+    //            console.log(user.name);
+    //            })
+
+    //     var knex = require('./db')
+    //      knex('follow')
+    //      .join('users as u1', 'u1.id', 'follow.follower')
+    //      join('users as u2', 'u2.id', 'follow.followee')
+    //      .select('u1.username as follower_name', 'u2.username as followee_name')
+    //      .then(user => {
+    //          follows.map((follow) => {
+    //          console.log(follow.follower_name + " -> " + follow.followee_name);
+    //          })
+    //      })
+
+    // const user = await db
+    //   .select("*")
+    //   .from("users")
+    //   .leftJoin("metrics", "users.id", "metrics.user_id")
+    //   .leftJoin("workouts", "users.id", "workouts.user_id")
+    //   .leftJoin("exercises", "workouts.id", "exercises.workout_id");
+    // .whereIn(["metrics.user_id","users.user_id"], [[userId, userId]])
+
+    // .leftJoin("exercises", "workouts.id", "exercises.workout_id")
+
+    // .innerJoin('workouts', 'user.id', 'workouts.user_id');
+    // userObj = {
+    //   ...userInfo[0],
+    //   metrics: [...metrics],
+    //   workouts: workoutsArray,
+    //   scheduleWorkouts: sWorkoutsArray
+    // };
+    //     res.status(200).json(user);
+    //   } catch (error) {
+    //     res
+    //       .status(500)
+    //       .json({ error, "Well this is embarrassing": "Something went wrong" });
+    //   }
+    // });
+    // reduce((user, current) => {
+
+    //   const user = {...current};
+
+    //   const newWorkout
+    //   if(user.workouts) {
+    //     user.workouts = [current]
+    //   }
+
+    // }, {})
+
+    const userId = req.id;
     const metrics = await db("metrics").where("user_id", "=", userId);
 
     const workouts = await db("workouts").where("user_id", "=", userId);
