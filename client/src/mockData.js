@@ -74,12 +74,49 @@ export default {
         name: "Legs",
         user_id: 0
       }
+    },
+    {
+      id: 1,
+      user_id: 0,
+      category_id: 0,
+      title: "Deadlift Day #2",
+      exercises: [
+        {
+          id: 4,
+          workout_id: 0,
+          name: "Deadlift1",
+          weight: 315,
+          sets: 5,
+          reps: 5
+        },
+        {
+          id: 5,
+          workout_id: 0,
+          name: "Squats",
+          weight: 275,
+          sets: 5,
+          reps: 5
+        },
+        {
+          id: 6,
+          workout_id: 0,
+          name: "Lunges",
+          weight: 25,
+          sets: 3,
+          reps: 24
+        }
+      ],
+      category: {
+        id: 1,
+        name: "Legs",
+        user_id: 0
+      }
     }
   ],
   scheduleWorkouts: [
     {
       id: 1,
-      date: "2019-01-03",
+      date: "2019-01-19",
       completed: 0,
       percentage: 0,
       title: "Deadlift Day #1",
@@ -118,6 +155,49 @@ export default {
         id: 1,
         name: "Legs",
         user_id: 1
+      }
+    },
+    {
+      id: 2,
+      date: "2019-01-20",
+      completed: 0,
+      percentage: 0,
+      title: "Deadlift Day #3",
+      category_id: 2,
+      user_id: 0,
+      exercises: [
+        {
+          id: 7,
+          schedule_workout_id: 2,
+          name: "Deadlift",
+          weight: 315,
+          sets: 5,
+          reps: 5,
+          completed: 0
+        },
+        {
+          id: 8,
+          schedule_workout_id: 2,
+          name: "Squats",
+          weight: 275,
+          sets: 5,
+          reps: 5,
+          completed: 0
+        },
+        {
+          id: 9,
+          schedule_workout_id: 2,
+          name: "Lunges",
+          weight: 25,
+          sets: 3,
+          reps: 24,
+          completed: 0
+        }
+      ],
+      category: {
+        id: 2,
+        name: "Legs",
+        user_id: 0
       }
     }
   ]
