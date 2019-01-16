@@ -38,7 +38,7 @@ router.get("/all", async (req, res) => {
         }
 
         return workout;
-}, {});
+      }, {});
 
     res.status(200).json(allworkouts);
   } catch (error) {
@@ -143,7 +143,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// EDIT set of workouts 
+// EDIT set of workouts
 router.put("/edit/:id", async (req, res) => {
   //Grab workout ID from req.params.id
   const workoutID = req.params.id;

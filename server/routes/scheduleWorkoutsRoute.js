@@ -50,7 +50,7 @@ router.get("/", async (req, res) => {
 // Create new Scheduled Workout
 router.post("/create/:id", async (req, res) => {
   const { body } = req;
-  const id = req.params.id
+  const id = req.params.id;
 
   if (!body.date) {
     res.status(401).json({ message: "workout date string required" });

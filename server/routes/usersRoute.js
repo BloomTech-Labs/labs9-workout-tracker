@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
     //          console.log(follow.follower_name + " -> " + follow.followee_name);
     //          })
     //      })
-        
+
     // const user = await db
     //   .select("*")
     //   .from("users")
@@ -88,9 +88,8 @@ router.get("/", async (req, res) => {
     //     user.workouts = [current]
     //   }
 
-
     // }, {})
-  
+
     const userId = req.id;
     const metrics = await db("metrics").where("user_id", "=", userId);
 
