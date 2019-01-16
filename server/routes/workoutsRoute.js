@@ -188,4 +188,36 @@ router.put("/edit/:id", async (req, res) => {
   }
 });
 
+//Edit Exercise
+router.put("/edit/exercise", async (req, res) => {
+  const { body } = req;
+
+  // checks if proper id is passed
+  if (!Number.isInteger(body.id)) {
+    res.status(400).json({ message: "id is required" });
+    return;
+  }
+
+  //checks if the request body has all required fields for an exercise  
+  const { name, reps, sets, id } = body;
+  if (!name && !reps && sets) {
+    res.status(400).json({ message: "nothing to update" });
+    return;
+  }
+
+  //Removes the ID from the scheduled exercise insertObj
+  const insertObj = { ...body };
+  delete insertObj.id;
+
+  //Finds the scheduled exercise to update and updates that exercise with the insertObj
+  const updatedExercise = await db("exercises")
+    .whereIn(["id"], [[id]])
+    .update(insertObj);
+
+  //Gets the updated exercies that we send back as the response
+  const newEx = await db("exercises").where("id", "=", id);
+
+  res.status(200).json(newEx[0]);
+});
+
 module.exports = router;

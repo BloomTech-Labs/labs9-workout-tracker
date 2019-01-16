@@ -91,6 +91,10 @@ router.get("/", async (req, res) => {
     // }, {})
 
     const userId = req.id;
+
+
+    const userInfo = await db("users").where("id", "=", userId);
+
     const metrics = await db("metrics").where("user_id", "=", userId);
 
     const workouts = await db("workouts").where("user_id", "=", userId);
@@ -119,6 +123,7 @@ router.get("/", async (req, res) => {
       "=",
       userId
     );
+
     let sWorkoutsArray = [];
     for (const workout of sWorkouts) {
       const exercises = await db("schedule_exercises").where(
@@ -145,6 +150,7 @@ router.get("/", async (req, res) => {
       workouts: workoutsArray,
       scheduleWorkouts: sWorkoutsArray
     };
+
     res.status(200).json(userObj);
   } catch (error) {
     res
@@ -177,36 +183,35 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 //Edit User
-router.put("/edit/:id", async (req, res) => {
-  const { name, email, phone } = req.body;
-  const { id } = req.params;
+router.put("/edit", async (req, res) => {
+  const { name, email, phone, recieves_text, recieves_email } = req.body;
 
-  if (
-    !{ name, email, phone }.name ||
-    !{ name, email, phone }.email ||
-    !{ name, email, phone }.phone
-  ) {
+  if (!name && !email && !phone && !recieves_text && !recieves_email) {
     res
       .status(400)
-      .json({ errorMessage: "Please provide a name/email/phone for the user" });
+      .json({ errorMessage: "Please provide a name, email, phone for the user" });
+      return
   }
 
   try {
-    console.log("id is: ", id);
-    // console.log("changes are: ", changes);
-    const updateduserCount = await db("users")
-      .where("id", "=", req.params.id)
-      .update({ email, phone, name });
 
-    {
-      updateduserCount === 0
-        ? res
-            .status(404)
-            .json({ message: "The user with the specified ID does not exist." })
-        : res.status(200).json({ updateduserCount });
+    const updateduserCount = await db("users")
+      .where("id", "=", req.id)
+      .update(req.body);
+
+    if (updateduserCount === 0) {
+      res
+        .status(404)
+        .json({ message: "The user with the specified ID does not exist." })
+        return
     }
+
+    const updateUser = await db('users').where('id', '=', req.id)
+
+    res.status(200).json(updateUser[0]);
+
   } catch (error) {
-    console.log("the req.params.id is... ", req.params.id);
+    console.log("the req.params.id is... ", req.id);
     console.log("the error is... ", error);
     res.status(500).json(error);
   }

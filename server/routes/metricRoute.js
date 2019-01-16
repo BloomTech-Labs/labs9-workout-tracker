@@ -16,11 +16,9 @@ router.get("/metrics/all", async (req, res) => {
 });
 
 //GET Metric set by user ID
-router.get("/metrics/get/:id", async (req, res) => {
+router.get("/metrics/get", async (req, res) => {
   try {
-    //grab the user ID from the user's DB
-    const userInfo = await db("users").where("id", "=", req.params.id);
-    userId = userInfo[0].id;
+    const userId = req.id;
     //use that user ID to pull the metrics associated with the user
     const metricInfo = await db("metrics").where("user_id", "=", userId);
     //metrics return as an array
@@ -34,10 +32,9 @@ router.get("/metrics/get/:id", async (req, res) => {
 });
 
 //Create new set of metrics
-router.post("/metrics/create/:id", async (req, res) => {
+router.post("/metrics/create", async (req, res) => {
   try {
-    const userInfo = await db("users").where("id", "=", req.params.id);
-    let userId = userInfo[0].id;
+    let userId = req.id;
     console.log(userInfo);
     const metricObj = ({
       weight,
