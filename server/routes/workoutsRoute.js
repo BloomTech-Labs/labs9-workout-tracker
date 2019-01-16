@@ -41,7 +41,6 @@ router.get("/all", async (req, res) => {
 }, {});
 
     res.status(200).json(allworkouts);
-    //I believe we need to add the workouts that come with the workout here
   } catch (error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",
@@ -103,11 +102,10 @@ router.get("/", async (req, res) => {
 });
 
 // Create new set of workouts for a given user ID
-router.post("/:id", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     //Grab user_id from user table
-    const userInfo = await db("users").where("id", "=", req.params.id);
-    let userId = userInfo[0].id;
+    let userId = req.id;
     //Create Object from req.body data and user_id
     const insertObj = {
       title: req.body.title,
@@ -145,8 +143,7 @@ router.post("/:id", async (req, res) => {
   }
 });
 
-// EDIT set of workouts --------------------------------------
-
+// EDIT set of workouts 
 router.put("/edit/:id", async (req, res) => {
   //Grab workout ID from req.params.id
   const workoutID = req.params.id;
@@ -187,8 +184,6 @@ router.put("/edit/:id", async (req, res) => {
         : res.status(200).json(editWorkout);
     }
   } catch (error) {
-    console.log("the req.params.id is... ", req.params.id);
-    console.log("the error is... ", error);
     res.status(500).json(error);
   }
 });
