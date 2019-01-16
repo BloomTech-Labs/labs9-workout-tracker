@@ -12,40 +12,64 @@ beforeAll(async done => {
 });
 
 describe("userRoute", () => {
-  describe("/api/user/info/:id", () => {
-    const id = "w5iY6dJDISWE17ZbaO72QZWLTi62";
 
+  describe("/api/user/all", () => {
     it("should return status code 200 OK", async () => {
       const expected = 200;
       const res = await request(server)
-        .get(`/api/user/info/${id}`)
+        .get(`/api/user/all`)
+        .set(headers);
+      expect(res.status).toEqual(expected);
+    });
+  });
+
+  describe("/api/user/", () => {
+    it("should return status code 200 OK", async () => {
+      const expected = 200;
+      const res = await request(server)
+        .get(`/api/user`)
         .set(headers);
       expect(res.status).toEqual(expected);
     });
 
     it("should return JSON", async () => {
       const res = await request(server)
-        .get(`/api/user/info/${id}`)
+        .get(`/api/user`)
         .set(headers);
       expect(res.type).toEqual("application/json");
     });
 
-    it("should return 404 when no user", async () => {
-      const noID = 1500;
-      const expected = 404;
+    it("should return 401 when no user", async () => {
+      const expected = 401;
       const res = await request(server)
-        .get(`/api/user/info/${noID}`)
+        .get(`/api/user`)
+      expect(res.status).toEqual(expected);
+    });
+  });
+
+  describe("/api/user/edit", () => {
+    it("should return status code 200 OK", async () => {
+      const expected = 200;
+      const res = await request(server)
+        .put(`/api/user/edit`)
+        .send({ name :"New Test Name" })
         .set(headers);
       expect(res.status).toEqual(expected);
     });
 
-    it("should return no user message when no user", async () => {
-      const noID = 1500;
-      const expected = { message: "That user doesnt exist" };
+    it("should return status code 400 when no data is passed", async () => {
+      const expected = 400;
       const res = await request(server)
-        .get(`/api/user/info/${noID}`)
+        .put(`/api/user/edit`)
         .set(headers);
-      expect(res.body).toEqual(expected);
+      expect(res.status).toEqual(expected);
+    });
+
+    it("should return status code 401 when no token is passed", async () => {
+      const expected = 401;
+      const res = await request(server)
+        .put(`/api/user/edit`)
+      expect(res.status).toEqual(expected);
     });
   });
 });

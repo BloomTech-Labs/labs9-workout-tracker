@@ -17,7 +17,7 @@ router.get("/all", async (req, res) => {
 });
 
 //Create new category for a specific user
-router.post("/create/:id", async (req, res) => {
+router.post("/create", async (req, res) => {
   const categoryData = req.body;
   console.log(categoryData);
   if (!categoryData.name) {
@@ -26,7 +26,7 @@ router.post("/create/:id", async (req, res) => {
       .json({ errorMessage: "Please provide a name for category" });
   } else {
     try {
-      const userInfo = await db("users").where("id", "=", req.params.id);
+      const userInfo = await db("users").where("id", "=", req.id);
       let userId = userInfo[0].id;
       const name = req.body;
       const insertObj = {
@@ -46,12 +46,9 @@ router.post("/create/:id", async (req, res) => {
 });
 
 //GET category by user id
-router.get("/getbyuser/:id", async (req, res) => {
+router.get("/user", async (req, res) => {
   try {
-    //grab the user ID from the user's DB
-    const userInfo = await db("users").where("id", "=", req.params.id);
-    console.log("userinfo", userInfo);
-    userId = userInfo[0].id;
+    userId = req.id;
     console.log("cat by userID: ", userId);
     //use that user ID to pull the categories associated with the user
     const categoryInfo = await db("category").where("user_id", "=", userId);

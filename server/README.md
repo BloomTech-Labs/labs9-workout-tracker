@@ -18,29 +18,31 @@
 ## Enviroment Variables
 `DATABASE_URL`: Databse URI for postgress database
 `DB_ENGINE`: Databse engine to use 'production' for deployment
+`FIREBASE_CLIENT_EMAIL`: Firebase client email necessary to initialize firebase app
+`FIREBASE_PRIVATE_KEY`: Firebase private key necessary to initialize firebase app
 
 ## API Documentation
 
 ### EndPoints
-#### User Route Endpoints:
-- GET `/api/user/all`
-- GET `/api/user/info/:id`
-- PUT `/api/user/edit/:id`
-- DELETE `/api/user/delete/:id`
+#### [User Route Endpoints](#user-routes)
+- [GET `/api/user/all`](#get-all-users)
+- [GET `/api/user/info`](#get-user-details)
+- [PUT `/api/user/edit`](#edit-user-details)
+- [DELETE `/api/user/delete`](#delete-user)
 
-#### Metrics Route Endpoints:
-- GET `/api/progress/metrics/all`
-- GET `/api/progress/metrics/get/:id`
-- POST `/api/progress/metrics/create/:id`
-- PUT `/api/progress/metrics/edit/:id`
+#### [Metrics Route Endpoints](#metrics-routes)
+- [GET `/api/progress/metrics/all`](#get-all-metrics)
+- [GET `/api/progress/metrics/get`](#get-metrics-info)
+- [POST `/api/progress/metrics/create`](#create-metrics-info)
+- [PUT `/api/progress/metrics/edit`](#edit-metrics-info)
 - DELETE `/api/progress/metrics/delete/:id`
 
-#### Category Route Endpoints:
-- GET `/api/category/all`
-- GET `/api/category/getbyuser/:id`
-- POST `/api/category/create/:id`
-- PUT `/api/category/edit/:id`
-- DELETE `/api/category/delete/:id`
+#### [Category Route Endpoints](#category-routes)
+- [GET `/api/category/all`](#get-all-categories)
+- [GET `/api/category/getbyuser/:id`](#get-category-info)
+- [POST `/api/category/create/:id`](#create-category)
+- [PUT `/api/category/edit/:id`](#edit-category)
+- [DELETE `/api/category/delete/:id`](#delete-category)
 
 #### Workouts Route Endpoints:
 - GET `/api/workouts/all`
@@ -48,16 +50,17 @@
 - POST `/api/workouts/`
 - PUT `/api/workouts/edit/:id`
 
-#### Schedule Workouts Route Endpoints:
-- GET `/api/schedule/all`
-- GET `/api/schedule/`
-- POST `/api/schedule/create/:id`
-- PUT `/api/schedule/edit/workout`
+#### [Schedule Workouts Route Endpoints](#scheduledWorkouts-routes)
+- [GET `/api/schedule/all`](#get-all-schedule-workouts)
+- [GET `/api/schedule/`](#get-schedule-workout)
+- [POST `/api/schedule/create/:id`](#create-schedule-workout)
+- [PUT `/api/schedule/edit/workout/:id`](#edit-schedule-workout)
+- [PUT `/api/schedule/edit/excercise/:id`](#edit-schedule-workout-exercise)
 
 
 ### User Routes
 
-#### User Info
+#### Get All Users
 
 GET `/api/user/all`
 - Gets a list of all users (testing purposes)
@@ -69,7 +72,9 @@ users : [
 ] 
 ```
 
-GET `/api/user/info/:id`
+#### Get User Details
+
+GET `/api/user`
 - Gets all the info of a single user with given id in req.params.
 - Response is basic user object of Users table with all associated data.
 
@@ -109,7 +114,9 @@ Response:
 }
 ```
 
-PUT `/api/user/edit/52`
+#### Edit User Details
+
+PUT `/api/user/edit`
 
 - Edits the user with given id in req.params
 - Response includes an object with the updateduserCount of 1
@@ -122,7 +129,9 @@ Response:
 }
 ```
 
-DELETE `/api/user/delete/:id`
+#### Delete User
+
+DELETE `/api/user/delete`
 
 - Deletes the user with given id in req.params
 - Response includes an object with the deleteduserCount of 1
@@ -138,7 +147,7 @@ Response:
 
 ### Metrics Routes
 
-#### Metrics Info
+#### Get All Metrics
 
 GET `/api/progress/metrics/all`
 
@@ -179,7 +188,9 @@ Response:
   }
 ]
 ```
-GET `/api/progress/metrics/get/:id`
+#### Get Metrics Info
+
+GET `/api/progress/metrics/get/`
 
 - Gets the metrics of the given user id in req.params
 - Response is an array of all metrics objects that match the user ID
@@ -218,7 +229,10 @@ Response:
   }
 ]
 ```
-POST `/api/progress/metrics/create/:id`
+
+#### Create Metrics Info
+
+POST `/api/progress/metrics/create`
 
 - Creates a metric object for the given user id in req.params
 - Response is the created metric object
@@ -237,7 +251,10 @@ Response:
   "user_id": 1
 }
 ```
-PUT `/api/progress/metrics/edit/:id`
+
+#### Edit Metrics Info
+
+PUT `/api/progress/metrics/edit`
 
 - Edits the metric with the given metric id in req.params
 - Response is an object with updated user count of 1
@@ -264,7 +281,7 @@ Response:
 
 ### Category Routes
 
-#### Category Info
+#### Get All Categories
 
 GET `/api/category/all`
 
@@ -283,6 +300,8 @@ Response:
 ]
 ```
 
+#### Get Category Info
+
 GET `/api/category/getbyuser/:id`
 
 - gets category by user id given by req.params
@@ -300,6 +319,8 @@ Response:
 ]
 ```
 
+#### Create Category
+
 POST `/api/category/create/:id`
 
 - Creates a new category for a specifc user id given by req.params
@@ -313,6 +334,8 @@ Response:
     "user_id": "w5iY6dJDISWE17ZbaO72QZWLTi62"
 }
 ```
+
+#### Edit Category
 
 PUT `/api/category/edit/:id`
 
@@ -330,6 +353,8 @@ Response:
 
 ```
 
+#### Delete Category
+
 DELETE `/api/category/delete/:id`
 
 - Deletes a certain category by category id given by req.params
@@ -344,7 +369,7 @@ Category has been deleted
 
 ### ScheduledWorkouts Routes
 
-#### ScheduledWorkouts Info
+#### Get All Schedule Workouts
 
 GET `/api/schedule/all`
 
@@ -364,6 +389,8 @@ GET `/api/schedule/all`
   }
 ]
 ```
+
+#### Get Schedule Workouts
 
 GET `/api/schedule/`
 
@@ -413,6 +440,8 @@ Response:
 }
 ```
 
+#### Create Schedule Workout
+
 POST `/api/schedule/create/:id`
 
 - Creates a new scheduled workout
@@ -431,22 +460,8 @@ POST `/api/schedule/create/:id`
 }
 ```
 
-PUT `/api/schedule/edit/exercise`
 
-- Edits the scheduled exercise 
-- Response is the newly-edited scheduled exercise
-
-```
-{
-  "id": 1,
-  "schedule_workout_id": 0,
-  "name": "Stand still for a while",
-  "weight": 275,
-  "sets": 3,
-  "reps": 8,
-  "completed": 0
-}
- ```
+#### Edit Schedule Workout
 
 Put `/api/schedule/edit/workout`
 
@@ -464,4 +479,23 @@ Put `/api/schedule/edit/workout`
   "user_id": "w5iY6dJDISWE17ZbaO72QZWLTi62"
 }
 ```
+
+#### Edit Schedule Workout Exercise
+
+PUT `/api/schedule/edit/exercise`
+
+- Edits the scheduled exercise 
+- Response is the newly-edited scheduled exercise
+
+```
+{
+  "id": 1,
+  "schedule_workout_id": 0,
+  "name": "Stand still for a while",
+  "weight": 275,
+  "sets": 3,
+  "reps": 8,
+  "completed": 0
+}
+ ```
 
