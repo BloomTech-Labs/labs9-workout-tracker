@@ -71,6 +71,7 @@ const App = props => {
                 workouts={state.user.workouts}
                 scheduleWorkouts={state.user.scheduleWorkouts}
                 user={state.user}
+                dispatch={dispatch}
               />
             )}
           />
