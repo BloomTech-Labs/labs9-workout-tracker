@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import { Route } from "react-router-dom";
+import axios from "axios";
 
 // import axios from "axios";
 import LandingPage from "./components/LandingPageView/LandingPage";
@@ -17,7 +18,7 @@ import userData from "./mockData";
 
 const App = props => {
   const initialState = {
-    user: {}
+    user: userData
   };
 
   const reducer = (state, action) => {
@@ -44,6 +45,24 @@ const App = props => {
       messagingSenderId: "771224902694"
     };
     firebase.initializeApp(config);
+
+    // const token = window.localStorage.getItem("login_token");
+
+    // if (token !== undefined) {
+    //   axios
+    //     .post(
+    //       "http://localhost:9001/auth/login",
+    //       {},
+    //       { headers: { Authorization: token } }
+    //     )
+    //     .then(res => {
+    //       console.log(res.data);
+    //       dispatch({ type: "userModel", payload: res.data });
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // }
   }, []);
 
   return (
