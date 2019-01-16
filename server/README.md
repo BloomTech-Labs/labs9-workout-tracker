@@ -1,4 +1,15 @@
-# Backend
+# fitmetrix 
+#### fitmetrix.herokuapp.com
+
+# Back-End
+
+#### Dependencies
+- cors
+- express
+- faker
+- helmet
+- knex
+- morgan
 
 ## Scripts
 `npm run start`: Runs server once using node index.js
@@ -11,44 +22,37 @@
 ## API Documentation
 
 ### EndPoints
-User Route Endpoints:
+#### User Route Endpoints:
 - GET `/api/user/all`
 - GET `/api/user/info/:id`
 - PUT `/api/user/edit/:id`
 - DELETE `/api/user/delete/:id`
 
-Metrics Route Endpoints:
+#### Metrics Route Endpoints:
 - GET `/api/progress/metrics/all`
 - GET `/api/progress/metrics/get/:id`
 - POST `/api/progress/metrics/create/:id`
 - PUT `/api/progress/metrics/edit/:id`
 - DELETE `/api/progress/metrics/delete/:id`
 
-Category Route Endpoints:
+#### Category Route Endpoints:
 - GET `/api/category/all`
 - GET `/api/category/getbyuser/:id`
 - POST `/api/category/create/:id`
 - PUT `/api/category/edit/:id`
 - DELETE `/api/category/delete/:id`
 
-Workouts Route Endpoints:
+#### Workouts Route Endpoints:
 - GET `/api/workouts/all`
 - GET `/api/workouts/`
 - POST `/api/workouts/`
 - PUT `/api/workouts/edit/:id`
 
-Schedule Workouts Route Endpoints:
+#### Schedule Workouts Route Endpoints:
 - GET `/api/schedule/all`
 - GET `/api/schedule/`
 - POST `/api/schedule/create/:id`
 - PUT `/api/schedule/edit/workout`
-
-
-
-
-
-
-
 
 
 ### User Routes
@@ -67,7 +71,7 @@ users : [
 
 GET `/api/user/info/:id`
 - Gets all the info of a single user with given id in req.params.
-- Response includes basic user object of Users table.
+- Response is basic user object of Users table with all associated data.
 
 Response:
 
@@ -338,7 +342,6 @@ Category has been deleted
 ```
 
 
-
 ### ScheduledWorkouts Routes
 
 #### ScheduledWorkouts Info
@@ -346,7 +349,7 @@ Category has been deleted
 GET `/api/schedule/all`
 
 - Retrieves all schedule workouts 
-- 
+- Response is an array  of scheduled workout objects. 
  Response: 
 ```
 [
@@ -365,8 +368,8 @@ GET `/api/schedule/all`
 GET `/api/schedule/`
 
 - Returns workouts associated with user
-- Returns the scheduled workout and the exercises assigned to it
-- Returns scheduled exercises for the corresponding scheduled workout
+- Response is the scheduled workout and the exercises assigned to it
+- Also returns scheduled exercises for the corresponding scheduled workout
 
 Response: 
 ```
@@ -412,7 +415,8 @@ Response:
 
 POST `/api/schedule/create/:id`
 
--Creates a new scheduled workout
+- Creates a new scheduled workout
+- Response is the newly created scheduled workout
 
 ```
 {
@@ -429,7 +433,8 @@ POST `/api/schedule/create/:id`
 
 PUT `/api/schedule/edit/exercise`
 
--Edit scheduled exercises
+- Edits the scheduled exercise 
+- Response is the newly-edited scheduled exercise
 
 ```
 {
@@ -445,7 +450,8 @@ PUT `/api/schedule/edit/exercise`
 
 Put `/api/schedule/edit/workout`
 
--Edit scheduled workout
+- Edits the selected scheduled workout
+- Response is the newly edited schedules workout
 
 ``` 
 {
