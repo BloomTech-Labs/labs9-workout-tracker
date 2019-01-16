@@ -79,8 +79,6 @@ router.delete("/metrics/delete/:id", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 //Edit set of metrics by ID
 router.put("/metrics/edit/:id", async (req, res) => {
   const { id } = req.params;
@@ -146,5 +144,4 @@ router.put("/metrics/edit/:id", async (req, res) => {
   }
 });
 
->>>>>>> 0560863727e5cd03606610a77ac760d05e61e49e
 module.exports = router;
