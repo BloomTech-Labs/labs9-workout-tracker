@@ -1,5 +1,6 @@
 import React from "react";
 import dateFns from "date-fns";
+import AddWorkout from "./AddWorkout";
 import "./Calendar.css";
 
 class Calendar extends React.Component {
@@ -12,7 +13,7 @@ class Calendar extends React.Component {
   }
 
   renderHeader() {
-    const dateFormat = "MMMM YYYY";
+    const dateFormat = "MMM YYYY";
 
     return (
       <div className="header row flex-middle">
@@ -56,15 +57,20 @@ class Calendar extends React.Component {
     const endDate = dateFns.endOfWeek(monthEnd);
 
     const dateFormat = "D";
+    const dateMatch = "YYYY-MM-DD";
+    let matchedDate = ""
     const rows = [];
 
     let days = [];
     let day = startDate;
     let formattedDate = "";
 
+
+
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = dateFns.format(day, dateFormat);
+        matchedDate = dateFns.format(day, dateMatch)
         const cloneDay = day;
         days.push(
           <div
@@ -80,6 +86,12 @@ class Calendar extends React.Component {
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
+            {this.props.scheduleWorkouts !== undefined ? (
+            this.props.scheduleWorkouts.map(sworkout => {
+              if (sworkout.date == matchedDate) return sworkout.title
+            }
+            )
+           ) : null }
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -95,9 +107,15 @@ class Calendar extends React.Component {
   }
 
   onDateClick = day => {
+    if(this.state.selectedDate === null){
     this.setState({
       selectedDate: day
     });
+  } else {
+    this.setState({
+      selectedDate: null
+    });
+  }
   };
 
   nextMonth = () => {
@@ -114,12 +132,14 @@ class Calendar extends React.Component {
 
   render() {
     return (
+
       <div className="calendar">
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}
-        {this.state.selectedDate === null ? null : <div>Hello</div>}
+    
       </div>
+   
     );
   }
 }
