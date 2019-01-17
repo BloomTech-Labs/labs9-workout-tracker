@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
+import ExerciseDetails from './ExerciseDetails'
 import styled from "styled-components";
 
 
 const WorkoutDetails = (props) => {
+  
   return <WorkoutDetailsStyle>
     WorkoutDetails
 
@@ -10,6 +12,7 @@ const WorkoutDetails = (props) => {
     then I needed to map through exercises as well to render each exercise from the exercise array.
     Another choice is to create another component after mapping through schedule workouts, 
     and mapping through the exercises array on that component -wd */}
+    
 
     {
       props.scheduleWorkouts && props.scheduleWorkouts.map(scheduleWorkout => {
@@ -21,12 +24,7 @@ const WorkoutDetails = (props) => {
             {
               scheduleWorkout.exercises && scheduleWorkout.exercises.map(exercise => {
               return (
-                <div key={exercise.id}>
-                  <p > {exercise.name}</p>
-                  <p>Weight: {exercise.weight}</p>
-                  <p>Sets: {exercise.sets}</p>
-                  <p>Reps: {exercise.reps}</p>
-                </div>
+               <ExerciseDetails key={exercise.id} exercise={exercise}/>
               )
             })}
           </div>

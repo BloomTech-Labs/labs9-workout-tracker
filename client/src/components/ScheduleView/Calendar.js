@@ -191,6 +191,7 @@ class Calendar extends React.Component {
         // if date is selected, check if date is populated and return component based on that
         this.state.datePopulated === true ? (
           <div>
+          {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
             <WorkoutDetails scheduleWorkouts={this.props.scheduleWorkouts} />
           </div>
         ) : (
