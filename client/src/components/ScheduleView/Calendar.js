@@ -66,7 +66,6 @@ class Calendar extends React.Component {
 
     let days = [];
     let day = startDate;
-    console.log("Dayvar:", day);
     let formattedDate = "";
     let matchedDate = "";
 
@@ -87,7 +86,6 @@ class Calendar extends React.Component {
         formattedDate = dateFns.format(day, dateFormat);
         //matched date to check against scheduled workout date
         matchedDate = dateFns.format(day, dateMatch);
-        console.log("matcheddate:", matchedDate);
         //create a clone of the day to update selected date when cell is clicked
         const cloneDay = day;
 
