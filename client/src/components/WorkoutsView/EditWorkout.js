@@ -1,11 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const EditWorkoutStyle = styled.div`
   font-family: ${props => props.theme.roboto};
   display: flex;
   flex-direction: column;
   margin-left: 25%;
+  background-color: ${props => props.theme.primary};
+  width: 175px;
 `;
 
 const EditWorkoutSubmitForm = styled.form`
@@ -55,13 +57,13 @@ const EditWorkout = props => {
   return (
     <EditWorkoutStyle>
       <EditWorkoutSubmitForm>
-        <TitleInput type="text" placeholder="Title" />
-        <StyledButton>Add Workout</StyledButton>
-        <ValueInput type="text" placeholder="Workout Name" />
+        <TitleInput type="text" placeholder="Workout Title" />
+
+        <ValueInput type="text" placeholder="Exercise Name" />
         <ValueInput type="text" placeholder="Weight" />
         <ValueInput type="text" placeholder="Sets" />
         <ValueInput type="text" placeholder="Reps" />
-
+        <StyledButton>Add Exercise</StyledButton>
         <StyledButton>Submit</StyledButton>
       </EditWorkoutSubmitForm>
     </EditWorkoutStyle>

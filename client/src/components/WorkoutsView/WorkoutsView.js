@@ -3,7 +3,7 @@ import EditWorkout from "./EditWorkout";
 import WorkoutCategoryList from "./WorkoutCategoryList";
 import styled from "styled-components";
 
-import bodybuilder from "../assets/bodybuilder.jpg";
+import bodybuilder from '../assets/bodybuilder.jpg';
 
 const WorkoutsViewContainer = styled.div`
   width: 100vw;
@@ -26,14 +26,6 @@ const WorkoutsViewStyle = styled.div`
   top: 74px;
   justify-content: space-between;
 `;
-
-// const EditWorkout = styled.div`
-//   margin-left: 25%;
-// `;
-
-// const WorkoutCategoryList = styled.div`
-//   margin-right: 25%;
-// `;
 
 const WorkoutsView = props => {
 
