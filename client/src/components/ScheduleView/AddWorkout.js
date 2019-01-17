@@ -8,7 +8,7 @@ const AddWorkout = (props) => {
       <div>{
         props.workouts && props.workouts.map(workout => {
           return (
-            <p key={workout.id}>Add workout {workout.category.name}</p>
+            <p key={workout.id}>Add workout COMPONENT {workout.category.name}</p>
           )
         })}</div>
     </form>
