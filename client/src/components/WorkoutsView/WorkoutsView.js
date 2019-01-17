@@ -1,5 +1,6 @@
 import React from 'react';
 import EditWorkout from './EditWorkout';
+import Dropdown from './Dropdown';
 import WorkoutCategoryList from './WorkoutCategoryList';
 import styled from 'styled-components';
 
