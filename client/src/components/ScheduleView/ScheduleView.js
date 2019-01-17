@@ -1,7 +1,6 @@
 import React from "react";
 import Calendar from "./Calendar";
 import ScheduleWorkoutList from "./ScheduleWorkout/ScheduleWorkoutList";
-import WorkoutDetails from "./WorkoutDetails";
 import styled from "styled-components";
 
 /* I believe this view needs it's own state so that we can render the Addworkout/Workout details
@@ -11,29 +10,20 @@ class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dateSelected: false
+      dateSelected:false
     };
   }
 
   componentDidMount() {
-    console.log(this.props);
-  }
-
-  selectDate() {
-    console.log(this)
-    console.log(this.state)
-    // this.setState({dateSelected:true})
+    console.log("props: ", this.props);
   }
 
   render() {
     return (
       <ScheduleViewStyle>
         {this.props.user.email}
-        <Calendar dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.scheduleWorkouts} />
-        {/* <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} />
-        <WorkoutDetails
-          scheduleWorkouts={this.props.scheduleWorkouts}
-        /> */}
+        <Calendar user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.scheduleWorkouts} />
+        {/* <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} /> */}
       </ScheduleViewStyle>
     );
   }

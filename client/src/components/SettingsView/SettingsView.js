@@ -1,108 +1,118 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StripeButton from './BillingView.js';
 import axios from "axios";
 
-const SettingsViewStyle = styled.div`
-  width: 100%;
-  max-width: 880px;
-  display: flex;
-  padding-bottom: 100px;
-  position: absolute;
-  top: 74px;
-`;
+const SettingsView = (props) =>  {
+  const [email, setEmail] = useState(props.user.email);
+  const [phone, setPhone] = useState(props.user.phone);
+  const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email)
 
-const LabelStyle = styled.label`
-  display: flex;
-  flex-direction: column;
-`;
+  // const value = target.type === 'checkbox' ? target.checked : target.value;
 
-const LabelDivStyle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
+  const updateUser = async (e) => {
+    e.preventDefault();
+    const token = window.localStorage.getItem('login_token');
 
-const InputStyle = styled.input`
-  height: 20px;
-`;
-
-const FormStyle = styled.form`
-  width: 40%;
-  margin-left: 5%;
-`;
-
-class SettingsView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {},
-      email: '',
-      phone: '',
+    if (token !== undefined) {
+      const res = await axios.put(
+        'http://localhost:9001/api/user/edit',
+        {email, phone, recieves_email},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        }
+      );
+      console.log(res.data);
     }
-    this.handleInputChange = this.handleInputChange.bind(this)
   }
-      
-componentDidMount() {
-  this.setState({user: this.props.user})
-}
 
-
-handleInputChange = e => {
-  this.setState({ [e.target.name]: e.target.value });
-}; 
-
-handleSaveInfo = e => {
-  e.preventDefault();
-  axios
-.put("https://fitmetrix.herokuapp.com/api/user/edit", {
-  email: this.state.email,
-  phone: this.state.phone
-})
-.then(response => {
-  this.setState({email: '', phone: ''})
-})
-.catch(err => err)  
-
-}
-
-// const token = window.localStorage.getItem("login_token");
-
-  render() {
-
-    return (
+  return (
       <SettingsViewStyle>
-        <FormStyle>
-          <LabelStyle>
-            <LabelDivStyle>
-              <p>Email:</p>
-              <InputStyle
-                type="text"
-                name="email"
-                value={this.state.email}
-                placeholder="user@example.com"
-                onChange={this.handleInputChange}
-                />
-            </LabelDivStyle>
-            <LabelDivStyle>
-              <p>Phone:</p>
-              <InputStyle type="text" name="phone" value={this.state.phone} onChange={this.handleInputChange}  />
-            </LabelDivStyle>
-            <LabelDivStyle>
-              <input type="checkbox" name="email_box" value={this.props.recieves_email} />
-              <p>Emails?</p>
-              <input type="checkbox" name="text_box" value={this.props.recieves_text} />
-              <p>Texts?</p>
-            </LabelDivStyle>           
-          </LabelStyle>
-          <button  value="Save" onClick={this.handleSaveInfo}>Submit</button>
+        <FormStyle onSubmit={e => updateUser(e)}> 
+          <Div>
+            <LabelStyle>Email:</LabelStyle>
+            <InputStyle type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </Div>
+          <Div>
+            <LabelStyle>Phone:</LabelStyle>
+            <InputStyle type="text" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)} /> 
+          </Div>
+          <Div>
+            <LabelStyle>Recieve Email</LabelStyle>
+            <input name='Recieve Email' type="checkbox" checked={recieves_email} onChange={(e) => setRecieveEmail(e.target.checked)} /> 
+          </Div>
+          <ButtonDiv>
+            <Button>Submit</Button>
+            <StripeButton />
+          </ButtonDiv>
         </FormStyle>
-        <StripeButton />
+
       </SettingsViewStyle>
-    );
-  }
+  );
 }
   
   
   
   export default SettingsView;
+
+  
+const SettingsViewStyle = styled.div`
+width: 100%;
+max-width: 880px;
+display: flex;
+padding-bottom: 100px;
+position: absolute;
+top: 74px;
+font-size:1.6rem;
+`;
+
+const FormStyle = styled.form`
+display:flex;
+flex-direction: column;
+justify-content:space-evenly;
+height:350px;
+width:50%;
+`;
+
+const EmailStyle = styled.div`
+display:flex;
+justify-content:space-around;
+align-items:center;
+`;
+
+const InputStyle = styled.input`
+width:40%;
+height:40px;
+border-radius:5px;
+text-align:center;
+`;
+
+const Button = styled.button`
+border-radius:5px;
+height:40px;
+color: white;
+background:${props => props.theme.primaryDark};
+font-weight:bold;
+width:40%;
+`;
+
+const Div = styled.div`
+display:flex;
+align-items:center;
+`;
+
+const ButtonDiv = styled.div`
+display:flex;
+flex-direction:column;
+width:100%;
+height:150px;
+justify-content:space-around;
+`;
+
+const LabelStyle = styled.label`
+width:25%;
+`;
+
