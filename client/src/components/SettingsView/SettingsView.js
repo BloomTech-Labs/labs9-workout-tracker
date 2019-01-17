@@ -7,7 +7,7 @@ const SettingsView = (props) =>  {
   const [email, setEmail] = useState(props.user.email);
   const [phone, setPhone] = useState(props.user.phone);
   const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email)
-
+  const [premium, displayPremium] = useState(props.user.premium);
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
   const updateUser = async (e) => {
