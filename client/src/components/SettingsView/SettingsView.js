@@ -55,7 +55,7 @@ handleInputChange = e => {
 handleSaveInfo = e => {
   e.preventDefault();
   axios
-.put("http://localhost:9001/api/user/edit", {
+.put("https://fitmetrix.herokuapp.com/api/user/edit", {
   email: this.state.email,
   phone: this.state.phone
 })

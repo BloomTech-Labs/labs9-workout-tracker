@@ -11,7 +11,7 @@ const StripeButton = () => {
       token: token
   };
   axios
-      .post("http://localhost:9001/api/settings/payment", body)
+      .post("https://fitmetrix.herokuapp.com/api/settings/payment", body)
       .then(response => {
         console.log(response);
         alert("Payment Success");

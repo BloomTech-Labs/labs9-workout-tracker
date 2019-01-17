@@ -22,7 +22,7 @@ const Register = props => {
           .getIdToken()
           .then(token => {
             axios.post(
-              "http://localhost:9001/auth/register",
+              "https://fitmetrix.herokuapp.com/auth/register",
               { email, name },
               { headers: { Authorization: token } }
             );

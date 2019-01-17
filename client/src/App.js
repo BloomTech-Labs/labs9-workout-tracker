@@ -44,7 +44,7 @@ const App = props => {
     // if (token !== undefined) {
     //   axios
     //     .post(
-    //       "http://localhost:9001/auth/login",
+    //       "https://fitmetrix.herokuapp.com/auth/login",
     //       {},
     //       { headers: { Authorization: token } }
     //     )
