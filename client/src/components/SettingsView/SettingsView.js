@@ -34,10 +34,11 @@ const SettingsView = (props) =>  {
       return (<PremiumStyle>You are premium</PremiumStyle>)
     } else {
       return (
-        <PremiumStyle>You are not premium</PremiumStyle>
+        <StripeButton />
       );      
     }
   }
+
 
   return (
       <SettingsViewStyle>
@@ -56,9 +57,9 @@ const SettingsView = (props) =>  {
           </Div>
           <ButtonDiv>      
             <Button>Submit</Button>
-            <StripeButton />
+            {renderPremium()}
           </ButtonDiv>
-          {renderPremium()}
+          
         </FormStyle>
 
       </SettingsViewStyle>
