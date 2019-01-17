@@ -14,17 +14,24 @@ const ProgressView = props => {
       <ProgressAction>
         <StyledButton>Add Metric</StyledButton>
       </ProgressAction>
-      <ProgressInfo>
-        <ProgressTitle>Progress</ProgressTitle>
-        <ProgressHeader metrics={metrics} setType={setType} />
-      </ProgressInfo>
-      <ProgressGraph metrics={metrics} type={type} />
-      <SelectedMetric>
-        {type
-          .toUpperCase()
-          .split("_")
-          .join(" ")}
-      </SelectedMetric>
+      {
+        metrics && !metrics.length 
+          ? (<h2>Add metrics to view progress</h2>)
+          : ( 
+            <>
+              <ProgressInfo>
+                <ProgressTitle>Progress</ProgressTitle>
+                <ProgressHeader metrics={metrics} setType={setType} />
+              </ProgressInfo>
+              <ProgressGraph metrics={metrics} type={type} />
+              <SelectedMetric>
+                {type
+                  .toUpperCase()
+                  .split("_")
+                  .join(" ")}
+              </SelectedMetric>
+            </>
+          )}
     </ProgressViewStyle>
   );
 };
