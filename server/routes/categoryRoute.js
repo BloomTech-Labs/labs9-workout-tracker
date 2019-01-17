@@ -26,7 +26,7 @@ router.post("/create", async (req, res) => {
       .json({ errorMessage: "Please provide a name for category" });
   } else {
     try {
-      const userInfo = await db("users").where("uid", "=", req.id);
+      const userInfo = await db("users").where("id", "=", req.id);
       let userId = userInfo[0].id;
       const name = req.body;
       const insertObj = {
