@@ -2,28 +2,67 @@ import React from "react";
 import styled from "styled-components";
 
 const EditWorkoutStyle = styled.div`
+  font-family: ${props => props.theme.roboto};
   display: flex;
   flex-direction: column;
+  margin-left: 25%;
 `;
 
 const EditWorkoutSubmitForm = styled.form`
   display: flex;
   flex-direction: column;
+  width: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const TitleInput = styled.input`
+  font-family: ${props => props.theme.roboto};
+  height: 30px;
+  width: 145px;
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: ${props => props.theme.themeWhite};
+`;
+
+const StyledButton = styled.button`
+  height: 40px;
   width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
+  font-size: 1.5em;
+  background-color: ${props => props.theme.primaryLight};
+  border-radius: 6px;
+  &:hover {
+    color: ${props => props.theme.accent};
+  }
+`;
+
+const ValueInput = styled.input`
+  font-family: ${props => props.theme.roboto};
+  height: 30px;
+  width: 145px;
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: ${props => props.theme.themeWhite};
 `;
 
 const EditWorkout = props => {
   return (
     <EditWorkoutStyle>
       <EditWorkoutSubmitForm>
-        <input type="text" placeholder="title" />
-        <button>Add Workout</button>
-        <input type="text" placeholder="Workout Name" />
-        <input type="text" placeholder="Weight" />
-        <input type="text" placeholder="Sets" />
-        <input type="text" placeholder="Reps" />
+        <TitleInput type="text" placeholder="Title" />
+        <StyledButton>Add Workout</StyledButton>
+        <ValueInput type="text" placeholder="Workout Name" />
+        <ValueInput type="text" placeholder="Weight" />
+        <ValueInput type="text" placeholder="Sets" />
+        <ValueInput type="text" placeholder="Reps" />
 
-        <button>Submit</button>
+        <StyledButton>Submit</StyledButton>
       </EditWorkoutSubmitForm>
     </EditWorkoutStyle>
   );

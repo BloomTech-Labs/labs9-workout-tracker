@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import * as d3 from "d3";
+
+import ProgressGraph from "./ProgressGraph";
+import ProgressHeader from "./ProgressHeader";
 
 const ProgressView = props => {
   const { metrics } = props.user;
+  const [type, setType] = useState("weight");
+
   return (
     <ProgressViewStyle>
       <ProgressAction>
-        <StyledButton>Add</StyledButton>
+        <StyledButton>Add Metric</StyledButton>
       </ProgressAction>
       <ProgressInfo>
-        <Metric>{metrics[0].weight}</Metric>
-        <Metric>{metrics[0].waist}</Metric>
-        <Metric>{metrics[0].hips}</Metric>
+        <ProgressTitle>Progress</ProgressTitle>
+        <ProgressHeader metrics={metrics} setType={setType} />
       </ProgressInfo>
+      <ProgressGraph metrics={metrics} type={type} />
+      <SelectedMetric>
+        {type
+          .toUpperCase()
+          .split("_")
+          .join(" ")}
+      </SelectedMetric>
     </ProgressViewStyle>
   );
 };
 
 export default ProgressView;
+
+const SelectedMetric = styled.h2`
+  margin: 10px 0px;
+`;
+
+const ProgressTitle = styled.h2`
+  margin: 10px 0px;
+`;
 
 const StyledButton = styled.button`
   width: 100px;
@@ -26,6 +46,7 @@ const StyledButton = styled.button`
   border-radius: 8px;
   background-color: ${props => props.theme.accent};
   color: ${props => props.theme.white};
+  cursor: pointer;
 `;
 
 const ProgressAction = styled.div`
@@ -38,7 +59,6 @@ const ProgressAction = styled.div`
 const ProgressViewStyle = styled.div`
   display: flex;
   flex-direction: column;
-  font-family: "Anton", sans-serif;
   position: absolute;
   left: 0;
   top: 74px;
@@ -48,15 +68,8 @@ const ProgressViewStyle = styled.div`
 
 const ProgressInfo = styled.div`
   width: 100%;
-  height: 100px;
-  border: solid 1px black;
+  height: 150px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 `;
-
-const Metric = styled.div`
-  width: 100px;
-  height: 100px;
-`;
-
-const SubmitProgress = styled.form``;

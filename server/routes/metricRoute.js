@@ -35,7 +35,6 @@ router.get("/metrics/get", async (req, res) => {
 router.post("/metrics/create", async (req, res) => {
   try {
     let userId = req.id;
-    console.log(userInfo);
     const metricObj = ({
       weight,
       hips,
@@ -56,6 +55,7 @@ router.post("/metrics/create", async (req, res) => {
     console.log(addMetric);
     res.status(201).json(insertObj);
   } catch (error) {
+    console.log("the error posting a metric is: ", error);
     res.status(500).json({ error });
   }
 });

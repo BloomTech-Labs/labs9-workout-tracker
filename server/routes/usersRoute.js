@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
     //     user_receives_text: "users.receives_text",
     //     user_created_at: "users.created_at",
     //     user_updated_at: "users.updated_at",
-    //     // user_premium: "users.premium",                                        
+    //     // user_premium: "users.premium",
     //     exercise_id: "exercises.id",
     //     exercise_name: "exercises.name",
 
@@ -49,59 +49,58 @@ router.get("/", async (req, res) => {
     //   .innerJoin("metrics", { "metrics.user_id": "users.id" })
     //   .innerJoin("exercises", { "exercises.workout_id": "workouts.id" })
 
-      // .reduce((user, current) => {
-      //   const {
-      //     user_id,
-      //     name,
-      //     email,
-      //     phone,
-      //     recieves_email,
-      //     recieves_text,
-      //     weight,
-      //     hips,
-      //     waist,
-      //     arm_right,
-      //     arm_left,
-      //     leg_right,
-      //     leg_left,
-      //     date
-      //   } = current;
+    // .reduce((user, current) => {
+    //   const {
+    //     user_id,
+    //     name,
+    //     email,
+    //     phone,
+    //     recieves_email,
+    //     recieves_text,
+    //     weight,
+    //     hips,
+    //     waist,
+    //     arm_right,
+    //     arm_left,
+    //     leg_right,
+    //     leg_left,
+    //     date
+    //   } = current;
 
-      //   user = {
-      //     user_id,
-      //     name,
-      //     email,
-      //     phone,
-      //     recieves_email,
-      //     recieves_text
-      //   };
+    //   user = {
+    //     user_id,
+    //     name,
+    //     email,
+    //     phone,
+    //     recieves_email,
+    //     recieves_text
+    //   };
 
-      //   const newMetric = {
-      //     weight,
-      //     hips,
-      //     waist,
-      //     arm_right,
-      //     arm_left,
-      //     leg_right,
-      //     leg_left,
-      //     date,
-      //     id: metric_id
-      //   };
+    //   const newMetric = {
+    //     weight,
+    //     hips,
+    //     waist,
+    //     arm_right,
+    //     arm_left,
+    //     leg_right,
+    //     leg_left,
+    //     date,
+    //     id: metric_id
+    //   };
 
-      //   if (user.metrics) {
-      //     if(!user.metrics.filter(m => m.id === newMetric.id).length){
-      //       user.metrics.push(newMetric);
-      //     }
-      //   } else {
-      //     user.metrics = [newMetric]
-      //   }
+    //   if (user.metrics) {
+    //     if(!user.metrics.filter(m => m.id === newMetric.id).length){
+    //       user.metrics.push(newMetric);
+    //     }
+    //   } else {
+    //     user.metrics = [newMetric]
+    //   }
 
-      //   if (user.workouts) {
-      //     if(!user.workouts.filter(m => m.id === newMetric.id).length){
-      //       user.metrics.push(newMetric);
-      //     }
-      //   }
-
+    //   if (user.workouts) {
+    //     if(!user.workouts.filter(m => m.id === newMetric.id).length){
+    //       user.metrics.push(newMetric);
+    //     }
+    //   }
 
     const userId = req.id;
 
@@ -172,6 +171,7 @@ router.get("/", async (req, res) => {
 });
 
 //Delete User
+//-----------------------DO WE NEED TO ADD SOMETHING TO DELETE FROM FIREBASE DB HERE? ------------------------
 router.delete("/delete/:id", async (req, res) => {
   const userId = req.params.id;
 
