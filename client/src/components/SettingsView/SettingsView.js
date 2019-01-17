@@ -16,7 +16,7 @@ const SettingsView = (props) =>  {
 
     if (token !== undefined) {
       const res = await axios.put(
-        'http://localhost:9001/api/user/edit',
+        'https://fitmetrix.herokuapp.com/api/user',
         {email, phone, recieves_email},
         {
           headers: {
@@ -26,6 +26,16 @@ const SettingsView = (props) =>  {
         }
       );
       console.log(res.data);
+    }
+  }
+
+  const renderPremium = () => {
+    if(props.user.premium === true) {
+      return (<p>You are premium</p>)
+    } else {
+      return (
+        <p>You are not premium</p>
+      );      
     }
   }
 
@@ -48,6 +58,7 @@ const SettingsView = (props) =>  {
             <Button>Submit</Button>
             <StripeButton />
           </ButtonDiv>
+          {renderPremium()}
         </FormStyle>
 
       </SettingsViewStyle>
