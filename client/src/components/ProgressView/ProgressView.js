@@ -6,9 +6,8 @@ import ProgressGraph from "./ProgressGraph";
 import ProgressHeader from "./ProgressHeader";
 
 const ProgressView = props => {
-  const { metrics } = props.user;
+  const { metrics } = props.user || [];
   const [type, setType] = useState("weight");
-
   return (
     <ProgressViewStyle>
       <ProgressAction>
