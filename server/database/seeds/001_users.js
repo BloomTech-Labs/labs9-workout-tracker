@@ -15,6 +15,6 @@
 
 exports.seed = function(knex, Promise) {
   return knex('users').insert([
-    {id: "w5iY6dJDISWE17ZbaO72QZWLTi62", name: 'Test', email:"test@test.com"}
+    {id: 0, uid: "w5iY6dJDISWE17ZbaO72QZWLTi62", name: 'Test', email:"test@test.com"}
   ]);
 };

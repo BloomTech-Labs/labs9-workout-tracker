@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
   try {
     const id = req.id;
 
-    const userObj = await db("users").where("id", "=", id);
+    const userObj = await db("users").where("uid", "=", id);
     console.log(userObj);
 
     res.status(200).json(userObj[0]);

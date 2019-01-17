@@ -104,7 +104,7 @@ router.get("/", async (req, res) => {
 
     const userId = req.id;
 
-    const userInfo = await db("users").where("id", "=", userId);
+    const userInfo = await db("users").where("uid", "=", userId);
 
     const metrics = await db("metrics").where("user_id", "=", userId);
 
@@ -177,7 +177,7 @@ router.delete("/delete/:id", async (req, res) => {
 
   try {
     const deleteduserCount = await db("users")
-      .where("id", "=", req.params.id)
+      .where("uid", "=", req.params.id)
       .del(userId);
     {
       deleteduserCount === 0
@@ -207,7 +207,7 @@ router.put("/edit", async (req, res) => {
 
   try {
     const updateduserCount = await db("users")
-      .where("id", "=", req.id)
+      .where("uid", "=", req.id)
       .update(req.body);
 
     if (updateduserCount === 0) {
@@ -217,7 +217,7 @@ router.put("/edit", async (req, res) => {
       return;
     }
 
-    const updateUser = await db("users").where("id", "=", req.id);
+    const updateUser = await db("users").where("uid", "=", req.id);
 
     res.status(200).json(updateUser[0]);
   } catch (error) {
