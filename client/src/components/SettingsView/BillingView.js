@@ -54,7 +54,7 @@ const StripeStyle = styled.button`
   box-shadow: rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
   border-radius: 5px;
   text-align:center;
-  padding-top:8px;
+  padding-top:5px;
   width:40%;
 `;
 
