@@ -134,7 +134,7 @@ const PremiumStyle = styled.div`
 color:${props => props.theme.accent}
 display: flex;
 justify-content: flex-start;
-padding-left: 2%;
+padding-left: 5%;
 `;
 
 const InputCheckStyle = styled.input`
