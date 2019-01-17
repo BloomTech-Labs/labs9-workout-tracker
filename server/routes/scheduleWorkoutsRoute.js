@@ -53,16 +53,16 @@ router.get("/", async (req, res) => {
 });
 
 // Create new Scheduled Workout given original workout ID
-router.post("/create/:id", async (req, res) => {
+router.post("/create", async (req, res) => {
   const body = req.body;
   const userID = req.id;
-  const workoutId = req.params.id;
+  const workoutId = body.workout_id;
 
   if (!body.date) {
     res.status(401).json({ message: "workout date string required" });
     return;
   } else {
-    console.log("body, userID, workoutID are: ", body, userID, workoutId);
+    // console.log("body, userID, workoutID are: ", body, userID, workoutId);
   }
 
   // Gets the workout from the database to schedule
@@ -152,6 +152,11 @@ router.put("/edit/exercise/:id", async (req, res) => {
     .whereIn(["id"], [[exerciseID]])
     .update(insertObj);
 
+  if (updatedExercise < 1) {
+    res.status(400).json({message: "Nothing to update"});
+    return
+  }
+
   //Gets the updated exercies that we send back as the response
   const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
 
@@ -184,8 +189,16 @@ router.put("/edit/workout/:id", async (req, res) => {
     .whereIn(["id"], [[schedWorkoutID]])
     .update(insertObj);
 
+    console.log(updatedWorkout)
+  if (updatedWorkout < 1) {
+    res.status(400).json({message: "Nothing to update"});
+    return
+  }
+
   //Gets the updated workout that we send back as the response
   const newWk = await db("schedule_workouts").where("id", "=", schedWorkoutID);
+
+  console.log(newWk);
 
   res.status(200).json(newWk[0]);
 });

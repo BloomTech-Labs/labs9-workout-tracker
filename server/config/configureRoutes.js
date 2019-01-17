@@ -18,4 +18,7 @@ module.exports = server => {
   server.use("/api/category", authenticate, categoryRoute);
   server.use("/api/schedule", authenticate, scheduleWorkoutsRoute);
   server.use("/api/settings/payment", stripeRoute);
+  server.use("*", (req, res) => {
+    res.status(404).json({message: 'route not found'})
+  })
 };

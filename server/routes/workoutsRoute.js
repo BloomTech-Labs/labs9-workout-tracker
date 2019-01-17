@@ -239,6 +239,11 @@ router.put("/edit/exercise/:id", async (req, res) => {
     .whereIn(["id"], [[id]])
     .update(insertObj);
 
+    if (updatedExercise < 1) {
+      res.status(400).json({message: "Nothing to update"});
+      return
+    }
+
   //Gets the updated exercies that we send back as the response
   const newEx = await db("exercises").where("id", "=", id);
 

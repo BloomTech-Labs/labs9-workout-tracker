@@ -26,12 +26,10 @@ router.post("/create", async (req, res) => {
       .json({ errorMessage: "Please provide a name for category" });
   } else {
     try {
-      const userInfo = await db("users").where("id", "=", req.id);
-      let userId = userInfo[0].id;
       const name = req.body;
       const insertObj = {
         ...name,
-        user_id: userId
+        user_id: req.id
       };
       const newCategory = await db("category").insert(insertObj);
       console.log(name, "message");
@@ -49,7 +47,6 @@ router.post("/create", async (req, res) => {
 router.get("/user", async (req, res) => {
   try {
     userId = req.id;
-    console.log("cat by userID: ", userId);
     //use that user ID to pull the categories associated with the user
     const categoryInfo = await db("category").where("user_id", "=", userId);
     //categories return as an array
