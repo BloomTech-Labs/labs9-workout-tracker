@@ -15,7 +15,7 @@ const LandingPage = () => {
         <CallToAction>
           <Action>{preCallToAction}</Action>
           <Action>{callToAction}</Action>
-          <StyledButton to="/schedule">TRACK NOW</StyledButton>
+          <StyledButton to="/register">TRACK NOW</StyledButton>
         </CallToAction>
         <BlankImage />
         {/* <DownArrow>
