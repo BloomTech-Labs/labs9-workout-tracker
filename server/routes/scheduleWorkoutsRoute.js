@@ -15,7 +15,8 @@ router.get("/all", async (req, res) => {
   }
 });
 
-//GET SchedWorkout set
+//GET SchedWorkout for given User\
+//------------DOES THIS NEED TO BRING IN SCHEDULED EXERCISES???--------
 router.get("/", async (req, res) => {
   try {
     //use the user ID to pull the workouts associated with the user
@@ -24,6 +25,10 @@ router.get("/", async (req, res) => {
       "=",
       req.id
     );
+
+    if (!scheduleWorkouts[0]) {
+      res.status(200).json("You have no scheduled workout, go schedule some!");
+    }
 
     //gets scheduled exercises that for the corresponding scheduled workout
     const exercises = await db("schedule_exercises").where(
@@ -47,20 +52,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Create new Scheduled Workout
+// Create new Scheduled Workout given original workout ID
 router.post("/create/:id", async (req, res) => {
-  const { body } = req;
-  const id = req.params.id;
+  const body = req.body;
+  const userID = req.id;
+  const workoutId = req.params.id;
 
   if (!body.date) {
     res.status(401).json({ message: "workout date string required" });
     return;
+  } else {
+    console.log("body, userID, workoutID are: ", body, userID, workoutId);
   }
 
   // Gets the workout from the database to schedule
   const workout = await db("workouts").whereIn(
     ["id", "user_id"],
-    [[id, req.id]]
+    [[workoutId, userID]]
   );
 
   // Gets the exercises for that workout
@@ -72,7 +80,7 @@ router.post("/create/:id", async (req, res) => {
 
   // Create a new scheduleWorkoutObj with the original Workout data at a date
   const scheduleWorkoutObj = {
-    user_id: id,
+    user_id: userID,
     title: workout[0].title,
     category_id: workout[0].category_id,
     date: body.date
@@ -118,16 +126,17 @@ router.post("/create/:id", async (req, res) => {
 });
 
 //Edit Scheduled Exercise
-router.put("/edit/exercise", async (req, res) => {
+router.put("/edit/exercise/:id", async (req, res) => {
+  const exerciseID = req.params.id;
   const { body } = req;
 
   // checks if proper id is passed
-  if (!Number.isInteger(body.id)) {
+  if (Number.isInteger(exerciseID)) {
     res.status(400).json({ message: "id is required" });
     return;
   }
 
-  //checks if the request body has all required fields for an exercise  
+  //checks if the request body has all required fields for an exercise
   const { name, reps, sets, completed, id } = body;
   if (!name && !reps && sets && !completed) {
     res.status(400).json({ message: "nothing to update" });
@@ -140,20 +149,21 @@ router.put("/edit/exercise", async (req, res) => {
 
   //Finds the scheduled exercise to update and updates that exercise with the insertObj
   const updatedExercise = await db("schedule_exercises")
-    .whereIn(["id"], [[id]])
+    .whereIn(["id"], [[exerciseID]])
     .update(insertObj);
 
   //Gets the updated exercies that we send back as the response
-  const newEx = await db("schedule_exercises").where("id", "=", id);
+  const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
 
   res.status(200).json(newEx[0]);
 });
 
 //Edit Scheduled Workout
-router.put("/edit/workout", async (req, res) => {
-  const { body } = req;
+router.put("/edit/workout/:id", async (req, res) => {
+  const schedWorkoutID = req.params.id;
+  const body = req.body;
   // checks if proper id is passed
-  if (!Number.isInteger(body.id)) {
+  if (Number.isInteger(body.schedWorkoutID)) {
     res.status(400).json({ message: "id is required" });
     return;
   }
@@ -171,11 +181,11 @@ router.put("/edit/workout", async (req, res) => {
 
   //Finds the scheduled workout to update and updates that workout with the insertObj
   const updatedWorkout = await db("schedule_workouts")
-    .whereIn(["id"], [[id]])
+    .whereIn(["id"], [[schedWorkoutID]])
     .update(insertObj);
 
   //Gets the updated workout that we send back as the response
-  const newWk = await db("schedule_workouts").where("id", "=", id);
+  const newWk = await db("schedule_workouts").where("id", "=", schedWorkoutID);
 
   res.status(200).json(newWk[0]);
 });

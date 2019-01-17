@@ -71,6 +71,7 @@ router.put("/edit/:id", async (req, res) => {
       .status(400)
       .json({ errorMessage: "Please provide a name for the category" });
   }
+
   try {
     //Find Category that matches req.params.id above
     const categoryInfo = await db("category").where("id", "=", req.params.id);
