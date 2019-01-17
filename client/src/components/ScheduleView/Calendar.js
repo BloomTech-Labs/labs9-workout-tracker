@@ -66,14 +66,13 @@ class Calendar extends React.Component {
 
     let days = [];
     let day = startDate;
-    console.log("Dayvar:", day);
     let formattedDate = "";
     let matchedDate = "";
 
     const arrayContains = (str, array) => {
       let populated = false;
       array.forEach(stringObj => {
-        if (stringObj.date === str) {
+        if (stringObj.date.split("T")[0] === str) {
           populated = true;
         }
       });
@@ -87,7 +86,6 @@ class Calendar extends React.Component {
         formattedDate = dateFns.format(day, dateFormat);
         //matched date to check against scheduled workout date
         matchedDate = dateFns.format(day, dateMatch);
-        console.log("matcheddate:", matchedDate);
         //create a clone of the day to update selected date when cell is clicked
         const cloneDay = day;
 
@@ -95,7 +93,10 @@ class Calendar extends React.Component {
         days.push(
           <>
             {/* checking if scheduleWorkouts is defined */}
-            {this.props.scheduleWorkouts === undefined ? null : (
+            {this.props.scheduleWorkouts === undefined ? 
+            
+            // IF no scheduled workouts, right now the cells don't render. Need to decide what to do here.
+            null : (
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
@@ -126,7 +127,8 @@ class Calendar extends React.Component {
                   {//maps through scheduleworkouts
                   this.props.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
-                    return sworkout.date === matchedDate
+                    const splitDate = sworkout.date.split("T")[0]
+                    return splitDate === matchedDate
                       ? sworkout.title
                       : null;
                   })}

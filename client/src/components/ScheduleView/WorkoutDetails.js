@@ -16,11 +16,17 @@ const WorkoutDetails = (props) => {
         return (
           <div key={scheduleWorkout.id}>
             
-            <p>{scheduleWorkout.category.name}</p>
+            <p>Scheduled Workout: {scheduleWorkout.title}</p>
+            Exercises for workout:
             {
               scheduleWorkout.exercises && scheduleWorkout.exercises.map(exercise => {
               return (
-                <p key={exercise.id}>{exercise.name}</p>
+                <div key={exercise.id}>
+                  <p > {exercise.name}</p>
+                  <p>Weight: {exercise.weight}</p>
+                  <p>Sets: {exercise.sets}</p>
+                  <p>Reps: {exercise.reps}</p>
+                </div>
               )
             })}
           </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import * as d3 from "d3";
+// import * as d3 from "d3";
 
 import ProgressGraph from "./ProgressGraph";
 import ProgressHeader from "./ProgressHeader";
