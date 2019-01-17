@@ -6,7 +6,6 @@
     "heroku-postbuild": "cd server && knex migrate:latest && knex seed:run"
   },
   "dependencies": {
-    "react-stripe-checkout": "^2.6.3"
-  },
-  "devDependencies": {}
+    "d3": "^5.7.0"
+  }
 }

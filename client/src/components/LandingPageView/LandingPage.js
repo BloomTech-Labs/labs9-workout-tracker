@@ -6,12 +6,14 @@ import squatImg from "../assets/squat-filter.jpg";
 import fitnesstrackerImg from "../assets/fitness-tracker.svg";
 
 const LandingPage = () => {
+  const preCallToAction = "Progress starts with a plan.";
   const callToAction = "Track your fitness journey with us.";
   return (
     <LandingContainer>
       <LandingStyle>
         <BackgroundImage />
         <CallToAction>
+          <Action>{preCallToAction}</Action>
           <Action>{callToAction}</Action>
           <StyledButton to="/schedule">TRACK NOW</StyledButton>
         </CallToAction>
@@ -26,10 +28,10 @@ const LandingPage = () => {
       </Part2>
       <Part3>
         <WorkoutDemo>Plan ahead, execute your plan.</WorkoutDemo>
-        <WorkoutPic>Pic of the Workouts page goes here.</WorkoutPic>
+        <WorkoutPic>Workout pic goes heres.</WorkoutPic>
       </Part3>
       <Part4>
-        <ProgressPic>Pic of Progress page goes here.</ProgressPic>
+        <ProgressPic>Progress pic goes here.</ProgressPic>
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
       <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
@@ -116,15 +118,15 @@ const BlankImage = styled.div`
   background-repeat: no-repeat;
 `;
 
-const DownArrow = styled.span`
-  width: 60px;
-  height: 80px;
-  position: absolute;
-  top: 500px;
-  left: 0;
-  font-size: 5.5rem;
-  text-align: center;
-`;
+// const DownArrow = styled.span`
+//   width: 60px;
+//   height: 80px;
+//   position: absolute;
+//   top: 500px;
+//   left: 0;
+//   font-size: 5.5rem;
+//   text-align: center;
+// `;
 
 const Part2 = styled.div`
   width: 100vw;
