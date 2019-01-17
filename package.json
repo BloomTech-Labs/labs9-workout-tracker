@@ -4,8 +4,5 @@
   "scripts": {
     "postinstall": "npm install --prefix server && npm install -g knex",
     "heroku-postbuild": "cd server && knex migrate:latest && knex seed:run"
-  },
-  "dependencies": {
-    "d3": "^5.7.0"
   }
 }

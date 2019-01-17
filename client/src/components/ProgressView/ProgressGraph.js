@@ -11,20 +11,23 @@ const ProgressGraph = props => {
     metrics.forEach(m => {
       arr.push({
         date: dateParser(m.date),
-        value: m[type]
+        value: parseFloat(m[type])
       });
+      console.log(arr)
     });
 
     return arr;
   };
 
   const dateParser = date => {
-    date = date.split("-");
+    
+    date = date.split("T")[0].split('-');
 
     const newDate = date[0] + "/" + date[1] + "/" + date[2];
 
     return new Date(newDate).getTime();
   };
+
 
   const drawChart = () => {
     let data = d3Data();

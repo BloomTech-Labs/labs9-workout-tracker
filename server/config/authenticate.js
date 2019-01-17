@@ -19,9 +19,14 @@ async function authenticate(req, res, next) {
   if (token) {
     try {
       const decodedToken = await admin.auth().verifyIdToken(token);
-      // console.log(decodedToken);
-      const users = await db('users').where('uid', '=', decodedToken.uid);
       req.uid = decodedToken.uid;
+      
+      if (req.originalUrl === '/auth/register') {
+        next();
+        return
+      }
+      
+      const users = await db('users').where('uid', '=', decodedToken.uid);
       req.id = users[0].id
       next();
     } catch (error) {

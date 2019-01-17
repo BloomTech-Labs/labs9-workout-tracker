@@ -16,7 +16,7 @@ import firebase from "firebase";
 import userData from "./mockData";
 const App = props => {
   const initialState = {
-    user: {}
+    user: userData
   };
   const reducer = (state, action) => {
     switch (action.type) {

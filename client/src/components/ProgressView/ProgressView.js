@@ -1,35 +1,41 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import * as d3 from "d3";
+import requireAuth from '../../requireAuth';
 
 import ProgressGraph from "./ProgressGraph";
 import ProgressHeader from "./ProgressHeader";
 
 const ProgressView = props => {
-  const { metrics } = props.user;
+  const { metrics } = props.user || [];
   const [type, setType] = useState("weight");
-
   return (
     <ProgressViewStyle>
       <ProgressAction>
         <StyledButton>Add Metric</StyledButton>
       </ProgressAction>
-      <ProgressInfo>
-        <ProgressTitle>Progress</ProgressTitle>
-        <ProgressHeader metrics={metrics} setType={setType} />
-      </ProgressInfo>
-      <ProgressGraph metrics={metrics} type={type} />
-      <SelectedMetric>
-        {type
-          .toUpperCase()
-          .split("_")
-          .join(" ")}
-      </SelectedMetric>
+      {
+        metrics && !metrics.length 
+          ? (<h2>Add metrics to view progress</h2>)
+          : ( 
+            <>
+              <ProgressInfo>
+                <ProgressTitle>Progress</ProgressTitle>
+                <ProgressHeader metrics={metrics} setType={setType} />
+              </ProgressInfo>
+              <ProgressGraph metrics={metrics} type={type} />
+              <SelectedMetric>
+                {type
+                  .toUpperCase()
+                  .split("_")
+                  .join(" ")}
+              </SelectedMetric>
+            </>
+          )}
     </ProgressViewStyle>
   );
 };
 
-export default ProgressView;
+export default requireAuth(ProgressView);
 
 const SelectedMetric = styled.h2`
   margin: 10px 0px;
