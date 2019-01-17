@@ -73,7 +73,7 @@ class Calendar extends React.Component {
     const arrayContains = (str, array) => {
       let populated = false;
       array.forEach(stringObj => {
-        if (stringObj.date === str) {
+        if (stringObj.date.split("T")[0] === str) {
           populated = true;
         }
       });
