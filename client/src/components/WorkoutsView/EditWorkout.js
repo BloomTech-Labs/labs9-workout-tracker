@@ -64,7 +64,6 @@ const EditWorkout = props => {
         <ValueInput type="text" placeholder="Sets" />
         <ValueInput type="text" placeholder="Reps" />
         <StyledButton>Add Exercise</StyledButton>
-
         <StyledButton>Submit</StyledButton>
       </EditWorkoutSubmitForm>
     </EditWorkoutStyle>
