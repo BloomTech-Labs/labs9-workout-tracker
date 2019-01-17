@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import React from "react";
 import dateFns from "date-fns";
 import AddWorkout from "./AddWorkout";
@@ -11,10 +12,9 @@ class Calendar extends React.Component {
       currentMonth: new Date(),
       dateSelected: false,
       datePopulated: false,
-      selectedDate:null,
+      selectedDate: null
     };
   }
-  
 
   renderHeader() {
     const dateFormat = "MMM YYYY";
@@ -66,60 +66,75 @@ class Calendar extends React.Component {
 
     let days = [];
     let day = startDate;
-      console.log("Dayvar:", day)
+    console.log("Dayvar:", day);
     let formattedDate = "";
     let matchedDate = "";
 
+    const arrayContains = (str, array) => {
+      let populated = false;
+      array.forEach(stringObj => {
+        if (stringObj.date === str) {
+          populated = true;
+        }
+      });
+      return populated;
+    };
+
     while (day <= endDate) {
+      //Loop through days 1-7
       for (let i = 0; i < 7; i++) {
+        //formattedDate to render onto the cell
         formattedDate = dateFns.format(day, dateFormat);
-        matchedDate = dateFns.format(day, dateMatch)
+        //matched date to check against scheduled workout date
+        matchedDate = dateFns.format(day, dateMatch);
+        console.log("matcheddate:", matchedDate);
+        //create a clone of the day to update selected date when cell is clicked
         const cloneDay = day;
+
+        //pushing into the days array
         days.push(
           <>
-          {this.props.scheduleWorkouts === undefined ? null : (
-              this.props.scheduleWorkouts.map(sworkout => {
-                if (sworkout.date === matchedDate) {
-                  return (
-                    <div
-                      className={`col cell ${
-                        !dateFns.isSameMonth(day, monthStart)
-                          ? "disabled"
-                          : dateFns.isSameDay(day, selectedDate)
-                          ? "selected"
-                          : ""
-                      }`}
-                      key={day}
-                      onClick={() => {this.onDateClick(dateFns.parse(cloneDay), true)}}
-                    >
-                      <span className="number">{formattedDate}</span>
-                      <span className="bg">{formattedDate}</span>
-                      {sworkout.title}
-                    </div>
-                  )
-                } else {
-            return (
+            {/* checking if scheduleWorkouts is defined */}
+            {this.props.scheduleWorkouts === undefined ? null : (
               <div
-              className={`col cell ${
-                !dateFns.isSameMonth(day, monthStart)
-                  ? "disabled"
-                  : dateFns.isSameDay(day, selectedDate)
-                  ? "selected"
-                  : ""
-              }`}
-              key={day}
-              onClick={() => {this.onDateClick(dateFns.parse(cloneDay), false)}}
-            >
-              <span className="number">{formattedDate}</span>
-              <span className="bg">{formattedDate}</span>
-            </div>
-            )   
-            }
-              })
-           )}
-            </>
+                className={`col cell ${
+                  !dateFns.isSameMonth(day, monthStart)
+                    ? "disabled"
+                    : dateFns.isSameDay(day, selectedDate)
+                    ? "selected"
+                    : ""
+                }`}
+                key={day}
+                onClick={
+                  //Check whether the matchedDate is inside of scheduled workouts
+                  // using arrayContains method
+                  arrayContains(matchedDate, this.props.scheduleWorkouts) ===
+                  true
+                    ? //if so, runs onDateClick with true
+                      () => {
+                        this.onDateClick(dateFns.parse(cloneDay), true);
+                      }
+                    : //else runs onDateClick with false
+                      () => {
+                        this.onDateClick(dateFns.parse(cloneDay), false);
+                      }
+                }
+              >
+                <span className="number">{formattedDate}</span>
+                <span className="bg">{formattedDate}</span>
+                <span>
+                  {//maps through scheduleworkouts
+                  this.props.scheduleWorkouts.map(sworkout => {
+                    // returns the title of the scheduled workout if it matches matchedDate
+                    return sworkout.date === matchedDate
+                      ? sworkout.title
+                      : null;
+                  })}
+                </span>
+              </div>
+            )}
+          </>
         );
-          
         day = dateFns.addDays(day, 1);
       }
       rows.push(
@@ -133,77 +148,20 @@ class Calendar extends React.Component {
   }
 
   onDateClick = (day, isPopulated) => {
-    if(this.state.selectedDate === null){
-    this.setState({
-      selectedDate: day,
-      datePopulated: isPopulated,
-    });
-  } else {
-    this.setState({
-      selectedDate: null,
-      datePopulated: false
-    });
-  }
+    if (this.state.selectedDate === null) {
+      this.setState({
+        selectedDate: day,
+        datePopulated: isPopulated,
+        dateSelected: true
+      });
+    } else {
+      this.setState({
+        selectedDate: null,
+        datePopulated: false,
+        dateSelected: false
+      });
+    }
   };
-
-  //   while (day <= endDate) {
-  //     for (let i = 0; i < 7; i++) {
-  //       formattedDate = dateFns.format(day, dateFormat);
-  //       matchedDate = dateFns.format(day, dateMatch);
-  //       const cloneDay = day;
-
-
-  //       days.push(
-  //         <div
-  //           className={`col cell ${
-  //             !dateFns.isSameMonth(day, monthStart)
-  //               ? "disabled"
-  //               : dateFns.isSameDay(day, selectedDate)
-  //               ? "selected"
-  //               : ""
-  //           }`}
-  //           key={day}
-  //           onClick={() => {
-  //             this.onDateClick(dateFns.parse(cloneDay) )
-  //           }}
-  //         >
-  //           <span className="number">{formattedDate}</span>
-  //           <span className="bg">{formattedDate}</span>
-  //           {this.props.scheduleWorkouts !== undefined
-  //             ? this.props.scheduleWorkouts.map(sworkout => {
-  //                 if (sworkout.date === matchedDate) {
-  //                   return <p>{sworkout.title}</p>
-  //                 } 
-  //               })
-  //             : null}
-  //         </div>
-  //       );
-  //       day.startDate = dateFns.addDays(day, 1);
-  //     }
-  //     rows.push(
-  //       <div className="row" key={day}>
-  //         {days}
-  //       </div>
-  //     );
-  //     days = [];
-  //   }
-  //   return <div className="body">{rows}</div>;
-  // }
-
-  // onDateClick = (day)=> {
-  
-  //   if (this.state.selectedDate === null) {
-  //     this.setState({
-  //       dateSelected: !this.state.dateSelected,
-  //       selectedDate: day
-  //     }); 
-  //   }  else {
-  //     this.setState({
-  //       selectedDate: null,
-  //       dateSelected: !this.state.dateSelected
-  //     });
-  //   }
-  // };
 
   nextMonth = () => {
     this.setState({
@@ -225,17 +183,20 @@ class Calendar extends React.Component {
           {this.renderDays()}
           {this.renderCells()}
         </div>
-        {this.state.dateSelected !== true ? null : this.state.datePopulated ===
-          true ? (
+        {/* if no date is selected, return null */}
+        {this.state.dateSelected !==
+        true ? null : 
+        // if date is selected, check if date is populated and return component based on that
+        this.state.datePopulated === true ? (
+          <div>
+            <WorkoutDetails scheduleWorkouts={this.props.scheduleWorkouts} />
+          </div>
+        ) : (
           <div>
             <AddWorkout
               workouts={this.props.user.workouts}
               scheduleWorkouts={this.props.user.scheduleWorkouts}
             />
-          </div>
-        ) : (
-          <div>
-            <WorkoutDetails scheduleWorkouts={this.props.scheduleWorkouts} />
           </div>
         )}
       </div>
