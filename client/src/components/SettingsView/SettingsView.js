@@ -31,10 +31,10 @@ const SettingsView = (props) =>  {
 
   const renderPremium = () => {
     if(props.user.premium === true) {
-      return (<p>You are premium</p>)
+      return (<PremiumStyle>You are premium</PremiumStyle>)
     } else {
       return (
-        <p>You are not premium</p>
+        <PremiumStyle>You are not premium</PremiumStyle>
       );      
     }
   }
@@ -125,5 +125,9 @@ justify-content:space-around;
 
 const LabelStyle = styled.label`
 width:25%;
+`;
+
+const PremiumStyle = styled.div`
+color:${props => props.theme.accent}
 `;
 

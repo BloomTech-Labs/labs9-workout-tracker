@@ -24,7 +24,7 @@ const StripeButton = () => {
   };
 
   return (
-    <StripeCheckout
+    <StyleCheckout
         label="Upgrade" //Component button text
         name="fitmetrix" //Modal Header
         description="Upgrade to a premium account today."
@@ -36,12 +36,12 @@ const StripeButton = () => {
         billingAddress={false} //asks for less info. Delete to ask for billing address
     >
       <StripeStyle>Upgrade</StripeStyle>
-    </StripeCheckout>
+    </StyleCheckout>
   );
 };
 export default StripeButton;
 
-const StripeStyle = styled.span`
+const StripeStyle = styled.button`
   background-color: ${props => props.theme.accent}
   font-size: 14px;
   position: relative;
@@ -54,4 +54,8 @@ const StripeStyle = styled.span`
   text-align:center;
   padding-top:8px;
   width:40%;
+`;
+
+const StyleCheckout = styled(StripeCheckout)`
+
 `;
