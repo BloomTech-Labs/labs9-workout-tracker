@@ -8,8 +8,7 @@ export default ComposedComponent => {
     
     function requireAuth(props) {
 
-        console.log(props);
-        const token = localStorage.getItem(keyName);
+        const token = window.localStorage.getItem(keyName);
 
         if (token && token !== 'undefined') {
             const decoded = jwt.decode(token)
