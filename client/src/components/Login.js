@@ -24,9 +24,8 @@ const Login = props => {
             console.log(idToken);
             window.localStorage.setItem("login_token", idToken);
             axios
-              .post(
-                "http://localhost:9001/auth/login",
-                {},
+              .get(
+                "https://fitmetrix.herokuapp.com/api/user",
                 { headers: { Authorization: idToken } }
               )
               .then(res => {

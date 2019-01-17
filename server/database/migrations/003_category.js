@@ -3,11 +3,13 @@ exports.up = function(knex, Promise) {
     tbl.increments();
     tbl.string("name").notNullable();
     tbl
-      .integer("user_id")
+      .biginteger("user_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("users")
-      .notNullable();
+      .onDelete("CASCADE")
+      .index();
   });
 };
 

@@ -2,11 +2,13 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("workouts", function(tbl) {
     tbl.increments();
     tbl
-      .integer("user_id")
+      .biginteger("user_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("users")
-      .notNullable();
+      .onDelete("CASCADE")
+      .index();
     tbl
       .integer("category_id")
       .unsigned()

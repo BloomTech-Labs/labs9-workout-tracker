@@ -11,11 +11,13 @@ exports.up = function(knex, Promise) {
     tbl.decimal("leg_left");
     tbl.timestamp("date").defaultTo(knex.fn.now());
     tbl
-      .integer("user_id")
+      .biginteger("user_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("users")
-      .notNullable();
+      .onDelete("CASCADE")
+      .index();
   });
 };
 

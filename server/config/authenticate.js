@@ -1,6 +1,7 @@
 require("dotenv").config();
 const admin = require("firebase-admin");
-const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+const db = require("../database/dbConfig");
+const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n');
 const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 
 admin.initializeApp({
@@ -19,7 +20,9 @@ async function authenticate(req, res, next) {
     try {
       const decodedToken = await admin.auth().verifyIdToken(token);
       // console.log(decodedToken);
-      req.id = decodedToken.uid;
+      const users = await db('users').where('uid', '=', decodedToken.uid);
+      req.uid = decodedToken.uid;
+      req.id = users[0].id
       next();
     } catch (error) {
       res.status(500).json({

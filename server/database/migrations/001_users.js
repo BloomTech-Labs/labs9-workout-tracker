@@ -1,10 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("users", function(tbl) {
-    tbl
-      .string("id")
-      .unique()
-      .notNullable()
-      .primary();
+    tbl.increments();
+    tbl.string("uid").unique();
     tbl.string("name").notNullable();
     tbl.string("email").unique();
     tbl.string("phone");

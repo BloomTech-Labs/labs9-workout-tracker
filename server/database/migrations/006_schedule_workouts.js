@@ -11,11 +11,13 @@ exports.up = function(knex, Promise) {
       .references("id")
       .inTable("category");
     tbl
-      .integer("user_id")
+      .biginteger("user_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("users")
-      .notNullable();
+      .onDelete("CASCADE")
+      .index();
   });
 };
 

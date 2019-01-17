@@ -19,7 +19,7 @@ router.post("/user", async (req, res) => {
 //Register user
 router.post("/register", async (req, res) => {
   try {
-    const userObj = { ...req.body, id: req.id };
+    const userObj = { ...req.body, uid: req.uid };
     const addUser = await db("users").insert(userObj);
     console.log(addUser);
     res.status(200).json({ message: "Succesfully Registered" });
