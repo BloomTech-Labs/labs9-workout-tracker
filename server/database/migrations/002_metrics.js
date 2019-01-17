@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
       .biginteger("user_id")
       .unsigned()
       .notNullable()
-      .references("uid")
+      .references("id")
       .inTable("users")
       .onDelete("CASCADE")
       .index();

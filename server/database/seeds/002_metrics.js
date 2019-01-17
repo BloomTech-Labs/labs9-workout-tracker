@@ -28,7 +28,7 @@ exports.seed = function(knex, Promise) {
       arm_left: randomMetric(),
       leg_right: randomMetric(),
       leg_left: randomMetric(),
-      user_id: "w5iY6dJDISWE17ZbaO72QZWLTi62"
+      user_id: 0
     }
   ]);
 };
