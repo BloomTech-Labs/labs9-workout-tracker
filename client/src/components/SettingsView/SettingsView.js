@@ -10,6 +10,10 @@ const SettingsView = (props) =>  {
   const [premium, displayPremium] = useState(props.user.premium);
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
+  useEffect(() => {
+    props.getUserInfo();
+  }, [])
+  
   const updateUser = async (e) => {
     e.preventDefault();
     const token = window.localStorage.getItem('login_token');

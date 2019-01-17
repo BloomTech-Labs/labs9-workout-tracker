@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import { Route } from "react-router-dom";
 import axios from "axios";
-// import axios from "axios";
 import LandingPage from "./components/LandingPageView/LandingPage";
 import ScheduleView from "./components/ScheduleView/ScheduleView";
 import ProgressView from "./components/ProgressView/ProgressView";
@@ -14,10 +13,13 @@ import styled, { ThemeProvider } from "styled-components";
 import { theme } from "./StyleTheme";
 import firebase from "firebase";
 import userData from "./mockData";
+
 const App = props => {
+
   const initialState = {
     user: userData
   };
+
   const reducer = (state, action) => {
     switch (action.type) {
       case "userModel":
@@ -28,7 +30,10 @@ const App = props => {
         return state;
     }
   };
+
   const [state, dispatch] = useReducer(reducer, initialState);
+
+
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     var config = {
@@ -40,23 +45,24 @@ const App = props => {
       messagingSenderId: "771224902694"
     };
     firebase.initializeApp(config);
-    // const token = window.localStorage.getItem("login_token");
-    // if (token !== undefined) {
-    //   axios
-    //     .post(
-    //       "https://fitmetrix.herokuapp.com/auth/login",
-    //       {},
-    //       { headers: { Authorization: token } }
-    //     )
-    //     .then(res => {
-    //       console.log(res.data);
-    //       dispatch({ type: "userModel", payload: res.data });
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //     });
-    // }
   }, []);
+
+  const getUserInfo = async () => {
+    console.log('getUSerInfo called');
+    const token = window.localStorage.getItem("login_token");
+
+    const user = await axios.get(
+      "https://fitmetrix.herokuapp.com/api/user",
+      { 
+        headers: { 
+          Authorization: token
+        }
+      });
+    
+    dispatch({ type: "userModel", payload: user.data });
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -83,25 +89,26 @@ const App = props => {
                 scheduleWorkouts={state.user.scheduleWorkouts}
                 user={state.user}
                 dispatch={dispatch}
+                getUserInfo={getUserInfo}
               />
             )}
           />
           <Route
             exact
             path="/progress"
-            render={props => <ProgressView {...props} user={state.user} />}
+            render={props => <ProgressView {...props} user={state.user} getUserInfo={getUserInfo}/>}
           />
           <Route
             exact
             path="/workouts"
             render={props => (
-              <WorkoutsView {...props} workouts={state.user.workouts} />
+              <WorkoutsView {...props} workouts={state.user.workouts} getUserInfo={getUserInfo}/>
             )}
           />
           <Route
             exact
             path="/settings"
-            render={props => <SettingsView {...props} user={state.user} />}
+            render={props => <SettingsView {...props} user={state.user} getUserInfo={getUserInfo}/>}
           />
         </StyledApp>
       </div>
@@ -109,6 +116,7 @@ const App = props => {
   );
 };
 export default App;
+
 const StyledApp = styled.div`
   text-align: center;
   width: 100%;

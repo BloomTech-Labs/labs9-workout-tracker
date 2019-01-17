@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import requireAuth from '../../requireAuth';
 
@@ -8,6 +8,11 @@ import ProgressHeader from "./ProgressHeader";
 const ProgressView = props => {
   const { metrics } = props.user || [];
   const [type, setType] = useState("weight");
+  
+  useEffect(() => {
+    props.getUserInfo();
+  }, [])
+
   return (
     <ProgressViewStyle>
       <ProgressAction>

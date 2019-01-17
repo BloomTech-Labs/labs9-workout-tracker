@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EditWorkout from "./EditWorkout";
 import WorkoutCategoryList from "./WorkoutCategoryList";
 import styled from "styled-components";
@@ -36,6 +36,11 @@ const WorkoutsViewStyle = styled.div`
 // `;
 
 const WorkoutsView = props => {
+
+  useEffect(() => {
+    props.getUserInfo();
+  }, [])
+
   return (
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
