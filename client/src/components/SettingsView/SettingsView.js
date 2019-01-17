@@ -16,7 +16,7 @@ const SettingsView = (props) =>  {
 
     if (token !== undefined) {
       const res = await axios.put(
-        'https://fitmetrix.herokuapp.com/api/user',
+        'https://fitmetrix.herokuapp.com/api/user/edit',
         {email, phone, recieves_email},
         {
           headers: {
