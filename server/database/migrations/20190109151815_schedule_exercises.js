@@ -2,11 +2,13 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("schedule_exercises", function(tbl) {
     tbl.increments();
     tbl
-      .integer("schedule_workout_id")
+      .biginteger("schedule_workout_id")
       .unsigned()
+      .notNullable()
       .references("id")
       .inTable("schedule_workouts")
-      .notNullable();
+      .onDelete("CASCADE")
+      .index();
     tbl.string("name");
     tbl.integer("weight");
     tbl.integer("sets");
