@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import * as d3 from "d3";
+import requireAuth from '../../requireAuth';
 
 import ProgressGraph from "./ProgressGraph";
 import ProgressHeader from "./ProgressHeader";
@@ -29,7 +29,7 @@ const ProgressView = props => {
   );
 };
 
-export default ProgressView;
+export default requireAuth(ProgressView);
 
 const SelectedMetric = styled.h2`
   margin: 10px 0px;

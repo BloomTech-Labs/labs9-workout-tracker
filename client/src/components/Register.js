@@ -21,6 +21,7 @@ const Register = props => {
         res.user
           .getIdToken()
           .then(token => {
+            console.log(email, name, token)
             axios.post(
               "https://fitmetrix.herokuapp.com/auth/register",
               { email, name },
