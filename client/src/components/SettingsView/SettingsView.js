@@ -7,7 +7,7 @@ const SettingsView = (props) =>  {
   const [email, setEmail] = useState(props.user.email);
   const [phone, setPhone] = useState(props.user.phone);
   const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email)
-
+  const [premium, displayPremium] = useState(props.user.premium);
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
   const updateUser = async (e) => {
@@ -16,7 +16,7 @@ const SettingsView = (props) =>  {
 
     if (token !== undefined) {
       const res = await axios.put(
-        'http://localhost:9001/api/user/edit',
+        'https://fitmetrix.herokuapp.com/api/user',
         {email, phone, recieves_email},
         {
           headers: {
@@ -26,6 +26,16 @@ const SettingsView = (props) =>  {
         }
       );
       console.log(res.data);
+    }
+  }
+
+  const renderPremium = () => {
+    if(props.user.premium === true) {
+      return (<PremiumStyle>You are premium</PremiumStyle>)
+    } else {
+      return (
+        <PremiumStyle>You are not premium</PremiumStyle>
+      );      
     }
   }
 
@@ -42,12 +52,13 @@ const SettingsView = (props) =>  {
           </Div>
           <Div>
             <LabelStyle>Recieve Email</LabelStyle>
-            <input name='Recieve Email' type="checkbox" checked={recieves_email} onChange={(e) => setRecieveEmail(e.target.checked)} /> 
+            <InputCheckStyle name='Recieve Email' type="checkbox" checked={recieves_email} onChange={(e) => setRecieveEmail(e.target.checked)} /> 
           </Div>
-          <ButtonDiv>
+          <ButtonDiv>      
             <Button>Submit</Button>
             <StripeButton />
           </ButtonDiv>
+          {renderPremium()}
         </FormStyle>
 
       </SettingsViewStyle>
@@ -101,7 +112,9 @@ width:40%;
 
 const Div = styled.div`
 display:flex;
-align-items:center;
+flex-direction:column;
+margin-top:15px;
+
 `;
 
 const ButtonDiv = styled.div`
@@ -113,6 +126,17 @@ justify-content:space-around;
 `;
 
 const LabelStyle = styled.label`
-width:25%;
+width:40%;
+`;
+
+const PremiumStyle = styled.div`
+color:${props => props.theme.accent}
+display: flex;
+justify-content: flex-start;
+padding-left: 2%;
+`;
+
+const InputCheckStyle = styled.input`
+margin-left:18%;
 `;
 
