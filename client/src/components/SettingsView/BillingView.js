@@ -23,6 +23,8 @@ const StripeButton = () => {
       });
   };
 
+  
+
   return (
     <StyleCheckout
         label="Upgrade" //Component button text
@@ -57,5 +59,4 @@ const StripeStyle = styled.button`
 `;
 
 const StyleCheckout = styled(StripeCheckout)`
-
 `;
