@@ -15,7 +15,9 @@ const LandingPage = () => {
         <CallToAction>
           <Action>{preCallToAction}</Action>
           <Action>{callToAction}</Action>
-          <StyledButton to="/register">TRACK NOW</StyledButton>
+          <StyledButton to="/register">
+            START TRACKING YOUR WORKOUTS NOW
+          </StyledButton>
         </CallToAction>
         <BlankImage />
         {/* <DownArrow>
@@ -59,7 +61,7 @@ const Action = styled.div`
   font-weight: 500;
   margin-bottom: 20px;
   text-align: left;
-  color: ${props => props.theme.themeWhite};
+  color: white;
 `;
 
 const BackgroundImage = styled.span`
@@ -89,14 +91,14 @@ const CallToAction = styled.div`
 `;
 
 const StyledButton = styled(Link)`
-  width: 150px;
+  width: 350px;
   height: 40px;
   line-height: 40px;
   border-radius: 6px;
   border: none;
   font-size: 1.6rem;
   font-weight: 700;
-  color: ${props => props.theme.themeWhite};
+  color: white;
   background-color: ${props => props.theme.primary};
   cursor: pointer;
   text-decoration: none;
@@ -116,6 +118,7 @@ const BlankImage = styled.div`
   background-image: url(${fitnesstrackerImg});
   background-size: 400px 400px;
   background-repeat: no-repeat;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
 `;
 
 // const DownArrow = styled.span`

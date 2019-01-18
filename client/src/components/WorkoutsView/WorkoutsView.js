@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import EditWorkout from "./EditWorkout";
-import WorkoutCategoryList from "./WorkoutCategoryList";
-import styled from "styled-components";
+import React from 'react';
+import EditWorkout from './EditWorkout';
+import Dropdown from './Dropdown';
+import WorkoutCategoryList from './WorkoutCategoryList';
+import styled from 'styled-components';
 
 import bodybuilder from '../assets/bodybuilder.jpg';
 
@@ -28,16 +29,11 @@ const WorkoutsViewStyle = styled.div`
 `;
 
 const WorkoutsView = props => {
-
-  useEffect(() => {
-    props.getUserInfo();
-  }, [])
-
   return (
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
-        <EditWorkout workouts={props.workouts} />
-        <WorkoutCategoryList workouts={props.workouts} />
+        <EditWorkout />
+        <WorkoutCategoryList />
       </WorkoutsViewStyle>
     </WorkoutsViewContainer>
   );
