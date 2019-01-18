@@ -147,15 +147,13 @@ router.put("/edit/exercise/:id", async (req, res) => {
   
     //Removes the ID from the scheduled exercise insertObj
     const insertObj = { ...body };
-  
-    console.log('indertObj', insertObj)
+
+    delete insertObj.id;
   
     //Finds the scheduled exercise to update and updates that exercise with the insertObj
     const updatedExercise = await db("schedule_exercises")
       .whereIn(["id"], [[exerciseID]])
       .update(insertObj);
-  
-    console.log('updatedExercise', updatedExercise)
   
     if (updatedExercise < 1) {
       res.status(400).json({message: "Nothing to update"});
@@ -165,7 +163,6 @@ router.put("/edit/exercise/:id", async (req, res) => {
     //Gets the updated exercies that we send back as the response
     const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
   
-    console.log('updatedExercise', updatedExercise)
   
     res.status(200).json(newEx[0]);
 
