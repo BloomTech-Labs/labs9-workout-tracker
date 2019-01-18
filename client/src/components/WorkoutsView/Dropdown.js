@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 const Dropdown = props => {
   const [state, dispatch] = useReducer(reducer, {
-    category: props.user
+    category: 'Add a category'
   });
-  const { workouts, categories } = props.user || [];
+  const { categories } = 'Add a categery' || [];
   const [category, setCategory] = useState('add a category');
 
   // useEffect(() => {
@@ -33,10 +33,7 @@ const Dropdown = props => {
       <p>Dropdown menu examples</p>
       <div className="wrapper">
         <DropdownList
-          workouts={props.workouts}
-          categories={props.categories}
           title="Select Category"
-          list={props.categories}
           resetThenSet={() => dispatch({ type: 'resetThenSet' })}
         />
       </div>

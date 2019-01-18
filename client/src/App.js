@@ -94,13 +94,7 @@ const App = props => {
           <Route
             exact
             path="/workouts"
-            render={props => (
-              <WorkoutsView
-                {...props}
-                workouts={state.user.workouts}
-                categories={state.user.categories}
-              />
-            )}
+            render={props => <WorkoutsView {...props} user={state.user} />}
           />
           <Route
             exact
