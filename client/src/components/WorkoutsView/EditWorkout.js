@@ -59,7 +59,7 @@ const EditWorkout = props => {
     <EditWorkoutStyle>
       <EditWorkoutSubmitForm>
         <TitleInput type="text" placeholder="Workout Title" />
-        <Dropdown />
+        <Dropdown workouts={props.workouts} categories={props.categories} />
         <ValueInput type="text" placeholder="Exercise Name" />
         <ValueInput type="text" placeholder="Weight" />
         <ValueInput type="text" placeholder="Sets" />

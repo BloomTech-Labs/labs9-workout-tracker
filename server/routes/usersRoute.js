@@ -1,23 +1,23 @@
-const express = require("express");
-const db = require("../database/dbConfig");
+const express = require('express');
+const db = require('../database/dbConfig');
 const router = express.Router();
 
 //Get all users
-router.get("/all", async (req, res) => {
+router.get('/all', async (req, res) => {
   try {
-    const allUsers = await db("users");
-    console.log("All the users are", allUsers);
+    const allUsers = await db('users');
+    console.log('All the users are', allUsers);
     res.status(200).json(allUsers);
   } catch (error) {
     res.status(500).json({
-      "Well this is embarrassing": "Something went wrong",
+      'Well this is embarrassing': 'Something went wrong',
       error
     });
   }
 });
 
 //Get single User
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     //Sets a userID from the userInfo & then finds that user's metrics and workouts with that userID
 
@@ -104,21 +104,23 @@ router.get("/", async (req, res) => {
 
     const userId = req.id;
 
-    const userInfo = await db("users").where("id", "=", userId);
+    const userInfo = await db('users').where('id', '=', userId);
 
-    const metrics = await db("metrics").where("user_id", "=", userId);
+    const metrics = await db('metrics').where('user_id', '=', userId);
 
-    const workouts = await db("workouts").where("user_id", "=", userId);
+    const categories = await db('categories').where('user_id', '=', userId);
+
+    const workouts = await db('workouts').where('user_id', '=', userId);
     let workoutsArray = [];
     for (const workout of workouts) {
-      const exercises = await db("exercises").where(
-        "workout_id",
-        "=",
+      const exercises = await db('exercises').where(
+        'workout_id',
+        '=',
         workout.id
       );
-      const category = await db("category").where(
-        "id",
-        "=",
+      const category = await db('category').where(
+        'id',
+        '=',
         workout.category_id
       );
       const workObj = {
@@ -129,22 +131,22 @@ router.get("/", async (req, res) => {
       workoutsArray.push(workObj);
     }
 
-    const sWorkouts = await db("schedule_workouts").where(
-      "user_id",
-      "=",
+    const sWorkouts = await db('schedule_workouts').where(
+      'user_id',
+      '=',
       userId
     );
 
     let sWorkoutsArray = [];
     for (const workout of sWorkouts) {
-      const exercises = await db("schedule_exercises").where(
-        "schedule_workout_id",
-        "=",
+      const exercises = await db('schedule_exercises').where(
+        'schedule_workout_id',
+        '=',
         workout.id
       );
-      const category = await db("category").where(
-        "id",
-        "=",
+      const category = await db('category').where(
+        'id',
+        '=',
         workout.category_id
       );
       const workObj = {
@@ -158,6 +160,7 @@ router.get("/", async (req, res) => {
     userObj = {
       ...userInfo[0],
       metrics: [...metrics],
+      category: [...category],
       workouts: workoutsArray,
       scheduleWorkouts: sWorkoutsArray
     };
@@ -166,63 +169,63 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error, "Well this is embarrassing": "Something went wrong" });
+      .json({ error, 'Well this is embarrassing': 'Something went wrong' });
   }
 });
 
 //Delete User
 //-----------------------DO WE NEED TO ADD SOMETHING TO DELETE FROM FIREBASE DB HERE? ------------------------
-router.delete("/delete/:id", async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const deleteduserCount = await db("users")
-      .where("id", "=", req.params.id)
+    const deleteduserCount = await db('users')
+      .where('id', '=', req.params.id)
       .del(userId);
     {
       deleteduserCount === 0
         ? res
             .status(404)
-            .json({ message: "The user with the specified ID does not exist." })
+            .json({ message: 'The user with the specified ID does not exist.' })
         : res.status(200).json({ deleteduserCount });
     }
   } catch (error) {
-    console.log("the req.params.id is... ", req.params.id);
-    console.log("the error is... ", error);
+    console.log('the req.params.id is... ', req.params.id);
+    console.log('the error is... ', error);
 
-    res.status(500).json("the error is... ", error);
+    res.status(500).json('the error is... ', error);
   }
 });
 
 //Edit User
-router.put("/edit", async (req, res) => {
+router.put('/edit', async (req, res) => {
   const { name, email, phone, recieves_text, recieves_email } = req.body;
 
   if (!name && !email && !phone && !recieves_text && !recieves_email) {
     res.status(400).json({
-      errorMessage: "Please provide a name, email, phone for the user"
+      errorMessage: 'Please provide a name, email, phone for the user'
     });
     return;
   }
 
   try {
-    const updateduserCount = await db("users")
-      .where("id", "=", req.id)
+    const updateduserCount = await db('users')
+      .where('id', '=', req.id)
       .update(req.body);
 
     if (updateduserCount === 0) {
       res
         .status(404)
-        .json({ message: "The user with the specified ID does not exist." });
+        .json({ message: 'The user with the specified ID does not exist.' });
       return;
     }
 
-    const updateUser = await db("users").where("id", "=", req.id);
+    const updateUser = await db('users').where('id', '=', req.id);
 
     res.status(200).json(updateUser[0]);
   } catch (error) {
-    console.log("the req.params.id is... ", req.id);
-    console.log("the error is... ", error);
+    console.log('the req.params.id is... ', req.id);
+    console.log('the error is... ', error);
     res.status(500).json(error);
   }
 });

@@ -8,6 +8,7 @@ const DDWrapper = styled.div`
   position: relative;
   width: 222px;
   color: ${props => props.theme.themeWhite};
+  border: solid red;
 `;
 
 const DDHeader = styled.div`
@@ -116,24 +117,14 @@ class DropdownList extends Component {
   render() {
     const { list } = this.props;
     const { listOpen, headerTitle } = this.state;
+    console.log('The list is: ', list);
     return (
       <DDWrapper>
         <DDHeader onClick={() => this.toggleList()}>
           <DDHeaderTitle>{headerTitle}</DDHeaderTitle>
           {listOpen ? <h1>UP</h1> : <h1>DOWN</h1>}
         </DDHeader>
-        {listOpen && (
-          <DDList onClick={e => e.stopPropagation()}>
-            {list.map(item => (
-              <DDListItem
-                key={item.id}
-                onClick={() => this.selectItem(item.title, item.id, item.key)}
-              >
-                {item.title} {item.selected && <h1 name="check" />}
-              </DDListItem>
-            ))}
-          </DDList>
-        )}
+        {listOpen && <DDList onClick={e => e.stopPropagation()} />}
       </DDWrapper>
     );
   }

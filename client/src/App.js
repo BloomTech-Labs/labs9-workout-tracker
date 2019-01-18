@@ -1,26 +1,26 @@
-import React, { useReducer, useEffect } from "react";
-import { Route } from "react-router-dom";
-import axios from "axios";
+import React, { useReducer, useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import axios from 'axios';
 // import axios from "axios";
-import LandingPage from "./components/LandingPageView/LandingPage";
-import ScheduleView from "./components/ScheduleView/ScheduleView";
-import ProgressView from "./components/ProgressView/ProgressView";
-import WorkoutsView from "./components/WorkoutsView/WorkoutsView";
-import SettingsView from "./components/SettingsView/SettingsView";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Navigation from "./components/Navigation";
-import styled, { ThemeProvider } from "styled-components";
-import { theme } from "./StyleTheme";
-import firebase from "firebase";
-import userData from "./mockData";
+import LandingPage from './components/LandingPageView/LandingPage';
+import ScheduleView from './components/ScheduleView/ScheduleView';
+import ProgressView from './components/ProgressView/ProgressView';
+import WorkoutsView from './components/WorkoutsView/WorkoutsView';
+import SettingsView from './components/SettingsView/SettingsView';
+import Login from './components/Login';
+import Register from './components/Register';
+import Navigation from './components/Navigation';
+import styled, { ThemeProvider } from 'styled-components';
+import { theme } from './StyleTheme';
+import firebase from 'firebase';
+import userData from './mockData';
 const App = props => {
   const initialState = {
     user: userData
   };
   const reducer = (state, action) => {
     switch (action.type) {
-      case "userModel":
+      case 'userModel':
         return { ...state, user: action.payload };
       default:
         // A reducer must always return a valid state.
@@ -32,12 +32,12 @@ const App = props => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     var config = {
-      apiKey: "AIzaSyAQRB_UBjCXzDmxluLuDiM-VUjEoi9HjnQ",
-      authDomain: "fitmetrix-57cce.firebaseapp.com",
-      databaseURL: "https://fitmetrix-57cce.firebaseio.com",
-      projectId: "fitmetrix-57cce",
-      storageBucket: "fitmetrix-57cce.appspot.com",
-      messagingSenderId: "771224902694"
+      apiKey: 'AIzaSyAQRB_UBjCXzDmxluLuDiM-VUjEoi9HjnQ',
+      authDomain: 'fitmetrix-57cce.firebaseapp.com',
+      databaseURL: 'https://fitmetrix-57cce.firebaseio.com',
+      projectId: 'fitmetrix-57cce',
+      storageBucket: 'fitmetrix-57cce.appspot.com',
+      messagingSenderId: '771224902694'
     };
     firebase.initializeApp(config);
     // const token = window.localStorage.getItem("login_token");
@@ -95,7 +95,11 @@ const App = props => {
             exact
             path="/workouts"
             render={props => (
-              <WorkoutsView {...props} workouts={state.user.workouts} />
+              <WorkoutsView
+                {...props}
+                workouts={state.user.workouts}
+                categories={state.user.categories}
+              />
             )}
           />
           <Route

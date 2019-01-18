@@ -1,39 +1,50 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect, useReducer } from 'react';
 import DropdownList from './DropdownList';
 
 import styled from 'styled-components';
 
 const Dropdown = props => {
-  const { workouts } = props.user || [];
-  const [type, setType] = useState('firstWorkout');
+  const [state, dispatch] = useReducer(reducer, {
+    category: props.user
+  });
+  const { workouts, categories } = props.user || [];
+  const [category, setCategory] = useState('add a category');
 
-  toggleSelected = (id, key) => {
-    let temp = JSON.parse(JSON.stringify(this.state[key]));
-    temp[id].selected = !temp[id].selected;
-    this.setState({
-      [key]: temp
-    });
-  };
+  // useEffect(() => {
+  //   const resetThenSet = (id, key) => {
+  //     let temp = JSON.parse(JSON.stringify(this.state[key]));
+  //     temp.forEach(item => (item.selected = false));
+  //     temp[id].selected = true;
+  //     this.setState({
+  //       [key]: temp
+  //     });
+  //   };
+  // });
 
-  resetThenSet = (id, key) => {
-    let temp = JSON.parse(JSON.stringify(this.state[key]));
-    temp.forEach(item => (item.selected = false));
-    temp[id].selected = true;
-    this.setState({
-      [key]: temp
-    });
-  };
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'resetThenSet':
+        return { category: state.category };
+    }
+  }
 
   return (
     <div className="Dropdown">
       <p>Dropdown menu examples</p>
-
       <div className="wrapper">
-        <DropdownList title="Select Category" />
+        <DropdownList
+          workouts={props.workouts}
+          categories={props.categories}
+          title="Select Category"
+          list={props.categories}
+          resetThenSet={() => dispatch({ type: 'resetThenSet' })}
+        />
       </div>
     </div>
   );
 };
+
+export default Dropdown;
 
 // class Dropdown extends Component {
 //   constructor() {
@@ -151,5 +162,3 @@ const Dropdown = props => {
 //     );
 //   }
 // }
-
-export default Dropdown;
