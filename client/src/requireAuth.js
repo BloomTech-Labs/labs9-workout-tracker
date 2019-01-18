@@ -11,8 +11,6 @@ export default ComposedComponent => {
 
         const token = window.localStorage.getItem(keyName);
 
-      const currentTime = Date.now() / 1000;
-
       if (decoded && currentTime > decoded.exp) {
         localStorage.removeItem(keyName);
         return <Redirect to={'/login'} />;

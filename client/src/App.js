@@ -140,3 +140,55 @@ const StyledApp = styled.div`
   padding: 0 30px;
   font-family: ${props => props.theme.opensans};
 `;
+
+const StyledApp = styled.div`
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 62.5%;
+  font-size: 1.2rem;
+  height: 100vh;
+  position: relative;
+  background-color: transparent;
+  padding: 0 30px;
+  font-family: ${props => props.theme.opensans};
+`;
+
+const StyledApp = styled.div`
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 62.5%;
+  font-size: 1.2rem;
+  height: 100vh;
+  position: relative;
+  background-color: transparent;
+  padding: 0 30px;
+  font-family: ${props => props.theme.opensans};
+`;
+
+const StyledApp = styled.div`
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 62.5%;
+  font-size: 1.2rem;
+  height: 100vh;
+  position: relative;
+  background-color: transparent;
+  padding: 0 30px;
+  font-family: ${props => props.theme.opensans};
+`;
+
+const StyledApp = styled.div`
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 62.5%;
+  font-size: 1.2rem;
+  height: 100vh;
+  position: relative;
+  background-color: transparent;
+  padding: 0 30px;
+  font-family: ${props => props.theme.opensans};
+`;

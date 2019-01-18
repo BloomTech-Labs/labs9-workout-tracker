@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React from 'react';
 import EditWorkout from './EditWorkout';
 import Dropdown from './Dropdown';
 import WorkoutCategoryList from './WorkoutCategoryList';
 import styled from 'styled-components';
-=======
-import React, { useEffect } from "react";
-import EditWorkout from "./EditWorkout";
-import WorkoutCategoryList from "./WorkoutCategoryList";
-import styled from "styled-components";
->>>>>>> 0f5248a234012af9b37e362e31edb7ee9c37b631
 
 import bodybuilder from '../assets/bodybuilder.jpg';
 
@@ -36,11 +29,6 @@ const WorkoutsViewStyle = styled.div`
 `;
 
 const WorkoutsView = props => {
-
-  useEffect(() => {
-    props.getUserInfo();
-  }, [])
-
   return (
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
