@@ -10,13 +10,17 @@ const SettingsView = (props) =>  {
   const [premium, displayPremium] = useState(props.user.premium);
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
+  useEffect(() => {
+    props.getUserInfo();
+  }, [])
+  
   const updateUser = async (e) => {
     e.preventDefault();
     const token = window.localStorage.getItem('login_token');
 
     if (token !== undefined) {
       const res = await axios.put(
-        'https://fitmetrix.herokuapp.com/api/user',
+        'https://fitmetrix.herokuapp.com/api/user/edit',
         {email, phone, recieves_email},
         {
           headers: {
@@ -34,10 +38,11 @@ const SettingsView = (props) =>  {
       return (<PremiumStyle>You are premium</PremiumStyle>)
     } else {
       return (
-        <PremiumStyle>You are not premium</PremiumStyle>
+        <StripeButton />
       );      
     }
   }
+
 
   return (
       <SettingsViewStyle>
@@ -56,9 +61,9 @@ const SettingsView = (props) =>  {
           </Div>
           <ButtonDiv>      
             <Button>Submit</Button>
-            <StripeButton />
+            {renderPremium()}
           </ButtonDiv>
-          {renderPremium()}
+          
         </FormStyle>
 
       </SettingsViewStyle>
@@ -133,7 +138,7 @@ const PremiumStyle = styled.div`
 color:${props => props.theme.accent}
 display: flex;
 justify-content: flex-start;
-padding-left: 2%;
+padding-left: 5%;
 `;
 
 const InputCheckStyle = styled.input`

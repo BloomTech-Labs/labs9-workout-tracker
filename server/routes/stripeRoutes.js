@@ -35,9 +35,13 @@ Router.route("/").post(async (req, res) => {
   res.status(200).send(customer);
 });
 
+
+
 module.exports = Router;
 
 
-// db("users")
-//       .where("id", "=", req.params.id)
-//       .update({ email, phone, name });
+
+
+
+
+

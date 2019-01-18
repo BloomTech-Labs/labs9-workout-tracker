@@ -7,19 +7,10 @@ const Dropdown = props => {
   const [state, dispatch] = useReducer(reducer, {
     category: 'Add a category'
   });
-  const { categories } = 'Add a categery' || [];
+  const { categories } = 'Add a category' || [];
   const [category, setCategory] = useState('add a category');
 
-  // useEffect(() => {
-  //   const resetThenSet = (id, key) => {
-  //     let temp = JSON.parse(JSON.stringify(this.state[key]));
-  //     temp.forEach(item => (item.selected = false));
-  //     temp[id].selected = true;
-  //     this.setState({
-  //       [key]: temp
-  //     });
-  //   };
-  // });
+  useEffect(() => {}, []);
 
   function reducer(state, action) {
     switch (action.type) {

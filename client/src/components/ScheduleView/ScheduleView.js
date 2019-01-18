@@ -2,6 +2,7 @@ import React from "react";
 import Calendar from "./Calendar";
 import ScheduleWorkoutList from "./ScheduleWorkout/ScheduleWorkoutList";
 import styled from "styled-components";
+import requireAuth from '../../requireAuth';
 
 /* I believe this view needs it's own state so that we can render the Addworkout/Workout details
 components based on a dateSelected flag, as well as based on whether the date selected is already populated
@@ -15,7 +16,7 @@ class ScheduleView extends React.Component {
   }
 
   componentDidMount() {
-    console.log("props: ", this.props);
+    this.props.getUserInfo();
   }
 
   render() {
@@ -36,4 +37,6 @@ const ScheduleViewStyle = styled.div`
   position: absolute;
   top: 74px;
 `;
-export default ScheduleView;
+
+
+export default requireAuth(ScheduleView);

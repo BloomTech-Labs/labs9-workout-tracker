@@ -9,8 +9,7 @@ export default ComposedComponent => {
     console.log(props);
     const token = localStorage.getItem(keyName);
 
-    if (token && token !== 'undefined') {
-      const decoded = jwt.decode(token);
+        const token = window.localStorage.getItem(keyName);
 
       const currentTime = Date.now() / 1000;
 
