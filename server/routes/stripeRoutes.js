@@ -35,6 +35,14 @@ Router.route("/").post(async (req, res) => {
   res.status(200).send(customer);
 });
 
+// Router.route("/cancel").put(async (req, res) => {
+//   const user = await db('users').where('email', '=', req.body.token.email);
+//     if (user.length === 0) {
+//       return res.status(500).send("user not found");
+//     }
+//     console.log('hello')
+// })
+
 
 
 module.exports = Router;
