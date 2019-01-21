@@ -23,7 +23,7 @@ class ScheduleView extends React.Component {
     return (
       <ScheduleViewStyle>
         <p>{this.props.user.email}</p>
-        <Calendar user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.scheduleWorkouts} />
+        <Calendar dispatch={this.props.dispatch} user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.scheduleWorkouts} />
         {/* <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} /> */}
       </ScheduleViewStyle>
     );

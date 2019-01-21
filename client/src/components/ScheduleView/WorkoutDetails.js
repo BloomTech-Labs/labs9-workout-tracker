@@ -24,7 +24,7 @@ const WorkoutDetails = (props) => {
             {
               scheduleWorkout.exercises && scheduleWorkout.exercises.map(exercise => {
               return (
-               <ExerciseDetails key={exercise.id} exercise={exercise}/>
+               <ExerciseDetails dispatch={props.dispatch} key={exercise.id} exercise={exercise}/>
               )
             })}
           </div>

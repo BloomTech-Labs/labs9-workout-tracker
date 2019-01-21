@@ -192,7 +192,7 @@ class Calendar extends React.Component {
         this.state.datePopulated === true ? (
           <div>
           {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
-            <WorkoutDetails scheduleWorkouts={this.props.scheduleWorkouts} />
+            <WorkoutDetails dispatch={this.props.dispatch} scheduleWorkouts={this.props.scheduleWorkouts} />
           </div>
         ) : (
           <div>
