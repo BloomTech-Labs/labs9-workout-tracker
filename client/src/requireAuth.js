@@ -26,3 +26,4 @@ export default ComposedComponent => {
   }
   return requireAuth;
 }
+
