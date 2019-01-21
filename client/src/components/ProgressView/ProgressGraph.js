@@ -99,9 +99,6 @@ const ProgressGraph = props => {
 
   return (
     <div>
-      {/* <svg width="600" height="400">
-        <g transform={`translate(${50},${20})`}/>
-      </svg> */}
       <svg />
     </div>
   );

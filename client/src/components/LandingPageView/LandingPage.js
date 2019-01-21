@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import deadliftImg from '../assets/deadlift-filter.jpg';
-import squatImg from '../assets/squat-filter.jpg';
-import fitnesstrackerImg from '../assets/fitness-tracker.svg';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import deadliftImg from "../assets/deadlift-filter.jpg";
+import squatImg from "../assets/squat-filter.jpg";
+import fitnesstrackerImg from "../assets/fitness-tracker.svg";
 
 const LandingPage = () => {
-  const preCallToAction = 'Progress starts with a plan.';
-  const callToAction = 'Track your fitness journey with us.';
+  const preCallToAction = "Progress starts with a plan.";
+  const callToAction = "Track your fitness journey with us.";
   return (
     <LandingContainer>
       <LandingStyle>
@@ -54,6 +54,9 @@ const LandingStyle = styled.div`
   position: relative;
   background-color: transparent;
   margin: 0 auto;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Action = styled.div`

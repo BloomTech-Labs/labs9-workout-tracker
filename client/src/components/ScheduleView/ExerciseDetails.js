@@ -16,6 +16,9 @@ const ExerciseDetails = props => {
       .then(response => {
         const exercise = response.data;
         console.log("exercise in axios call: ", exercise);
+        // DO NOT UPDATE WITH INCOMING EXERCISE 
+        // JUST UPDATE THE VALUE ITSELF
+        // TO DO ON MONDAY
         props.dispatch({
           type: "UPDATE_S_EXERCISE",
           payload: {

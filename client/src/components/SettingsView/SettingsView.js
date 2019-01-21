@@ -1,137 +1,144 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import StripeButton from './BillingView.js';
+import StripeButton from "./BillingView.js";
 import axios from "axios";
 
-const SettingsView = (props) =>  {
+const SettingsView = props => {
   const [email, setEmail] = useState(props.user.email);
   const [phone, setPhone] = useState(props.user.phone);
-  const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email)
+  const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
   const [premium, displayPremium] = useState(props.user.premium);
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
   useEffect(() => {
     props.getUserInfo();
-  }, [])
-  
-  const updateUser = async (e) => {
+  }, []);
+  //essentially a component did mount
+
+  const updateUser = async e => {
     e.preventDefault();
-    const token = window.localStorage.getItem('login_token');
+    const token = window.localStorage.getItem("login_token");
 
     if (token !== undefined) {
       const res = await axios.put(
-        'https://fitmetrix.herokuapp.com/api/user/edit',
-        {email, phone, recieves_email},
+        "https://fitmetrix.herokuapp.com/api/user/edit",
+        { email, phone, recieves_email },
         {
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
+            "Content-Type": "application/json",
+            Authorization: token
           }
         }
       );
       console.log(res.data);
     }
-  }
+  };
 
   const renderPremium = () => {
-    if(props.user.premium === true) {
-      return (<PremiumStyle>You are premium</PremiumStyle>)
+    if (props.user.premium === true) {
+      return <PremiumStyle>You are premium</PremiumStyle>;
     } else {
-      return (
-        <StripeButton />
-      );      
+      return <StripeButton />;
     }
-  }
-
+  };
 
   return (
-      <SettingsViewStyle>
-        <FormStyle onSubmit={e => updateUser(e)}> 
-          <Div>
-            <LabelStyle>Email:</LabelStyle>
-            <InputStyle type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </Div>
-          <Div>
-            <LabelStyle>Phone:</LabelStyle>
-            <InputStyle type="text" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)} /> 
-          </Div>
-          <Div>
-            <LabelStyle>Recieve Email</LabelStyle>
-            <InputCheckStyle name='Recieve Email' type="checkbox" checked={recieves_email} onChange={(e) => setRecieveEmail(e.target.checked)} /> 
-          </Div>
-          <ButtonDiv>      
-            <Button>Submit</Button>
-            {renderPremium()}
-          </ButtonDiv>
-          
-        </FormStyle>
-
-      </SettingsViewStyle>
+    <SettingsViewStyle>
+      <FormStyle onSubmit={e => updateUser(e)}>
+        <Div>
+          <LabelStyle>Email:</LabelStyle>
+          <InputStyle
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+        </Div>
+        <Div>
+          <LabelStyle>Phone:</LabelStyle>
+          <InputStyle
+            type="text"
+            placeholder="phone"
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
+          />
+        </Div>
+        <Div>
+          <LabelStyle>Recieve Email</LabelStyle>
+          <InputCheckStyle
+            name="Recieve Email"
+            type="checkbox"
+            checked={recieves_email}
+            onChange={e => setRecieveEmail(e.target.checked)}
+          />
+        </Div>
+        <ButtonDiv>
+          <Button>Submit</Button>
+          {renderPremium()}
+        </ButtonDiv>
+      </FormStyle>
+    </SettingsViewStyle>
   );
-}
-  
-  
-  
-  export default SettingsView;
+};
 
-  
+export default SettingsView;
+
 const SettingsViewStyle = styled.div`
-width: 100%;
-max-width: 880px;
-display: flex;
-padding-bottom: 100px;
-position: absolute;
-top: 74px;
-font-size:1.6rem;
+  width: 100%;
+  max-width: 880px;
+  display: flex;
+  padding-bottom: 100px;
+  position: absolute;
+  top: 74px;
+  font-size: 1.6rem;
 `;
 
 const FormStyle = styled.form`
-display:flex;
-flex-direction: column;
-justify-content:space-evenly;
-height:350px;
-width:50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 350px;
+  width: 50%;
 `;
 
 const EmailStyle = styled.div`
-display:flex;
-justify-content:space-around;
-align-items:center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const InputStyle = styled.input`
-width:40%;
-height:40px;
-border-radius:5px;
-text-align:center;
+  width: 40%;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
 `;
 
 const Button = styled.button`
-border-radius:5px;
-height:40px;
-color: white;
-background:${props => props.theme.primaryDark};
-font-weight:bold;
-width:40%;
+  border-radius: 5px;
+  height: 40px;
+  color: white;
+  background: ${props => props.theme.primaryDark};
+  font-weight: bold;
+  width: 40%;
 `;
 
 const Div = styled.div`
-display:flex;
-flex-direction:column;
-margin-top:15px;
-
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
 `;
 
 const ButtonDiv = styled.div`
-display:flex;
-flex-direction:column;
-width:100%;
-height:150px;
-justify-content:space-around;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 150px;
+  justify-content: space-around;
 `;
 
 const LabelStyle = styled.label`
-width:40%;
+  width: 40%;
 `;
 
 const PremiumStyle = styled.div`
@@ -142,6 +149,5 @@ padding-left: 5%;
 `;
 
 const InputCheckStyle = styled.input`
-margin-left:18%;
+  margin-left: 18%;
 `;
-

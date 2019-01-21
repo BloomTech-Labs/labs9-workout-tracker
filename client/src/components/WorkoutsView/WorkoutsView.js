@@ -1,10 +1,10 @@
-import React from 'react';
-import EditWorkout from './EditWorkout';
-import Dropdown from './Dropdown';
-import WorkoutCategoryList from './WorkoutCategoryList';
-import styled from 'styled-components';
+import React from "react";
+import EditWorkout from "./EditWorkout";
+import Dropdown from "./Dropdown";
+import WorkoutCategoryList from "./WorkoutCategoryList";
+import styled from "styled-components";
 
-import bodybuilder from '../assets/bodybuilder.jpg';
+import bodybuilder from "../assets/bodybuilder.jpg";
 
 const WorkoutsViewContainer = styled.div`
   width: 100vw;
@@ -33,7 +33,7 @@ const WorkoutsView = props => {
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
         <EditWorkout />
-        <WorkoutCategoryList />
+        <WorkoutCategoryList workouts={props.workouts} />
       </WorkoutsViewStyle>
     </WorkoutsViewContainer>
   );
