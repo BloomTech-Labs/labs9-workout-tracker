@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Dropdown from './Dropdown';
 
 const EditWorkoutStyle = styled.div`
   font-family: ${props => props.theme.roboto};
@@ -58,7 +59,7 @@ const EditWorkout = props => {
     <EditWorkoutStyle>
       <EditWorkoutSubmitForm>
         <TitleInput type="text" placeholder="Workout Title" />
-
+        <Dropdown />
         <ValueInput type="text" placeholder="Exercise Name" />
         <ValueInput type="text" placeholder="Weight" />
         <ValueInput type="text" placeholder="Sets" />
