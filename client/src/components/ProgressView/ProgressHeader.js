@@ -58,7 +58,7 @@ export default ProgressHeader;
 
 const Metric = styled.div`
   width: 100px;
-  height: 100px;
+  height: 65px;
   display: flex;
   flex-direction: column;
   font-size: 18px;
@@ -70,8 +70,8 @@ const Metric = styled.div`
 
 const MetricContainer = styled.div`
   width: 100%;
-  height: 100px;
-  /* border: solid 1px black; */
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;

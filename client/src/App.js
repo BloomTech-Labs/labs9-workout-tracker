@@ -23,10 +23,43 @@ const App = props => {
     switch (action.type) {
       case 'userModel':
         return { ...state, user: action.payload };
-      default:
+        case "UPDATE_S_EXERCISE":
+        //Create a variable that points to schedule workouts on state
+      const sw = [...state.user.scheduleWorkouts];
+        let wIndex = null;
+       //Loop through scheduledworkouts 
+       sw.forEach((w , i)=> {
+          if (w.id == action.payload.wID) {
+            //assign the id that is in the payload
+            wIndex = i
+          }
+        });
+        let exIndex = null;
+
+        sw[wIndex].exercises.forEach((ex, i) => {
+          if (ex === action.payload.eId) {
+            exIndex = i;
+          }
+        })
+
+       let userObj = {...state.user};
+       console.log("userObj form state: ", userObj)
+       userObj.scheduleWorkouts[wIndex].exercises[exIndex]= action.payload.exercise
+        // console.log("updated userexercises: ", userObj.scheduleWorkouts[wIndex].exercises[exIndex])
+        console.log("updated userexercises: ", userObj)
+      return {...state, user: {
+        ...state.user,
+        ...userObj
+       }};
+
+
+
+
+        default:
         // A reducer must always return a valid state.
         // Alternatively you can throw an error if an invalid action is dispatched.
         return state;
+      
     }
   };
 

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import WorkoutCategory from "./WorkoutCategory";
 import styled from "styled-components";
+import axios from "axios";
 
 const WorkoutCategoryListStyle = styled.div`
   font-family: ${props => props.theme.roboto};
@@ -14,16 +15,35 @@ const WorkoutCategoryListStyle = styled.div`
 `;
 
 const WorkoutCategoryList = props => {
+  const [categories, setCategories] = useState([]);
+
+  const getAllCategories = props => {
+    const token = window.localStorage.getItem("login_token");
+    axios
+      .get("https://fitmetrix.herokuapp.com/api/category/all", {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(response => {
+        setCategories(response.data);
+      });
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   return (
     <WorkoutCategoryListStyle>
-      {props.workouts !== undefined
-        ? props.workouts.map(workoutObj => {
-            console.log(workoutObj);
-            return (
-              <WorkoutCategory key={workoutObj.id} workoutObj={workoutObj} />
-            );
-          })
-        : null}
+      {categories.map(category => {
+        return (
+          <div>
+            {category.name}
+            <WorkoutCategory category={category} />
+          </div>
+        );
+      })}
     </WorkoutCategoryListStyle>
   );
 };
