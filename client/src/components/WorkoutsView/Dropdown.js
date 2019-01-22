@@ -1,52 +1,44 @@
-import React, { Component, useState, useEffect, useReducer } from "react";
-import axios from "axios";
-import DropdownList from "./DropdownList";
+import React, { Component, useState, useEffect, useReducer } from 'react';
+import axios from 'axios';
+import DropdownList from './DropdownList';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Dropdown = props => {
-  const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user/";
+  const key = window.localStorage.getItem('login_token');
 
-  const initialCategoryValue = [" --- Select a Category --- "];
+  const reqUrl = 'https://fitmetrix.herokuapp.com/api/category/user';
 
-  const [categorys, setCategorys] = useState(initialCategoryValue);
+  const initialCategoryValue = [' --- Select an Category --- '];
+
+  const [categories, setCategory] = useState(initialCategoryValue);
 
   let categoryComponent = null;
 
-  // useEffect to get Categories
+  // useEffect to get Authors
   useEffect(() => {
-    console.log("Inside effect 1");
-    const token = window.localStorage.getItem("login_token");
-    axios
-      .get(reqUrl, {
-        headers: {
-          Authorization: token
-        }
+    console.log('Inside effect 2');
+    axios.get(reqUrl, { headers: { Authorization: key } }).then(result =>
+      result.data.map(res => {
+        initialCategoryValue.push(res.name);
+        return setCategory(initialCategoryValue);
       })
-      .then(result =>
-        // console.log("result.data is: ", result.data)
-        result.data.map(res => {
-          console.log("result.data.map response is: ", res);
-          initialCategoryValue.push(res.category);
-          return setCategorys(initialCategoryValue);
-        })
-      );
+    );
   }, []);
 
   categoryComponent = (
     <select>
-      {categorys.map((category, index) => (
+      {categories.map((category, index) => (
         <option key={index}>{category}</option>
       ))}
     </select>
   );
 
-  console.log("Inside WorkoutView - Dropdown.js");
-
   return (
     <div>
-      <label>Category:</label>
+      <label>Category::</label>
       {categoryComponent}
+      <hr />
     </div>
   );
 };
