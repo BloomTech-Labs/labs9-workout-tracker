@@ -4,7 +4,7 @@ const randomMetric = () => Math.random() * 10 + 1;
 
 // for (let i = 0; i < 49; i++) {
 //   const userMetrics = {
-//     id: i,
+//
 //     weight: randomMetric(),
 //     hips:randomMetric(),
 //     waist:randomMetric(),
@@ -20,7 +20,6 @@ const randomMetric = () => Math.random() * 10 + 1;
 exports.seed = function(knex, Promise) {
   return knex("metrics").insert([
     {
-      id: 0,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -29,10 +28,9 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-16",
-      user_id: 0
+      user_id: 1
     },
     {
-      id: 1,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -41,10 +39,9 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-17",
-      user_id: 0
+      user_id: 1
     },
     {
-      id: 2,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -53,10 +50,9 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-18",
-      user_id: 0
+      user_id: 1
     },
     {
-      id: 3,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -65,10 +61,9 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-19",
-      user_id: 0
+      user_id: 1
     },
     {
-      id: 4,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -77,7 +72,7 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-20",
-      user_id: 0
+      user_id: 1
     },
   ]);
 };

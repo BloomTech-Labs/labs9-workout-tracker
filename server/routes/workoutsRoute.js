@@ -127,7 +127,6 @@ router.get("/", async (req, res) => {
 // Create new workout for a given user ID
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
     //Grab user_id from user table
     let userId = req.id;
     //Create Object from req.body data and user_id
@@ -137,7 +136,7 @@ router.post("/", async (req, res) => {
       user_id: userId
     };
     //Insert Obj into workout table to create the workout ID
-    const addWorkout = await db("workouts").insert(insertObj);
+    const addWorkout = await db("workouts").returning('id').insert(insertObj);
 
     const workout = {
       ...insertObj,
@@ -145,22 +144,23 @@ router.post("/", async (req, res) => {
     };
 
     if (req.body.exercises) {
-      const exercisesArr = req.body.exercises;
+      let exercisesArr = req.body.exercises;
 
+      exercisesArr.forEach(ex => ex.workout_id = workout.id);
       console.log(exercisesArr);
-      for (let exercise of exercisesArr) {
-        const exerciseObj = {
-          ...exercise,
-          workout_id: workout.id
-        };
-        console.log("exerciseObj: ", exerciseObj);
-        const addExercises = await db("exercises").insert(exerciseObj);
-      }
+
+      
+      const addExercises = await db("exercises").returning('id').insert(exercisesArr);
+
+      console.log(addExercises);
+
       const completeExercises = await db("exercises").where(
         "workout_id",
         "=",
         workout.id
       );
+
+      console.log(completeExercises)
       insertObj.exercises = completeExercises;
     }
 

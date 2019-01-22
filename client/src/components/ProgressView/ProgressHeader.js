@@ -31,13 +31,17 @@ const ProgressHeader = props => {
         <Metric onClick={e => setType(k)}>
           <span>
             {Math.round(10 * progress) / 10}
-            {k === "weight" ? " lbs" : " cm"}
+            {k === "weight" ? " lbs" : " in"}
           </span>
           <span>
-            {k
+            {
+              k
               .toUpperCase()
+              .replace(/LEFT/g, 'L')
+              .replace(/RIGHT/g, 'R')
               .split("_")
-              .join(" ")}
+              .join(" ")
+            }
           </span>
         </Metric>
       );
@@ -57,7 +61,7 @@ const ProgressHeader = props => {
 export default ProgressHeader;
 
 const Metric = styled.div`
-  width: 100px;
+  width: 80px;
   height: 65px;
   display: flex;
   flex-direction: column;
