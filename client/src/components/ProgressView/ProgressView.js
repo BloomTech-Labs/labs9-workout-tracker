@@ -31,7 +31,7 @@ const ProgressView = props => {
         </>
       )}
 
-      {addMetric ? (<AddMetricModule setAddMetric={setAddMetric}/>) : null}
+      {addMetric ? (<AddMetricModule setAddMetric={setAddMetric} metrics={metrics}/>) : null}
     </ProgressViewStyle>
   );
 };
