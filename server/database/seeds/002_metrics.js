@@ -4,7 +4,7 @@ const randomMetric = () => Math.random() * 10 + 1;
 
 // for (let i = 0; i < 49; i++) {
 //   const userMetrics = {
-//     id: i,
+//
 //     weight: randomMetric(),
 //     hips:randomMetric(),
 //     waist:randomMetric(),

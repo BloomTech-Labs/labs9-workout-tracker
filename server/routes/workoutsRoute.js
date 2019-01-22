@@ -147,6 +147,8 @@ router.post("/", async (req, res) => {
 
       exercisesArr.forEach(ex => ex.workout_id = workout.id);
       console.log(exercisesArr);
+
+      
       const addExercises = await db("exercises").returning('id').insert(exercisesArr);
 
       console.log(addExercises);
