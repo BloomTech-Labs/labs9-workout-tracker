@@ -93,7 +93,7 @@ router.post("/create", async (req, res) => {
   };
 
   // Insert scheduleWorkoutObj with the original Workout data at a date
-  const scheduleWorkout = await db("schedule_workouts").insert(
+  const scheduleWorkout = await db("schedule_workouts").returning('id').insert(
     scheduleWorkoutObj
   );
 
@@ -115,7 +115,7 @@ router.post("/create", async (req, res) => {
   const insertedEx = [];
 
   for (ex of exercises) {
-    const exId = await db("schedule_exercises").insert(ex);
+    const exId = await db("schedule_exercises").returning('id').insert(ex);
     insertedEx.push(exId);
   }
 

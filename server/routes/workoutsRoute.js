@@ -136,7 +136,7 @@ router.post("/", async (req, res) => {
       user_id: userId
     };
     //Insert Obj into workout table to create the workout ID
-    const addWorkout = await db("workouts").insert(insertObj);
+    const addWorkout = await db("workouts").returning('id').insert(insertObj);
 
     const workout = {
       ...insertObj,
