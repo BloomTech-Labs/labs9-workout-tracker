@@ -28,7 +28,7 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-16",
-      user_id: 0
+      user_id: 1
     },
     {
       weight: randomMetric(),
@@ -39,7 +39,7 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-17",
-      user_id: 0
+      user_id: 1
     },
     {
       weight: randomMetric(),
@@ -50,7 +50,7 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-18",
-      user_id: 0
+      user_id: 1
     },
     {
       weight: randomMetric(),
@@ -61,7 +61,7 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-19",
-      user_id: 0
+      user_id: 1
     },
     {
       weight: randomMetric(),
@@ -72,7 +72,7 @@ exports.seed = function(knex, Promise) {
       leg_right: randomMetric(),
       leg_left: randomMetric(),
       date: "2019-01-20",
-      user_id: 0
+      user_id: 1
     },
   ]);
 };

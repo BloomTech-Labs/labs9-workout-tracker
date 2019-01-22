@@ -14,13 +14,13 @@
 exports.seed = function(knex, Promise) {
   return knex("workouts").insert([
     {
-      user_id: 0,
-      category_id: 0,
+      user_id: 1,
+      category_id: 1,
       title: "Deadlift Day #1"
     },
     {
-      user_id: 0,
-      category_id: 1,
+      user_id: 1,
+      category_id: 2,
       title: "Chest Day #1"
     }
   ]);
