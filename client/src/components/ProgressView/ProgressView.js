@@ -3,8 +3,8 @@ import styled from "styled-components";
 import requireAuth from "../../requireAuth";
 
 import ProgressGraph from "./ProgressGraph";
-import ProgressHeader from "./ProgressHeader";
 import AddMetricModule from './AddMetricModule';
+import ProgressDayView from './ProgressDayView';
 
 const ProgressView = props => {
   const { metrics } = props.user || [];
@@ -24,7 +24,12 @@ const ProgressView = props => {
 
       {metrics && !metrics.length ? (
         <h2>Add metrics to view progress</h2>
-      ) : (<ProgressGraph metrics={metrics} />)}
+      ) : (
+        <>
+          <ProgressGraph metrics={metrics} />
+          <ProgressDayView metrics={metrics}/>
+        </>
+      )}
 
       {addMetric ? (<AddMetricModule setAddMetric={setAddMetric}/>) : null}
     </ProgressViewStyle>
