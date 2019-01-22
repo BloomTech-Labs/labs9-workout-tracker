@@ -11,7 +11,7 @@ const categoryArr = [];
 
 exports.seed = function(knex, Promise) {
   return knex("category").insert([
-    { id: 0, name: "Legs", user_id: 0 },
-    { id: 1, name: "Upperbody", user_id: 0 }
+    { name: "Legs", user_id: 1 },
+    { name: "Upperbody", user_id: 1 }
   ]);
 };

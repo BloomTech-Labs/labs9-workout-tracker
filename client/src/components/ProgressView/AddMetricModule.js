@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const AddMetricModule = ({setAddMetric}) => {
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+const AddMetricModule = ({setAddMetric, metrics}) => {
 
     const [weight, setWeight] = useState('')
     const [hips, setHips] = useState('')
@@ -10,6 +14,46 @@ const AddMetricModule = ({setAddMetric}) => {
     const [armRight, setArmRight] = useState('')
     const [legLeft, setLegLeft] = useState('')
     const [legRight, setLegRight] = useState('')
+    const [date, setDate] = useState(new Date())
+
+    const dateStringParser = date => {
+    
+      date = date.split("T")[0].split('-');
+  
+      const newDate = date[0] + "/" + date[1] + "/" + date[2];
+  
+      return new Date(newDate);
+    };
+
+    const dateFormat = d => {
+      let month = d.getMonth() + 1;
+      let day = d.getDate();
+    
+      if (day < 10) {
+        day = '0' + day;
+      }
+    
+      if (month < 10) {
+        month = '0' + month;
+      }
+    
+      return `${d.getFullYear()}-${month}-${day}`
+    };
+
+    const addMetric = () => {
+
+    }
+
+    const changeDate = (nDate) => {
+      const dates = metrics.map(m => dateFormat(dateStringParser(m.date)));
+
+      if (dates.includes(dateFormat(nDate))){
+        console.log(true)
+        return
+      }
+      console.log(false)
+
+    }
 
 
     return (
@@ -22,6 +66,10 @@ const AddMetricModule = ({setAddMetric}) => {
             <input type="text" placeholder="ArmRight" value={armRight} onChange={e => setArmRight(e.target.value)} />
             <input type="text" placeholder="LegLeft" value={legLeft} onChange={e => setLegLeft(e.target.value)} />
             <input type="text" placeholder="LegRight" value={legRight} onChange={e => setLegRight(e.target.value)} />
+            <DatePicker
+              selected={date}
+              onChange={changeDate}
+            />
 
             <ModuleActions>
               <button type="button" onClick={() => setAddMetric(false)}>
