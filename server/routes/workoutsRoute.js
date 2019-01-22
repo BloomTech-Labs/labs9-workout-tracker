@@ -146,27 +146,18 @@ router.post("/", async (req, res) => {
       let exercisesArr = req.body.exercises;
 
       exercisesArr.forEach(ex => ex.workout_id = workout.id);
-      // const addExercises = await db("exercises").returning('id').insert([exercisesArr]);
-      const addExercises = await db("exercises").returning('id').insert(exercisesArr, ['id'])
+      console.log(exercisesArr);
+      const addExercises = await db("exercises").returning('id').insert(exercisesArr);
 
       console.log(addExercises);
-
-      // for (let exercise of exercisesArr) {
-
-      //   const exerciseObj = {
-      //     ...exercise,
-      //     workout_id: workout.id
-      //   };
-
-      //   console.log("exerciseObj: ", exerciseObj);
-      //   const addExercises = await db("exercises").insert(exerciseObj);
-      // }
 
       const completeExercises = await db("exercises").where(
         "workout_id",
         "=",
         workout.id
       );
+
+      console.log(completeExercises)
       insertObj.exercises = completeExercises;
     }
 

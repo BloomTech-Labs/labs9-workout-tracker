@@ -29,11 +29,11 @@
 
 exports.seed = function(knex, Promise) {
   return knex("exercises").insert([
-    { id: 0, name: "Deadlift", workout_id: 0, sets: 5, reps: 5, weight: 315 },
-    { id: 1, name: "Squats", workout_id: 0, sets: 3, reps: 8, weight: 275 },
-    { id: 2, name: "Lunges", workout_id: 0, sets: 3, reps: 12, weight: 25 },
-    { id: 3, name: "Bench Press", workout_id: 1, sets: 3, reps: 5, weight: 245 },
-    { id: 4, name: "Incline DB", workout_id: 1, sets: 3, reps: 10, weight: 75 },
-    { id: 5, name: "Dips", workout_id: 1, sets: 3, reps: 10, weight: 0 }
+    { name: "Deadlift", workout_id: 0, sets: 5, reps: 5, weight: 315 },
+    { name: "Squats", workout_id: 0, sets: 3, reps: 8, weight: 275 },
+    { name: "Lunges", workout_id: 0, sets: 3, reps: 12, weight: 25 },
+    { name: "Bench Press", workout_id: 1, sets: 3, reps: 5, weight: 245 },
+    { name: "Incline DB", workout_id: 1, sets: 3, reps: 10, weight: 75 },
+    { name: "Dips", workout_id: 1, sets: 3, reps: 10, weight: 0 }
   ]);
 };
