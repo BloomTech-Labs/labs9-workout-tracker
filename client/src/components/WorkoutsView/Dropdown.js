@@ -1,7 +1,6 @@
 import React, { Component, useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import DropdownList from './DropdownList';
-
 import styled from 'styled-components';
 
 const Dropdown = props => {
@@ -9,13 +8,15 @@ const Dropdown = props => {
 
   const reqUrl = 'https://fitmetrix.herokuapp.com/api/category/user';
 
+  //Sets first Category in the dropdown list
   const initialCategoryValue = [' --- Select an Category --- '];
 
+  //useState hook to set the Category that was chosen
   const [categories, setCategory] = useState(initialCategoryValue);
 
   let categoryComponent = null;
 
-  // useEffect to get Categories
+  // useEffect to get Categories from the backend
   useEffect(() => {
     console.log('Inside effect 2');
     axios.get(reqUrl, { headers: { Authorization: key } }).then(result =>
@@ -26,6 +27,7 @@ const Dropdown = props => {
     );
   }, []);
 
+  //Puts the categories into a component
   categoryComponent = (
     <select>
       {categories.map((category, index) => (
@@ -38,7 +40,6 @@ const Dropdown = props => {
     <div>
       <label>Category::</label>
       {categoryComponent}
-      <hr />
     </div>
   );
 };
