@@ -13,6 +13,7 @@ const SettingsView = props => {
   const [newPassword, setPassword] = useState('');
   const [currentPassword, setcurrentPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
+
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
   useEffect(() => {
@@ -35,10 +36,13 @@ const SettingsView = props => {
                 "Content-Type": "application/json",
                 Authorization: token
               }
-            }
+            },
+            
           );
           console.log(res.data);
           props.dispatch({type: 'userModel', payload:res.data})
+          setPassword('');
+          setcurrentPassword('');
         }
       alert('Email was changed');
     }).catch((error) => {
