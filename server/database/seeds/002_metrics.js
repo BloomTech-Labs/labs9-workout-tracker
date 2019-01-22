@@ -28,7 +28,56 @@ exports.seed = function(knex, Promise) {
       arm_left: randomMetric(),
       leg_right: randomMetric(),
       leg_left: randomMetric(),
+      date: "2019-01-16",
       user_id: 0
-    }
+    },
+    {
+      id: 1,
+      weight: randomMetric(),
+      hips: randomMetric(),
+      waist: randomMetric(),
+      arm_right: randomMetric(),
+      arm_left: randomMetric(),
+      leg_right: randomMetric(),
+      leg_left: randomMetric(),
+      date: "2019-01-17",
+      user_id: 0
+    },
+    {
+      id: 2,
+      weight: randomMetric(),
+      hips: randomMetric(),
+      waist: randomMetric(),
+      arm_right: randomMetric(),
+      arm_left: randomMetric(),
+      leg_right: randomMetric(),
+      leg_left: randomMetric(),
+      date: "2019-01-18",
+      user_id: 0
+    },
+    {
+      id: 3,
+      weight: randomMetric(),
+      hips: randomMetric(),
+      waist: randomMetric(),
+      arm_right: randomMetric(),
+      arm_left: randomMetric(),
+      leg_right: randomMetric(),
+      leg_left: randomMetric(),
+      date: "2019-01-19",
+      user_id: 0
+    },
+    {
+      id: 4,
+      weight: randomMetric(),
+      hips: randomMetric(),
+      waist: randomMetric(),
+      arm_right: randomMetric(),
+      arm_left: randomMetric(),
+      leg_right: randomMetric(),
+      leg_left: randomMetric(),
+      date: "2019-01-20",
+      user_id: 0
+    },
   ]);
 };

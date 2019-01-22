@@ -82,25 +82,40 @@ router.get("/all/exercises", async (req, res) => {
 //GET Workout set by user ID
 router.get("/", async (req, res) => {
   try {
-    const workoutInfo = await db("workouts").where("user_id", "=", req.id);
+    
+    //use the user ID to pull the workouts associated with the user
+    const workouts = await db('workouts').where('user_id', '=', req.id);
+    console.log(workouts);
 
-    if (workoutInfo[0]) {
-      const exercisesInWorkout = await db("exercises").where(
-        "workout_id",
-        "=",
-        workoutInfo[0].id
-      );
-      console.log("WorkoutInfo is: ", workoutInfo[0]);
-      const returnObj = {
-        ...workoutInfo[0],
-        exercisesInWorkout
-      };
-      res.status(200).json(returnObj);
-    } else {
-      res.status(404).json({ message: "No Workouts Saved Yet" });
+    if (!workouts[0]) {
+      res.status(200).json("You have no workouts");
+      return
     }
-  } catch (error) {
-    console.log("getting a workout error is: ", error);
+
+    let workoutsArray = [];
+
+    for (const workout of workouts) {
+      //gets exercises that for the corresponding workout
+      const exercises = await db('exercises').where(
+        'workout_id',
+        '=',
+        workout.id
+      );
+      const category = await db('category').where(
+        'id',
+        '=',
+        workout.category_id
+      );
+      const workObj = {
+        ...workout,
+        exercises: [...exercises],
+        category: category[0]
+      };
+      workoutsArray.push(workObj);
+    }
+
+    res.status(200).json(workoutsArray);
+  } catch(error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",
       error

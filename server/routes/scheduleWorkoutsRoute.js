@@ -15,35 +15,41 @@ router.get("/all", async (req, res) => {
   }
 });
 
-//GET SchedWorkout for given User\
-//------------DOES THIS NEED TO BRING IN SCHEDULED EXERCISES???--------
+//GET SchedWorkout for given User
 router.get("/", async (req, res) => {
   try {
-    //use the user ID to pull the workouts associated with the user
-    const scheduleWorkouts = await db("schedule_workouts").where(
-      "user_id",
-      "=",
-      req.id
-    );
 
-    if (!scheduleWorkouts[0]) {
+    //use the user ID to pull the workouts associated with the user
+    const sWorkouts = await db('schedule_workouts').where(
+      'user_id',
+      '=',
+      req.id
+      );
+      
+    if (!sWorkouts[0]) {
       res.status(200).json("You have no scheduled workout, go schedule some!");
     }
+    let sWorkoutsArray = [];
+    for (const workout of sWorkouts) {
+      const exercises = await db('schedule_exercises').where(
+        'schedule_workout_id',
+        '=',
+        workout.id
+      );
+      const category = await db('category').where(
+        'id',
+        '=',
+        workout.category_id
+      );
+      const workObj = {
+        ...workout,
+        exercises: [...exercises],
+        category: category[0]
+      };
+      sWorkoutsArray.push(workObj);
+    }
 
-    //gets scheduled exercises that for the corresponding scheduled workout
-    const exercises = await db("schedule_exercises").where(
-      "schedule_workout_id",
-      "=",
-      scheduleWorkouts[0].id
-    );
-
-    // returnObj gets the scheduled workout and it's exercises assigned to it
-    const returnObj = {
-      ...scheduleWorkouts[0],
-      exercises
-    };
-
-    res.status(200).json(returnObj);
+    res.status(200).json(sWorkoutsArray);
   } catch (error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",

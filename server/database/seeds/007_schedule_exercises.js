@@ -52,6 +52,9 @@ exports.seed = function(knex, Promise) {
       sets: 3,
       reps: 12,
       weight: 25
-    }
+    },
+    { id: 3, name: "Bench Press", schedule_workout_id: 1, sets: 3, reps: 5, weight: 245 },
+    { id: 4, name: "Incline DB", schedule_workout_id: 1, sets: 3, reps: 10, weight: 75 },
+    { id: 5, name: "Dips", schedule_workout_id: 1, sets: 3, reps: 10, weight: 0 }
   ]);
 };
