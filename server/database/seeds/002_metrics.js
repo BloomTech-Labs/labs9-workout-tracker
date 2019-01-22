@@ -20,7 +20,6 @@ const randomMetric = () => Math.random() * 10 + 1;
 exports.seed = function(knex, Promise) {
   return knex("metrics").insert([
     {
-      id: 0,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -32,7 +31,6 @@ exports.seed = function(knex, Promise) {
       user_id: 0
     },
     {
-      id: 1,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -44,7 +42,6 @@ exports.seed = function(knex, Promise) {
       user_id: 0
     },
     {
-      id: 2,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -56,7 +53,6 @@ exports.seed = function(knex, Promise) {
       user_id: 0
     },
     {
-      id: 3,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
@@ -68,7 +64,6 @@ exports.seed = function(knex, Promise) {
       user_id: 0
     },
     {
-      id: 4,
       weight: randomMetric(),
       hips: randomMetric(),
       waist: randomMetric(),
