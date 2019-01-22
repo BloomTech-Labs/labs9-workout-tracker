@@ -25,7 +25,21 @@ const SettingsView = props => {
     const token = window.localStorage.getItem("login_token");
     reauthenticate(currentPassword).then(() => {
       var user = firebase.auth().currentUser;
-      user.updateEmail(email).then(() => {
+      user.updateEmail(email).then( async () => {
+        if (token !== undefined) {
+          const res = await axios.put(
+            "https://fitmetrix.herokuapp.com/api/user/edit",
+            { email, phone, recieves_email },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token
+              }
+            }
+          );
+          console.log(res.data);
+          props.dispatch({type: 'userModel', payload:res.data})
+        }
       alert('Email was changed');
     }).catch((error) => {
         alert(error.message);
@@ -34,21 +48,6 @@ const SettingsView = props => {
     }).catch((error) => {
       alert(error.message);
     })
-
-
-    if (token !== undefined) {
-      const res = await axios.put(
-        "https://fitmetrix.herokuapp.com/api/user/edit",
-        { email, phone, recieves_email },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token
-          }
-        }
-      );
-      console.log(res.data);
-    }
   };
 
   const renderPremium = () => {
