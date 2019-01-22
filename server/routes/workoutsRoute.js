@@ -106,6 +106,7 @@ router.get("/", async (req, res) => {
         '=',
         workout.category_id
       );
+
       const workObj = {
         ...workout,
         exercises: [...exercises],
