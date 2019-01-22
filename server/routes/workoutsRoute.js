@@ -92,7 +92,7 @@ router.get("/", async (req, res) => {
       );
       console.log("WorkoutInfo is: ", workoutInfo[0]);
       const returnObj = {
-        ...workoutInfo[0],
+        ...workoutInfo,
         exercisesInWorkout
       };
       res.status(200).json(returnObj);
