@@ -22,7 +22,7 @@ const App = props => {
   const reducer = (state, action) => {
     switch (action.type) {
       case 'userModel':
-        return { ...state, user: action.payload };
+        return { ...state, user: {...action.payload}, };
         case "UPDATE_S_EXERCISE":
         //Create a variable that points to schedule workouts on state
       const sw = [...state.user.scheduleWorkouts];
@@ -79,7 +79,7 @@ const App = props => {
   }, []);
 
   const getUserInfo = async () => {
-    console.log('getUSerInfo called');
+    console.log('getUserInfo called');
     const token = window.localStorage.getItem('login_token');
 
     const user = await axios.get('https://fitmetrix.herokuapp.com/api/user', {
@@ -147,7 +147,8 @@ const App = props => {
             exact
             path="/settings"
             render={props => (
-              <SettingsView
+              <SettingsView 
+                dispatch={dispatch}
                 {...props}
                 user={state.user}
                 getUserInfo={getUserInfo}
