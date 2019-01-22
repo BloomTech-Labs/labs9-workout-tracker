@@ -40,7 +40,7 @@ const WorkoutCategoryList = props => {
         return (
           <div>
             {category.name}
-            <WorkoutCategory category={category} />
+            <WorkoutCategory category={category} workouts={props.workouts} />
           </div>
         );
       })}

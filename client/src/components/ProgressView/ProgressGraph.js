@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import * as d3 from "d3";
 
+
+import ProgressHeader from "./ProgressHeader";
+
 const ProgressGraph = props => {
-  const { metrics, type } = props;
+
+  const [type, setType] = useState("weight");
+  const { metrics } = props;
 
   const d3Data = () => {
     let arr = [];
@@ -98,10 +103,49 @@ const ProgressGraph = props => {
   );
 
   return (
-    <div>
-      <svg />
-    </div>
+    <>
+      <ProgressInfo>
+        <ProgressTitle>Progress</ProgressTitle>
+        <ProgressHeader metrics={props.metrics} setType={setType} />
+      </ProgressInfo>
+      <GraphContainer>
+        <div>
+          <svg/>
+        </div>
+        <SelectedMetric>
+          {type
+            .toUpperCase()
+            .split("_")
+            .join(" ")}
+        </SelectedMetric>
+      </GraphContainer>
+    </>
   );
 };
 
 export default ProgressGraph;
+
+
+const GraphContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+
+const ProgressInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ProgressTitle = styled.h2`
+  margin: 10px 0px;
+`;
+
+const SelectedMetric = styled.h2`
+  margin: 10px 0px;
+`;

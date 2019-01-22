@@ -15,35 +15,41 @@ router.get("/all", async (req, res) => {
   }
 });
 
-//GET SchedWorkout for given User\
-//------------DOES THIS NEED TO BRING IN SCHEDULED EXERCISES???--------
+//GET SchedWorkout for given User
 router.get("/", async (req, res) => {
   try {
-    //use the user ID to pull the workouts associated with the user
-    const scheduleWorkouts = await db("schedule_workouts").where(
-      "user_id",
-      "=",
-      req.id
-    );
 
-    if (!scheduleWorkouts[0]) {
+    //use the user ID to pull the workouts associated with the user
+    const sWorkouts = await db('schedule_workouts').where(
+      'user_id',
+      '=',
+      req.id
+      );
+      
+    if (!sWorkouts[0]) {
       res.status(200).json("You have no scheduled workout, go schedule some!");
     }
+    let sWorkoutsArray = [];
+    for (const workout of sWorkouts) {
+      const exercises = await db('schedule_exercises').where(
+        'schedule_workout_id',
+        '=',
+        workout.id
+      );
+      const category = await db('category').where(
+        'id',
+        '=',
+        workout.category_id
+      );
+      const workObj = {
+        ...workout,
+        exercises: [...exercises],
+        category: category[0]
+      };
+      sWorkoutsArray.push(workObj);
+    }
 
-    //gets scheduled exercises that for the corresponding scheduled workout
-    const exercises = await db("schedule_exercises").where(
-      "schedule_workout_id",
-      "=",
-      scheduleWorkouts[0].id
-    );
-
-    // returnObj gets the scheduled workout and it's exercises assigned to it
-    const returnObj = {
-      ...scheduleWorkouts[0],
-      exercises
-    };
-
-    res.status(200).json(returnObj);
+    res.status(200).json(sWorkoutsArray);
   } catch (error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",
@@ -87,7 +93,7 @@ router.post("/create", async (req, res) => {
   };
 
   // Insert scheduleWorkoutObj with the original Workout data at a date
-  const scheduleWorkout = await db("schedule_workouts").insert(
+  const scheduleWorkout = await db("schedule_workouts").returning('id').insert(
     scheduleWorkoutObj
   );
 
@@ -109,7 +115,7 @@ router.post("/create", async (req, res) => {
   const insertedEx = [];
 
   for (ex of exercises) {
-    const exId = await db("schedule_exercises").insert(ex);
+    const exId = await db("schedule_exercises").returning('id').insert(ex);
     insertedEx.push(exId);
   }
 
@@ -127,40 +133,51 @@ router.post("/create", async (req, res) => {
 
 //Edit Scheduled Exercise
 router.put("/edit/exercise/:id", async (req, res) => {
-  const exerciseID = req.params.id;
-  const { body } = req;
 
-  // checks if proper id is passed
-  if (Number.isInteger(exerciseID)) {
-    res.status(400).json({ message: "id is required" });
-    return;
+  try {
+    const exerciseID = req.params.id;
+    const { body } = req;
+  
+    // checks if proper id is passed
+    if (Number.isInteger(exerciseID)) {
+      res.status(400).json({ message: "id is required" });
+      return;
+    }
+  
+    //checks if the request body has all required fields for an exercise
+    const { name, reps, sets, completed, id } = body;
+    if (!name && !reps && sets && !completed) {
+      res.status(400).json({ message: "nothing to update" });
+      return;
+    }
+  
+    //Removes the ID from the scheduled exercise insertObj
+    const insertObj = { ...body };
+
+    delete insertObj.id;
+  
+    //Finds the scheduled exercise to update and updates that exercise with the insertObj
+    const updatedExercise = await db("schedule_exercises")
+      .whereIn(["id"], [[exerciseID]])
+      .update(insertObj);
+  
+    if (updatedExercise < 1) {
+      res.status(400).json({message: "Nothing to update"});
+      return
+    }
+  
+    //Gets the updated exercies that we send back as the response
+    const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
+  
+  
+    res.status(200).json(newEx[0]);
+
+  } catch(err) {
+    res.status(500).json({
+      "Well this is embarrassing": "Something went wrong",
+      error
+    });
   }
-
-  //checks if the request body has all required fields for an exercise
-  const { name, reps, sets, completed, id } = body;
-  if (!name && !reps && sets && !completed) {
-    res.status(400).json({ message: "nothing to update" });
-    return;
-  }
-
-  //Removes the ID from the scheduled exercise insertObj
-  const insertObj = { ...body };
-  delete insertObj.id;
-
-  //Finds the scheduled exercise to update and updates that exercise with the insertObj
-  const updatedExercise = await db("schedule_exercises")
-    .whereIn(["id"], [[exerciseID]])
-    .update(insertObj);
-
-  if (updatedExercise < 1) {
-    res.status(400).json({message: "Nothing to update"});
-    return
-  }
-
-  //Gets the updated exercies that we send back as the response
-  const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
-
-  res.status(200).json(newEx[0]);
 });
 
 //Edit Scheduled Workout
