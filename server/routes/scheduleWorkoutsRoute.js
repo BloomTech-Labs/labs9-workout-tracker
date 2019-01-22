@@ -133,40 +133,51 @@ router.post("/create", async (req, res) => {
 
 //Edit Scheduled Exercise
 router.put("/edit/exercise/:id", async (req, res) => {
-  const exerciseID = req.params.id;
-  const { body } = req;
 
-  // checks if proper id is passed
-  if (Number.isInteger(exerciseID)) {
-    res.status(400).json({ message: "id is required" });
-    return;
+  try {
+    const exerciseID = req.params.id;
+    const { body } = req;
+  
+    // checks if proper id is passed
+    if (Number.isInteger(exerciseID)) {
+      res.status(400).json({ message: "id is required" });
+      return;
+    }
+  
+    //checks if the request body has all required fields for an exercise
+    const { name, reps, sets, completed, id } = body;
+    if (!name && !reps && sets && !completed) {
+      res.status(400).json({ message: "nothing to update" });
+      return;
+    }
+  
+    //Removes the ID from the scheduled exercise insertObj
+    const insertObj = { ...body };
+
+    delete insertObj.id;
+  
+    //Finds the scheduled exercise to update and updates that exercise with the insertObj
+    const updatedExercise = await db("schedule_exercises")
+      .whereIn(["id"], [[exerciseID]])
+      .update(insertObj);
+  
+    if (updatedExercise < 1) {
+      res.status(400).json({message: "Nothing to update"});
+      return
+    }
+  
+    //Gets the updated exercies that we send back as the response
+    const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
+  
+  
+    res.status(200).json(newEx[0]);
+
+  } catch(err) {
+    res.status(500).json({
+      "Well this is embarrassing": "Something went wrong",
+      error
+    });
   }
-
-  //checks if the request body has all required fields for an exercise
-  const { name, reps, sets, completed, id } = body;
-  if (!name && !reps && sets && !completed) {
-    res.status(400).json({ message: "nothing to update" });
-    return;
-  }
-
-  //Removes the ID from the scheduled exercise insertObj
-  const insertObj = { ...body };
-  delete insertObj.id;
-
-  //Finds the scheduled exercise to update and updates that exercise with the insertObj
-  const updatedExercise = await db("schedule_exercises")
-    .whereIn(["id"], [[exerciseID]])
-    .update(insertObj);
-
-  if (updatedExercise < 1) {
-    res.status(400).json({message: "Nothing to update"});
-    return
-  }
-
-  //Gets the updated exercies that we send back as the response
-  const newEx = await db("schedule_exercises").where("id", "=", exerciseID);
-
-  res.status(200).json(newEx[0]);
 });
 
 //Edit Scheduled Workout
