@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from 'firebase';
+//working on updating info
 
 const SettingsView = props => {
   const [email, setEmail] = useState(props.user.email);
