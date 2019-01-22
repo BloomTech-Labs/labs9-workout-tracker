@@ -39,18 +39,23 @@ const SettingsView = props => {
             },
             
           );
-          console.log(res.data);
+          if (props.user.email !== email) {
+            alert("Email has changed")
+          }
+          console.log(res.data); 
           props.dispatch({type: 'userModel', payload:res.data})
+          if (email === props.user.email) {
+            changePasswordPress();
+          } 
           setPassword('');
           setcurrentPassword('');
         }
-      alert('Email was changed');
     }).catch((error) => {
-        alert(error.message);
+        alert('Reformat email to update email');
     })
 
     }).catch((error) => {
-      alert(error.message);
+      alert('not sure of this catch');
     })
   };
 
@@ -68,11 +73,11 @@ const SettingsView = props => {
       user.updatePassword(newPassword).then(() => {
       alert('Password was changed');
     }).catch((error) => {
-        alert(error.message);
+        alert(error.message, 'changePasswordPress function error');
     })
 
     }).catch((error) => {
-      alert(error.message);
+      alert(error.message, 'error message catch 2 for password');
     })
   }
 
@@ -130,7 +135,7 @@ const SettingsView = props => {
             secureTextEntry={true}
             onChange={(e) =>  setPassword(e.target.value) } 
             />
-            <Button title='Change Password' onClick={() => changePasswordPress()}>Update Info</Button>
+            <Button title='Change Password'>Update Info</Button>
 
         </Div>
         <ButtonDiv>
