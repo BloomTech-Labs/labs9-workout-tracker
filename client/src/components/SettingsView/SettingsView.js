@@ -9,7 +9,9 @@ const SettingsView = props => {
   const [phone, setPhone] = useState(props.user.phone);
   const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
   const [premium, displayPremium] = useState(props.user.premium);
-  const [password, changePassword] = useState('');
+  const [newPassword, setPassword] = useState('');
+  const [currentPassword, setcurrentPassword] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
   useEffect(() => {
@@ -43,6 +45,26 @@ const SettingsView = props => {
       return <StripeButton />;
     }
   };
+
+  const changePasswordPress = () => {
+    reauthenticate(currentPassword).then(() => {
+      var user = firebase.auth().currentUser;
+      user.updatePassword(newPassword).then(() => {
+      alert('Password was changed');
+    }).catch((error) => {
+        alert(error.message);
+    })
+
+    }).catch((error) => {
+      alert(error.message);
+    })
+  }
+
+  const reauthenticate = (currentPassword) => {
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred);
+  }
   
 
   return (
@@ -77,13 +99,20 @@ const SettingsView = props => {
         </Div>
         <Div>
           <InputStyle 
-            value={password} 
+            value={newPassword} 
+            placeholder='Current Password' 
+            autoCapitalize='none' 
+            secureTextEntry={true}
+            onTextChange={(text) => { currentPassword(text) }} 
+          />
+          <InputStyle 
+            value={newPassword} 
             placeholder='New Password' 
             autoCapitalize='none' 
             secureTextEntry={true}
-            onTextChange={(text) => { this.setState({password: text }) }} 
+            onTextChange={(text) => { setPassword(text) }} 
             />
-            <Button title='Change Password' onPress={this.changePasswordPress} /> 
+            <Button title='Change Password' onPress={changePasswordPress()} /> 
 
         </Div>
         <ButtonDiv>
