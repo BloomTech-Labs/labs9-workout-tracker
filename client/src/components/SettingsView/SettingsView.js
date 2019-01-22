@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
+import firebase from 'firebase';
 
 const SettingsView = props => {
   const [email, setEmail] = useState(props.user.email);
   const [phone, setPhone] = useState(props.user.phone);
   const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
   const [premium, displayPremium] = useState(props.user.premium);
+  const [password, changePassword] = useState('');
   // const value = target.type === 'checkbox' ? target.checked : target.value;
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const SettingsView = props => {
       return <StripeButton />;
     }
   };
+  
 
   return (
     <SettingsViewStyle>
@@ -71,6 +74,17 @@ const SettingsView = props => {
             checked={recieves_email}
             onChange={e => setRecieveEmail(e.target.checked)}
           />
+        </Div>
+        <Div>
+          <InputStyle 
+            value={password} 
+            placeholder='New Password' 
+            autoCapitalize='none' 
+            secureTextEntry={true}
+            onTextChange={(text) => { this.setState({password: text }) }} 
+            />
+            <Button title='Change Password' onPress={this.changePasswordPress} /> 
+
         </Div>
         <ButtonDiv>
           <Button>Submit</Button>
