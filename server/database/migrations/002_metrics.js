@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
     tbl.decimal("arm_left");
     tbl.decimal("leg_right");
     tbl.decimal("leg_left");
-    tbl.timestamp("date").defaultTo(knex.fn.now());
+    tbl.date("date").notNullable();
     tbl
       .biginteger("user_id")
       .unsigned()
