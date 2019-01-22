@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 const SettingsView = props => {
   const [email, setEmail] = useState(props.user.email);
@@ -22,6 +22,18 @@ const SettingsView = props => {
   const updateUser = async e => {
     e.preventDefault();
     const token = window.localStorage.getItem("login_token");
+    reauthenticate(currentPassword).then(() => {
+      var user = firebase.auth().currentUser;
+      user.updateEmail(email).then(() => {
+      alert('Email was changed');
+    }).catch((error) => {
+        alert(error.message);
+    })
+
+    }).catch((error) => {
+      alert(error.message);
+    })
+
 
     if (token !== undefined) {
       const res = await axios.put(
@@ -62,7 +74,7 @@ const SettingsView = props => {
 
   const reauthenticate = (currentPassword) => {
     var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+    var cred = firebase.auth.EmailAuthProvider.credential(props.user.email, currentPassword);
     return user.reauthenticateWithCredential(cred);
   }
   
@@ -99,24 +111,25 @@ const SettingsView = props => {
         </Div>
         <Div>
           <InputStyle 
-            value={newPassword} 
+          type='password'
+            value={currentPassword} 
             placeholder='Current Password' 
             autoCapitalize='none' 
             secureTextEntry={true}
-            onTextChange={(text) => { currentPassword(text) }} 
+            onChange={(e) =>  setcurrentPassword(e.target.value) } 
           />
           <InputStyle 
+          type='password'
             value={newPassword} 
             placeholder='New Password' 
             autoCapitalize='none' 
             secureTextEntry={true}
-            onTextChange={(text) => { setPassword(text) }} 
+            onChange={(e) =>  setPassword(e.target.value) } 
             />
-            <Button title='Change Password' onPress={changePasswordPress()} /> 
+            <Button title='Change Password' onClick={() => changePasswordPress()}>Update Info</Button>
 
         </Div>
         <ButtonDiv>
-          <Button>Submit</Button>
           {renderPremium()}
         </ButtonDiv>
       </FormStyle>

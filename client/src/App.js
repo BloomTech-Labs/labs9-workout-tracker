@@ -79,7 +79,7 @@ const App = props => {
   }, []);
 
   const getUserInfo = async () => {
-    console.log('getUSerInfo called');
+    console.log('getUserInfo called');
     const token = window.localStorage.getItem('login_token');
 
     const user = await axios.get('https://fitmetrix.herokuapp.com/api/user', {
