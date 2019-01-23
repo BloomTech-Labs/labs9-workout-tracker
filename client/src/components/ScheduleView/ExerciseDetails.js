@@ -37,14 +37,13 @@ const ExerciseDetails = props => {
     <div key={props.exercise.id}>
       <input
         type="checkbox"
-        checked={props.exercise.completed}
+        checked={status}
         onChange={e => {
-            console.log('hello')
-            updateExercise()
+            setStatus(e.target.checked)
         } }
       />
       <p> {props.exercise.name}</p>
-      <p>completed? {props.exercise.completed.toString()}</p>
+      <p>completed? {status.toString()}</p>
       <p>Weight: {props.exercise.weight}</p>
       <p>Sets: {props.exercise.sets}</p>
       <p>Reps: {props.exercise.reps}</p>
