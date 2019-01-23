@@ -79,6 +79,14 @@ class Calendar extends React.Component {
       return populated;
     };
 
+
+    const renderButton = (key) => {
+      console.log(key)
+      if(key.toString().includes("Sun")) {
+        return <button>Duplicate</button>
+      }
+    }
+
     while (day <= endDate) {
       //Loop through days 1-7
       for (let i = 0; i < 7; i++) {
@@ -106,6 +114,15 @@ class Calendar extends React.Component {
                     : ""
                 }`}
                 key={day}
+                sworkout={
+                  this.props.scheduleWorkouts.map(sworkout => {
+                    // returns the title of the scheduled workout if it matches matchedDate
+                    const splitDate = sworkout.date.split("T")[0]
+                    return splitDate === matchedDate
+                      ? sworkout
+                      : null;
+                  })
+                }
                 onClick={
                   //Check whether the matchedDate is inside of scheduled workouts
                   // using arrayContains method
@@ -133,6 +150,7 @@ class Calendar extends React.Component {
                       : null;
                   })}
                 </span>
+                {renderButton(day)}
               </div>
             )}
           </>
@@ -144,6 +162,7 @@ class Calendar extends React.Component {
           {days}
         </div>
       );
+      console.log("DAYS:", days)
       days = [];
     }
     return <div className="body">{rows}</div>;
