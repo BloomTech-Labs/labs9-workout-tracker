@@ -18,7 +18,6 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
     const [error, setError] = useState('')
 
     const dateStringParser = date => {
-    
       date = date.split("T")[0].split('-');
   
       const newDate = date[0] + "/" + date[1] + "/" + date[2];
@@ -53,6 +52,7 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
         return
       }
       setDate(nDate);
+      setError('');
     }
 
 
@@ -70,6 +70,13 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
               selected={date}
               onChange={changeDate}
             />
+            {
+              error !== "" 
+                ? (
+                  <StyledError>{error}</StyledError>
+                )
+                : null
+            }
 
             <ModuleActions>
               <button type="button" onClick={() => setAddMetric(false)}>
@@ -84,7 +91,10 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
 
 export default AddMetricModule;
 
-// react-datepicker-ignore-onclickoutside
+const StyledError = styled.div`
+  color: red;
+  font-size: 16px;
+`;
 
 const StyledDatePicker = styled(DatePicker)`
   width: 100%;
