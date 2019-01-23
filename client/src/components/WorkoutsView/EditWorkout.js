@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as firebase from "firebase";
+import { Store } from "../../index";
 
 const EditWorkout = props => {
-  const key = window.localStorage.getItem("login_token");
-
-  const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
+  const { state, dispatch } = useContext(Store);
 
   //Sets first Category in the dropdown list
 
@@ -32,20 +31,14 @@ const EditWorkout = props => {
   // //useState hooks to set the CategoryId that was chosen
   // const [categoryId, setCategoryId] = useState(initialCategoryId);
   // hook to set the workouts to add
-  const [workout, setWorkout] = useState(initialWorkoutValue);
+  const [workout, setWorkout] = useState(initialWorkoutValue)
 
-  // useEffect to get Categories from the backend
-  // hook to set the workouts to add
-  const [workout, setWorkout] = useState(initialWorkoutValue);
-
-  // useEffect to get Categories from the backend
-  useEffect(() => {
-    console.log("Inside effect 1");
-    axios.get(reqUrl, { headers: { Authorization: key } }).then(result => {
-      console.log("the result is: ", result.data);
-      setCategories(result.data);
-    });
-  }, []);
+  useEffect(
+    () => {
+      setCategories(state.categories);
+    },
+    [state]
+  );
 
   //add Exercise handler
   const addExercise = async e => {
@@ -194,8 +187,8 @@ const EditWorkout = props => {
       {workout.exercises.length > 0 ? (
         <StyledButton>Submit</StyledButton>
       ) : null}
-    </EditWorkoutSubmitForm>
-  );
+    </EditWorkoutSubmitForm> 
+    );
 };
 
 export default EditWorkout;

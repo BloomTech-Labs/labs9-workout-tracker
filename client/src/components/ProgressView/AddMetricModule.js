@@ -55,50 +55,50 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
   return (
     <MetricFormContainer>
       <MetricForm>
-        <input
+        <StyledInput
           type="text"
           placeholder="Weight"
           value={weight}
           onChange={e => setWeight(e.target.value)}
         />
-        <input
+        <StyledInput
           type="text"
           placeholder="Hips"
           value={hips}
           onChange={e => setHips(e.target.value)}
         />
-        <input
+        <StyledInput
           type="text"
           placeholder="Waist"
           value={waist}
           onChange={e => setWaist(e.target.value)}
         />
-        <input
+        <StyledInput
           type="text"
           placeholder="ArmLeft"
           value={armLeft}
           onChange={e => setArmLeft(e.target.value)}
         />
-        <input
+        <StyledInput
           type="text"
           placeholder="ArmRight"
           value={armRight}
           onChange={e => setArmRight(e.target.value)}
         />
-        <input
+        <StyledInput
           type="text"
           placeholder="LegLeft"
           value={legLeft}
           onChange={e => setLegLeft(e.target.value)}
         />
-        <input
+        <StyledInput
           type="text"
           placeholder="LegRight"
           value={legRight}
           onChange={e => setLegRight(e.target.value)}
         />
-        <DatePicker selected={date} onChange={changeDate} />
-
+        <StyledDatePicker selected={date} onChange={changeDate} />
+        {error !== "" ? <StyledError>{error}</StyledError> : null}
         <ModuleActions>
           <button type="button" onClick={() => setAddMetric(false)}>
             Cancel
@@ -159,51 +159,3 @@ const MetricForm = styled.form`
   padding: 30px 40px;
 `;
 
-export default AddMetricModule;
-
-const StyledError = styled.div`
-  color: red;
-  font-size: 16px;
-`;
-
-const StyledDatePicker = styled(DatePicker)`
-  width: 100%;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 35px;
-  margin-bottom: 10px;
-  border: 1px solid rgba(0,0,0,0.45);
-  padding: 0px 15px;
-  outline: none;
-  font-size: 18px;
-`;
-
-const ModuleActions = styled.div`
-  width: 100%;
-  height: 60px;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const MetricFormContainer = styled.form`
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.45);
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-`;
-
-const MetricForm = styled.form`
-  width: 340px;
-  height: 500px;
-  background-color: white;
-  border-radius: 12px;
-  padding: 30px 40px;
-`;
