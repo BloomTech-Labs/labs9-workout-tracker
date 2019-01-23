@@ -12,7 +12,11 @@ class Calendar extends React.Component {
       currentMonth: new Date(),
       dateSelected: false,
       datePopulated: false,
-      selectedDate: null
+      selectedDate: null,
+
+      //Dup week func
+      weekSelected:false,
+      datesSelected: []
     };
   }
 
@@ -163,17 +167,21 @@ class Calendar extends React.Component {
         </div>
       );
       console.log("DAYS:", days)
+
       days = [];
     }
     return <div className="body">{rows}</div>;
   }
 
   onDateClick = (day, isPopulated) => {
+    // selecteddate null, dates length =0
     if (this.state.selectedDate === null) {
       this.setState({
         selectedDate: day,
         datePopulated: isPopulated,
-        dateSelected: true
+        dateSelected: true,
+        //dupweek func
+        datesSelected: [...this.state.datesSelected, day]
       });
     } else {
       this.setState({
@@ -182,6 +190,16 @@ class Calendar extends React.Component {
         dateSelected: false
       });
     }
+    // isPopulated: If the date has a scheduled workout true/false
+    // dateSelected: If any date on the calendar is selected true/false
+    // selectedDate: What current date is being highlighted null/date
+    // week selected: If a week is selected true/false not used yet
+
+    //when selecting first date, selectedDate becomes the highlighted day
+    //date populated takes care of itself. Incoming flag
+    //
+
+
   };
 
   nextMonth = () => {

@@ -137,10 +137,9 @@ const StyledUserIcon = styled.span`
 
 const NavContainer = styled.div`
   height: 54px;
-  width: 100vw;
+  width: 100%;
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
-  padding: 0px 30px;
   z-index: 99;
   position: absolute;
   top: 0;

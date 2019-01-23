@@ -171,7 +171,6 @@ const StyledApp = styled.div`
   height: 100vh;
   position: relative;
   background-color: transparent;
-  padding: 0 30px;
   font-family: ${props => props.theme.opensans};
 `;
 
