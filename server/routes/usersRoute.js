@@ -138,7 +138,6 @@ router.get('/', async (req, res) => {
     );
 
     let sWorkoutsArray = [];
-    console.log(sWorkouts);
     for (const workout of sWorkouts) {
       const exercises = await db('schedule_exercises').where(
         'schedule_workout_id',
@@ -167,7 +166,6 @@ router.get('/', async (req, res) => {
       scheduleWorkouts: sWorkoutsArray
     };
 
-    console.log(userObj);
 
     res.status(200).json(userObj);
   } catch (error) {
