@@ -14,6 +14,7 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
   const [legLeft, setLegLeft] = useState("");
   const [legRight, setLegRight] = useState("");
   const [date, setDate] = useState(new Date());
+  const [error, setError] = useState("");
 
   const dateStringParser = date => {
     date = date.split("T")[0].split("-");
@@ -44,10 +45,11 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
     const dates = metrics.map(m => dateFormat(dateStringParser(m.date)));
 
     if (dates.includes(dateFormat(nDate))) {
-      console.log(true);
+      setError("Metric for date already exists");
       return;
     }
-    console.log(false);
+    setDate(nDate);
+    setError("");
   };
 
   return (
@@ -109,6 +111,26 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
 };
 
 export default AddMetricModule;
+
+const StyledError = styled.div`
+  color: red;
+  font-size: 16px;
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  width: 100%;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  height: 35px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  padding: 0px 15px;
+  outline: none;
+  font-size: 18px;
+`;
+
 const ModuleActions = styled.div`
   width: 100%;
   height: 60px;
@@ -134,4 +156,54 @@ const MetricForm = styled.form`
   height: 500px;
   background-color: white;
   border-radius: 12px;
+  padding: 30px 40px;
+`;
+
+export default AddMetricModule;
+
+const StyledError = styled.div`
+  color: red;
+  font-size: 16px;
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  width: 100%;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  height: 35px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(0,0,0,0.45);
+  padding: 0px 15px;
+  outline: none;
+  font-size: 18px;
+`;
+
+const ModuleActions = styled.div`
+  width: 100%;
+  height: 60px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const MetricFormContainer = styled.form`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+`;
+
+const MetricForm = styled.form`
+  width: 340px;
+  height: 500px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px 40px;
 `;
