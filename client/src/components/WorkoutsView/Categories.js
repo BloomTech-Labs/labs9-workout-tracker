@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
+import WorkoutList from './WorkoutList';
 import styled from 'styled-components';
 import { Store } from '../../index';
 
-const WorkoutListStyle = styled.div`
+const CategoriesStyle = styled.div`
   font-family: ${props => props.theme.roboto};
   font-size: 2em;
   font-weight: bold;
@@ -13,25 +14,23 @@ const WorkoutListStyle = styled.div`
   border-radius: 6px;
 `;
 
-const WorkoutList = props => {
+const Categories = props => {
   const { state, dispatch } = useContext(Store);
+  console.log(state);
 
-  useEffect(() => {
-    dispatch({ type: 'USER_MODEL' });
-  }, []);
   return (
-    <WorkoutListStyle>
-      <div>
-        WORKOUT CARD
-        {state.workouts.map(workout => {
-          if (workout.category_id === state.category.id) {
-            console.log('match? true');
-            return <p>{workout.title}</p>;
-          }
+    <CategoriesStyle>
+      {state.category &&
+        state.category.map(cat => {
+          return (
+            <div>
+              {cat.name}
+              <WorkoutList cat={cat} workouts={state.workouts} />
+            </div>
+          );
         })}
-      </div>
-    </WorkoutListStyle>
+    </CategoriesStyle>
   );
 };
 
-export default WorkoutList;
+export default Categories;
