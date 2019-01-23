@@ -1,141 +1,110 @@
-import styled from 'styled-components';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import styled from "styled-components";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 const EditWorkout = props => {
-  const key = window.localStorage.getItem('login_token');
+  const key = window.localStorage.getItem("login_token");
 
-  const reqUrl = 'https://fitmetrix.herokuapp.com/api/category/user';
+  const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
 
   //Sets first Category in the dropdown list
-  const initialCategoryValue = [{ name: ' --- Select a Category --- ' }];
 
   //  Create variable to store workout
   let initialWorkoutValue = {
     category_id: null,
-    title: '',
+    title: "",
     exercises: []
   };
 
-  let initialExercise = {
-    name: '',
-    weight: null,
-    sets: null,
-    reps: null
-  };
-
   //Hook to set workout Title
-  const [title, setTitle] = useState('');
-  const [exerciseName, setExerciseName] = useState('');
-  const [weight, setWeight] = useState('');
-  const [sets, setSets] = useState('');
-  const [reps, setReps] = useState('');
+  const [title, setTitle] = useState("");
+  const [exerciseName, setExerciseName] = useState("");
+  const [weight, setWeight] = useState("");
+  const [sets, setSets] = useState("");
+  const [reps, setReps] = useState("");
 
   //useState hooks to set the Category that was chosen
-  const [categories, setCategory] = useState(initialCategoryValue);
+  const [category, setCategory] = useState("default");
+  const [categories, setCategories] = useState([]);
+
   // //useState hooks to set the CategoryId that was chosen
   // const [categoryId, setCategoryId] = useState(initialCategoryId);
   // hook to set the workouts to add
   const [workout, setWorkout] = useState(initialWorkoutValue);
-  //create category component variable to put in the dropdown.
-  let categoryComponent = null;
 
   // useEffect to get Categories from the backend
   useEffect(() => {
-    console.log('Inside effect 1');
-    axios.get(reqUrl, { headers: { Authorization: key } }).then(
-      result => (
-        console.log('the result is: ', result.data),
-        result.data.map(res => {
-          console.log('the res is: ', res);
-          initialCategoryValue.push(res);
-          console.log('initialCategoryValue:', initialCategoryValue);
-          return setCategory(initialCategoryValue);
-        })
-      )
-    );
+    console.log("Inside effect 1");
+    axios.get(reqUrl, { headers: { Authorization: key } }).then(result => {
+      console.log("the result is: ", result.data);
+      setCategories(result.data);
+    });
   }, []);
 
-  // // useEffect to set category ID on initialWorkoutValue
-  // useEffect(() => {
-  //   console.log('Inside effect 2');
-  //   // return setCategoryId(ca tegoryId);
-  // }, []);
-
-  // method to handle selecting a category from dropdown
-  const categorySelectionHandler = event => {
-    let value = event.target.value;
-    const categoryIndex = categories.filter(category => {
-      if (category.name === value) console.log('match!', category.id);
-
-      return category.name === value;
-    });
-    workout.category_id = categoryIndex[0].id;
-    console.log(workout);
-  };
-
   //add Exercise handler
-  const addExercise = async (e, id) => {
-    console.log('the current initialWorkoutValue is: ', workout);
-    console.log('incoming id is: ', id);
+  const addExercise = async e => {
     e.preventDefault();
-    const token = window.localStorage.getItem('login_token');
 
-    workout.category_id = id;
-    initialExercise.name = exerciseName;
-    initialExercise.weight = Number(weight);
-    initialExercise.sets = Number(sets);
-    initialExercise.reps = Number(reps);
+    let nExcercise = {
+      name: exerciseName,
+      weight: Number(weight),
+      sets: Number(sets),
+      reps: Number(reps)
+    };
 
-    if (token !== undefined) {
-      workout.exercises.push(initialExercise);
-      console.log('the current workout is: ', workout);
-      setExerciseName('');
-      setWeight('');
-      setSets('');
-      setReps('');
-    }
+    workout.exercises.push(nExcercise);
+    setExerciseName("");
+    setWeight("");
+    setSets("");
+    setReps("");
   };
 
   // add workout handler to add workout to database
   const addWorkout = async e => {
     e.preventDefault();
-    const token = window.localStorage.getItem('login_token');
+    // const token = window.localStorage.getItem("login_token");
 
     workout.title = title;
-    console.log('the current workout is: ', workout);
-    if (token !== undefined) {
-      const res = await axios.post('https://fitmetrix.herokuapp.com/api/workouts/', workout, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token
-        }
-      });
-      console.log('the current workout is: ', workout);
-    }
-    setTitle('');
-    setCategory('');
+    workout.category_id = Number(category);
+    console.log("the current workout is: ", workout);
+    // if (token !== undefined) {
+    //   const res = await axios.post(
+    //     "https://fitmetrix.herokuapp.com/api/workouts/",
+    //     workout,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: token
+    //       }
+    //     }
+    //   );
+    //   console.log("the current workout is: ", workout);
+    // }
+    setTitle("");
+    setCategory("");
   };
 
   //Puts the categories into a component
-  categoryComponent = (
-    <select
-      onChange={e => {
-        categorySelectionHandler(e);
-      }}
-      value={categories}
-    >
-      {categories.map((category, index) => (
-        <option value={category.id} key={index}>
-          {category.name}
-        </option>
-      ))}
+  const categoryComponent = (
+    <select onChange={e => setCategory(e.target.value)} value={category}>
+      <option value={"default"}>--- Select a Category ---</option>
+      {categories &&
+        categories.map((category, index) => (
+          <option value={category.id} key={index}>
+            {category.name}
+          </option>
+        ))}
     </select>
   );
 
   return (
     <EditWorkoutSubmitForm onSubmit={e => addWorkout(e)}>
-      <ValueInput value={title} type="text" placeholder="Workout Title" onChange={e => setTitle(e.target.value)} />
+      <ValueInput
+        value={title}
+        type="text"
+        placeholder="Workout Title"
+        onChange={e => setTitle(e.target.value)}
+      />
       <div>{categoryComponent}</div>
       <ValueInput
         value={exerciseName}
@@ -143,12 +112,32 @@ const EditWorkout = props => {
         placeholder="Exercise Name"
         onChange={e => setExerciseName(e.target.value)}
       />
-      <ValueInput value={weight} type="text" placeholder="Weight" onChange={e => setWeight(e.target.value)} />
-      <ValueInput value={sets} type="text" placeholder="Sets" onChange={e => setSets(e.target.value)} />
-      <ValueInput value={reps} type="text" placeholder="Reps" onChange={e => setReps(e.target.value)} />
-      <StyledButton onClick={e => addExercise(e, workout.category_id)}>Add Exercise</StyledButton>
+      <ValueInput
+        value={weight}
+        type="text"
+        placeholder="Weight"
+        onChange={e => setWeight(e.target.value)}
+      />
+      <ValueInput
+        value={sets}
+        type="text"
+        placeholder="Sets"
+        onChange={e => setSets(e.target.value)}
+      />
+      <ValueInput
+        value={reps}
+        type="text"
+        placeholder="Reps"
+        onChange={e => setReps(e.target.value)}
+      />
+      <StyledButton onClick={e => addExercise(e)}>Add Exercise</StyledButton>
 
-      <StyledButton>Submit</StyledButton>
+      <div value={workout}>
+        {/* conditional for Submit button if no workouts exist */}
+        {workout.exercises.length > 0 ? (
+          <StyledButton>Submit</StyledButton>
+        ) : null}
+      </div>
     </EditWorkoutSubmitForm>
   );
 };
