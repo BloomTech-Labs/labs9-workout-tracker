@@ -15,6 +15,7 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
     const [legLeft, setLegLeft] = useState('')
     const [legRight, setLegRight] = useState('')
     const [date, setDate] = useState(new Date())
+    const [error, setError] = useState('')
 
     const dateStringParser = date => {
     
