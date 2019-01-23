@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Store } from '../../index';
 import EditWorkout from "./EditWorkout";
-import WorkoutCategoryList from "./WorkoutCategoryList";
+import WorkoutList from "./WorkoutList";
 import styled from "styled-components";
 
 import bodybuilder from "../assets/bodybuilder.jpg";
 
 const WorkoutsView = props => {
+
+  const { state, dispatch } = useContext(Store);
+  
   return (
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
-        <EditWorkout user={props.user} />
-        <WorkoutCategoryList workouts={props.workouts} />
+        <EditWorkout user={state} />
+        <WorkoutList workouts={state.workouts} />
       </WorkoutsViewStyle>
     </WorkoutsViewContainer>
   );

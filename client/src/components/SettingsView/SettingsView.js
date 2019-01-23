@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from 'firebase';
+import requireAuth from '../../requireAuth';
 //working on updating info
 
 const SettingsView = props => {
@@ -15,10 +16,6 @@ const SettingsView = props => {
   const [newEmail, setNewEmail] = useState('');
 
   // const value = target.type === 'checkbox' ? target.checked : target.value;
-
-  useEffect(() => {
-    props.getUserInfo();
-  }, []);
   //essentially a component did mount
 
   const updateUser = async e => {
@@ -146,7 +143,7 @@ const SettingsView = props => {
   );
 };
 
-export default SettingsView;
+export default requireAuth(SettingsView);
 
 const SettingsViewStyle = styled.div`
   width: 100%;
@@ -207,7 +204,7 @@ const LabelStyle = styled.label`
 `;
 
 const PremiumStyle = styled.div`
-color:${props => props.theme.accent}
+color:${props => props.theme.accent};
 display: flex;
 justify-content: flex-start;
 padding-left: 5%;

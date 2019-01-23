@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Store } from '../../index';
 import styled from "styled-components";
 import requireAuth from "../../requireAuth";
 
@@ -7,12 +8,9 @@ import AddMetricModule from './AddMetricModule';
 import ProgressDayView from './ProgressDayView';
 
 const ProgressView = props => {
-  const { metrics } = props.user || [];
+  const { state, dispatch } = useContext(Store)
+  const { metrics } = state || [];
   const [addMetric, setAddMetric] = useState(false);
-
-  useEffect(() => {
-    props.getUserInfo();
-  }, []);
 
   return (
     <ProgressViewStyle>
