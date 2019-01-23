@@ -33,8 +33,6 @@ const EditWorkout = props => {
 
   //useState hooks to set the Category that was chosen
   const [categories, setCategory] = useState(initialCategoryValue);
-  // //useState hooks to set the CategoryId that was chosen
-  // const [categoryId, setCategoryId] = useState(initialCategoryId);
   // hook to set the workouts to add
   const [workout, setWorkout] = useState(initialWorkoutValue);
   //create category component variable to put in the dropdown.
