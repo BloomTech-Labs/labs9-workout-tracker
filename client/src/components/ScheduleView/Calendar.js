@@ -199,6 +199,7 @@ class Calendar extends React.Component {
             <AddWorkout
               workouts={this.props.user.workouts}
               scheduleWorkouts={this.props.user.scheduleWorkouts}
+              selectedDate={this.state.selectedDate}
             />
           </div>
         )}
