@@ -48,25 +48,24 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
       const dates = metrics.map(m => dateFormat(dateStringParser(m.date)));
 
       if (dates.includes(dateFormat(nDate))){
-        console.log(true)
+        setError('Metric for date already exists');
         return
       }
-      console.log(false)
-
+      setDate(nDate);
     }
 
 
     return (
         <MetricFormContainer>
           <MetricForm>
-            <input type="text" placeholder="Weight" value={weight} onChange={e => setWeight(e.target.value)} />
-            <input type="text" placeholder="Hips" value={hips} onChange={e => setHips(e.target.value)} />
-            <input type="text" placeholder="Waist" value={waist} onChange={e => setWaist(e.target.value)} />
-            <input type="text" placeholder="ArmLeft" value={armLeft} onChange={e => setArmLeft(e.target.value)} />
-            <input type="text" placeholder="ArmRight" value={armRight} onChange={e => setArmRight(e.target.value)} />
-            <input type="text" placeholder="LegLeft" value={legLeft} onChange={e => setLegLeft(e.target.value)} />
-            <input type="text" placeholder="LegRight" value={legRight} onChange={e => setLegRight(e.target.value)} />
-            <DatePicker
+            <StyledInput type="text" placeholder="Weight" value={weight} onChange={e => setWeight(e.target.value)} />
+            <StyledInput type="text" placeholder="Hips" value={hips} onChange={e => setHips(e.target.value)} />
+            <StyledInput type="text" placeholder="Waist" value={waist} onChange={e => setWaist(e.target.value)} />
+            <StyledInput type="text" placeholder="ArmLeft" value={armLeft} onChange={e => setArmLeft(e.target.value)} />
+            <StyledInput type="text" placeholder="ArmRight" value={armRight} onChange={e => setArmRight(e.target.value)} />
+            <StyledInput type="text" placeholder="LegLeft" value={legLeft} onChange={e => setLegLeft(e.target.value)} />
+            <StyledInput type="text" placeholder="LegRight" value={legRight} onChange={e => setLegRight(e.target.value)} />
+            <StyledDatePicker
               selected={date}
               onChange={changeDate}
             />
@@ -83,6 +82,23 @@ const AddMetricModule = ({setAddMetric, metrics}) => {
 }
 
 export default AddMetricModule;
+
+// react-datepicker-ignore-onclickoutside
+
+const StyledDatePicker = styled(DatePicker)`
+  width: 100%;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  height: 35px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(0,0,0,0.45);
+  padding: 0px 15px;
+  outline: none;
+  font-size: 18px;
+`;
+
 const ModuleActions = styled.div`
   width: 100%;
   height: 60px;
@@ -108,4 +124,5 @@ const MetricForm = styled.form`
   height: 500px;
   background-color: white;
   border-radius: 12px;
+  padding: 30px 40px;
 `;
