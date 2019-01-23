@@ -16,20 +16,20 @@ const WorkoutListStyle = styled.div`
 const WorkoutList = props => {
   const { state, dispatch } = useContext(Store);
 
+  console.log('the workouts are: ', props.workouts);
+
   useEffect(() => {
     dispatch({ type: 'USER_MODEL' });
   }, []);
   return (
     <WorkoutListStyle>
-      <div>
-        WORKOUT CARD
-        {state.workouts.map(workout => {
-          if (workout.category_id === state.category.id) {
+      {props.workouts &&
+        props.workouts.map(workout => {
+          if (workout.category_id === props.cat.id) {
             console.log('match? true');
             return <p>{workout.title}</p>;
           }
         })}
-      </div>
     </WorkoutListStyle>
   );
 };
