@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const AddWorkout = props => {
   const key = window.localStorage.getItem("login_token");
@@ -11,6 +13,8 @@ const AddWorkout = props => {
   ];
   const [categories, setCategory] = useState(initialCategoryValue);
   const [categoryID, setCategoryID] = useState(null);
+
+
 
   //create category component variable to put in the dropdown.
   let categoryComponent = null;
@@ -58,13 +62,28 @@ const AddWorkout = props => {
   );
 
   //handler to schedule the workout and add it to Sworkout Database
-  const scheduleWorkoutHandler = (e, workout) => {
+  const scheduleWorkoutHandler = async (e, workout, date) => {
     e.preventDefault();
+    const token = window.localStorage.getItem('login_token');
     //incoming workout object
+    console.log("schedworkouthandler date:", date);
     console.log("schedworkouthandler wkt:", workout);
     // add to scheduled workout array
+    const workoutObj = {
+      date,
+      workout_id: workout.id
+    }
+    console.log("schedworkouthandler wktOBJ:", workoutObj);
 
-    //should re-render on calender as a scheduled workout
+    const scheduleWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", workoutObj, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
+    })
+    .catch(err => console.log(err))
+
+    
 
   };
 
@@ -83,7 +102,7 @@ const AddWorkout = props => {
                     <div>{workout.title}</div>
                     <button
                       onClick={ (e) => {
-                        scheduleWorkoutHandler(e, workout)
+                        scheduleWorkoutHandler(e, workout, props.selectedDate)
                        } }
                     >
                       Schedule
