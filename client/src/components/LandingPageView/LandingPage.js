@@ -96,12 +96,11 @@ display:flex
 }
 `
 const CallToAction = styled.div`
-  width: 100%
   height: 200px;
   z-index: 2;
   position: absolute;
   top: 350px;
-  left: 0;
+  margin-left: 2%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -112,6 +111,7 @@ const CallToAction = styled.div`
     margin: 0 auto;
     display:flex;
     align-items:center
+    width:100%;
   }
 `;
 
@@ -139,6 +139,7 @@ const BlankImage = styled.div`
   height: 400px;
   border-radius: 18px;
   position: absolute;
+  margin-right:2%;
   top: 360px;
   right: 0px;
   background-color: ${props => props.theme.primaryDark};
@@ -172,6 +173,9 @@ const Part2 = styled.div`
   justify-content:space-around;
   align-items: center;
   border: 1px solid blue;
+  @media(max-width:900px) {
+    flex-direction:column
+    }
 `;
 
 const CalendarPic = styled.div`
@@ -181,7 +185,9 @@ const CalendarPic = styled.div`
   width: 40%;
   height: 200px;
   border: 1px solid red;
-
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const CalendarDemo = styled.div`
@@ -191,7 +197,9 @@ const CalendarDemo = styled.div`
   width: 40%;
   height: 200px;
    border: 1px solid red;
-
+   @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const Part3 = styled.div`
@@ -201,7 +209,11 @@ const Part3 = styled.div`
   font-size: 3.3rem;
   display: flex;
   justify-content:center;
+  align-items:center;
   border: 1px solid blue;
+  @media(max-width:900px) {
+  flex-direction:column
+  }
 `;
 
 const WorkoutPic = styled.div`
@@ -212,7 +224,9 @@ const WorkoutPic = styled.div`
   height: 200px;
   align-items: center;
   border: 1px solid red;
-
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const WorkoutDemo = styled.div`
@@ -222,7 +236,9 @@ const WorkoutDemo = styled.div`
   width: 50%;
   height: 200px;
   border: 1px solid red;
-
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const Part4 = styled.div`
@@ -234,6 +250,9 @@ const Part4 = styled.div`
   justify-content:space-around;
   align-items: center;
   border: 1px solid blue;
+  @media(max-width:900px) {
+    flex-direction:column
+    }
 `;
 
 const ProgressDemo = styled.div`
@@ -243,7 +262,9 @@ const ProgressDemo = styled.div`
   width: 45%;
   height: 200px;
   border: 1px solid red;
-
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const ProgressPic = styled.div`
@@ -253,20 +274,24 @@ const ProgressPic = styled.div`
   width: 45%;
   height: 200px;
     border: 1px solid red;
-
+    @media(max-width:900px) {
+      width: 65%;
+    }
 `;
 
 const Part5 = styled.div`
   width: 100%;
-  height: 700px;
   background: no-repeat center center fixed;
   background-image: url(${deadliftImg});
   background-size: cover;
   color: white;
-  font-size: 3.3rem;
+  font-size: 1.6rem;
   justify-content:center;
   align-items: center;
   border: 1px solid blue;
+  @media(max-width:900px) {
+    flex-direction:column
+    }
 `;
 
 const LandingContainer = styled.div``;

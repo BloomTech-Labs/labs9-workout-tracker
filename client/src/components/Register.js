@@ -71,10 +71,11 @@ const Register = props => {
 export default Register;
 
 const RegisterContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   min-height: 500px;
   position: fixed;
+  margin:0 auto;
   top: 0;
   left: 0;
   z-index: 0;
@@ -84,23 +85,30 @@ const RegisterContainer = styled.div`
 `;
 
 const Container = styled.div`
-  margin: 20px;
-  height: auto;
-  position: absolute;
-  top: 25%;
-  left: 40%;
+margin: 0 auto;
+height: auto;
+margin-top: 200px;
+display:flex;
+justify-content: center;
+align-items:center;
 `;
 
 const FormStyle = styled.form`
   border: 1px solid ${props => props.theme.primaryDark};
   border-radius: 6px;
   background-color: ${props => props.theme.primary};
-`;
+  margin: 0 2%;
+  @media(max-width:634px) {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:60%;
+  }
+  `;
 
 const InputStyle = styled.input`
   font-family: ${props => props.theme.roboto};
   height: 30px;
-  width: 145px;
   margin-top: 30px;
   margin-left: 20px;
   margin-right: 20px;
@@ -109,12 +117,12 @@ const InputStyle = styled.input`
 
 const Button = styled.button`
   height: 40px;
-  width: 20%;
+  width: 30%;
   margin-top: 30px;
   margin-bottom: 30px;
   font-family: ${props => props.theme.roboto};
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   background-color: ${props => props.theme.primaryLight};
   border-radius: 6px;
   &:hover {

@@ -144,6 +144,8 @@ const NavContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  margin:0 auto;
+  padding: 0 2%;
 `;
 
 const NavStyle = styled.div`

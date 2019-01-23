@@ -70,7 +70,7 @@ const Login = props => {
 export default Login;
 
 const LoginContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   min-height: 500px;
   position: fixed;
@@ -83,17 +83,25 @@ const LoginContainer = styled.div`
 `;
 
 const Container = styled.div`
-  margin: 20px;
+  margin: 0 auto;
   height: auto;
-  position: absolute;
-  top: 25%;
-  left: 40%;
+  margin-top: 200px;
+  display:flex;
+  justify-content: center;
+  align-items:center;
 `;
 
 const FormStyle = styled.form`
   border: 1px solid ${props => props.theme.primaryDark};
   border-radius: 6px;
   background-color: ${props => props.theme.primary};
+  margin: 0 2%;
+  @media(max-width:450px) {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:85%;
+  }
 `;
 
 const InputStyle = styled.input`
@@ -112,7 +120,7 @@ const Button = styled.button`
   margin-bottom: 30px;
   font-family: ${props => props.theme.roboto};
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   background-color: ${props => props.theme.primaryLight};
   border-radius: 6px;
   &:hover {
