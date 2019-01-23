@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import requireAuth from "../../requireAuth";
+import axios from "axios";
 
 import ProgressGraph from "./ProgressGraph";
 import ProgressHeader from "./ProgressHeader";
@@ -9,10 +10,81 @@ const ProgressView = props => {
   const { metrics } = props.user || [];
   const [type, setType] = useState("weight");
   const [addMetric, setAddMetric] = useState(false);
+  //hooks to update state of each individual metric when adding a new metric
+  const [weight, setWeight] = useState("");
+  const [hips, setHips] = useState();
+  const [waist, setWaist] = useState();
+  const [arm_right, setRightArm] = useState();
+  const [arm_left, setLeftArm] = useState();
+  const [leg_right, setRightLeg] = useState();
+  const [leg_left, setLeftLeg] = useState();
 
   useEffect(() => {
     props.getUserInfo();
   }, []);
+  //handlers for each individual metric
+  const weightHandler = e => {
+    setWeight(e.target.value);
+  };
+  const hipsHandler = e => {
+    setHips(e.target.value);
+  };
+  const waistHandler = e => {
+    setWaist(e.target.value);
+  };
+  const rightArmHandler = e => {
+    setRightArm(e.target.value);
+  };
+  const leftArmHandler = e => {
+    setLeftArm(e.target.value);
+  };
+  const rightLegHandler = e => {
+    setRightLeg(e.target.value);
+  };
+  const leftLegHandler = e => {
+    setLeftLeg(e.target.value);
+  };
+
+  // handler to submit metrics to database
+  const submitMetricsHandler = async e => {
+    e.preventDefault();
+    const token = window.localStorage.getItem("login_token");
+    // object to be posted to db
+    const newMetricsSet = {
+      weight,
+      waist,
+      hips,
+      arm_left,
+      arm_right,
+      leg_left,
+      leg_right,
+      date: "2019-01-23T00:00:00.000Z" //needs set to a timestamp. Due to formatting of date, we hard-coded the date in
+    };
+    console.log(newMetricsSet);
+    if (token !== undefined) {
+      const res = await axios
+        .post(
+          "https://fitmetrix.herokuapp.com/api/progress/metrics/create",
+          newMetricsSet,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token
+            }
+          }
+        )
+        .catch(err => console.log(err));
+    }
+    //reset the state of each metric
+    setWeight("");
+    setHips("");
+    setWaist("");
+    setLeftArm("");
+    setRightArm("");
+    setLeftLeg("");
+    setRightLeg("");
+    setAddMetric(false);
+  };
 
   return (
     <ProgressViewStyle>
@@ -43,13 +115,69 @@ const ProgressView = props => {
       {addMetric ? (
         <MetricFormContainer>
           <MetricForm>
-            <input type="text" />
-
+            <input
+              type="text"
+              placeholder="weight"
+              value={weight}
+              onChange={e => {
+                weightHandler(e);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="hips"
+              value={hips}
+              onChange={e => {
+                hipsHandler(e);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="waist"
+              value={waist}
+              onChange={e => {
+                waistHandler(e);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="right arm"
+              value={arm_right}
+              onChange={e => {
+                rightArmHandler(e);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="left arm"
+              value={arm_left}
+              onChange={e => {
+                leftArmHandler(e);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="right leg"
+              value={leg_right}
+              onChange={e => {
+                rightLegHandler(e);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="left leg"
+              value={leg_left}
+              onChange={e => {
+                leftLegHandler(e);
+              }}
+            />
             <ModuleActions>
               <button type="button" onClick={() => setAddMetric(false)}>
                 Cancel
               </button>
-              <button type="button">Submit</button>
+              <button type="button" onClick={e => submitMetricsHandler(e)}>
+                Submit!
+              </button>
             </ModuleActions>
           </MetricForm>
         </MetricFormContainer>
