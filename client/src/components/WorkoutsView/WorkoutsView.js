@@ -9,7 +9,7 @@ const WorkoutsView = props => {
   return (
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
-        <EditWorkout />
+        <EditWorkout user={props.user} />
         <WorkoutCategoryList workouts={props.workouts} />
       </WorkoutsViewStyle>
     </WorkoutsViewContainer>

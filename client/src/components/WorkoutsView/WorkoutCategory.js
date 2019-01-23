@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import WorkoutTitleList from "./WorkoutTitleList";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -27,15 +26,14 @@ const WorkoutCategory = props => {
 
   return (
     <WorkoutCategoryStyle>
-      <div>WORKOUT CARD
-      {props.workouts.map(workout => {
-
-        if (workout.category_id === props.category.id) {
-          console.log("match? true", )
-          return   <p>{workout.title}</p>
-        }
-      })
-      }
+      <div>
+        WORKOUT CARD
+        {props.workouts.map(workout => {
+          if (workout.category_id === props.category.id) {
+            console.log("match? true");
+            return <p>{workout.title}</p>;
+          }
+        })}
       </div>
     </WorkoutCategoryStyle>
   );

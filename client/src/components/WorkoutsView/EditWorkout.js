@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import * as firebase from "firebase";
 
 const EditWorkout = props => {
   const key = window.localStorage.getItem("login_token");
@@ -26,6 +27,7 @@ const EditWorkout = props => {
   //useState hooks to set the Category that was chosen
   const [category, setCategory] = useState("default");
   const [categories, setCategories] = useState([]);
+  const [addCategory, setAddCategory] = useState("");
 
   // //useState hooks to set the CategoryId that was chosen
   // const [categoryId, setCategoryId] = useState(initialCategoryId);
@@ -62,26 +64,53 @@ const EditWorkout = props => {
   // add workout handler to add workout to database
   const addWorkout = async e => {
     e.preventDefault();
-    // const token = window.localStorage.getItem("login_token");
+    const token = window.localStorage.getItem("login_token");
 
     workout.title = title;
     workout.category_id = Number(category);
     console.log("the current workout is: ", workout);
-    // if (token !== undefined) {
-    //   const res = await axios.post(
-    //     "https://fitmetrix.herokuapp.com/api/workouts/",
-    //     workout,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: token
-    //       }
-    //     }
-    //   );
-    //   console.log("the current workout is: ", workout);
-    // }
+
+    if (token !== undefined) {
+      const res = await axios.post(
+        "https://fitmetrix.herokuapp.com/api/workouts/",
+        workout,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+          }
+        }
+      );
+      console.log("the current workout is: ", workout);
+    }
     setTitle("");
     setCategory("");
+  };
+
+  //add Category handler
+  const submitCategory = async e => {
+    e.preventDefault();
+    console.log("Adding a category", addCategory);
+
+    const token = window.localStorage.getItem("login_token");
+
+    if (token !== undefined) {
+      const res = await axios.post(
+        "https://fitmetrix.herokuapp.com/api/category/create",
+        {
+          name: addCategory,
+          user_id: props.user.id
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+          }
+        }
+      );
+      console.log("the current category is: ", addCategory);
+    }
+    setAddCategory("");
   };
 
   //Puts the categories into a component
@@ -94,6 +123,7 @@ const EditWorkout = props => {
             {category.name}
           </option>
         ))}
+      <option value={"addCategory"}>--- Add a Category ---</option>
     </select>
   );
 
@@ -104,8 +134,32 @@ const EditWorkout = props => {
         type="text"
         placeholder="Workout Title"
         onChange={e => setTitle(e.target.value)}
+        required
       />
       <div>{categoryComponent}</div>
+
+      {category === "addCategory" ? (
+        <>
+          <ValueInput
+            value={addCategory}
+            type="text"
+            placeholder="Category Name"
+            onChange={e => setAddCategory(e.target.value)}
+          />
+          <StyledButton type="button" onClick={e => submitCategory(e)}>
+            Add Category
+          </StyledButton>
+        </>
+      ) : null}
+
+      <div>
+        {workout.exercises &&
+          workout.exercises.map(ex => {
+            return (
+              <div>{`${ex.name}: ${ex.weight}x${ex.sets}x${ex.reps}`}</div>
+            );
+          })}
+      </div>
       <ValueInput
         value={exerciseName}
         type="text"
@@ -132,12 +186,10 @@ const EditWorkout = props => {
       />
       <StyledButton onClick={e => addExercise(e)}>Add Exercise</StyledButton>
 
-      <div value={workout}>
-        {/* conditional for Submit button if no workouts exist */}
-        {workout.exercises.length > 0 ? (
-          <StyledButton>Submit</StyledButton>
-        ) : null}
-      </div>
+      {/* conditional for Submit button if no workouts exist */}
+      {workout.exercises.length > 0 ? (
+        <StyledButton>Submit</StyledButton>
+      ) : null}
     </EditWorkoutSubmitForm>
   );
 };
