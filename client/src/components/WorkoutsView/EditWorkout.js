@@ -28,8 +28,7 @@ const EditWorkout = props => {
   const [categories, setCategories] = useState([]);
   const [addCategory, setAddCategory] = useState("");
 
-  // //useState hooks to set the CategoryId that was chosen
-  // const [categoryId, setCategoryId] = useState(initialCategoryId);
+  // useEffect to get Categories from the backend
   // hook to set the workouts to add
   const [workout, setWorkout] = useState(initialWorkoutValue)
 
