@@ -6,6 +6,7 @@ import axios from "axios";
 import barbell from "./assets/barbell.jpeg";
 
 const Register = props => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
