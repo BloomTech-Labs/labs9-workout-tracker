@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import * as d3 from "d3";
+import { Store } from '../../index';
 
 
 import ProgressHeader from "./ProgressHeader";
 
 const ProgressGraph = props => {
 
+  const { state, dispatch } = useContext(Store);
+
   const [type, setType] = useState("weight");
-  const { metrics } = props;
+  const { metrics } = state;
 
   const d3Data = () => {
     let arr = [];
@@ -18,8 +21,9 @@ const ProgressGraph = props => {
         date: dateParser(m.date),
         value: parseFloat(m[type])
       });
-      console.log(arr)
     });
+
+    arr.sort((a,b) => a.date - b.date)
 
     return arr;
   };
@@ -99,14 +103,14 @@ const ProgressGraph = props => {
     () => {
       drawChart();
     },
-    [type]
+    [type, state]
   );
 
   return (
     <>
       <ProgressInfo>
         <ProgressTitle>Progress</ProgressTitle>
-        <ProgressHeader metrics={props.metrics} setType={setType} />
+        <ProgressHeader metrics={metrics} setType={setType} />
       </ProgressInfo>
       <GraphContainer>
         <div>

@@ -17,7 +17,7 @@ const ProgressDayView = ({metrics}) => {
         {
             metrics.map((m, i) => {
                 return (
-                    <DayItem>
+                    <DayItem key={i}>
                         <span>Date:{dateParser(m.date)} </span>
                         <span>Weight:{m.weight} </span>
                         <span>Hips:{m.hips} </span>

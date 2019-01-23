@@ -24,11 +24,11 @@ const ProgressHeader = props => {
         ["id", "created_at", "updated_at", "user_id", "date"].indexOf(key) < 0
     );
 
-    return keys.map(k => {
+    return keys.map((k, i) => {
       const progress = metrics[latest.index][k] - metrics[earliest.index][k];
 
       return (
-        <Metric onClick={e => setType(k)}>
+        <Metric key={i} onClick={e => setType(k)}>
           <span>
             {Math.round(10 * progress) / 10}
             {k === "weight" ? " lbs" : " in"}
