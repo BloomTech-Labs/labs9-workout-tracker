@@ -35,6 +35,10 @@ const EditWorkout = props => {
   const [workout, setWorkout] = useState(initialWorkoutValue);
 
   // useEffect to get Categories from the backend
+  // hook to set the workouts to add
+  const [workout, setWorkout] = useState(initialWorkoutValue);
+
+  // useEffect to get Categories from the backend
   useEffect(() => {
     console.log("Inside effect 1");
     axios.get(reqUrl, { headers: { Authorization: key } }).then(result => {
