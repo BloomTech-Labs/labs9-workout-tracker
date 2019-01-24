@@ -29,12 +29,16 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'USER_MODEL':
       return { ...state, ...action.payload };
-    case "UPDATE_METRICS":
-      return {...state, metrics: [...action.payload]}
-    case "CONTEXT_TEST":
+    case 'UPDATE_METRICS':
+      return { ...state, metrics: [...action.payload] };
+    case 'CONTEXT_TEST':
       return { ...state };
     case 'EDIT_WORKOUT':
       return { ...state, editWorkout: { ...action.payload } };
+    case 'RESET_EDIT_WORKOUT':
+      return { ...state, editWorkout: null };
+    case 'UPDATE_WORKOUTS':
+      return { ...state, workouts: [...action.payload] };
     case 'EDIT_METRIC':
       return { ...state, editMetric: { ...action.payload } };
     case 'RESET_EDIT_METRIC':
