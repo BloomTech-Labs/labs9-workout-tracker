@@ -4,7 +4,6 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { getDate } from "date-fns";
 
-
 const AddWorkout = props => {
   const key = window.localStorage.getItem("login_token");
   const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
@@ -15,8 +14,7 @@ const AddWorkout = props => {
   const [categories, setCategory] = useState(initialCategoryValue);
   const [categoryID, setCategoryID] = useState(null);
   const [recurring, setRecurring] = useState(false);
-
-
+  const [recurringWeeks, setRecurringWeeks] = useState(false);
 
   //create category component variable to put in the dropdown.
   let categoryComponent = null;
@@ -64,54 +62,54 @@ const AddWorkout = props => {
   );
 
   //handler to schedule the workout and add it to Sworkout Database
-  const scheduleWorkoutHandler = async (e, workout, date) => {
+  const scheduleWorkoutHandler = async (e, workout, date, recurringWeeks) => {
     e.preventDefault();
-    const token = window.localStorage.getItem('login_token');
-    
+    const token = window.localStorage.getItem("login_token");
+
     // add to scheduled workout array
     const workoutObj = {
       date,
       workout_id: workout.id
-    }
-    
-    //Buggy. If at the end of the month, returns an invalid date. NEed to refactor this.
-     const addSevenDays = (date) => {
-      let strSplit = date.toString().split(" ")
-      console.log(strSplit[2])
-      strSplit[2] = Number(strSplit[2]) + 7
-      return strSplit.join(" ")
-      }
-      const nextWeek = addSevenDays(date)
-      let nextWeekObj = new Date(nextWeek)
-   
-      const recurringWorkoutObj = {
-      date: nextWeekObj,
-      workout_id: workout.id
-    }
+    };
+
     console.log("schedworkouthandler workoutObj:", workoutObj);
-    console.log("schedworkouthandler recurringWorkoutObj:", recurringWorkoutObj);
 
-    const scheduleWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", workoutObj, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token
+    const scheduleWorkout = await axios
+      .post("https://fitmetrix.herokuapp.com/api/schedule/create", workoutObj, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token
+        }
+      })
+      .catch(err => console.log(err));
+    if (recurring === true) {
+      //Adds 7 days to the incoming date
+      const addSevenDays = (date, seven) => {
+        let result = new Date(date);
+        result.setDate(result.getDate() + seven);
+        return result;
+      };
+
+      for (let i = 1; i <= recurringWeeks -1 ; i++) {
+        const nextWeek = addSevenDays(date, 7);
+        let nextWeekObj = new Date(nextWeek);
+        console.log(nextWeekObj);
+        const recurringWorkoutObj = {
+          date: nextWeekObj,
+          workout_id: workout.id
+        };
+        
+        date = nextWeek;
+
+              const scheduleRecurringWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", recurringWorkoutObj, {
+                headers: {
+                  'Content-Type': 'application/json',
+            Authorization: token
+          }
+        })
+        .catch(err => console.log(err))
       }
-    })
-    .catch(err => console.log(err))
-if (recurring === true) {
-
-  const scheduleRecurringWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", recurringWorkoutObj, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token
     }
-  })
-  .catch(err => console.log(err))
-
-}
-
-    
-
   };
 
   return (
@@ -127,11 +125,28 @@ if (recurring === true) {
                 return (
                   <div>
                     <div>{workout.title}</div>
-                    Recurring ? <input type='checkbox' checked={recurring} onChange={e=> setRecurring(e.target.checked)}/>
+                    Recurring ?{" "}
+                    <input
+                      type="checkbox"
+                      checked={recurring}
+                      onChange={e => setRecurring(e.target.checked)}
+                    />
+                    next{" "}
+                    <input
+                      type="number"
+                      value={recurringWeeks}
+                      onChange={e => setRecurringWeeks(e.target.value)}
+                    />{" "}
+                    weeks
                     <button
-                      onClick={ (e) => {
-                        scheduleWorkoutHandler(e, workout, props.selectedDate)
-                       } }
+                      onClick={e => {
+                        scheduleWorkoutHandler(
+                          e,
+                          workout,
+                          props.selectedDate,
+                          recurringWeeks
+                        );
+                      }}
                     >
                       Schedule
                     </button>
@@ -148,4 +163,5 @@ if (recurring === true) {
 const AddWorkoutStyle = styled.div`
   border: 1px solid purple;
 `;
+
 export default AddWorkout;
