@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Store } from '../../index';
 import styled from 'styled-components';
-
+import axios from 'axios';
+import firebase from 'firebase'
 
 
 const ProgressDayView = () => {
@@ -45,10 +46,38 @@ const ProgressDayView = () => {
 
     };
 
+    const deleteMetric = async () => {
+        const token = await firebase.auth().currentUser.getIdToken()
+        const deleteRes = await axios.delete(
+            `https://fitmetrix.herokuapp.com/api/progress/metrics/delete/${currentMetric.id}`,
+            {
+                headers: {
+                  Authorization: token
+                }
+            }
+        );
+
+        console.log(deleteRes)
+
+        if (deleteRes.status === 200) {
+            const newMetrics = await axios.get('https://fitmetrix.herokuapp.com/api/progress/metrics/get',
+            {
+                headers: {
+                  Authorization: token
+                }
+            })
+
+            dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
+            setDelete(false);
+        }
+
+    }
+
     const deleteCheck = (m) => {
         setCurrentMetric(m);
         setDelete(true);
     };
+
 
 
     return (
@@ -79,7 +108,7 @@ const ProgressDayView = () => {
                     <DeleteComponent>
                         <h3>Delete Metric</h3>
                         <div>Date: {currentMetric.date}</div>
-                        <DeleteButton type="button">Delete</DeleteButton>
+                        <DeleteButton type="button" onClick={e => deleteMetric()}>Delete</DeleteButton>
                         <button type="button" onClick={e => setDelete(false)}>Cancel</button>
                     </DeleteComponent>
                 </DeleteContainer>
