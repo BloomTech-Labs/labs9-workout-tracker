@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const AddMetricModule = ({ setAddMetric }) => {
 
   const { state, dispatch } = useContext(Store);
-
+ 
   const [weight, setWeight] = useState("");
   const [hips, setHips] = useState("");
   const [waist, setWaist] = useState("");
@@ -55,7 +55,6 @@ const AddMetricModule = ({ setAddMetric }) => {
     setDate(nDate);
     setError("");
   };
-
 
   const addMetric = async (e) => {
     e.preventDefault();

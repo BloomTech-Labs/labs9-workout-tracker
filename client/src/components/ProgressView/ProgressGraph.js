@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Store } from '../../index';
 import styled from "styled-components";
 import * as d3 from "d3";
-import { Store } from '../../index';
 
 
 import ProgressHeader from "./ProgressHeader";
 
 const ProgressGraph = props => {
 
-  const { state, dispatch } = useContext(Store);
+  const { state } = useContext(Store);
 
   const [type, setType] = useState("weight");
   const { metrics } = state;
