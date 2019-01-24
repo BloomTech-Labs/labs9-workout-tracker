@@ -22,7 +22,8 @@ const initialState = {
   uid: '',
   workouts: [],
   editMetric: null,
-  showMetricForm: false
+  showMetricForm: false,
+  ...userData,
 };
 
 const reducer = (state, action) => {
