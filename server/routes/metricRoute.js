@@ -81,8 +81,6 @@ router.put("/metrics/edit/:id", async (req, res) => {
 
   const body = req.body;
 
-  const id = req.id;
-
   if (!body.weight && !body.hips && !body.waist && !body.arm_right && !body.arm_left && !body.leg_right && !body.leg_left) {
     res.status(400).json({
       errorMessage: "Please provide an update for atleast one field"
@@ -93,7 +91,7 @@ router.put("/metrics/edit/:id", async (req, res) => {
   try {
     // console.log("changes are: ", changes);
     const updateduserCount = await db("metrics")
-      .where("id", "=", id)
+      .whereIn(["id", "user_id"], [[req.params.id, req.id]])
       .update(body);
 
     {
