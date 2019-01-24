@@ -227,8 +227,8 @@ try {
   .where("id", "=", req.params.id)
   .del();
   {
-    deleteMetricData === 0
-      ? res.status(404).json({ message: "That sceduled workout does not exist" })
+    deleteScheduleWorkout === 0
+      ? res.status(404).json({ message: "That scheduled workout does not exist" })
       : res.status(200).json({ deleteScheduleWorkout });
   }
 } catch (error) {

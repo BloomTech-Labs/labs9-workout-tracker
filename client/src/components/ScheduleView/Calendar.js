@@ -83,11 +83,7 @@ class Calendar extends React.Component {
       return populated;
     };
 
-    const renderButton = key => {
-      if (key.toString().includes("Sun")) {
-        return <button>Duplicate</button>;
-      }
-    };
+  
 
     while (day <= endDate) {
       //Loop through days 1-7
@@ -159,7 +155,6 @@ class Calendar extends React.Component {
                     return splitDate === matchedDate ? sworkout.title : null;
                   })}
                 </span>
-                {renderButton(day)}
               </div>
             )}
           </>

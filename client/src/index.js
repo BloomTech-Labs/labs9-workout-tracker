@@ -31,8 +31,8 @@ const reducer = (state, action) => {
       return { ...state, ...action.payload };
     case 'UPDATE_METRICS':
       return { ...state, metrics: [...action.payload] };
-    case 'CONTEXT_TEST':
-      return { ...state };
+    case "UPDATE_SCHEDULE_WORKOUTS":
+      return {...state, schedule_workouts: [...action.payload]}
     case 'EDIT_WORKOUT':
       return { ...state, editWorkout: { ...action.payload } };
     case 'RESET_EDIT_WORKOUT':
