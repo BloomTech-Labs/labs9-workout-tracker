@@ -5,9 +5,9 @@ import { Store } from '../../index';
 
 const CategoriesStyle = styled.div`
   font-family: ${props => props.theme.roboto};
-  font-size: 2em;
+  font-size: 1.75rem;
   font-weight: bold;
-  color: ${props => props.theme.accent};
+  color: ${props => props.theme.white};
   background-color: ${props => props.theme.primary};
   margin-right: 25%;
   padding: 0 10px;
@@ -24,7 +24,7 @@ const Categories = props => {
         state.category.map(cat => {
           return (
             <div>
-              {cat.name}
+              <p>{cat.name}</p>
               <WorkoutList cat={cat} workouts={state.workouts} />
             </div>
           );

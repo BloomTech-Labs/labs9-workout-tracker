@@ -4,19 +4,17 @@ import { Store } from '../../index';
 
 const WorkoutListStyle = styled.div`
   font-family: ${props => props.theme.roboto};
-  font-size: 2em;
+  font-size: 1.2rem;
   font-weight: bold;
   color: ${props => props.theme.accent};
   background-color: ${props => props.theme.primary};
-  margin-right: 25%;
+  text-align: center;
   padding: 0 10px;
   border-radius: 6px;
 `;
 
 const WorkoutList = props => {
   const { state, dispatch } = useContext(Store);
-
-  console.log('the workouts are: ', props.workouts);
 
   useEffect(() => {}, []);
 
@@ -32,9 +30,7 @@ const WorkoutList = props => {
         props.workouts.map(workout => {
           if (workout.category_id === props.cat.id) {
             console.log('match? true');
-            return (
-              <p onClick={() => verifyEditWorkout(workout)}>{workout.title}</p>
-            );
+            return <p onClick={() => verifyEditWorkout(workout)}>{workout.title}</p>;
           }
         })}
     </WorkoutListStyle>
