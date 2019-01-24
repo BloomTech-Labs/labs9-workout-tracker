@@ -231,7 +231,7 @@ const EditWorkout = props => {
 
               <StyledButton onClick={e => addExercise(e)}>Add Exercise to Workout</StyledButton>
               {/* conditional for Submit button if no workouts exist */}
-              {workout.exercises.length > 0 ? <StyledButton>Submit Workout</StyledButton> : null}
+              {exercises.length > 0 ? <StyledButton>Submit Workout</StyledButton> : null}
             </AddWorkoutSubmitForm>
           </div>
         </div>
