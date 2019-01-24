@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import { getDate } from "date-fns";
 
 
 const AddWorkout = props => {
@@ -67,17 +68,28 @@ const AddWorkout = props => {
     const token = window.localStorage.getItem('login_token');
     //incoming workout object
     console.log("schedworkouthandler date:", date);
+    console.log("schedworkouthandler typeof date:", typeof(date));
     console.log("schedworkouthandler wkt:", workout);
     // add to scheduled workout array
     const workoutObj = {
       date,
       workout_id: workout.id
     }
+    
+     const addSevenDays = (date) => {
+      let strSplit = date.toString().split(" ")
+      console.log(strSplit[2])
+      strSplit[2] = Number(strSplit[2]) + 7
+      return strSplit.join(" ")
+      }
+      const nextWeek = addSevenDays(date)
+      let nextWeekObj = new Date(nextWeek)
     const recurringWorkoutObj = {
-      date,
+      date: nextWeekObj,
       workout_id: workout.id
     }
-    console.log("schedworkouthandler wktOBJ:", workoutObj);
+    console.log("schedworkouthandler workoutObj:", workoutObj);
+    console.log("schedworkouthandler recurringWorkoutObj:", recurringWorkoutObj);
 
     const scheduleWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", workoutObj, {
       headers: {
@@ -87,13 +99,13 @@ const AddWorkout = props => {
     })
     .catch(err => console.log(err))
 
-    // const scheduleRecurringWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", recurringWorkoutObj, {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: token
-    //   }
-    // })
-    // .catch(err => console.log(err))
+    const scheduleRecurringWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", recurringWorkoutObj, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
+    })
+    .catch(err => console.log(err))
 
     
 
