@@ -15,7 +15,7 @@ class Calendar extends React.Component {
       selectedDate: null,
 
       //Dup week func
-      weekSelected:false,
+      weekSelected: false,
       datesSelected: []
     };
   }
@@ -83,13 +83,11 @@ class Calendar extends React.Component {
       return populated;
     };
 
-
-    const renderButton = (key) => {
-      console.log(key)
-      if(key.toString().includes("Sun")) {
-        return <button>Duplicate</button>
+    const renderButton = key => {
+      if (key.toString().includes("Sun")) {
+        return <button>Duplicate</button>;
       }
-    }
+    };
 
     while (day <= endDate) {
       //Loop through days 1-7
@@ -105,10 +103,8 @@ class Calendar extends React.Component {
         days.push(
           <>
             {/* checking if scheduleWorkouts is defined */}
-            {this.props.scheduleWorkouts === undefined ? 
-            
-            // IF no scheduled workouts, right now the cells don't render. Need to decide what to do here.
-            null : (
+            {this.props.scheduleWorkouts === undefined ? (
+              // IF no scheduled workouts, renders an empty calendar
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
@@ -118,15 +114,26 @@ class Calendar extends React.Component {
                     : ""
                 }`}
                 key={day}
-                sworkout={
-                  this.props.scheduleWorkouts.map(sworkout => {
-                    // returns the title of the scheduled workout if it matches matchedDate
-                    const splitDate = sworkout.date.split("T")[0]
-                    return splitDate === matchedDate
-                      ? sworkout
-                      : null;
-                  })
-                }
+                onClick={() => this.onDateClick(dateFns.parse(cloneDay), false)}
+              >
+                <span className="number">{formattedDate}</span>
+                <span className="bg">{formattedDate}</span>
+              </div>
+            ) : (
+              <div
+                className={`col cell ${
+                  !dateFns.isSameMonth(day, monthStart)
+                    ? "disabled"
+                    : dateFns.isSameDay(day, selectedDate)
+                    ? "selected"
+                    : ""
+                }`}
+                key={day}
+                sworkout={this.props.scheduleWorkouts.map(sworkout => {
+                  // returns the title of the scheduled workout if it matches matchedDate
+                  const splitDate = sworkout.date.split("T")[0];
+                  return splitDate === matchedDate ? sworkout : null;
+                })}
                 onClick={
                   //Check whether the matchedDate is inside of scheduled workouts
                   // using arrayContains method
@@ -148,10 +155,8 @@ class Calendar extends React.Component {
                   {//maps through scheduleworkouts
                   this.props.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
-                    const splitDate = sworkout.date.split("T")[0]
-                    return splitDate === matchedDate
-                      ? sworkout.title
-                      : null;
+                    const splitDate = sworkout.date.split("T")[0];
+                    return splitDate === matchedDate ? sworkout.title : null;
                   })}
                 </span>
                 {renderButton(day)}
@@ -166,7 +171,6 @@ class Calendar extends React.Component {
           {days}
         </div>
       );
-      console.log("DAYS:", days)
 
       days = [];
     }
@@ -198,8 +202,6 @@ class Calendar extends React.Component {
     //when selecting first date, selectedDate becomes the highlighted day
     //date populated takes care of itself. Incoming flag
     //
-
-
   };
 
   nextMonth = () => {
@@ -224,12 +226,15 @@ class Calendar extends React.Component {
         </div>
         {/* if no date is selected, return null */}
         {this.state.dateSelected !==
-        true ? null : 
-        // if date is selected, check if date is populated and return component based on that
+        true ? null : // if date is selected, check if date is populated and return component based on that
         this.state.datePopulated === true ? (
           <div>
-          {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
-            <WorkoutDetails  selectedDate={this.state.selectedDate} dispatch={this.props.dispatch} scheduleWorkouts={this.props.scheduleWorkouts} />
+            {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
+            <WorkoutDetails
+              selectedDate={this.state.selectedDate}
+              dispatch={this.props.dispatch}
+              scheduleWorkouts={this.props.scheduleWorkouts}
+            />
           </div>
         ) : (
           <div>
