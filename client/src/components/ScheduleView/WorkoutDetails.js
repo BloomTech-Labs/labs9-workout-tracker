@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Store } from '../../index';
+
 import ExerciseDetails from "./ExerciseDetails";
 import axios from 'axios';
 import styled from "styled-components";
@@ -6,7 +8,10 @@ import firebase from 'firebase';
 
 const WorkoutDetails = props => {
 
-  
+  const { state, dispatch } = useContext(Store);
+
+  const [sWorkouts, setSWorkouts] = useState(state.scheduleWorkouts);
+
 
   const dateStringParser = date => {
     if (date.length === 10) {
@@ -37,33 +42,47 @@ const WorkoutDetails = props => {
   
 
  const unscheduleWorkout = async (e, scheduleWorkout) => {
-   e.preventDefault();
    console.log(scheduleWorkout)
-   const token = await firebase.auth().currentUser.getIdToken()
+   const token = await firebase.auth().currentUser.getIdToken();
+
    const deleteRes = await axios.delete(
-    `https://fitmetrix.herokuapp.com/api/schedule/delete/${scheduleWorkout.id}`,
+    `https://fitmetrix.herokuapp.com/api/schedule/delete/workout/${scheduleWorkout.id}`,
     {
         headers: {
           Authorization: token
         }
     }
-)
-    .catch(err => console.log(err));
+  );
+
+  console.log('deleteRes:', deleteRes)
+
+    if (deleteRes.status === 200) {
+      console.log("200 OK")
+      const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule',
+      {
+          headers: {
+            Authorization: token
+          }
+      })
+
+      dispatch({type: "UPDATE_SCHEDULE_WORKOUTS", payload: newScheduleWorkouts.data})
+      setSWorkouts();
+  }
  }
  
 
   return (
     <div>
-
+      <p>workoutdetscomp</p>
  
-      {props.scheduleWorkouts &&
-        props.scheduleWorkouts.map(scheduleWorkout => {
+      {sWorkouts &&
+        sWorkouts.map(scheduleWorkout => {
           if (dateFormat(dateStringParser(scheduleWorkout.date)) === dateFormat(props.selectedDate)) {
             return (
               <WorkoutDetailsDiv key={scheduleWorkout.id}>
                 <p>      WorkoutDetails</p>
                 <p>Scheduled Workout: {scheduleWorkout.title}</p>
-                <button onClick={(e) => unscheduleWorkout(e, scheduleWorkout)}>Unschedule</button>
+                <button type="button" onClick={(e) => unscheduleWorkout(e, scheduleWorkout)}>Unschedule</button>
                 Exercises for workout:
                 {scheduleWorkout.exercises &&
                   scheduleWorkout.exercises.map(exercise => {
