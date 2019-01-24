@@ -32,12 +32,12 @@ const WorkoutDetails = props => {
     <div>
 
  
-      WorkoutDetails
       {props.scheduleWorkouts &&
         props.scheduleWorkouts.map(scheduleWorkout => {
           if (dateFormat(dateStringParser(scheduleWorkout.date)) === dateFormat(props.selectedDate)) {
             return (
-              <div key={scheduleWorkout.id}>
+              <WorkoutDetailsDiv key={scheduleWorkout.id}>
+                <p>      WorkoutDetails</p>
                 <p>Scheduled Workout: {scheduleWorkout.title}</p>
                 Exercises for workout:
                 {scheduleWorkout.exercises &&
@@ -50,7 +50,7 @@ const WorkoutDetails = props => {
                       />
                     );
                   })}
-              </div>
+              </WorkoutDetailsDiv>
             );
           }
         })}
@@ -59,3 +59,6 @@ const WorkoutDetails = props => {
 };
 
 export default WorkoutDetails;
+
+const WorkoutDetailsDiv = styled.div`
+`;

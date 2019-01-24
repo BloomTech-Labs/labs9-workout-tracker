@@ -42,8 +42,9 @@ const StripeButton = () => {
 export default StripeButton;
 
 const StripeStyle = styled.button`
-  background-color: ${props => props.theme.accent};
-  font-size: 14px;
+  background-color: ${props => props.theme.accent}
+  font-size: 1.4rem;
+
   position: relative;
   display: block;
   height: 40px;
@@ -51,9 +52,11 @@ const StripeStyle = styled.button`
   font-weight: bold;
   box-shadow: rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
   border-radius: 5px;
-  text-align: center;
-  padding-top: 5px;
-  width: 40%;
+  text-align:center;
+  padding-top:5px;
+  padding-left: 50px;
+  padding-right: 50px;
+
 `;
 
 const StyleCheckout = styled(StripeCheckout)``;

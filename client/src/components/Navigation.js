@@ -137,14 +137,15 @@ const StyledUserIcon = styled.span`
 
 const NavContainer = styled.div`
   height: 54px;
-  width: 100vw;
+  width: 100%;
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
-  padding: 0px 30px;
   z-index: 99;
   position: absolute;
   top: 0;
   left: 0;
+  margin:0 auto;
+  padding: 0 2%;
 `;
 
 const NavStyle = styled.div`
@@ -176,7 +177,7 @@ const StyledLink = styled(NavLink)`
 `
 
 const Logo = styled(Link)`
-  font-size: 25px;
+  font-size: 2.5rem;
   font-weight: 800;
   color: ${props => props.theme.accent};
   text-decoration: none;
@@ -186,4 +187,5 @@ const Logo = styled(Link)`
 const NavBar = styled.div`
   display: flex;
   justify-content: flex-end;
+  width:42%;
 `;

@@ -12,14 +12,16 @@ const LandingPage = () => {
     <LandingContainer>
       <LandingStyle>
         <BackgroundImage />
+        <CtaDiv>
         <CallToAction>
           <Action>{preCallToAction}</Action>
           <Action>{callToAction}</Action>
           <StyledButton to="/register">
-            START TRACKING YOUR WORKOUTS NOW
+            START TRACKING NOW
           </StyledButton>
         </CallToAction>
         <BlankImage />
+        </CtaDiv>
         {/* <DownArrow>
           <i className="fas fa-arrow-down" />
         </DownArrow> */}
@@ -47,15 +49,16 @@ const LandingStyle = styled.div`
   width: 100%;
   max-width: ${props => props.theme.containingWidth};
   height: calc(100% - 54px);
-  padding: 0px 30px;
   min-height: 1200px;
   color: white;
   font-family: ${props => props.theme.roboto};
   position: relative;
   background-color: transparent;
   margin: 0 auto;
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     flex-direction: column;
+    min-height: 600px;
+
   }
 `;
 
@@ -65,10 +68,14 @@ const Action = styled.div`
   margin-bottom: 20px;
   text-align: left;
   color: white;
+
+  @media(max-width:900px) {
+    text-align:center;
+  }
 `;
 
 const BackgroundImage = styled.span`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   min-height: 500px;
   position: fixed;
@@ -80,21 +87,38 @@ const BackgroundImage = styled.span`
   background-size: cover;
 `;
 
+const CtaDiv = styled.div`
+display:flex
+
+@media(max-width:900px){
+  flex-direction:column;
+  align-items:center;
+}
+`
 const CallToAction = styled.div`
-  width: 400px;
   height: 200px;
   z-index: 2;
   position: absolute;
   top: 350px;
-  left: 0;
+  margin-left: 2%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  
+  @media(max-width:900px){
+    top:200px;
+    margin: 0 auto;
+    display:flex;
+    align-items:center
+    width:100%;
+  }
 `;
 
 const StyledButton = styled(Link)`
-  width: 350px;
+  max-width: 350px;
+  min-width: 100px;
+  width: 60%;
   height: 40px;
   line-height: 40px;
   border-radius: 6px;
@@ -115,6 +139,7 @@ const BlankImage = styled.div`
   height: 400px;
   border-radius: 18px;
   position: absolute;
+  margin-right:2%;
   top: 360px;
   right: 0px;
   background-color: ${props => props.theme.primaryDark};
@@ -122,6 +147,10 @@ const BlankImage = styled.div`
   background-size: 400px 400px;
   background-repeat: no-repeat;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
+
+  @media(max-width:900px) {
+    display:none;
+  }
 `;
 
 // const DownArrow = styled.span`
@@ -135,39 +164,56 @@ const BlankImage = styled.div`
 // `;
 
 const Part2 = styled.div`
-  width: 100vw;
-  margin-left: -30px;
+  width: 100%;
+  margin: 0 auto;
   height: 600px;
   background-color: white;
   font-size: 3.3rem;
   display: flex;
+  justify-content:space-around;
+  align-items: center;
+  border: 1px solid blue;
+  @media(max-width:900px) {
+    flex-direction:column
+    }
 `;
 
 const CalendarPic = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  width: 40%;
   height: 200px;
-  padding-top: 250px;
+  border: 1px solid red;
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const CalendarDemo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  width: 40%;
   height: 200px;
-  padding-top: 250px;
+   border: 1px solid red;
+   @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const Part3 = styled.div`
-  width: 100vw;
-  margin-left: -30px;
+  width: 100%;
   height: 600px;
   background-color: #f4f5f5;
   font-size: 3.3rem;
   display: flex;
+  justify-content:center;
+  align-items:center;
+  border: 1px solid blue;
+  @media(max-width:900px) {
+  flex-direction:column
+  }
 `;
 
 const WorkoutPic = styled.div`
@@ -176,7 +222,11 @@ const WorkoutPic = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  padding-top: 250px;
+  align-items: center;
+  border: 1px solid red;
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const WorkoutDemo = styled.div`
@@ -185,45 +235,63 @@ const WorkoutDemo = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  padding-top: 250px;
+  border: 1px solid red;
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const Part4 = styled.div`
-  width: 100vw;
-  margin-left: -30px;
+  width: 100%;
   height: 600px;
   background-color: white;
   font-size: 3.3rem;
   display: flex;
+  justify-content:space-around;
+  align-items: center;
+  border: 1px solid blue;
+  @media(max-width:900px) {
+    flex-direction:column
+    }
 `;
 
 const ProgressDemo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  width: 45%;
   height: 200px;
-  padding-top: 250px;
+  border: 1px solid red;
+  @media(max-width:900px) {
+    width: 65%;
+  }
 `;
 
 const ProgressPic = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  width: 45%;
   height: 200px;
-  padding-top: 250px;
+    border: 1px solid red;
+    @media(max-width:900px) {
+      width: 65%;
+    }
 `;
 
 const Part5 = styled.div`
-  width: 100vw;
-  margin-left: -30px;
-  height: 700px;
+  width: 100%;
   background: no-repeat center center fixed;
   background-image: url(${deadliftImg});
   background-size: cover;
   color: white;
-  font-size: 3.3rem;
+  font-size: 1.6rem;
+  justify-content:center;
+  align-items: center;
+  border: 1px solid blue;
+  @media(max-width:900px) {
+    flex-direction:column
+    }
 `;
 
 const LandingContainer = styled.div``;

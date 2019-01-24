@@ -114,13 +114,13 @@
   
   .calendar-div {
     display:flex;
+    width:100%;
   }
   .calendar {
     display: block;
     position: relative;
     width: 100%;
-    height:412px;
-    min-width: 700px;
+    height:auto;
     background: var(--neutral-color);
     border: 1px solid var(--border-color);
   }
@@ -176,7 +176,7 @@
   
   .calendar .body .selected {
     border-left: 10px solid transparent;
-    border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
+    border-image: linear-gradient(45deg, #d0d4d8 0%, #53cbf1 40%);
     border-image-slice: 1;
   }
   
