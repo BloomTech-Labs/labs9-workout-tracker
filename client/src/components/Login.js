@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Store } from "../index";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
@@ -6,6 +7,8 @@ import axios from "axios";
 import ropeImg from "./assets/rope.jpg";
 
 const Login = props => {
+  const { state, dispatch } = useContext(Store);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,13 +27,12 @@ const Login = props => {
             console.log(idToken);
             window.localStorage.setItem("login_token", idToken);
             axios
-              .get(
-                "https://fitmetrix.herokuapp.com/api/user",
-                { headers: { Authorization: idToken } }
-              )
+              .get("https://fitmetrix.herokuapp.com/api/user", {
+                headers: { Authorization: idToken }
+              })
               .then(res => {
                 console.log(res.data);
-                props.dispatch({ type: "userModel", payload: res.data });
+                dispatch({ type: "USER_MODEL", payload: res.data });
                 props.history.push("/schedule");
               })
               .catch(err => {

@@ -82,34 +82,29 @@ router.get("/all/exercises", async (req, res) => {
 //GET Workout set by user ID
 router.get("/", async (req, res) => {
   try {
-    
     //use the user ID to pull the workouts associated with the user
-    const workouts = await db('workouts').where('user_id', '=', req.id);
+    const workouts = await db("workouts").where("user_id", "=", req.id);
     console.log(workouts);
 
     if (!workouts[0]) {
       res.status(200).json("You have no workouts");
-      return
+      return;
     }
 
     let workoutsArray = [];
 
     for (const workout of workouts) {
       //gets exercises that for the corresponding workout
-      const exercises = await db('exercises').where(
-        'workout_id',
-        '=',
+      const exercises = await db("exercises").where(
+        "workout_id",
+        "=",
         workout.id
       );
-      const category = await db('category').where(
-        'id',
-        '=',
+      const category = await db("category").where(
+        "id",
+        "=",
         workout.category_id
       );
-<<<<<<< HEAD
-=======
-
->>>>>>> 47eba353ffac9092f6796478ff2925d3cc92961b
       const workObj = {
         ...workout,
         exercises: [...exercises],
@@ -119,7 +114,7 @@ router.get("/", async (req, res) => {
     }
 
     res.status(200).json(workoutsArray);
-  } catch(error) {
+  } catch (error) {
     res.status(500).json({
       "Well this is embarrassing": "Something went wrong",
       error
@@ -139,7 +134,9 @@ router.post("/", async (req, res) => {
       user_id: userId
     };
     //Insert Obj into workout table to create the workout ID
-    const addWorkout = await db("workouts").returning('id').insert(insertObj);
+    const addWorkout = await db("workouts")
+      .returning("id")
+      .insert(insertObj);
 
     const workout = {
       ...insertObj,
@@ -149,11 +146,12 @@ router.post("/", async (req, res) => {
     if (req.body.exercises) {
       let exercisesArr = req.body.exercises;
 
-      exercisesArr.forEach(ex => ex.workout_id = workout.id);
+      exercisesArr.forEach(ex => (ex.workout_id = workout.id));
       console.log(exercisesArr);
 
-      
-      const addExercises = await db("exercises").returning('id').insert(exercisesArr);
+      const addExercises = await db("exercises")
+        .returning("id")
+        .insert(exercisesArr);
 
       console.log(addExercises);
 
@@ -163,7 +161,7 @@ router.post("/", async (req, res) => {
         workout.id
       );
 
-      console.log(completeExercises)
+      console.log(completeExercises);
       insertObj.exercises = completeExercises;
     }
 
@@ -258,10 +256,10 @@ router.put("/edit/exercise/:id", async (req, res) => {
     .whereIn(["id"], [[id]])
     .update(insertObj);
 
-    if (updatedExercise < 1) {
-      res.status(400).json({message: "Nothing to update"});
-      return
-    }
+  if (updatedExercise < 1) {
+    res.status(400).json({ message: "Nothing to update" });
+    return;
+  }
 
   //Gets the updated exercies that we send back as the response
   const newEx = await db("exercises").where("id", "=", id);

@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Store } from '../../index';
 import EditWorkout from "./EditWorkout";
-import Dropdown from "./Dropdown";
-import WorkoutCategoryList from "./WorkoutCategoryList";
+import WorkoutList from "./WorkoutList";
 import styled from "styled-components";
 
 import bodybuilder from "../assets/bodybuilder.jpg";
+
+const WorkoutsView = props => {
+
+  const { state, dispatch } = useContext(Store);
+  
+  return (
+    <WorkoutsViewContainer>
+      <WorkoutsViewStyle>
+        <EditWorkout user={state} />
+        <WorkoutList workouts={state.workouts} />
+      </WorkoutsViewStyle>
+    </WorkoutsViewContainer>
+  );
+};
+
+export default WorkoutsView;
 
 const WorkoutsViewContainer = styled.div`
   width: 100vw;
@@ -21,22 +37,10 @@ const WorkoutsViewContainer = styled.div`
 
 const WorkoutsViewStyle = styled.div`
   width: 100%;
-  max-width: 100%;
+  max-width: 900px;
   display: flex;
-  position: absolute;
-  top: 74px;
   justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 100px;
 `;
-
-const WorkoutsView = props => {
-  return (
-    <WorkoutsViewContainer>
-      <WorkoutsViewStyle>
-        <EditWorkout />
-        <WorkoutCategoryList workouts={props.workouts} />
-      </WorkoutsViewStyle>
-    </WorkoutsViewContainer>
-  );
-};
-
-export default WorkoutsView;
