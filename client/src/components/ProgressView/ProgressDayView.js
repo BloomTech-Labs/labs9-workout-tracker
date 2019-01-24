@@ -9,41 +9,48 @@ const ProgressDayView = () => {
 
     const { state, dispatch } = useContext(Store);
 
-    
-
     const [metrics, setMetrics] = useState(state.metrics)
     const [showDelete, setDelete] = useState(false);
     const [currentMetric, setCurrentMetric] = useState({})
 
     useEffect(() => {
+        setMetrics(state.metrics)
 
-        const nM = metrics.map(m => {
-            const copy = m;
+        if (metrics) {
+            const nM = metrics.map(m => {
+                const copy = m;
+                copy.date = dateParser(m.date);
+                return copy;
+            });
 
-            copy.date = dateParser(m.date);
-            console.log(copy);
-            return copy;
-        });
+            const sortedMetrics = nM.sort((a, b) => {
+                a = a.date.split('/').reverse().join('')
+                b = b.date.split('/').reverse().join('')
+                return a > b ? 1 : a < b ? -1 : 0;
+            }).reverse();
+            
+            
+            setMetrics(sortedMetrics);
+        }
 
-        const sortedMetrics = nM.sort((a, b) => {
-            a = a.date.split('/').reverse().join('')
-            b = b.date.split('/').reverse().join('')
-            return a > b ? 1 : a < b ? -1 : 0;
-        }).reverse();
-
-
-        setMetrics(sortedMetrics);
-
-    }, [state]);
+    }, [state.metrics, state.editMetric]);
 
     const dateParser = date => {
+        if (date.toString().length === 10) {
+            return date
+        }
+
         date = date.split("T")[0].split('-');
     
         return date[0] + "/" + date[1] + "/" + date[2];
     };
 
-    const editMetric = (m) => {
-
+    const editMetric = (metric) => {
+        dispatch({
+            type: 'EDIT_METRIC',
+            payload: metric
+        })
+        dispatch({type:'SHOW_METRIC_FORM'})
     };
 
     const deleteMetric = async () => {
@@ -67,8 +74,8 @@ const ProgressDayView = () => {
                 }
             })
 
-            dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
             setDelete(false);
+            dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
         }
 
     }
@@ -78,46 +85,48 @@ const ProgressDayView = () => {
         setDelete(true);
     };
 
+    const renderDays = () => {
+        return (
+            <StyledContainer>
+            {
+                metrics && metrics.map((m, i) => {
+                    return (
+                        <DayItem key={i}>
+                            <span>Date: {m.date} </span>
+                            <span>Weight:{m.weight} </span>
+                            <span>Hips:{m.hips} </span>
+                            <span>Waist:{m.waist} </span>
+                            <span>LeftArm:{m.arm_left} </span>
+                            <span>RightArm:{m.arm_right} </span>
+                            <span>LeftLeg:{m.leg_left} </span>
+                            <span>RightLeg:{m.leg_right} </span>
+                            <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                            <StyledIcon onClick={() => deleteCheck(m)} delete><i className="fas fa-trash-alt"></i></StyledIcon>
+                        </DayItem>
+                    );
+                })
+            }
+    
+            {
+            showDelete
+                ? (
+                    <DeleteContainer>
+                        <DeleteComponent>
+                            <h3>Delete Metric</h3>
+                            <div>Date: {currentMetric.date}</div>
+                            <DeleteButton type="button" onClick={e => deleteMetric()}>Delete</DeleteButton>
+                            <button type="button" onClick={e => setDelete(false)}>Cancel</button>
+                        </DeleteComponent>
+                    </DeleteContainer>
+                )
+                : null
+            }
+    
+            </StyledContainer>
+        );
+    }
 
-
-    return (
-        <StyledContainer>
-        {
-            metrics.map((m, i) => {
-                return (
-                    <DayItem key={i}>
-                        <span>Date: {m.date} </span>
-                        <span>Weight:{m.weight} </span>
-                        <span>Hips:{m.hips} </span>
-                        <span>Waist:{m.waist} </span>
-                        <span>LeftArm:{m.arm_left} </span>
-                        <span>RightArm:{m.arm_right} </span>
-                        <span>LeftLeg:{m.leg_left} </span>
-                        <span>RightLeg:{m.leg_right} </span>
-                        <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
-                        <StyledIcon onClick={() => deleteCheck(m)} delete><i className="fas fa-trash-alt"></i></StyledIcon>
-                    </DayItem>
-                );
-            })
-        }
-
-        {
-        showDelete
-            ? (
-                <DeleteContainer>
-                    <DeleteComponent>
-                        <h3>Delete Metric</h3>
-                        <div>Date: {currentMetric.date}</div>
-                        <DeleteButton type="button" onClick={e => deleteMetric()}>Delete</DeleteButton>
-                        <button type="button" onClick={e => setDelete(false)}>Cancel</button>
-                    </DeleteComponent>
-                </DeleteContainer>
-            )
-            : null
-        }
-
-        </StyledContainer>
-    );
+    return renderDays();
 }
 
 export default ProgressDayView;

@@ -1,31 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react';
-import WorkoutList from './WorkoutList';
 import styled from 'styled-components';
 import { Store } from '../../index';
 
-const CategoriesStyle = styled.div`
-  font-family: ${props => props.theme.roboto};
-  font-size: 2em;
-  font-weight: bold;
-  color: ${props => props.theme.accent};
-  background-color: ${props => props.theme.primary};
-  margin-right: 25%;
-  padding: 0 10px;
-  border-radius: 6px;
-`;
-
-const Categories = props => {
+const Categories = () => {
   const { state, dispatch } = useContext(Store);
-  console.log(state);
+
+  const [workouts, setWorkouts] = useState(state.workouts || []);
+  const [categories, setCategories] = useState(state.category || []);
+
+  useEffect(
+    () => {
+      setWorkouts(state.workouts);
+      setCategories(state.category);
+    },
+    [state.workouts, state.category]
+  );
+
+  const verifyEditWorkout = workout => {
+    dispatch({ type: 'EDIT_WORKOUT', payload: workout });
+  };
 
   return (
     <CategoriesStyle>
-      {state.category &&
-        state.category.map(cat => {
+      {categories &&
+        categories.map((category, i) => {
           return (
-            <div>
-              {cat.name}
-              <WorkoutList cat={cat} workouts={state.workouts} />
+            <div key={i}>
+              <p>{category.name}</p>
+              <WorkoutListStyle>
+                {console.log(workouts)}
+                {workouts.map((w, j) => {
+                  if (w.category_id === category.id) {
+                    return (
+                      <div key={`${i}${j}`} onClick={() => verifyEditWorkout(w)}>
+                        {w.title}
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </WorkoutListStyle>
             </div>
           );
         })}
@@ -34,3 +48,25 @@ const Categories = props => {
 };
 
 export default Categories;
+
+const WorkoutListStyle = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: ${props => props.theme.accent};
+  background-color: ${props => props.theme.primary};
+  text-align: center;
+  padding: 0 10px;
+  border-radius: 6px;
+`;
+
+const CategoriesStyle = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: ${props => props.theme.white};
+  background-color: ${props => props.theme.primary};
+  margin-right: 25%;
+  padding: 0 10px;
+  border-radius: 6px;
+`;
