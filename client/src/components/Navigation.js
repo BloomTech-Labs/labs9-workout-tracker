@@ -177,7 +177,7 @@ const StyledLink = styled(NavLink)`
 `
 
 const Logo = styled(Link)`
-  font-size: 25px;
+  font-size: 2.5rem;
   font-weight: 800;
   color: ${props => props.theme.accent};
   text-decoration: none;
@@ -187,4 +187,5 @@ const Logo = styled(Link)`
 const NavBar = styled.div`
   display: flex;
   justify-content: flex-end;
+  width:42%;
 `;

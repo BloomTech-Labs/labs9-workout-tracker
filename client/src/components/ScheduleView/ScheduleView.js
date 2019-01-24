@@ -22,7 +22,7 @@ class ScheduleView extends React.Component {
   render() {
     return (
       <ScheduleViewStyle>
-        <p>{this.props.user.email}</p>
+        <p style={{display:'none'}}>{this.props.user.email}</p>
         <Calendar dispatch={this.props.dispatch} user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.scheduleWorkouts} />
         {/* <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} /> */}
       </ScheduleViewStyle>
@@ -36,7 +36,10 @@ const ScheduleViewStyle = styled.div`
   display: flex;
   position: absolute;
   top: 74px;
-`;
+  padding: 0 2%;
+  `;
+
+
 
 
 export default requireAuth(ScheduleView);
