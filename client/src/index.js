@@ -17,8 +17,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'USER_MODEL':
       return { ...state, ...action.payload };
-    case 'CONTEXT_TEST':
-      console.log('hi from reducer');
+    case "UPDATE_METRICS":
+      return {...state, metrics: [...action.payload]}
+    case "CONTEXT_TEST":
+      console.log("hi from reducer");
       return { ...state };
     case 'EDIT_WORKOUT':
       console.log('hi edit workout');

@@ -60,8 +60,11 @@ const SettingsView = props => {
     if (props.user.premium === true) {
       return <PremiumStyle>You are premium</PremiumStyle>;
     } else {
-      return <StripeButton />;
-    }
+      return  (
+      <StripeStyle>
+        <StripeButton />;
+      </StripeStyle>
+      )}
   };
 
   const changePasswordPress = () => {
@@ -86,6 +89,7 @@ const SettingsView = props => {
   
 
   return (
+    <ContainerDiv>
     <SettingsViewStyle>
       <FormStyle onSubmit={e => updateUser(e)}>
         <Div>
@@ -106,16 +110,8 @@ const SettingsView = props => {
             onChange={e => setPhone(e.target.value)}
           />
         </Div>
-        <Div>
-          <LabelStyle>Recieve Email</LabelStyle>
-          <InputCheckStyle
-            name="Recieve Email"
-            type="checkbox"
-            checked={recieves_email}
-            onChange={e => setRecieveEmail(e.target.checked)}
-          />
-        </Div>
-        <Div>
+       
+        <ChangePasswordDiv>
           <InputStyle 
           type='password'
             value={currentPassword} 
@@ -134,21 +130,38 @@ const SettingsView = props => {
             />
             <Button title='Change Password'>Update Info</Button>
 
-        </Div>
+        </ChangePasswordDiv>
+        <RecEmailDiv>
+          <LabelStyle>Want to Recieve Email?</LabelStyle>
+          <InputCheckStyle
+            name="Recieve Email"
+            type="checkbox"
+            checked={recieves_email}
+            onChange={e => setRecieveEmail(e.target.checked)}
+          />
+        </RecEmailDiv>
         <ButtonDiv>
           {renderPremium()}
         </ButtonDiv>
       </FormStyle>
     </SettingsViewStyle>
+    </ContainerDiv>
   );
 };
 
 export default requireAuth(SettingsView);
 
+const ContainerDiv = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+`;
+
 const SettingsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
+  justify-content:center;
   padding-bottom: 100px;
   position: absolute;
   top: 74px;
@@ -157,46 +170,63 @@ const SettingsViewStyle = styled.div`
 
 const FormStyle = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
   justify-content: space-evenly;
-  height: 350px;
-  width: 50%;
-`;
-
-const EmailStyle = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  width: 70%;
+  border: 1px solid blue;
+  align-items:center;
 `;
 
 const InputStyle = styled.input`
-  width: 40%;
   height: 40px;
   border-radius: 5px;
   text-align: center;
+  display:flex;
+  justify-content:center;
+  width:60%;
+  min-width:161.438px;
 `;
 
 const Button = styled.button`
   border-radius: 5px;
   height: 40px;
   color: white;
+  font-size:1.4rem;
   background: ${props => props.theme.primaryDark};
   font-weight: bold;
   width: 40%;
+  min-width: 161.438px;
+  padding 5px 50 px;
 `;
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
+  align-items:center;
+  width:60%;
 `;
+const ChangePasswordDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items:center;
+width:60%;
+  justify-content:space-evenly;
+  height:200px;
+`;
+const RecEmailDiv = styled.div`
+  display:flex;
+  width:50%;
+  justify-content:center;
 
+`;
 const ButtonDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 150px;
+  height: 70px;
   justify-content: space-around;
+  align-items:center;
+
 `;
 
 const LabelStyle = styled.label`
@@ -212,4 +242,10 @@ padding-left: 5%;
 
 const InputCheckStyle = styled.input`
   margin-left: 18%;
+  margin-top:15px;
+`;
+const StripeStyle = styled.div`
+display:flex;
+justify-content:center;
+width:100%;
 `;
