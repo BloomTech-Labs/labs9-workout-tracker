@@ -1,56 +1,48 @@
 /* eslint-disable no-loop-func */
-import React from "react";
+import React, { useContext, useState, } from "react";
+import { Store } from '../../index';
 import dateFns from "date-fns";
 import AddWorkout from "./AddWorkout";
 import WorkoutDetails from "./WorkoutDetails";
 import "./Calendar.css";
 
-class Calendar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentMonth: new Date(),
-      dateSelected: false,
-      datePopulated: false,
-      selectedDate: null,
 
-      //Dup week func
-      weekSelected: false,
-      datesSelected: []
-    };
-  }
-
-// componentDidMount() {
+const HooksCalendar = (props) => {
   
-//     this.setState({...this.props})
-//   }
-// }
+  const { state, dispatch } = useContext(Store);
 
-  renderHeader() {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [dateSelected, setdateSelected] = useState(false);
+  const [selectedDate, setselectedDate] = useState(null);
+  const [datePopulated, setdatePopulated] = useState(false);
+
+
+
+ const renderHeader= () => {
     const dateFormat = "MMM YYYY";
 
     return (
       <div className="header row flex-middle">
         <div className="col col-start">
-          <div className="icon" onClick={this.prevMonth}>
+          <div className="icon" onClick={prevMonth}>
             chevron_left
           </div>
         </div>
         <div className="col col-center">
-          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
+          <span>{dateFns.format(currentMonth, dateFormat)}</span>
         </div>
-        <div className="col col-end" onClick={this.nextMonth}>
+        <div className="col col-end" onClick={nextMonth}>
           <div className="icon">chevron_right</div>
         </div>
       </div>
     );
   }
 
-  renderDays() {
+  const renderDays = () => {
     const dateFormat = "ddd";
     const days = [];
 
-    let startDate = dateFns.startOfWeek(this.state.currentMonth);
+    let startDate = dateFns.startOfWeek(currentMonth);
 
     for (let i = 0; i < 7; i++) {
       days.push(
@@ -63,8 +55,7 @@ class Calendar extends React.Component {
     return <div className="days row">{days}</div>;
   }
 
-  renderCells() {
-    const { currentMonth, selectedDate } = this.state;
+  const renderCells = () => {
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
@@ -105,7 +96,7 @@ class Calendar extends React.Component {
         days.push(
           <>
             {/* checking if scheduleWorkouts is defined */}
-            {this.props.scheduleWorkouts === undefined ? (
+            {props.scheduleWorkouts === undefined ? (
               // IF no scheduled workouts, renders an empty calendar
               <div
                 className={`col cell ${
@@ -116,7 +107,7 @@ class Calendar extends React.Component {
                     : ""
                 }`}
                 key={day}
-                onClick={() => this.onDateClick(dateFns.parse(cloneDay), false)}
+                onClick={() => onDateClick(dateFns.parse(cloneDay), false)}
               >
                 <span className="number">{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
@@ -131,7 +122,7 @@ class Calendar extends React.Component {
                     : ""
                 }`}
                 key={day}
-                sworkout={this.props.scheduleWorkouts.map(sworkout => {
+                sworkout={props.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
                   const splitDate = sworkout.date.split("T")[0];
                   return splitDate === matchedDate ? sworkout : null;
@@ -139,15 +130,15 @@ class Calendar extends React.Component {
                 onClick={
                   //Check whether the matchedDate is inside of scheduled workouts
                   // using arrayContains method
-                  arrayContains(matchedDate, this.props.scheduleWorkouts) ===
+                  arrayContains(matchedDate, props.scheduleWorkouts) ===
                   true
                     ? //if so, runs onDateClick with true
                       () => {
-                        this.onDateClick(dateFns.parse(cloneDay), true);
+                        onDateClick(dateFns.parse(cloneDay), true);
                       }
                     : //else runs onDateClick with false
                       () => {
-                        this.onDateClick(dateFns.parse(cloneDay), false);
+                        onDateClick(dateFns.parse(cloneDay), false);
                       }
                 }
               >
@@ -155,7 +146,7 @@ class Calendar extends React.Component {
                 <span className="bg">{formattedDate}</span>
                 <span>
                   {//maps through scheduleworkouts
-                  this.props.scheduleWorkouts.map(sworkout => {
+                  props.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
                     const splitDate = sworkout.date.split("T")[0];
                     return splitDate === matchedDate ? sworkout.title : null;
@@ -178,22 +169,18 @@ class Calendar extends React.Component {
     return <div className="body">{rows}</div>;
   }
 
-  onDateClick = (day, isPopulated) => {
+  const onDateClick = (day, isPopulated) => {
     // selecteddate null, dates length =0
-    if (this.state.selectedDate === null) {
-      this.setState({
-        selectedDate: day,
-        datePopulated: isPopulated,
-        dateSelected: true,
-        //dupweek func
-        datesSelected: [...this.state.datesSelected, day]
-      });
+    if (selectedDate === null) {
+        setselectedDate(day);
+        setdatePopulated(isPopulated);
+        setdateSelected(true);
+
     } else {
-      this.setState({
-        selectedDate: null,
-        datePopulated: false,
-        dateSelected: false
-      });
+        setselectedDate(null);
+        setdatePopulated(isPopulated);
+        setdateSelected(false);
+
     }
     // isPopulated: If the date has a scheduled workout true/false
     // dateSelected: If any date on the calendar is selected true/false
@@ -205,50 +192,56 @@ class Calendar extends React.Component {
     //
   };
 
-  nextMonth = () => {
-    this.setState({
-      currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
-    });
+  const nextMonth = () => {
+
+    setCurrentMonth(dateFns.addMonths(currentMonth, 1))    
+    
+    
+    // this.setState({
+    //   currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
+    // });
   };
 
-  prevMonth = () => {
-    this.setState({
-      currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
-    });
+  const prevMonth = () => {
+    setCurrentMonth(dateFns.subMonths(currentMonth, 1))
+
+    // this.setState({
+    //   currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
+    // });
   };
 
-  render() {
+  
     return (
       <div className="calendar-div">
         <div className="calendar">
-          {this.renderHeader()}
-          {this.renderDays()}
-          {this.renderCells()}
+          {renderHeader()}
+          {renderDays()}
+          {renderCells()}
         </div>
+        
         {/* if no date is selected, return null */}
-        {this.state.dateSelected !==
+        {dateSelected !==
         true ? null : // if date is selected, check if date is populated and return component based on that
-        this.state.datePopulated === true ? (
+        datePopulated === true ? (
           <div>
             {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
             <WorkoutDetails
-              selectedDate={this.state.selectedDate}
-              dispatch={this.props.dispatch}
-              scheduleWorkouts={this.props.scheduleWorkouts}
+              selectedDate={selectedDate}
+              dispatch={props.dispatch}
+              scheduleWorkouts={props.scheduleWorkouts}
             />
           </div>
         ) : (
           <div>
             <AddWorkout
-              workouts={this.props.user.workouts}
-              scheduleWorkouts={this.props.user.scheduleWorkouts}
-              selectedDate={this.state.selectedDate}
+              workouts={props.user.workouts}
+              scheduleWorkouts={props.user.scheduleWorkouts}
+              selectedDate={selectedDate}
             />
           </div>
         )}
       </div>
     );
-  }
 }
 
-export default Calendar;
+export default HooksCalendar;

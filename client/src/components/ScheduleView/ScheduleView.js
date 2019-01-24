@@ -1,5 +1,6 @@
 import React from "react";
 import Calendar from "./Calendar";
+import HooksCalendar from "./HooksCalendar";
 import ScheduleWorkoutList from "./ScheduleWorkout/ScheduleWorkoutList";
 import styled from "styled-components";
 import requireAuth from "../../requireAuth";
@@ -19,7 +20,8 @@ class ScheduleView extends React.Component {
     return (
       <ScheduleViewStyle>
         <p style={{display:'none'}}>{this.props.user.email}</p>
-        <Calendar dispatch={this.props.dispatch} user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.user.scheduleWorkouts} />
+        {/* <Calendar dispatch={this.props.dispatch} user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.user.scheduleWorkouts} /> */}
+        <HooksCalendar dispatch={this.props.dispatch} user={this.props.user} dateSelected={this.state.dateSelected} selectDate={this.selectDate} scheduleWorkouts={this.props.user.scheduleWorkouts} />
 
         {/* <ScheduleWorkoutList scheduleWorkouts={this.props.scheduleWorkouts} /> */}
       </ScheduleViewStyle>
