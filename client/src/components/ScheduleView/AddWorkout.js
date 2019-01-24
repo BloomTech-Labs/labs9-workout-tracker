@@ -73,6 +73,10 @@ const AddWorkout = props => {
       date,
       workout_id: workout.id
     }
+    const recurringWorkoutObj = {
+      date,
+      workout_id: workout.id
+    }
     console.log("schedworkouthandler wktOBJ:", workoutObj);
 
     const scheduleWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", workoutObj, {
@@ -82,6 +86,14 @@ const AddWorkout = props => {
       }
     })
     .catch(err => console.log(err))
+
+    // const scheduleRecurringWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", recurringWorkoutObj, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: token
+    //   }
+    // })
+    // .catch(err => console.log(err))
 
     
 

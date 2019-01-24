@@ -19,6 +19,8 @@ const reducer = (state, action) => {
       return { ...state, ...action.payload };
     case "UPDATE_METRICS":
       return {...state, metrics: [...action.payload]}
+    case "UPDATE_SCHEDULE_WORKOUTS":
+      return {...state, schedule_workouts: [...action.payload]}
     case "CONTEXT_TEST":
       console.log("hi from reducer");
       return { ...state };
