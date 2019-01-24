@@ -220,4 +220,21 @@ router.put("/edit/workout/:id", async (req, res) => {
   res.status(200).json(newWk[0]);
 });
 
+//Delete Scheduled Workout
+router.delete('/delete/workout/:id', async (req, res) => {
+try {
+  const deleteScheduleWorkout = await db("schedule_workouts")
+  .where("id", "=", req.params.id)
+  .del();
+  {
+    deleteMetricData === 0
+      ? res.status(404).json({ message: "That sceduled workout does not exist" })
+      : res.status(200).json({ deleteScheduleWorkout });
+  }
+} catch (error) {
+  res.status(500).json(error, "error message");
+}
+});
+
+
 module.exports = router;
