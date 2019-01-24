@@ -19,12 +19,13 @@ const WorkoutList = props => {
   console.log('the workouts are: ', props.workouts);
 
   useEffect(() => {
-    dispatch({ type: 'USER_MODEL' });
+    dispatch({ type: 'EDIT_WORKOUT' });
   }, []);
 
-  const verifyEditWorkout = e => {
+  const verifyEditWorkout = workout => {
     console.log('Do you want to edit this workout?');
-    return <butto>Do you want to edit this workout?</butto>;
+
+    dispatch({ type: 'EDIT_WORKOUT', payload: workout });
   };
 
   return (
@@ -33,7 +34,9 @@ const WorkoutList = props => {
         props.workouts.map(workout => {
           if (workout.category_id === props.cat.id) {
             console.log('match? true');
-            return <p onClick={e => verifyEditWorkout(e)}>{workout.title}</p>;
+            return (
+              <p onClick={() => verifyEditWorkout(workout)}>{workout.title}</p>
+            );
           }
         })}
     </WorkoutListStyle>

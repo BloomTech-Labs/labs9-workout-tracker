@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
-import * as firebase from "firebase";
-import { Store } from "../../index";
+import styled from 'styled-components';
+import axios from 'axios';
+import React, { useState, useEffect, useContext } from 'react';
+import * as firebase from 'firebase';
+import { Store } from '../../index';
 
 const EditWorkout = props => {
   const { state, dispatch } = useContext(Store);
@@ -12,25 +12,25 @@ const EditWorkout = props => {
   //  Create variable to store workout
   let initialWorkoutValue = {
     category_id: null,
-    title: "",
+    title: '',
     exercises: []
   };
 
   //Hook to set workout Title
-  const [title, setTitle] = useState("");
-  const [exerciseName, setExerciseName] = useState("");
-  const [weight, setWeight] = useState("");
-  const [sets, setSets] = useState("");
-  const [reps, setReps] = useState("");
+  const [title, setTitle] = useState('');
+  const [exerciseName, setExerciseName] = useState('');
+  const [weight, setWeight] = useState('');
+  const [sets, setSets] = useState('');
+  const [reps, setReps] = useState('');
 
   //useState hooks to set the Category that was chosen
-  const [category, setCategory] = useState("default");
+  const [category, setCategory] = useState('default');
   const [categories, setCategories] = useState([]);
-  const [addCategory, setAddCategory] = useState("");
+  const [addCategory, setAddCategory] = useState('');
 
   // useEffect to get Categories from the backend
   // hook to set the workouts to add
-  const [workout, setWorkout] = useState(initialWorkoutValue)
+  const [workout, setWorkout] = useState(initialWorkoutValue);
 
   useEffect(
     () => {
@@ -51,75 +51,75 @@ const EditWorkout = props => {
     };
 
     workout.exercises.push(nExcercise);
-    setExerciseName("");
-    setWeight("");
-    setSets("");
-    setReps("");
+    setExerciseName('');
+    setWeight('');
+    setSets('');
+    setReps('');
   };
 
   // add workout handler to add workout to database
   const addWorkout = async e => {
     e.preventDefault();
-    const token = window.localStorage.getItem("login_token");
+    const token = window.localStorage.getItem('login_token');
 
     workout.title = title;
     workout.category_id = Number(category);
-    console.log("the current workout is: ", workout);
+    console.log('the current workout is: ', workout);
 
     if (token !== undefined) {
       const res = await axios.post(
-        "https://fitmetrix.herokuapp.com/api/workouts/",
+        'https://fitmetrix.herokuapp.com/api/workouts/',
         workout,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: token
           }
         }
       );
-      console.log("the current workout is: ", workout);
+      console.log('the current workout is: ', workout);
     }
-    setTitle("");
-    setCategory("");
+    setTitle('');
+    setCategory('');
   };
 
   //add Category handler
   const submitCategory = async e => {
     e.preventDefault();
-    console.log("Adding a category", addCategory);
+    console.log('Adding a category', addCategory);
 
-    const token = window.localStorage.getItem("login_token");
+    const token = window.localStorage.getItem('login_token');
 
     if (token !== undefined) {
       const res = await axios.post(
-        "https://fitmetrix.herokuapp.com/api/category/create",
+        'https://fitmetrix.herokuapp.com/api/category/create',
         {
           name: addCategory,
           user_id: props.user.id
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: token
           }
         }
       );
-      console.log("the current category is: ", addCategory);
+      console.log('the current category is: ', addCategory);
     }
-    setAddCategory("");
+    setAddCategory('');
   };
 
   //Puts the categories into a component
   const categoryComponent = (
     <select onChange={e => setCategory(e.target.value)} value={category}>
-      <option value={"default"}>--- Select a Category ---</option>
+      <option value={'default'}>--- Select a Category ---</option>
       {categories &&
         categories.map((category, index) => (
           <option value={category.id} key={index}>
             {category.name}
           </option>
         ))}
-      <option value={"addCategory"}>--- Add a Category ---</option>
+      <option value={'addCategory'}>--- Add a Category ---</option>
     </select>
   );
 
@@ -134,7 +134,7 @@ const EditWorkout = props => {
       />
       <div>{categoryComponent}</div>
 
-      {category === "addCategory" ? (
+      {category === 'addCategory' ? (
         <>
           <ValueInput
             value={addCategory}
@@ -186,8 +186,8 @@ const EditWorkout = props => {
       {workout.exercises.length > 0 ? (
         <StyledButton>Submit</StyledButton>
       ) : null}
-    </EditWorkoutSubmitForm> 
-    );
+    </EditWorkoutSubmitForm>
+  );
 };
 
 export default EditWorkout;
