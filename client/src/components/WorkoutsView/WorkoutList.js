@@ -18,9 +18,7 @@ const WorkoutList = props => {
 
   console.log('the workouts are: ', props.workouts);
 
-  useEffect(() => {
-    dispatch({ type: 'EDIT_WORKOUT' });
-  }, []);
+  useEffect(() => {}, []);
 
   const verifyEditWorkout = workout => {
     console.log('Do you want to edit this workout?');

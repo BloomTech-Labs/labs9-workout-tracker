@@ -111,10 +111,10 @@ const EditWorkout = props => {
 
   //Puts the categories into a component
   const categoryComponent = (
-    <select onChange={e => setCategory(e.target.value)} value={category}>
+    <select onChange={e => setCategory(e.target.value)} value={state.category}>
       <option value={'default'}>--- Select a Category ---</option>
-      {categories &&
-        categories.map((category, index) => (
+      {state.category &&
+        state.category.map((category, index) => (
           <option value={category.id} key={index}>
             {category.name}
           </option>
@@ -126,7 +126,7 @@ const EditWorkout = props => {
   return (
     <EditWorkoutSubmitForm onSubmit={e => addWorkout(e)}>
       <ValueInput
-        value={title}
+        value={state.editWorkout ? state.editWorkout.title : title}
         type="text"
         placeholder="Workout Title"
         onChange={e => setTitle(e.target.value)}
@@ -156,31 +156,37 @@ const EditWorkout = props => {
             );
           })}
       </div>
-      <ValueInput
-        value={exerciseName}
-        type="text"
-        placeholder="Exercise Name"
-        onChange={e => setExerciseName(e.target.value)}
-      />
-      <ValueInput
-        value={weight}
-        type="text"
-        placeholder="Weight"
-        onChange={e => setWeight(e.target.value)}
-      />
-      <ValueInput
-        value={sets}
-        type="text"
-        placeholder="Sets"
-        onChange={e => setSets(e.target.value)}
-      />
-      <ValueInput
-        value={reps}
-        type="text"
-        placeholder="Reps"
-        onChange={e => setReps(e.target.value)}
-      />
-      <StyledButton onClick={e => addExercise(e)}>Add Exercise</StyledButton>
+      {state.editWorkout ? null : (
+        <>
+          <ValueInput
+            value={exerciseName}
+            type="text"
+            placeholder="Exercise Name"
+            onChange={e => setExerciseName(e.target.value)}
+          />
+          <ValueInput
+            value={weight}
+            type="text"
+            placeholder="Weight"
+            onChange={e => setWeight(e.target.value)}
+          />
+          <ValueInput
+            value={sets}
+            type="text"
+            placeholder="Sets"
+            onChange={e => setSets(e.target.value)}
+          />
+
+          <ValueInput
+            value={reps}
+            type="text"
+            placeholder="Reps"
+            onChange={e => setReps(e.target.value)}
+          />
+        </>
+      )}
+
+      <StyledButton onClick={e => addExercise(e)}>Add Workout</StyledButton>
 
       {/* conditional for Submit button if no workouts exist */}
       {workout.exercises.length > 0 ? (

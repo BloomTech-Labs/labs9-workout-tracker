@@ -10,7 +10,7 @@ export const Store = createContext({ state: {}, dispatch: () => {} });
 
 const initialState = {
   ...userData,
-  editWorkout: {}
+  editWorkout: null
 };
 
 const reducer = (state, action) => {
