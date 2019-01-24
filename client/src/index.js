@@ -9,8 +9,20 @@ import firebase from 'firebase';
 export const Store = createContext({ state: {}, dispatch: () => {} });
 
 const initialState = {
-  ...userData,
-  editWorkout: null
+  category: [],
+  email: '',
+  id: null,
+  name: '',
+  phone: null,
+  premium: null,
+  recieves_email: null,
+  recieves_text: null,
+  editWorkout: null,
+  scheduleWorkouts: [],
+  uid: '',
+  workouts: [],
+  editMetric: null,
+  showMetricForm: false
 };
 
 const reducer = (state, action) => {
@@ -20,11 +32,15 @@ const reducer = (state, action) => {
     case "UPDATE_METRICS":
       return {...state, metrics: [...action.payload]}
     case "CONTEXT_TEST":
-      console.log("hi from reducer");
       return { ...state };
     case 'EDIT_WORKOUT':
-      console.log('hi edit workout');
       return { ...state, editWorkout: { ...action.payload } };
+    case 'EDIT_METRIC':
+      return { ...state, editMetric: { ...action.payload } };
+    case 'RESET_EDIT_METRIC':
+      return { ...state, editMetric: null };
+    case 'SHOW_METRIC_FORM':
+      return { ...state, showMetricForm: !state.showMetricForm };
     default:
       // A reducer must always return a valid state.
       // Alternatively you can throw an error if an invalid action is dispatched.

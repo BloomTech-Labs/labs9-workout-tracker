@@ -11,7 +11,7 @@ const ProgressGraph = props => {
   const { state } = useContext(Store);
 
   const [type, setType] = useState("weight");
-  const { metrics } = state;
+  const { metrics } = state || [];
 
   const d3Data = () => {
     let arr = [];
@@ -22,13 +22,17 @@ const ProgressGraph = props => {
         value: parseFloat(m[type])
       });
     });
-
+    
     arr.sort((a,b) => a.date - b.date)
-
+    
     return arr;
   };
 
   const dateParser = date => {
+
+    if (date.length === 10) {
+      return new Date(date).getTime();
+    }
     
     date = date.split("T")[0].split('-');
 
@@ -101,16 +105,16 @@ const ProgressGraph = props => {
 
   useEffect(
     () => {
-      drawChart();
+      metrics && drawChart();
     },
-    [type, state]
+    [type, state.metrics, state.editMetric]
   );
 
   return (
     <>
       <ProgressInfo>
         <ProgressTitle>Progress</ProgressTitle>
-        <ProgressHeader metrics={metrics} setType={setType} />
+        <ProgressHeader setType={setType} />
       </ProgressInfo>
       <GraphContainer>
         <div>

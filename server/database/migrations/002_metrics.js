@@ -1,7 +1,6 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("metrics", function(tbl) {
     tbl.increments();
-    tbl.timestamps(true, true);
     tbl.decimal("weight");
     tbl.decimal("hips");
     tbl.decimal("waist");

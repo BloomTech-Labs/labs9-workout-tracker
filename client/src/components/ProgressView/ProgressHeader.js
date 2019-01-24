@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { Store } from '../../index';
 import styled from "styled-components";
 
-const ProgressHeader = props => {
-  const { metrics, setType } = props;
+const ProgressHeader = ({setType}) => {
+
+  const { state, dispatch } = useContext(Store)
+
+  const metrics = state.metrics || [];
 
   const renderMetrics = () => {
     let earliest = { date: null, index: null };
@@ -48,14 +52,14 @@ const ProgressHeader = props => {
     });
   };
 
-  useEffect(
-    () => {
-      renderMetrics();
-    },
-    [metrics]
-  );
+  // useEffect(
+  //   () => {
+  //     renderMetrics();
+  //   },
+  //   [metrics]
+  // );
 
-  return <MetricContainer>{renderMetrics()}</MetricContainer>;
+  return <MetricContainer>{metrics && metrics.length && renderMetrics()}</MetricContainer>;
 };
 
 export default ProgressHeader;

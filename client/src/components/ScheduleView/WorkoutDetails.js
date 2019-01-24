@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import ExerciseDetails from "./ExerciseDetails";
+import axios from 'axios';
 import styled from "styled-components";
+import firebase from 'firebase';
 
 const WorkoutDetails = props => {
+
+  
+
   const dateStringParser = date => {
-    
+    if (date.length === 10) {
+      return date
+    }
     date = date.split("T")[0].split('-');
 
     const newDate = date[0] + "/" + date[1] + "/" + date[2];
@@ -28,6 +35,23 @@ const WorkoutDetails = props => {
     return `${d.getFullYear()}-${month}-${day}`
   };
   
+
+ const unscheduleWorkout = async (e, scheduleWorkout) => {
+   e.preventDefault();
+   console.log(scheduleWorkout)
+   const token = await firebase.auth().currentUser.getIdToken()
+   const deleteRes = await axios.delete(
+    `https://fitmetrix.herokuapp.com/api/schedule/delete/${scheduleWorkout.id}`,
+    {
+        headers: {
+          Authorization: token
+        }
+    }
+)
+    .catch(err => console.log(err));
+ }
+ 
+
   return (
     <div>
 
@@ -39,6 +63,7 @@ const WorkoutDetails = props => {
               <WorkoutDetailsDiv key={scheduleWorkout.id}>
                 <p>      WorkoutDetails</p>
                 <p>Scheduled Workout: {scheduleWorkout.title}</p>
+                <button onClick={(e) => unscheduleWorkout(e, scheduleWorkout)}>Unschedule</button>
                 Exercises for workout:
                 {scheduleWorkout.exercises &&
                   scheduleWorkout.exercises.map(exercise => {

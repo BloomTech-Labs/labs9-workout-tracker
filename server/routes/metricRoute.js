@@ -78,56 +78,21 @@ router.delete("/metrics/delete/:id", async (req, res) => {
 
 //Edit set of metrics by ID
 router.put("/metrics/edit/:id", async (req, res) => {
-  const { id } = req.params;
-  const {
-    weight,
-    hips,
-    waist,
-    arm_right,
-    arm_left,
-    leg_right,
-    leg_left,
-    date
-  } = req.body;
-  const { user_id } = req.id;
 
-  if (
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .weight ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .hips ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .waist ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .arm_right ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .arm_left ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .leg_right ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .leg_left ||
-    !{ weight, hips, waist, arm_right, arm_left, leg_right, leg_left, date }
-      .date
-  ) {
+  const body = req.body;
+
+  if (!body.weight && !body.hips && !body.waist && !body.arm_right && !body.arm_left && !body.leg_right && !body.leg_left) {
     res.status(400).json({
-      errorMessage: "Please provide an input for all metric fields for the user"
+      errorMessage: "Please provide an update for atleast one field"
     });
+    return
   }
 
   try {
     // console.log("changes are: ", changes);
     const updateduserCount = await db("metrics")
-      .where("id", "=", req.params.id)
-      .update({
-        weight,
-        hips,
-        waist,
-        arm_right,
-        arm_left,
-        leg_right,
-        leg_left,
-        date
-      });
+      .whereIn(["id", "user_id"], [[req.params.id, req.id]])
+      .update(body);
 
     {
       updateduserCount === 0
