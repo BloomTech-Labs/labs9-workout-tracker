@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import axios from 'axios';
+import firebase from "firebase";
+import { Store } from '../../index';
 
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddMetricModule = ({ setAddMetric, metrics }) => {
+const AddMetricModule = ({ setAddMetric }) => {
+
+  const { state, dispatch } = useContext(Store);
+ 
   const [weight, setWeight] = useState("");
   const [hips, setHips] = useState("");
   const [waist, setWaist] = useState("");
@@ -39,10 +45,8 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
     return `${d.getFullYear()}-${month}-${day}`;
   };
 
-  const addMetric = () => {};
-
   const changeDate = nDate => {
-    const dates = metrics.map(m => dateFormat(dateStringParser(m.date)));
+    const dates = state.metrics.map(m => dateFormat(dateStringParser(m.date)));
 
     if (dates.includes(dateFormat(nDate))) {
       setError("Metric for date already exists");
@@ -52,50 +56,105 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
     setError("");
   };
 
+  const addMetric = async (e) => {
+    e.preventDefault();
+
+    const dates = state.metrics.map(m => dateFormat(dateStringParser(m.date)));
+
+    if (dates.includes(dateFormat(date))) {
+      setError("Metric for date already exists");
+      return;
+    }
+
+    const token = await firebase.auth().currentUser.getIdToken()
+
+    const res = await axios.post('https://fitmetrix.herokuapp.com/api/progress/metrics/create/',
+      {
+        weight,
+        hips,
+        waist,
+        arm_right: armRight,
+        arm_left: armLeft,
+        leg_right: legRight,
+        leg_left: legLeft,
+        date: dateFormat(date)
+      },
+      {
+        headers: {
+          Authorization: token
+        }
+      }
+    )
+
+    if (res.status === 201) {
+      const nMetrics = await axios.get(
+        'https://fitmetrix.herokuapp.com/api/progress/metrics/get',
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+      
+      dispatch({
+        type: "UPDATE_METRICS",
+        payload: nMetrics.data
+      })
+    }
+
+  };
+
   return (
     <MetricFormContainer>
-      <MetricForm>
+      <MetricForm onSubmit={e => addMetric(e)}>
         <StyledInput
           type="text"
           placeholder="Weight"
           value={weight}
           onChange={e => setWeight(e.target.value)}
+          required
         />
         <StyledInput
           type="text"
           placeholder="Hips"
           value={hips}
           onChange={e => setHips(e.target.value)}
+          required
         />
         <StyledInput
           type="text"
           placeholder="Waist"
           value={waist}
           onChange={e => setWaist(e.target.value)}
+          required
         />
         <StyledInput
           type="text"
           placeholder="ArmLeft"
           value={armLeft}
           onChange={e => setArmLeft(e.target.value)}
+          required
         />
         <StyledInput
           type="text"
           placeholder="ArmRight"
           value={armRight}
           onChange={e => setArmRight(e.target.value)}
+          required
         />
         <StyledInput
           type="text"
           placeholder="LegLeft"
           value={legLeft}
           onChange={e => setLegLeft(e.target.value)}
+          required
         />
         <StyledInput
           type="text"
           placeholder="LegRight"
           value={legRight}
           onChange={e => setLegRight(e.target.value)}
+          required
         />
         <StyledDatePicker selected={date} onChange={changeDate} />
         {error !== "" ? <StyledError>{error}</StyledError> : null}
@@ -103,7 +162,7 @@ const AddMetricModule = ({ setAddMetric, metrics }) => {
           <button type="button" onClick={() => setAddMetric(false)}>
             Cancel
           </button>
-          <button type="button">Submit</button>
+          <button type="submit">Submit</button>
         </ModuleActions>
       </MetricForm>
     </MetricFormContainer>

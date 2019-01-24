@@ -37,7 +37,7 @@ const Navigation = (props) => {
           <StyledLink to="/workouts" activeClassName='active'><i className="fas fa-dumbbell"></i></StyledLink>
           <StyledLink to="/progress" activeClassName='active'><i className="fas fa-chart-line"></i></StyledLink>
           <StyledUserIcon onClick={() => setAccount(!account)}>
-            <i class="fas fa-user"></i>
+            <i className="fas fa-user"></i>
           </StyledUserIcon>
 
           <AccountOptions show={account}>
