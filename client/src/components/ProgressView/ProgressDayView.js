@@ -9,41 +9,48 @@ const ProgressDayView = () => {
 
     const { state, dispatch } = useContext(Store);
 
-    
-
     const [metrics, setMetrics] = useState(state.metrics)
     const [showDelete, setDelete] = useState(false);
     const [currentMetric, setCurrentMetric] = useState({})
 
     useEffect(() => {
+        setMetrics(state.metrics)
 
-        const nM = metrics.map(m => {
-            const copy = m;
+        if (metrics) {
+            const nM = metrics.map(m => {
+                const copy = m;
+                copy.date = dateParser(m.date);
+                return copy;
+            });
 
-            copy.date = dateParser(m.date);
-            console.log(copy);
-            return copy;
-        });
-
-        const sortedMetrics = nM.sort((a, b) => {
-            a = a.date.split('/').reverse().join('')
-            b = b.date.split('/').reverse().join('')
-            return a > b ? 1 : a < b ? -1 : 0;
-        }).reverse();
-
-
-        setMetrics(sortedMetrics);
+            const sortedMetrics = nM.sort((a, b) => {
+                a = a.date.split('/').reverse().join('')
+                b = b.date.split('/').reverse().join('')
+                return a > b ? 1 : a < b ? -1 : 0;
+            }).reverse();
+            
+            
+            setMetrics(sortedMetrics);
+        }
 
     }, [state]);
 
     const dateParser = date => {
+        if (date.toString().length === 10) {
+            return date
+        }
+
         date = date.split("T")[0].split('-');
     
         return date[0] + "/" + date[1] + "/" + date[2];
     };
 
-    const editMetric = (m) => {
-
+    const editMetric = (metric) => {
+        dispatch({
+            type: 'EDIT_METRIC',
+            payload: metric
+        })
+        dispatch({type:'SHOW_METRIC_FORM'})
     };
 
     const deleteMetric = async () => {
@@ -67,8 +74,8 @@ const ProgressDayView = () => {
                 }
             })
 
-            dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
             setDelete(false);
+            dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
         }
 
     }
@@ -78,12 +85,10 @@ const ProgressDayView = () => {
         setDelete(true);
     };
 
-
-
     return (
         <StyledContainer>
         {
-            metrics.map((m, i) => {
+            metrics && metrics.map((m, i) => {
                 return (
                     <DayItem key={i}>
                         <span>Date: {m.date} </span>

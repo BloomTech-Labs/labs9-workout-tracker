@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import firebase from "firebase";
@@ -104,69 +104,161 @@ const AddMetricModule = ({ setAddMetric }) => {
 
   };
 
-  return (
-    <MetricFormContainer>
-      <MetricForm onSubmit={e => addMetric(e)}>
-        <StyledInput
-          type="text"
-          placeholder="Weight"
-          value={weight}
-          onChange={e => setWeight(e.target.value)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="Hips"
-          value={hips}
-          onChange={e => setHips(e.target.value)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="Waist"
-          value={waist}
-          onChange={e => setWaist(e.target.value)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmLeft"
-          value={armLeft}
-          onChange={e => setArmLeft(e.target.value)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmRight"
-          value={armRight}
-          onChange={e => setArmRight(e.target.value)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegLeft"
-          value={legLeft}
-          onChange={e => setLegLeft(e.target.value)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegRight"
-          value={legRight}
-          onChange={e => setLegRight(e.target.value)}
-          required
-        />
-        <StyledDatePicker selected={date} onChange={changeDate} />
-        {error !== "" ? <StyledError>{error}</StyledError> : null}
-        <ModuleActions>
-          <button type="button" onClick={() => setAddMetric(false)}>
-            Cancel
-          </button>
-          <button type="submit">Submit</button>
-        </ModuleActions>
-      </MetricForm>
-    </MetricFormContainer>
-  );
+  const editMetric = async (e) => {
+    e.preventDefault();
+
+  }
+
+  useEffect(() => {
+    const editMetric = state.editMetric
+    if(editMetric !== null) {
+      setWeight(editMetric.weight);
+      setHips(editMetric.hips);
+      setWaist(editMetric.waist);
+      setArmLeft(editMetric.arm_left);
+      setArmRight(editMetric.arm_right);
+      setLegLeft(editMetric.leg_left);
+      setLegRight(editMetric.leg_right);
+      setDate(new Date(editMetric.date))
+    }
+  }, [state.editMetric])
+
+  const renderForm = () => {
+
+    const editMetric = state.editMetric;
+
+    if (editMetric === null) {
+      return (
+        <MetricFormContainer>
+          <MetricForm onSubmit={e => addMetric(e)}>
+            <StyledInput
+              type="text"
+              placeholder="Weight"
+              value={weight}
+              onChange={e => setWeight(e.target.value)}
+              required
+            />
+            <StyledInput
+              type="text"
+              placeholder="Hips"
+              value={hips}
+              onChange={e => setHips(e.target.value)}
+              required
+            />
+            <StyledInput
+              type="text"
+              placeholder="Waist"
+              value={waist}
+              onChange={e => setWaist(e.target.value)}
+              required
+            />
+            <StyledInput
+              type="text"
+              placeholder="ArmLeft"
+              value={armLeft}
+              onChange={e => setArmLeft(e.target.value)}
+              required
+            />
+            <StyledInput
+              type="text"
+              placeholder="ArmRight"
+              value={armRight}
+              onChange={e => setArmRight(e.target.value)}
+              required
+            />
+            <StyledInput
+              type="text"
+              placeholder="LegLeft"
+              value={legLeft}
+              onChange={e => setLegLeft(e.target.value)}
+              required
+            />
+            <StyledInput
+              type="text"
+              placeholder="LegRight"
+              value={legRight}
+              onChange={e => setLegRight(e.target.value)}
+              required
+            />
+            <StyledDatePicker selected={date} onChange={changeDate} />
+            {error !== "" ? <StyledError>{error}</StyledError> : null}
+            <ModuleActions>
+              <button type="button" onClick={() => dispatch({type:'SHOW_METRIC_FORM'})}>
+                Cancel
+              </button>
+              <button type="submit">Submit</button>
+            </ModuleActions>
+          </MetricForm>
+        </MetricFormContainer>
+      );
+    }
+
+    return (
+      <MetricFormContainer>
+        <MetricForm onSubmit={e => editMetric(e)}>
+          <StyledInput
+            type="text"
+            placeholder="Weight"
+            value={weight}
+            onChange={e => setWeight(e.target.value)}
+            required
+          />
+          <StyledInput
+            type="text"
+            placeholder="Hips"
+            value={hips}
+            onChange={e => setHips(e.target.value)}
+            required
+          />
+          <StyledInput
+            type="text"
+            placeholder="Waist"
+            value={waist}
+            onChange={e => setWaist(e.target.value)}
+            required
+          />
+          <StyledInput
+            type="text"
+            placeholder="ArmLeft"
+            value={armLeft}
+            onChange={e => setArmLeft(e.target.value)}
+            required
+          />
+          <StyledInput
+            type="text"
+            placeholder="ArmRight"
+            value={armRight}
+            onChange={e => setArmRight(e.target.value)}
+            required
+          />
+          <StyledInput
+            type="text"
+            placeholder="LegLeft"
+            value={legLeft}
+            onChange={e => setLegLeft(e.target.value)}
+            required
+          />
+          <StyledInput
+            type="text"
+            placeholder="LegRight"
+            value={legRight}
+            onChange={e => setLegRight(e.target.value)}
+            required
+          />
+          <StyledDatePicker selected={date} onChange={changeDate} disabled/>
+          {error !== "" ? <StyledError>{error}</StyledError> : null}
+          <ModuleActions>
+            <button type="button" onClick={() => dispatch({type:'SHOW_METRIC_FORM'})}>
+              Cancel
+            </button>
+            <button type="submit">Edit</button>
+          </ModuleActions>
+        </MetricForm>
+      </MetricFormContainer>
+    );
+  }
+
+  return renderForm();
 };
 
 export default AddMetricModule;
@@ -197,7 +289,7 @@ const ModuleActions = styled.div`
   align-items: center;
 `;
 
-const MetricFormContainer = styled.form`
+const MetricFormContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.45);

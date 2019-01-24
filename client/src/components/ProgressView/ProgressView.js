@@ -8,15 +8,13 @@ import AddMetricModule from './AddMetricModule';
 import ProgressDayView from './ProgressDayView';
 
 const ProgressView = props => {
-  const { state } = useContext(Store)
+  const { state, dispatch } = useContext(Store)
   const { metrics } = state || [];
-
-  const [addMetric, setAddMetric] = useState(false);
 
   return (
     <ProgressViewStyle>
       <ProgressAction>
-        <StyledButton onClick={() => setAddMetric(true)}>
+        <StyledButton onClick={() => dispatch({type:'SHOW_METRIC_FORM'})}>
           Add Metric
         </StyledButton>
       </ProgressAction>
@@ -30,7 +28,7 @@ const ProgressView = props => {
         </>
       )}
 
-      {addMetric ? (<AddMetricModule setAddMetric={setAddMetric} />) : null}
+      {state.showMetricForm ? (<AddMetricModule />) : null}
     </ProgressViewStyle>
   );
 };
