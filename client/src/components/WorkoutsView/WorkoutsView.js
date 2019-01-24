@@ -1,26 +1,26 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 import { Store } from '../../index';
-import EditWorkout from "./EditWorkout";
-import WorkoutList from "./WorkoutList";
-import styled from "styled-components";
+import EditWorkout from './EditWorkout';
+import Categories from './Categories';
+import styled from 'styled-components';
+import requireAuth from '../../requireAuth';
 
-import bodybuilder from "../assets/bodybuilder.jpg";
+import bodybuilder from '../assets/bodybuilder.jpg';
 
 const WorkoutsView = props => {
-
   const { state, dispatch } = useContext(Store);
-  
+
   return (
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
         <EditWorkout user={state} />
-        <WorkoutList workouts={state.workouts} />
+        <Categories workouts={state.workouts} />
       </WorkoutsViewStyle>
     </WorkoutsViewContainer>
   );
 };
 
-export default WorkoutsView;
+export default requireAuth(WorkoutsView);
 
 const WorkoutsViewContainer = styled.div`
   width: 100vw;
