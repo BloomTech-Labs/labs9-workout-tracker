@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const AddMetricModule = ({ setAddMetric }) => {
 
   const { state, dispatch } = useContext(Store);
- 
+
   const [weight, setWeight] = useState("");
   const [hips, setHips] = useState("");
   const [waist, setWaist] = useState("");
@@ -100,12 +100,53 @@ const AddMetricModule = ({ setAddMetric }) => {
         type: "UPDATE_METRICS",
         payload: nMetrics.data
       })
+      dispatch({type:'SHOW_METRIC_FORM'})
     }
 
   };
 
-  const editMetric = async (e) => {
+  const editMetricCall = async (e) => {
     e.preventDefault();
+
+    const token = await firebase.auth().currentUser.getIdToken()
+
+    console.log()
+
+    const res = await axios.put(`https://fitmetrix.herokuapp.com/api/progress/metrics/edit/${state.editMetric.id}`,
+      {
+        weight,
+        hips,
+        waist,
+        arm_right: armRight,
+        arm_left: armLeft,
+        leg_right: legRight,
+        leg_left: legLeft,
+      },
+      {
+        headers: {
+          Authorization: token
+        }
+      }
+    )
+
+    if (res.status === 200) {
+      const nMetrics = await axios.get(
+        'https://fitmetrix.herokuapp.com/api/progress/metrics/get',
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+      
+      dispatch({
+        type: "UPDATE_METRICS",
+        payload: nMetrics.data
+      })
+      dispatch({type:'SHOW_METRIC_FORM'})
+      dispatch({type:'RESET_EDIT_METRIC'})
+    }
+
 
   }
 
@@ -195,7 +236,7 @@ const AddMetricModule = ({ setAddMetric }) => {
 
     return (
       <MetricFormContainer>
-        <MetricForm onSubmit={e => editMetric(e)}>
+        <MetricForm onSubmit={e => editMetricCall(e)}>
           <StyledInput
             type="text"
             placeholder="Weight"

@@ -107,7 +107,7 @@ const ProgressGraph = props => {
     () => {
       metrics && drawChart();
     },
-    [type, state.metrics]
+    [type, state.metrics, state.editMetric]
   );
 
   return (

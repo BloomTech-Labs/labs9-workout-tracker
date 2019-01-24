@@ -37,6 +37,8 @@ const reducer = (state, action) => {
       return { ...state, editWorkout: { ...action.payload } };
     case 'EDIT_METRIC':
       return { ...state, editMetric: { ...action.payload } };
+    case 'RESET_EDIT_METRIC':
+      return { ...state, editMetric: null };
     case 'SHOW_METRIC_FORM':
       return { ...state, showMetricForm: !state.showMetricForm };
     default:

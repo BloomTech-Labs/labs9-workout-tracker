@@ -33,7 +33,7 @@ const ProgressDayView = () => {
             setMetrics(sortedMetrics);
         }
 
-    }, [state]);
+    }, [state.metrics, state.editMetric]);
 
     const dateParser = date => {
         if (date.toString().length === 10) {
@@ -85,44 +85,48 @@ const ProgressDayView = () => {
         setDelete(true);
     };
 
-    return (
-        <StyledContainer>
-        {
-            metrics && metrics.map((m, i) => {
-                return (
-                    <DayItem key={i}>
-                        <span>Date: {m.date} </span>
-                        <span>Weight:{m.weight} </span>
-                        <span>Hips:{m.hips} </span>
-                        <span>Waist:{m.waist} </span>
-                        <span>LeftArm:{m.arm_left} </span>
-                        <span>RightArm:{m.arm_right} </span>
-                        <span>LeftLeg:{m.leg_left} </span>
-                        <span>RightLeg:{m.leg_right} </span>
-                        <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
-                        <StyledIcon onClick={() => deleteCheck(m)} delete><i className="fas fa-trash-alt"></i></StyledIcon>
-                    </DayItem>
-                );
-            })
-        }
+    const renderDays = () => {
+        return (
+            <StyledContainer>
+            {
+                metrics && metrics.map((m, i) => {
+                    return (
+                        <DayItem key={i}>
+                            <span>Date: {m.date} </span>
+                            <span>Weight:{m.weight} </span>
+                            <span>Hips:{m.hips} </span>
+                            <span>Waist:{m.waist} </span>
+                            <span>LeftArm:{m.arm_left} </span>
+                            <span>RightArm:{m.arm_right} </span>
+                            <span>LeftLeg:{m.leg_left} </span>
+                            <span>RightLeg:{m.leg_right} </span>
+                            <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                            <StyledIcon onClick={() => deleteCheck(m)} delete><i className="fas fa-trash-alt"></i></StyledIcon>
+                        </DayItem>
+                    );
+                })
+            }
+    
+            {
+            showDelete
+                ? (
+                    <DeleteContainer>
+                        <DeleteComponent>
+                            <h3>Delete Metric</h3>
+                            <div>Date: {currentMetric.date}</div>
+                            <DeleteButton type="button" onClick={e => deleteMetric()}>Delete</DeleteButton>
+                            <button type="button" onClick={e => setDelete(false)}>Cancel</button>
+                        </DeleteComponent>
+                    </DeleteContainer>
+                )
+                : null
+            }
+    
+            </StyledContainer>
+        );
+    }
 
-        {
-        showDelete
-            ? (
-                <DeleteContainer>
-                    <DeleteComponent>
-                        <h3>Delete Metric</h3>
-                        <div>Date: {currentMetric.date}</div>
-                        <DeleteButton type="button" onClick={e => deleteMetric()}>Delete</DeleteButton>
-                        <button type="button" onClick={e => setDelete(false)}>Cancel</button>
-                    </DeleteComponent>
-                </DeleteContainer>
-            )
-            : null
-        }
-
-        </StyledContainer>
-    );
+    return renderDays();
 }
 
 export default ProgressDayView;
