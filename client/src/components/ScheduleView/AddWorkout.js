@@ -120,7 +120,8 @@ const AddWorkout = props => {
     }
 
     // const token = await firebase.auth().currentUser.getIdToken();
-    if (scheduleWorkout.status === 200) {
+    if (scheduleWorkout.status === 201) {
+      console.log("I AM HERE");
       const newSW = await axios.get(
         "https://fitmetrix.herokuapp.com/api/schedule",
         {

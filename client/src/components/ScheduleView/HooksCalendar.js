@@ -88,7 +88,7 @@ const HooksCalendar = props => {
 
         //pushing into the days array
         days.push(
-          <>
+          <React.Fragment key={`${day}${Math.random()}`}>
             {/* checking if scheduleWorkouts is defined */}
             {state.scheduleWorkouts === undefined ? (
               // IF no scheduled workouts, renders an empty calendar
@@ -149,7 +149,7 @@ const HooksCalendar = props => {
                 </span>
               </div>
             )}
-          </>
+          </React.Fragment>
         );
         day = dateFns.addDays(day, 1);
       }
@@ -161,7 +161,11 @@ const HooksCalendar = props => {
 
       days = [];
     }
-    return <div className="body" key={`${day}${Math.random()}`}>{rows}</div>;
+    return (
+      <div className="body" key={`${day}${Math.random()}`}>
+        {rows}
+      </div>
+    );
   };
 
   const onDateClick = (day, isPopulated) => {

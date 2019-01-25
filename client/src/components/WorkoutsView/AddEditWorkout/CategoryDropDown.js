@@ -26,20 +26,6 @@ const CategoryDropDown = props => {
           ))}
         <option value={"addCategory"}>--- Add a Category ---</option>
       </select>
-
-      {/* {category === 'addCategory' ? (
-          <>
-            <ValueInput
-              value={addCategory}
-              type="text"
-              placeholder="Category Name"
-              onChange={e => setAddCategory(e.target.value)}
-            />
-            <StyledButton type="button" onClick={e => submitCategory(e)}>
-              Add Category
-            </StyledButton>
-          </>
-      ) : null} */}
     </>
   );
 };
