@@ -1,20 +1,20 @@
-import React, { useState, useContext } from "react";
-import { Store } from '../../index';
+import React, { useContext } from "react";
+import { Store } from "../../index";
 import styled from "styled-components";
 import requireAuth from "../../requireAuth";
 
 import ProgressGraph from "./ProgressGraph";
-import AddMetricModule from './AddMetricModule';
-import ProgressDayView from './ProgressDayView';
+import MetricModule from "./MetricModule";
+import ProgressDayView from "./ProgressDayView";
 
 const ProgressView = props => {
-  const { state, dispatch } = useContext(Store)
+  const { state, dispatch } = useContext(Store);
   const { metrics } = state || [];
 
   return (
     <ProgressViewStyle>
       <ProgressAction>
-        <StyledButton onClick={() => dispatch({type:'SHOW_METRIC_FORM'})}>
+        <StyledButton onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>
           Add Metric
         </StyledButton>
       </ProgressAction>
@@ -24,11 +24,11 @@ const ProgressView = props => {
       ) : (
         <>
           <ProgressGraph />
-          <ProgressDayView/>
+          <ProgressDayView />
         </>
       )}
 
-      {state.showMetricForm ? (<AddMetricModule />) : null}
+      {state.showMetricForm ? <MetricModule /> : null}
     </ProgressViewStyle>
   );
 };

@@ -1,39 +1,33 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Store } from '../../index';
 import styled from 'styled-components';
 import axios from 'axios';
 import firebase from 'firebase'
 
 
-const ProgressDayView = () => {
+const ProgressDayView = props => {
 
     const { state, dispatch } = useContext(Store);
 
-    const [metrics, setMetrics] = useState(state.metrics)
     const [showDelete, setDelete] = useState(false);
     const [currentMetric, setCurrentMetric] = useState({})
 
-    useEffect(() => {
-        setMetrics(state.metrics)
+    const sortMetrics = (metrics) => {
+        const nM = metrics.map(m => {
+            const copy = m;
+            copy.date = dateParser(m.date);
+            return copy;
+        });
 
-        if (metrics) {
-            const nM = metrics.map(m => {
-                const copy = m;
-                copy.date = dateParser(m.date);
-                return copy;
-            });
+        const sortedMetrics = nM.sort((a, b) => {
+            a = a.date.split('/').reverse().join('')
+            b = b.date.split('/').reverse().join('')
+            return a > b ? 1 : a < b ? -1 : 0;
+        }).reverse();
 
-            const sortedMetrics = nM.sort((a, b) => {
-                a = a.date.split('/').reverse().join('')
-                b = b.date.split('/').reverse().join('')
-                return a > b ? 1 : a < b ? -1 : 0;
-            }).reverse();
-            
-            
-            setMetrics(sortedMetrics);
-        }
-
-    }, [state.metrics, state.editMetric]);
+        return sortedMetrics;
+        
+    }
 
     const dateParser = date => {
         if (date.toString().length === 10) {
@@ -89,7 +83,7 @@ const ProgressDayView = () => {
         return (
             <StyledContainer>
             {
-                metrics && metrics.map((m, i) => {
+                state.metrics && sortMetrics(state.metrics).map((m, i) => {
                     return (
                         <DayItem key={i}>
                             <span>Date: {m.date} </span>
