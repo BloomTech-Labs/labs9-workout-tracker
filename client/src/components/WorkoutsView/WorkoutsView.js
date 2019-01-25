@@ -14,7 +14,7 @@ const WorkoutsView = props => {
     <WorkoutsViewContainer>
       <WorkoutsViewStyle>
         <EditWorkout user={state} />
-        <Categories workouts={state.workouts} />
+        <Categories />
       </WorkoutsViewStyle>
     </WorkoutsViewContainer>
   );

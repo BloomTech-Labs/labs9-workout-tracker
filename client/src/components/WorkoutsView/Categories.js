@@ -1,20 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Store } from '../../index';
 
 const Categories = () => {
   const { state, dispatch } = useContext(Store);
-
-  const [workouts, setWorkouts] = useState(state.workouts || []);
-  const [categories, setCategories] = useState(state.category || []);
-
-  useEffect(
-    () => {
-      setWorkouts(state.workouts);
-      setCategories(state.category);
-    },
-    [state.workouts, state.category]
-  );
 
   const verifyEditWorkout = workout => {
     dispatch({ type: 'EDIT_WORKOUT', payload: workout });
@@ -22,14 +11,14 @@ const Categories = () => {
 
   return (
     <CategoriesStyle>
-      {categories &&
-        categories.map((category, i) => {
+      {console.log(state)}
+      {state.category &&
+        state.category.map((category, i) => {
           return (
             <div key={i}>
               <p>{category.name}</p>
               <WorkoutListStyle>
-                {console.log(workouts)}
-                {workouts.map((w, j) => {
+                {state.workouts.map((w, j) => {
                   if (w.category_id === category.id) {
                     return (
                       <div key={`${i}${j}`} onClick={() => verifyEditWorkout(w)}>

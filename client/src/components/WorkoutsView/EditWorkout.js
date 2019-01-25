@@ -144,7 +144,7 @@ const EditWorkout = props => {
         'https://fitmetrix.herokuapp.com/api/category/create',
         {
           name: addCategory,
-          user_id: props.user.id
+          user_id: state.id
         },
         {
           headers: {
