@@ -1,50 +1,52 @@
-import React, { useReducer, useEffect, createContext } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import userData from './mockData';
-import { BrowserRouter as Router } from 'react-router-dom';
-import firebase from 'firebase';
+import React, { useReducer, useEffect, createContext } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
+import firebase from "firebase";
 
 export const Store = createContext({ state: {}, dispatch: () => {} });
 
 const initialState = {
   category: [],
-  email: '',
+  email: "",
   id: null,
-  name: '',
+  name: "",
   phone: null,
   premium: null,
   recieves_email: null,
   recieves_text: null,
   editWorkout: null,
   scheduleWorkouts: [],
-  uid: '',
+  uid: "",
   workouts: [],
   editMetric: null,
-  showMetricForm: false
+  showMetricForm: false,
+  selectedCategory: "default"
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'USER_MODEL':
+    case "USER_MODEL":
       return { ...state, ...action.payload };
-    case 'UPDATE_METRICS':
+    case "UPDATE_METRICS":
       return { ...state, metrics: [...action.payload] };
     case "UPDATE_SCHEDULE_WORKOUTS":
-      return {...state, schedule_workouts: [...action.payload]}
-    case 'EDIT_WORKOUT':
+      return { ...state, scheduleWorkouts: [...action.payload] };
+    case "EDIT_WORKOUT":
       return { ...state, editWorkout: { ...action.payload } };
-    case 'RESET_EDIT_WORKOUT':
+    case "RESET_EDIT_WORKOUT":
       return { ...state, editWorkout: null };
-    case 'UPDATE_WORKOUTS':
+    case "UPDATE_WORKOUTS":
       return { ...state, workouts: [...action.payload] };
-    case 'EDIT_METRIC':
+    case "EDIT_METRIC":
       return { ...state, editMetric: { ...action.payload } };
-    case 'RESET_EDIT_METRIC':
+    case "RESET_EDIT_METRIC":
       return { ...state, editMetric: null };
-    case 'SHOW_METRIC_FORM':
+    case "SHOW_METRIC_FORM":
       return { ...state, showMetricForm: !state.showMetricForm };
+    case "UPDATE_SELECTED_CATEGORY":
+      return { ...state, selectedCategory: action.payload };
     default:
       // A reducer must always return a valid state.
       // Alternatively you can throw an error if an invalid action is dispatched.
@@ -55,12 +57,12 @@ const reducer = (state, action) => {
 const AppContainer = () => {
   useEffect(() => {
     var config = {
-      apiKey: 'AIzaSyAQRB_UBjCXzDmxluLuDiM-VUjEoi9HjnQ',
-      authDomain: 'fitmetrix-57cce.firebaseapp.com',
-      databaseURL: 'https://fitmetrix-57cce.firebaseio.com',
-      projectId: 'fitmetrix-57cce',
-      storageBucket: 'fitmetrix-57cce.appspot.com',
-      messagingSenderId: '771224902694'
+      apiKey: "AIzaSyAQRB_UBjCXzDmxluLuDiM-VUjEoi9HjnQ",
+      authDomain: "fitmetrix-57cce.firebaseapp.com",
+      databaseURL: "https://fitmetrix-57cce.firebaseio.com",
+      projectId: "fitmetrix-57cce",
+      storageBucket: "fitmetrix-57cce.appspot.com",
+      messagingSenderId: "771224902694"
     };
     firebase.initializeApp(config);
   }, []);
@@ -76,4 +78,4 @@ const AppContainer = () => {
   );
 };
 
-ReactDOM.render(<AppContainer />, document.getElementById('root'));
+ReactDOM.render(<AppContainer />, document.getElementById("root"));

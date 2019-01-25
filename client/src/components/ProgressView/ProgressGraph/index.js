@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Store } from '../../index';
+import { Store } from '../../../index';
 import styled from "styled-components";
 import * as d3 from "d3";
 

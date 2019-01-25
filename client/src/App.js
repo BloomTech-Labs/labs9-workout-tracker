@@ -1,9 +1,9 @@
-import React, { useReducer, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Route } from "react-router-dom";
 import LandingPage from "./components/LandingPageView/LandingPage";
 import ScheduleView from "./components/ScheduleView/ScheduleView";
-import ProgressView from "./components/ProgressView/ProgressView";
-import WorkoutsView from "./components/WorkoutsView/WorkoutsView";
+import ProgressView from "./components/ProgressView";
+import WorkoutsView from "./components/WorkoutsView/";
 import SettingsView from "./components/SettingsView/SettingsView";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -24,38 +24,35 @@ const App = props => {
         <Route path="/" render={props => <Navigation {...props} />} />
         <StyledApp>
           <Route exact path="/" render={props => <LandingPage {...props} />} />
-          <Route
-            exact
-            path="/login"
-            render={props => <Login {...props} />}
-          />
+          <Route exact path="/login" render={props => <Login {...props} />} />
           <Route
             exact
             path="/register"
-            render={props => <Register {...props}/>}
+            render={props => <Register {...props} />}
           />
           <Route
             exact
             path="/schedule"
-            render={props => (<ScheduleView
-              dispatch={dispatch}
-              user={state}
-              {...props}/>)}
+            render={props => (
+              <ScheduleView dispatch={dispatch} user={state} {...props} />
+            )}
           />
           <Route
             exact
             path="/progress"
-            render={props => <ProgressView {...props}/>}
+            render={props => <ProgressView {...props} />}
           />
           <Route
             exact
             path="/workouts"
-            render={props => (<WorkoutsView {...props}/>)}
+            render={props => <WorkoutsView {...props} />}
           />
           <Route
             exact
             path="/settings"
-            render={props => (<SettingsView dispatch={dispatch} user={state} {...props} />)}
+            render={props => (
+              <SettingsView dispatch={dispatch} user={state} {...props} />
+            )}
           />
         </StyledApp>
       </div>
