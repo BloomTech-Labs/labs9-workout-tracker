@@ -7,13 +7,15 @@ import requireAuth from '../../requireAuth';
 //working on updating info
 
 const SettingsView = props => {
-  const [email, setEmail] = useState(props.user.email);
-  const [phone, setPhone] = useState(props.user.phone);
-  const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
-  const [premium, displayPremium] = useState(props.user.premium);
-  const [newPassword, setPassword] = useState('');
-  const [currentPassword, setcurrentPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
+  const { state, dispatch } = useContext(Store)
+
+  // const [email, setEmail] = useState(props.user.email);
+  // const [phone, setPhone] = useState(props.user.phone);
+  // const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
+  // const [premium, displayPremium] = useState(props.user.premium);
+  // const [newPassword, setPassword] = useState('');
+  // const [currentPassword, setcurrentPassword] = useState('');
+  // const [newEmail, setNewEmail] = useState('');
 
   // const value = target.type === 'checkbox' ? target.checked : target.value;
   //essentially a component did mount
