@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Store } from "../../index";
 import styled from "styled-components";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { getDate } from "date-fns";
 
 const AddWorkout = props => {
+  const { state, dispatch } = useContext(Store);
   const key = window.localStorage.getItem("login_token");
   const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
 
@@ -82,6 +84,7 @@ const AddWorkout = props => {
         }
       })
       .catch(err => console.log(err));
+
     if (recurring === true) {
       //Adds 7 days to the incoming date
       const addSevenDays = (date, seven) => {
@@ -90,7 +93,7 @@ const AddWorkout = props => {
         return result;
       };
 
-      for (let i = 1; i <= recurringWeeks -1 ; i++) {
+      for (let i = 1; i <= recurringWeeks - 1; i++) {
         const nextWeek = addSevenDays(date, 7);
         let nextWeekObj = new Date(nextWeek);
         console.log(nextWeekObj);
@@ -98,17 +101,39 @@ const AddWorkout = props => {
           date: nextWeekObj,
           workout_id: workout.id
         };
-        
+
         date = nextWeek;
 
-              const scheduleRecurringWorkout = await axios.post("https://fitmetrix.herokuapp.com/api/schedule/create", recurringWorkoutObj, {
-                headers: {
-                  'Content-Type': 'application/json',
+        const scheduleRecurringWorkout = await axios
+          .post(
+            "https://fitmetrix.herokuapp.com/api/schedule/create",
+            recurringWorkoutObj,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token
+              }
+            }
+          )
+          .catch(err => console.log(err));
+      }
+    }
+
+    // const token = await firebase.auth().currentUser.getIdToken();
+    if (scheduleWorkout.status === 200) {
+      const newSW = await axios.get(
+        "https://fitmetrix.herokuapp.com/api/schedule",
+        {
+          headers: {
             Authorization: token
           }
-        })
-        .catch(err => console.log(err))
-      }
+        }
+      );
+
+      dispatch({
+        type: "UPDATE_SCHEDULE_WORKOUTS",
+        payload: newSW.data
+      });
     }
   };
 

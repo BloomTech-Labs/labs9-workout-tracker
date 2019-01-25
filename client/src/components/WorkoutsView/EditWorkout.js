@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
+import CategoryDropDown from './AddEditWorkout/CategoryDropDown';
 import * as firebase from 'firebase';
 import { Store } from '../../index';
 
@@ -181,7 +182,7 @@ const EditWorkout = props => {
       return (
         <div>
           {/* Dropdown component that displays the user's categories */}
-          <div>{categoryComponent}</div>
+          <CategoryDropDown />
           {/* Conditional that renders an input that allows you to add a category using a Hook */}
           {category === 'addCategory' ? (
             <>

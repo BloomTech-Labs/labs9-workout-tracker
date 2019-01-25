@@ -20,3 +20,4 @@ export const dateFormat = d => {
 
   return `${d.getFullYear()}-${month}-${day}`;
 };
+

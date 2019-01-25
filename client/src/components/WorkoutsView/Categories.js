@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Store } from '../../index';
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { Store } from "../../index";
 
 const Categories = () => {
   const { state, dispatch } = useContext(Store);
 
   const verifyEditWorkout = workout => {
-    dispatch({ type: 'EDIT_WORKOUT', payload: workout });
+    dispatch({ type: "EDIT_WORKOUT", payload: workout });
   };
 
   return (
     <CategoriesStyle>
-      {console.log(state)}
       {state.category &&
         state.category.map((category, i) => {
           return (
@@ -21,7 +20,10 @@ const Categories = () => {
                 {state.workouts.map((w, j) => {
                   if (w.category_id === category.id) {
                     return (
-                      <div key={`${i}${j}`} onClick={() => verifyEditWorkout(w)}>
+                      <div
+                        key={`${i}${j}`}
+                        onClick={() => verifyEditWorkout(w)}
+                      >
                         {w.title}
                       </div>
                     );

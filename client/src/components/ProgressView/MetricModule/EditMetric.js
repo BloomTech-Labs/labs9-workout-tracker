@@ -170,7 +170,7 @@ const EditMetric = () => {
           onChange={e => setMetric(e)}
           required
         />
-        <DatePicker selected={date} onChange={changeDate} disabled/>
+        <DatePicker selected={date} onChange={changeDate} disabled />
         {error !== "" ? <StyledError>{error}</StyledError> : null}
         <ModuleActions>
           <button
