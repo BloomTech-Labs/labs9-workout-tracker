@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { Store } from "../../index";
 import dateFns from "date-fns";
 import AddWorkout from "./AddWorkout";
+import styled from 'styled-components';
 import WorkoutDetails from "./WorkoutDetails";
 import "./Calendar.css";
 
@@ -215,25 +216,33 @@ const HooksCalendar = props => {
 
       {/* if no date is selected, return null */}
       {dateSelected !== true ? null : datePopulated === true ? ( // if date is selected, check if date is populated and return component based on that
-        <div>
+        <PopupModalDiv>
           {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
           <WorkoutDetails
             selectedDate={selectedDate}
             dispatch={dispatch}
             scheduleWorkouts={state.scheduleWorkouts}
           />
-        </div>
+        </PopupModalDiv>
       ) : (
-        <div>
+        <PopupModalDiv>
           <AddWorkout
             workouts={state.workouts}
             scheduleWorkouts={state.scheduleWorkouts}
             selectedDate={selectedDate}
           />
-        </div>
+        </PopupModalDiv>
       )}
     </div>
   );
 };
 
 export default HooksCalendar;
+
+const PopupModalDiv = styled.div`
+width:100%;
+justify-content: space-around;
+background-color:white;
+border-radius: 4px;
+margin-top:15px;
+`;

@@ -9,6 +9,7 @@
     "firebase": "^5.7.3",
     "jsonwebtoken": "^8.4.0",
     "react": "16.8.0-alpha.0",
+    "react-calendar": "^2.18.1",
     "react-datepicker": "^2.0.0",
     "react-dom": "16.8.0-alpha.0",
     "react-router-dom": "^4.3.1",

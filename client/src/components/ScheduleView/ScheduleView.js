@@ -35,7 +35,6 @@ class ScheduleView extends React.Component {
 
 const ScheduleViewStyle = styled.div`
   width: 100%;
-  max-width: 880px;
   display: flex;
   position: absolute;
   top: 74px;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from 'styled-components';
 import axios from "axios";
 
 const ExerciseDetails = props => {
@@ -34,7 +35,12 @@ const ExerciseDetails = props => {
   };
 
   return (
-    <div key={props.exercise.id}>
+    <ExerciseDetailsDiv key={props.exercise.id}>
+      <h4> {props.exercise.name}</h4>
+      <p>Weight: {props.exercise.weight}</p>
+      <p>Sets: {props.exercise.sets}</p>
+      <p>Reps: {props.exercise.reps}</p>
+      <p>Done?</p>
       <input
         type="checkbox"
         checked={status}
@@ -42,13 +48,15 @@ const ExerciseDetails = props => {
             setStatus(e.target.checked)
         } }
       />
-      <p> {props.exercise.name}</p>
-      <p>completed? {status.toString()}</p>
-      <p>Weight: {props.exercise.weight}</p>
-      <p>Sets: {props.exercise.sets}</p>
-      <p>Reps: {props.exercise.reps}</p>
-    </div>
+    </ExerciseDetailsDiv>
   );
 };
 
 export default ExerciseDetails;
+
+const ExerciseDetailsDiv = styled.div`
+display:flex;
+border-bottom:1px solid gray;
+align-items:center;
+justify-content:space-around;
+`;

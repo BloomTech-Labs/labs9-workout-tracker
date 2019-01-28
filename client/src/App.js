@@ -68,7 +68,10 @@ const StyledApp = styled.div`
   font-size: 62.5%;
   font-size: 1.2rem;
   height: 100vh;
+  max-width: 1000px;
   position: relative;
   background-color: transparent;
   font-family: ${props => props.theme.opensans};
+  display:flex;
+  justify-content:center;
 `;

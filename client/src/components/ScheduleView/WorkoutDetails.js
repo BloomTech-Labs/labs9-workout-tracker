@@ -74,9 +74,7 @@ const WorkoutDetails = props => {
   };
 
   return (
-    <div>
-      <p>workoutdetscomp</p>
-
+    <WorkoutContainer>
       {sWorkouts &&
         sWorkouts.map(scheduleWorkout => {
           if (
@@ -85,15 +83,18 @@ const WorkoutDetails = props => {
           ) {
             return (
               <WorkoutDetailsDiv key={scheduleWorkout.id}>
-                <p> WorkoutDetails</p>
-                <p>Scheduled Workout: {scheduleWorkout.title}</p>
+              <WorkoutTitleDiv>
+                <p>{scheduleWorkout.title}</p>
                 <button
                   type="button"
                   onClick={e => unscheduleWorkout(e, scheduleWorkout)}
                 >
                   Unschedule
                 </button>
-                Exercises for workout:
+              </WorkoutTitleDiv>
+              <ExerciseListDiv>
+
+        
                 {scheduleWorkout.exercises &&
                   scheduleWorkout.exercises.map(exercise => {
                     return (
@@ -104,14 +105,39 @@ const WorkoutDetails = props => {
                       />
                     );
                   })}
+                        </ExerciseListDiv>
               </WorkoutDetailsDiv>
             );
           }
         })}
-    </div>
+    </WorkoutContainer>
   );
 };
 
 export default WorkoutDetails;
 
-const WorkoutDetailsDiv = styled.div``;
+const WorkoutContainer = styled.div`
+justify-content: space-around;
+`;
+const WorkoutDetailsDiv = styled.div`
+display:flex
+border:1px solid gray;
+border-radius: 4px;
+padding: 10px;
+width:100%
+justify-content: space-around;
+`;
+
+
+const WorkoutTitleDiv = styled.div`
+display:flex;
+flex-direction:column;
+width:40%;
+`;
+
+const ExerciseListDiv = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:space-evenly;
+width:40%;
+`;
