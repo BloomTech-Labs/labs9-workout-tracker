@@ -50,31 +50,13 @@ const AddWorkouts = () => {
     setReps("");
   };
 
-  //add Workout handler
-  const addWorkout = async e => {
-    e.preventDefault();
-
-    let nExercise = {
-      name: exerciseName,
-      weight: Number(weight),
-      sets: Number(sets),
-      reps: Number(reps)
-    };
-
-    //adds exercise to exercises array in the workout being created/edited and resets the input fields
-    setExercises([...exercises, nExercise]);
-    setExerciseName("");
-    setWeight("");
-    setSets("");
-    setReps("");
-  };
-
   // add new workout handler to add workout to database
   const addNewWorkout = async e => {
     e.preventDefault();
     console.log("hello from addNewWorkout");
     const token = window.localStorage.getItem("login_token");
     console.log("the state.selectedCategory is: ", state.selectedCategory);
+
     //Sets the workout title and category id and sends a POST request to the backend to add the created workout
 
     const workout = {
@@ -127,7 +109,6 @@ const AddWorkouts = () => {
           placeholder="Weight"
           onChange={e => setWeight(e.target.value)}
         />
-
         <ExerciseInput
           value={sets}
           type="text"
@@ -147,7 +128,30 @@ const AddWorkouts = () => {
         {exercises &&
           exercises.map(ex => {
             return (
-              <div>{`${ex.name}: ${ex.weight}x${ex.sets}x${ex.reps}`}</div>
+              <div>
+                <Row>
+                  <NameInput
+                    value={ex.name}
+                    type="text"
+                    placeholder="Exercise Name"
+                  />
+                  <ExerciseInput
+                    value={ex.weight}
+                    type="text"
+                    placeholder="Weight"
+                  />
+                  <ExerciseInput
+                    value={ex.sets}
+                    type="text"
+                    placeholder="Sets"
+                  />
+                  <ExerciseInput
+                    value={ex.reps}
+                    type="text"
+                    placeholder="Reps"
+                  />
+                </Row>
+              </div>
             );
           })}
       </div>
