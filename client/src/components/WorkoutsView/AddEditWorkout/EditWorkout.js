@@ -3,14 +3,14 @@ import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import * as firebase from "firebase";
 import { Store } from "../../index";
-import {EditWorkoutSubmitForm, StyledButton, ValueInput} from './Style';
-import CategoryDropDown from './CategoryDropDown';
+import { EditWorkoutSubmitForm, StyledButton, ValueInput } from "./Style";
+import CategoryDropDown from "./CategoryDropDown";
 
 const EditWorkout = props => {
   const { state, dispatch } = useContext(Store);
 
   //Sets first Category in the dropdown list
-  const [category, setCategory] = useState('default');
+  const [category, setCategory] = useState("default");
 
   //  Create variable to store workout
   let initialWorkoutValue = {
@@ -111,51 +111,74 @@ const EditWorkout = props => {
     }
   };
 
+  return (
+    <div>
+      {/* Dropdown component that displays the user's categories */}
+      <CategoryDropDown
+        setCategory={setCategory}
+        categories={state.category}
+        category={category}
+      />
+      {/* Conditional that renders an input that allows you to add a category using a Hook */}
 
-    return (
-      <div>
-        {/* Dropdown component that displays the user's categories */}
-        <CategoryDropDown  setCategory={setCategory} categories={state.category} category={category} />
-        {/* Conditional that renders an input that allows you to add a category using a Hook */}
-        
-        <EditWorkoutSubmitForm onSubmit={e => editWorkoutCall(e)}>
-          {/* Conditional  in ValueInput that updates the input value to the title of the selected workout that is being Edited*/}
+      <EditWorkoutSubmitForm onSubmit={e => editWorkoutCall(e)}>
+        {/* Conditional  in ValueInput that updates the input value to the title of the selected workout that is being Edited*/}
+        <ValueInput
+          value={title}
+          type="text"
+          placeholder="Workout Title"
+          onChange={e => setTitle(e.target.value)}
+          required
+        />
+        {/* Conditional that renders the exercises that have been added to the workout that is being created */}
+        <div>
+          {exercises &&
+            exercises.map((ex, i) => {
+              return (
+                <div key={i}>{`${ex.name}: ${ex.weight}x${ex.sets}x${
+                  ex.reps
+                }`}</div>
+              );
+            })}
+        </div>
+
+        <div>
           <ValueInput
-            value={title}
+            value={exerciseName}
             type="text"
-            placeholder="Workout Title"
-            onChange={e => setTitle(e.target.value)}
-            required
+            placeholder="Exercise Name"
+            onChange={e => setExerciseName(e.target.value)}
           />
-          {/* Conditional that renders the exercises that have been added to the workout that is being created */}
-          <div>
-            {exercises &&
-              exercises.map((ex, i) => {
-                return <div key={i}>{`${ex.name}: ${ex.weight}x${ex.sets}x${ex.reps}`}</div>;
-              })}
-          </div>
+          <ValueInput
+            value={weight}
+            type="text"
+            placeholder="Weight"
+            onChange={e => setWeight(e.target.value)}
+          />
+          <ValueInput
+            value={sets}
+            type="text"
+            placeholder="Sets"
+            onChange={e => setSets(e.target.value)}
+          />
+          <ValueInput
+            value={reps}
+            type="text"
+            placeholder="Reps"
+            onChange={e => setReps(e.target.value)}
+          />
+        </div>
 
-          <div>
-            <ValueInput
-              value={exerciseName}
-              type="text"
-              placeholder="Exercise Name"
-              onChange={e => setExerciseName(e.target.value)}
-            />
-            <ValueInput value={weight} type="text" placeholder="Weight" onChange={e => setWeight(e.target.value)} />
-            <ValueInput value={sets} type="text" placeholder="Sets" onChange={e => setSets(e.target.value)} />
-            <ValueInput value={reps} type="text" placeholder="Reps" onChange={e => setReps(e.target.value)} />
-          </div>
+        <StyledButton onClick={e => addExercise(e)}>
+          Add Exercise to Workout
+        </StyledButton>
 
-          <StyledButton onClick={e => addExercise(e)}>Add Exercise to Workout</StyledButton>
-
-          {/* conditional for Submit button if no workouts exist */}
-          {state.editWorkout.exercises.length > 0 ? (
-            <StyledButton type="submit">Submit Edited Workout</StyledButton>
-          ) : null}
-        </EditWorkoutSubmitForm>
-      </div>
-    );
-          }
+        {/* conditional for Submit button if no workouts exist */}
+        {state.editWorkout.exercises.length > 0 ? (
+          <StyledButton type="submit">Submit Edited Workout</StyledButton>
+        ) : null}
+      </EditWorkoutSubmitForm>
+    </div>
+  );
+};
 export default EditWorkout;
-
