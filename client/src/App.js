@@ -70,5 +70,10 @@ const StyledApp = styled.div`
   height: 100vh;
   position: relative;
   background-color: transparent;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 75px;
   font-family: ${props => props.theme.opensans};
 `;
