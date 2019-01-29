@@ -112,7 +112,6 @@ const SettingsView = props => {
         </Div>
        
         <ChangePasswordDiv>
-        <LabelStyle>Password:</LabelStyle>
           <InputStyle 
           type='password'
             value={currentPassword} 
@@ -121,15 +120,6 @@ const SettingsView = props => {
             secureTextEntry={true}
             onChange={(e) =>  setcurrentPassword(e.target.value) } 
           />
-          <InputStyle 
-          type='password'
-            value={newPassword} 
-            placeholder='New Password' 
-            autoCapitalize='none' 
-            secureTextEntry={true}
-            onChange={(e) =>  setPassword(e.target.value) } 
-            />
-            <Button title='Change Password'>Update Info</Button>
 
         </ChangePasswordDiv>
         <RecEmailDiv>
@@ -171,11 +161,20 @@ const SettingsViewStyle = styled.div`
 `;
 
 const FormStyle = styled.form`
-  display: flex;
+  border: 1px solid ${props => props.theme.primaryDark};
+  border-radius: 6px;
+  background-color: ${props => props.theme.primary};
+  margin: 0 2%;
+  display:flex;
   flex-direction:column;
-  justify-content: space-evenly;
-  border: 1px solid blue;
+  padding: 20px 7%;
   align-items:center;
+  @media(max-width:634px) {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:60%;
+  }
 `;
 
 const InputStyle = styled.input`

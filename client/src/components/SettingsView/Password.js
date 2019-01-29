@@ -40,7 +40,7 @@ const PasswordView = props => {
 
 return (
     <div>
-        <form onSubmit={(e) => changePassword(e)}>
+        <FormStyle onSubmit={(e) => changePassword(e)}>
             <input 
                 type='password'
                 value={currentPassword}
@@ -56,10 +56,27 @@ return (
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button title='Change Password'>Update Info</button>
-        </form>
+        </FormStyle>
     </div>
     )
 }
 
 
 export default requireAuth(PasswordView)
+
+const FormStyle = styled.form`
+border: 1px solid ${props => props.theme.primaryDark};
+border-radius: 6px;
+background-color: ${props => props.theme.primary};
+margin: 0 2%;
+display:flex;
+flex-direction:column;
+padding: 20px 7%;
+align-items:center;
+@media(max-width:634px) {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:60%;
+}
+`;
