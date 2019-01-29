@@ -8,30 +8,34 @@ const MyWorkouts = () => {
   const { state, dispatch } = useContext(Store);
 
   return (
-    <Container>
-      <Row>
-        <h2>My Workouts</h2>
-        <CategoryDropDown />
-      </Row>
-      {state.workouts.map((workout, i) => {
-        if (workout.category_id == state.selectedCategory) {
-          return (
-            <Workout>
-              <h3>{workout.title}</h3>
-              <div>
-                <span>
-                  <i class="fas fa-pen" />
-                </span>
-                <span>
-                  <i class="fas fa-times" />
-                </span>
-              </div>
-            </Workout>
-          );
-        }
-        return null;
-      })}
-    </Container>
+    console.log("workouts on state are: ", state.workouts),
+    console.log("state.selectedCategory: ", state.selectedCategory),
+    (
+      <Container>
+        <Row>
+          <h2>My Workouts</h2>
+          <CategoryDropDown />
+        </Row>
+        {state.workouts.map((workout, i) => {
+          if (workout.category_id == state.selectedCategory) {
+            return (
+              <Workout>
+                <h3>{workout.title}</h3>
+                <div>
+                  <span>
+                    <i class="fas fa-pen" />
+                  </span>
+                  <span>
+                    <i class="fas fa-times" />
+                  </span>
+                </div>
+              </Workout>
+            );
+          }
+          return null;
+        })}
+      </Container>
+    )
   );
 };
 

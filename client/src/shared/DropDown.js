@@ -32,8 +32,9 @@ const Container = styled.div`
 `;
 
 const StyledDropDown = styled.select`
-  box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.4);
+  /* box-shadow: ${props => props.theme.boxShadow}; */
   border: none;
+  border: 1px solid rgba(0,0,0,0.24);
   padding: 0px 10px;
   appearance: none;
   width: 100%;

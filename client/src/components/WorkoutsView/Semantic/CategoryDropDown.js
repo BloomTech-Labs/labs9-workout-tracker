@@ -6,7 +6,6 @@ const CategoryDropDown = props => {
   const { state, dispatch } = useContext(Store);
 
   const handleChange = value => {
-
     dispatch({
       type: "UPDATE_SELECTED_CATEGORY",
       payload: value
@@ -17,7 +16,7 @@ const CategoryDropDown = props => {
     let options = state.category.map((cat, i) => {
       return {
         name: cat.name,
-        value: cat.value,
+        value: cat.id,
         key: cat.id
       };
     });
