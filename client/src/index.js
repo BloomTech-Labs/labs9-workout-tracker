@@ -23,12 +23,8 @@ const initialState = {
   editMetric: null,
   showMetricForm: false,
   selectedCategory: "default",
-<<<<<<< HEAD
   selectedWorkoutCategory: "all",
-=======
-  selectedWorkoutCategory: "default"
->>>>>>> 39545222daa7755c675fcf10b1939272cec051be
-  selectedDate:new Date(),
+  selectedDate: new Date(),
 };
 
 const reducer = (state, action) => {
