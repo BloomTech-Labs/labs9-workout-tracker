@@ -22,7 +22,9 @@ const initialState = {
   uid: '',
   workouts: [],
   editMetric: null,
-  showMetricForm: false
+  showMetricForm: false,
+  newPassword: '',
+  currentPassword: ''
 };
 
 const reducer = (state, action) => {
@@ -45,6 +47,8 @@ const reducer = (state, action) => {
       return { ...state, editMetric: null };
     case 'SHOW_METRIC_FORM':
       return { ...state, showMetricForm: !state.showMetricForm };
+    case 'UPDATE_SETTINGS_FORM':
+      return { ...state, settingsForm: {...action.payload } }
     default:
       // A reducer must always return a valid state.
       // Alternatively you can throw an error if an invalid action is dispatched.

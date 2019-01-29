@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from 'firebase';
 import requireAuth from '../../requireAuth';
+import { Store } from '../../index';
 //working on updating info
 
 const SettingsView = props => {
   const { state, dispatch } = useContext(Store)
-
   // const [email, setEmail] = useState(props.user.email);
   // const [phone, setPhone] = useState(props.user.phone);
   // const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
   // const [premium, displayPremium] = useState(props.user.premium);
-  // const [newPassword, setPassword] = useState('');
-  // const [currentPassword, setcurrentPassword] = useState('');
+  const [newPassword, setPassword] = useState('');
+  const [currentPassword, setcurrentPassword] = useState('');
   // const [newEmail, setNewEmail] = useState('');
 
   // const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -25,11 +25,11 @@ const SettingsView = props => {
     const token = window.localStorage.getItem("login_token");
     reauthenticate(currentPassword).then(() => {
       var user = firebase.auth().currentUser;
-      user.updateEmail(email).then( async () => {
+      user.updateEmail(state.email).then( async () => {
         if (token !== undefined) {
           const res = await axios.put(
             "https://fitmetrix.herokuapp.com/api/user/edit",
-            { email, phone, recieves_email },
+            state.email, state.phone, state.recieves_email,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -38,28 +38,28 @@ const SettingsView = props => {
             },
             
           );
-          if (props.user.email !== email) {
+          if (state.email !== e.target.value) {
             alert("Email has changed")
           }
           console.log(res.data); 
-          props.dispatch({type: 'userModel', payload:res.data})
-          if (email === props.user.email) {
+          dispatch({type: 'UPDATE_SETTINGS_FORM', payload:res.data})
+          if (e.target.value === state.email) {
             changePasswordPress();
           } 
-          setPassword('');
-          setcurrentPassword('');
+          dispatch({ type: "UPDATE_SETTINGS_FORM"})
+          
         }
     }).catch((error) => {
         alert('Reformat email to update email');
     })
 
     }).catch((error) => {
-      alert('not sure of this catch');
+      alert('user not updated');
     })
   };
 
   const renderPremium = () => {
-    if (props.user.premium === true) {
+    if (state.premium === true) {
       return <PremiumStyle>You are premium</PremiumStyle>;
     } else {
       return  (
@@ -85,9 +85,27 @@ const SettingsView = props => {
 
   const reauthenticate = (currentPassword) => {
     var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(props.user.email, currentPassword);
+    var cred = firebase.auth.EmailAuthProvider.credential(state.email, currentPassword);
     return user.reauthenticateWithCredential(cred);
   }
+
+  const setData = e => {
+    const value = e.target.value;
+
+    setcurrentPassword({value: currentPassword });
+    setPassword({ value: newPassword });
+
+  };
+
+  const updateCheck = e => {
+    const value = e.target.value;
+    dispatch({
+      type: "UPDATE_SETTINGS_FORM",
+      payload: value
+    })
+    console.log('hey')
+  }
+
   
 
   return (
@@ -99,8 +117,8 @@ const SettingsView = props => {
           <InputStyle
             type="text"
             placeholder="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={state.email}
+            onChange={e => setData(e)}
           />
         </Div>
         <Div>
@@ -108,27 +126,27 @@ const SettingsView = props => {
           <InputStyle
             type="text"
             placeholder="phone"
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
+            value={state.phone}
+            onChange={e => setData(e)}
           />
         </Div>
        
         <ChangePasswordDiv>
           <InputStyle 
           type='password'
-            value={currentPassword} 
+            value={state.currentPassword} 
             placeholder='Current Password' 
             autoCapitalize='none' 
             secureTextEntry={true}
-            onChange={(e) =>  setcurrentPassword(e.target.value) } 
+            onChange={(e) =>  setData(e) } 
           />
           <InputStyle 
           type='password'
-            value={newPassword} 
+            value={state.newPassword} 
             placeholder='New Password' 
             autoCapitalize='none' 
             secureTextEntry={true}
-            onChange={(e) =>  setPassword(e.target.value) } 
+            onChange={(e) =>  setData(e) } 
             />
             <Button title='Change Password'>Update Info</Button>
 
@@ -138,8 +156,8 @@ const SettingsView = props => {
           <InputCheckStyle
             name="Recieve Email"
             type="checkbox"
-            checked={recieves_email}
-            onChange={e => setRecieveEmail(e.target.checked)}
+            checked={state.recieves_email}
+            onChange={e => updateCheck(e)}
           />
         </RecEmailDiv>
         <ButtonDiv>
