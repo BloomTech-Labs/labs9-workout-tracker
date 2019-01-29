@@ -12,13 +12,6 @@ const AddWorkout = props => {
   //Sets first Category in the dropdown list
   const [category, setCategory] = useState("default");
 
-  //  Create variable to store workout
-  let initialWorkoutValue = {
-    category_id: null,
-    title: "",
-    exercises: []
-  };
-
   //Hook to set workout Title
   const [title, setTitle] = useState("");
   const [exerciseName, setExerciseName] = useState("");
@@ -27,10 +20,25 @@ const AddWorkout = props => {
   const [reps, setReps] = useState("");
   const [exercises, setExercises] = useState([]);
 
-  // hook to set the workouts to add
-  const [workout, setWorkout] = useState(initialWorkoutValue);
+  const addExercise = async e => {
+    e.preventDefault();
 
-  //add Exercise handler
+    let nExercise = {
+      name: exerciseName,
+      weight: Number(weight),
+      sets: Number(sets),
+      reps: Number(reps)
+    };
+
+    //adds exercise to exercises array in the workout being created/edited and resets the input fields
+    setExercises([...exercises, nExercise]);
+    setExerciseName("");
+    setWeight("");
+    setSets("");
+    setReps("");
+  };
+
+  //add Workout handler
   const addWorkout = async e => {
     e.preventDefault();
 
@@ -55,8 +63,11 @@ const AddWorkout = props => {
     const token = window.localStorage.getItem("login_token");
 
     //Sets the workout title and category id and sends a POST request to the backend to add the created workout
-    workout.title = title;
-    workout.category_id = Number(category);
+
+    const workout = {
+      title,
+      category_id: Number(category)
+    };
     console.log("the current workout is: ", workout);
 
     if (token !== undefined) {
@@ -118,13 +129,13 @@ const AddWorkout = props => {
             placeholder="Weight"
             onChange={e => setWeight(e.target.value)}
           />
+
           <ValueInput
             value={sets}
             type="text"
             placeholder="Sets"
             onChange={e => setSets(e.target.value)}
           />
-
           <ValueInput
             value={reps}
             type="text"

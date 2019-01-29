@@ -71,6 +71,11 @@ const StyledApp = styled.div`
   max-width: 1000px;
   position: relative;
   background-color: transparent;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 75px;
   font-family: ${props => props.theme.opensans};
   display:flex;
   justify-content:center;

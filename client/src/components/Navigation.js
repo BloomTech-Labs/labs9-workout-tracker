@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import { NavLink, Link, Route } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-const Navigation = (props) => {
-
+const Navigation = props => {
   const [account, setAccount] = useState(false);
-
 
   const logOut = () => {
     setAccount(!account);
-    window.localStorage.removeItem('login_token');
+    window.localStorage.removeItem("login_token");
 
-    props.history.push('/');
-  }
+    props.history.push("/");
+  };
 
   const renderRoutes = () => {
-
-    if (props.location.pathname === "/" || props.location.pathname === "/login" || props.location.pathname === "/register") {
+    if (
+      props.location.pathname === "/" ||
+      props.location.pathname === "/login" ||
+      props.location.pathname === "/register"
+    ) {
       return (
         <NavStyle>
-        <Logo to="/">fitmetrix</Logo>
-        <NavBar>
-          <StyledLink to="/login" activeClassName='active' landing="true">Login</StyledLink>
-          <StyledLink to="/register" activeClassName='active' landing="true">Register</StyledLink>
-        </NavBar>
+          <Logo to="/">fitmetrix</Logo>
+          <NavBar>
+            <StyledLink to="/login" activeClassName="active" landing="true">
+              Login
+            </StyledLink>
+            <StyledLink to="/register" activeClassName="active" landing="true">
+              Register
+            </StyledLink>
+          </NavBar>
         </NavStyle>
       );
     }
@@ -33,74 +37,75 @@ const Navigation = (props) => {
       <NavStyle isApp="true">
         <Logo to="/">fitmetrix</Logo>
         <NavBar>
-          <StyledLink to="/schedule" activeClassName='active'><i className="far fa-calendar-alt"></i></StyledLink>
-          <StyledLink to="/workouts" activeClassName='active'><i className="fas fa-dumbbell"></i></StyledLink>
-          <StyledLink to="/progress" activeClassName='active'><i className="fas fa-chart-line"></i></StyledLink>
+          <StyledLink to="/schedule" activeClassName="active">
+            <i className="far fa-calendar-alt" />
+          </StyledLink>
+          <StyledLink to="/workouts" activeClassName="active">
+            <i className="fas fa-dumbbell" />
+          </StyledLink>
+          <StyledLink to="/progress" activeClassName="active">
+            <i className="fas fa-chart-line" />
+          </StyledLink>
           <StyledUserIcon onClick={() => setAccount(!account)}>
-            <i className="fas fa-user"></i>
+            <i className="fas fa-user" />
           </StyledUserIcon>
 
           <AccountOptions show={account}>
             <OptionRowLink to="/settings" onClick={() => setAccount(!account)}>
               <span>Settings</span>
-              <i className="fas fa-cog"></i>
+              <i className="fas fa-cog" />
             </OptionRowLink>
             <OptionRow onClick={() => logOut()}>
               <span>Logout</span>
-              <i className="fas fa-sign-out-alt"></i>
+              <i className="fas fa-sign-out-alt" />
             </OptionRow>
           </AccountOptions>
           {/* <StyledLink to="/settings" activeClassName='active'>Settings</StyledLink> */}
         </NavBar>
       </NavStyle>
-    )
+    );
+  };
 
-  }
-
-  return (
-    <NavContainer>
-        {renderRoutes()}
-    </NavContainer>
-  );
+  return <NavContainer>{renderRoutes()}</NavContainer>;
 };
 
 export default Navigation;
 
 const OptionRow = styled.span`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
-    color: ${props => props.theme.primaryDark};
-    padding: 0px 15px;
-    font-size: 16px;
-    user-select: none;
-    cursor: pointer;
-    .fas {
-      font-size: 18px;
-    }
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  color: ${props => props.theme.primaryDark};
+  padding: 0px 15px;
+  font-size: 16px;
+  user-select: none;
+  cursor: pointer;
+  .fas {
+    font-size: 18px;
+  }
 `;
 
 const OptionRowLink = styled(NavLink)`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
-    color: ${props => props.theme.primaryDark};
-    padding: 0px 15px;
-    font-size: 16px;
-    user-select: none;
-    text-decoration: none;
-    cursor: pointer;
-    .fas {
-      font-size: 18px;
-    }
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  color: ${props => props.theme.primaryDark};
+  padding: 0px 15px;
+  font-size: 16px;
+  user-select: none;
+  text-decoration: none;
+  cursor: pointer;
+  .fas {
+    font-size: 18px;
+  }
 `;
 
 const AccountOptions = styled.span`
-  display: ${props => props.show ? 'flex' : 'none'};
+  display: ${props => (props.show ? "flex" : "none")};
   width: 130px;
   flex-direction: column;
   justify-content: flex-start;
@@ -113,7 +118,8 @@ const AccountOptions = styled.span`
   border-radius: 8px;
   z-index: 6;
   border: 1px solid rgb(218, 220, 224);
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 `;
 
 const StyledUserIcon = styled.span`
@@ -122,7 +128,7 @@ const StyledUserIcon = styled.span`
   color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
-  font-size: ${props => props.landing ? '16px' : '26px'};
+  font-size: ${props => (props.landing ? "16px" : "26px")};
   font-family: ${props => props.theme.roboto};
   font-weight: 500;
   &.active {
@@ -133,7 +139,6 @@ const StyledUserIcon = styled.span`
     color: ${props => props.theme.accent};
   }
 `;
-
 
 const NavContainer = styled.div`
   height: 54px;
@@ -141,22 +146,23 @@ const NavContainer = styled.div`
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
   z-index: 99;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  margin:0 auto;
+  margin: 0 auto;
   padding: 0 2%;
 `;
 
 const NavStyle = styled.div`
   width: 100%;
-  max-width: ${props => props.isApp ? '1200 px' : props.theme.containingWidth};
+  max-width: ${props =>
+    props.isApp ? "1200 px" : props.theme.containingWidth};
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-`
+`;
 
 const StyledLink = styled(NavLink)`
   width: 100px;
@@ -164,7 +170,7 @@ const StyledLink = styled(NavLink)`
   color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
-  font-size: ${props => props.landing ? '16px' : '26px'};
+  font-size: ${props => (props.landing ? "16px" : "26px")};
   font-family: ${props => props.theme.roboto};
   font-weight: 500;
   &.active {
@@ -174,7 +180,7 @@ const StyledLink = styled(NavLink)`
     /* border-bottom: solid 2px ${props => props.theme.accent}; */
     color: ${props => props.theme.accent};
   }
-`
+`;
 
 const Logo = styled(Link)`
   font-size: 2.5rem;
@@ -182,10 +188,10 @@ const Logo = styled(Link)`
   color: ${props => props.theme.accent};
   text-decoration: none;
   user-select: none;
-`
+`;
 
 const NavBar = styled.div`
   display: flex;
   justify-content: flex-end;
-  width:42%;
+  width: 42%;
 `;
