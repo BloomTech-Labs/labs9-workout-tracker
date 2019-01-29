@@ -167,8 +167,6 @@ const SettingsViewStyle = styled.div`
   flex-direction:column;
   justify-content:center;
   padding-bottom: 100px;
-  position: absolute;
-  top: 74px;
   font-size: 1.6rem;
 `;
 
@@ -176,7 +174,6 @@ const FormStyle = styled.form`
   display: flex;
   flex-direction:column;
   justify-content: space-evenly;
-  width: 70%;
   border: 1px solid blue;
   align-items:center;
 `;

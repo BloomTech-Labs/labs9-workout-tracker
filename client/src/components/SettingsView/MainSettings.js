@@ -10,50 +10,49 @@ import SettingsView from "./SettingsView";
 
 const MainSettingsView = props => {
     const [passwordFlag, setpasswordFlag] = useState(false)
-    const [premiumFlag, setpremiumFlag] = useState(false)
     const [accountFlag, setaccountFlag] = useState(true);
     
 
     const passwordClick = () => {
         setpasswordFlag(true);
         setaccountFlag(false);
-        setpremiumFlag(false);
     }
-    const premiumClick = () => {
-        setpasswordFlag(false);
-        setpremiumFlag(true);
-        setaccountFlag(false);
-    }
+
     const accountClick = () => {
         setpasswordFlag(false);
-        setpremiumFlag(false);
         setaccountFlag(true);
     }
 
 
     const renderView = () => {
-         if (passwordFlag === true && premiumFlag === false) {
+         if (passwordFlag === true && accountFlag === false) {
             return (
                 <PasswordView {...props} />
             )
-        } if (premiumFlag === true && passwordFlag === false) {
+        } if (passwordFlag === false && accountFlag === true) {
             return (
-                <BillingView {...props} /> 
+                <SettingsView {...props} />
             )
-        } 
+        }
     }
 
 return (
-    <div> 
+    <MainSettingsDiv> 
         <div>      
             <h1 onClick = {(e) => {accountClick()}}>Account</h1>
-            <h1 onClick = {(e) => {premiumClick()}}>Premium</h1>
             <h1 onClick = {() => {passwordClick()}}>Password</h1>
         </div>
         {renderView()}
-    </div>
+    </MainSettingsDiv>
 )
 
 }
 
 export default MainSettingsView;
+
+const MainSettingsDiv = styled.div`
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+`;

@@ -11,13 +11,19 @@ const PasswordView = props => {
     const [email, setEmail] = useState(props.user.email);
 
     const reauthenticate = (currentPassword) => {
+        console.log("currentpassword auth:",currentPassword)
         var user = firebase.auth().currentUser;
-        var cred = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
+        var cred = firebase.auth.EmailAuthProvider.credential(props.user.email, currentPassword);
         return user.reauthenticateWithCredential(cred)
     }
 
-    const changePassword = () => {
+    const changePassword = (e) => {
+        e.preventDefault();
+        console.log("changePassword ")
+        
         reauthenticate(currentPassword).then(() => {
+            console.log("currentpassword auth2:",currentPassword)
+
             var user = firebase.auth().currentUser;
             user.updatePassword(newPassword).then(() => {
                 alert('Password was changed');
@@ -27,12 +33,14 @@ const PasswordView = props => {
         }).catch((error) => {
             alert(error.message);
         })
+        setPassword('')
+        setcurrentPassword('')
     }
 
 
 return (
     <div>
-        <form onSubmit={() => changePassword()}>
+        <form onSubmit={(e) => changePassword(e)}>
             <input 
                 type='password'
                 value={currentPassword}
