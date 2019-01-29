@@ -55,9 +55,5 @@ const ProgressAction = styled.div`
 const ProgressViewStyle = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  left: 0;
-  top: 74px;
   width: 100%;
-  padding: 0px 30px;
 `;

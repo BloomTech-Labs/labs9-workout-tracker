@@ -1,8 +1,35 @@
 import styled from "styled-components";
 
+export const CancelButton = styled.button`
+  width: 140px;
+  height: 45px;
+  border-radius: 12px;
+  border: 2px solid ${props => props.theme.accent};
+  color: ${props => props.theme.accent};
+  background-color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+`;
+
+export const SubmitButton = styled.button`
+  width: 140px;
+  height: 45px;
+  border-radius: 12px;
+  border: 2px solid ${props => props.theme.accent};
+  color: white;
+  background-color: ${props => props.theme.accent};
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+`;
+
 export const StyledError = styled.div`
   color: red;
   font-size: 16px;
+  font-weight: 600;
 `;
 
 export const StyledInput = styled.input`
@@ -18,27 +45,7 @@ export const StyledInput = styled.input`
 export const ModuleActions = styled.div`
   width: 100%;
   height: 60px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-export const MetricFormContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.45);
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-`;
-
-export const MetricForm = styled.form`
-  width: 340px;
-  height: 500px;
-  background-color: white;
-  border-radius: 12px;
-  padding: 30px 40px;
 `;

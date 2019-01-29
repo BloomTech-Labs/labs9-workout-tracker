@@ -1,7 +1,48 @@
 import React from "react";
 import styled from "styled-components";
+import DatePicker from "react-datepicker";
 
-const Input = ({ size, value, name, onChange, placeholder, label }) => {
+const CalendarInput = ({onChange, placeholder, value, isSecure, id, onClick, isDisabled}) => {
+
+  console.log(isDisabled);
+  if (isDisabled === "true") {
+    return(
+        <StyledInput
+          onChange={onChange}
+          placeholder={placeholder}
+          value={value}
+          isSecure={isSecure}
+          id={id}
+          onClick={onClick}
+          disabled
+        />  
+      );
+  }
+  return(
+      <StyledInput
+        onChange={onChange}
+        placeholder={placeholder}
+        value={value}
+        isSecure={isSecure}
+        id={id}
+        onClick={onClick}
+      />  
+    );
+};
+
+const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabled}) => {
+  if (type === "calendar") {
+    return (
+      <Container size={size}>
+        <StyledLabel>{label}</StyledLabel>
+        <DatePicker 
+          selected={value} 
+          onChange={onChange}
+          customInput={<CalendarInput isDisabled={isDisabled}/>}
+        />
+      </Container>
+    )
+  }
   return (
     <Container size={size}>
       <StyledLabel>{label}</StyledLabel>
@@ -24,7 +65,8 @@ const StyledLabel = styled.span`
 `;
 
 const Container = styled.div`
-  width: ${props => (props.size === "large" ? "245px" : "100px")};
+  width: ${props => (props.size === "large" ? "245px" : props.size === "responsive" ? "100%" : "100px")};
+  ${props => props.size === "responsive" ? "margin: 10px 0px;" : ""}
   height: 62px;
   display: flex;
   flex-direction: column;

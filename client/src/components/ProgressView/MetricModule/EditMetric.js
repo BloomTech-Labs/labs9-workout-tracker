@@ -3,14 +3,14 @@ import axios from "axios";
 import firebase from "firebase";
 import { Store } from "../../../index";
 import { dateFormat, dateStringParser } from "../../../shared";
-import DatePicker from "react-datepicker";
 import {
   StyledError,
-  StyledInput,
   ModuleActions,
-  MetricFormContainer,
-  MetricForm
+  CancelButton,
+  SubmitButton
 } from "./Style";
+import Input from '../../../shared/Input';
+import FormModal from '../../../shared/FormModal';
 
 const EditMetric = () => {
   const { state, dispatch } = useContext(Store);
@@ -46,6 +46,11 @@ const EditMetric = () => {
     [state.editMetric]
   );
 
+  const closeWindow = e => {
+    e.preventDefault();
+    dispatch({ type: "SHOW_METRIC_FORM" })
+    dispatch({ type: "RESET_EDIT_METRIC" })
+  }
   const editMetric = async e => {
     e.preventDefault();
 
@@ -112,77 +117,87 @@ const EditMetric = () => {
   } = currentMetric;
 
   return (
-    <MetricFormContainer>
-      <MetricForm onSubmit={e => editMetric(e)}>
-        <StyledInput
-          type="text"
-          placeholder="Weight"
-          value={weight}
-          name="weight"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="Hips"
-          value={hips}
-          name="hips"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="Waist"
-          value={waist}
-          name="waist"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmLeft"
-          value={arm_left}
-          name="arm_left"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmRight"
-          value={arm_right}
-          name="arm_right"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegLeft"
-          value={leg_left}
-          name="leg_left"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegRight"
-          value={leg_right}
-          name="leg_right"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <DatePicker selected={date} onChange={changeDate} disabled />
-        {error !== "" ? <StyledError>{error}</StyledError> : null}
-        <ModuleActions>
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}
-          >
-            Cancel
-          </button>
-          <button type="submit">Edit</button>
-        </ModuleActions>
-      </MetricForm>
-    </MetricFormContainer>
+    <FormModal 
+      onSubmit={editMetric}
+      closeModal={e => closeWindow(e)}
+      title={"Edit Progress"}
+    >
+      <Input
+        label="Date"
+        name="Date"
+        size="responsive"
+        onChange={changeDate}
+        value={date}
+        type="calendar"
+        isDisabled="true"
+      />
+      <Input
+        placeholder="Weight"
+        label="Weight"
+        value={weight}
+        name="weight"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Hips"
+        label="Hips"
+        value={hips}
+        name="hips"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Waist"
+        label="Waist"
+        value={waist}
+        name="waist"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Arm Left"
+        label="Arm Left"
+        value={arm_left}
+        name="arm_left"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Arm Right"
+        label="Arm Right"
+        value={arm_right}
+        name="arm_right"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Leg Left"
+        label="Leg Left"
+        value={leg_left}
+        name="leg_left"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Leg Right"
+        label="Leg Right"
+        value={leg_right}
+        name="leg_right"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      {error !== "" ? <StyledError>{error}</StyledError> : null}
+      <ModuleActions>
+        <CancelButton
+          type="button"
+          onClick={e => closeWindow(e)}
+        >
+          Cancel
+        </CancelButton>
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </ModuleActions>
+    </FormModal>
   );
 };
 
