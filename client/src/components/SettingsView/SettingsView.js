@@ -15,8 +15,7 @@ const SettingsView = props => {
   const [currentPassword, setcurrentPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
 
-  // const value = target.type === 'checkbox' ? target.checked : target.value;
-  //essentially a component did mount
+  
 
   const updateUser = async e => {
     e.preventDefault();
