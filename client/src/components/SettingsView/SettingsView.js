@@ -4,6 +4,8 @@ import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from 'firebase';
 import requireAuth from '../../requireAuth';
+import MainSettings from './MainSettings';
+import './settings.css';
 //working on updating info
 
 const SettingsView = props => {
@@ -13,7 +15,6 @@ const SettingsView = props => {
   const [premium, displayPremium] = useState(props.user.premium);
   const [newPassword, setPassword] = useState('');
   const [currentPassword, setcurrentPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
 
   
 
@@ -95,7 +96,7 @@ const SettingsView = props => {
           <LabelStyle>Email:</LabelStyle>
           <InputStyle
             type="text"
-            placeholder="email"
+            placholder='hello'
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
@@ -104,13 +105,14 @@ const SettingsView = props => {
           <LabelStyle>Phone:</LabelStyle>
           <InputStyle
             type="text"
-            placeholder="phone"
+            placeholder={phone}
             value={phone}
             onChange={e => setPhone(e.target.value)}
           />
         </Div>
        
         <ChangePasswordDiv>
+        <LabelStyle>Password:</LabelStyle>
           <InputStyle 
           type='password'
             value={currentPassword} 
@@ -131,13 +133,14 @@ const SettingsView = props => {
 
         </ChangePasswordDiv>
         <RecEmailDiv>
-          <LabelStyle>Want to Recieve Email?</LabelStyle>
-          <InputCheckStyle
-            name="Recieve Email"
-            type="checkbox"
-            checked={recieves_email}
-            onChange={e => setRecieveEmail(e.target.checked)}
-          />
+          <LabelStyle >Want to Recieve Email?</LabelStyle>
+          <label className="switch">
+            <input type="checkbox" 
+                    name="Recieve Email"
+                  checked={recieves_email}
+                    onChange={e => setRecieveEmail(e.target.checked)}/>
+              <span className="slider round"></span>
+          </label>
         </RecEmailDiv>
         <ButtonDiv>
           {renderPremium()}
@@ -150,6 +153,7 @@ const SettingsView = props => {
 
 export default requireAuth(SettingsView);
 
+
 const ContainerDiv = styled.div`
   width:100%;
   display:flex;
@@ -160,10 +164,9 @@ const SettingsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
+  flex-direction:column;
   justify-content:center;
   padding-bottom: 100px;
-  position: absolute;
-  top: 74px;
   font-size: 1.6rem;
 `;
 
@@ -171,7 +174,6 @@ const FormStyle = styled.form`
   display: flex;
   flex-direction:column;
   justify-content: space-evenly;
-  width: 70%;
   border: 1px solid blue;
   align-items:center;
 `;
@@ -240,8 +242,9 @@ padding-left: 5%;
 `;
 
 const InputCheckStyle = styled.input`
-  margin-left: 18%;
-  margin-top:15px;
+opacity: 0;
+width: 0;
+height: 0;
 `;
 const StripeStyle = styled.div`
 display:flex;
