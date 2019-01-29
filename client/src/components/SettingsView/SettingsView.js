@@ -112,12 +112,12 @@ const SettingsView = props => {
     } else {
       return (
         <PremiumDiv>
-          <div>
-            <PremiumStyle>Account Status:</PremiumStyle>
+          <div className="status-div">
+            <LabelStyle>Account Status:</LabelStyle>
             <p>Basic</p>
           </div>
           <StripeStyle>
-            <StripeButton />;
+            <StripeButton />
           </StripeStyle>
         </PremiumDiv>
       );
@@ -303,14 +303,19 @@ const PremiumDiv = styled.div`
   @media (max-width: 550px) {
     width: 100%;
   }
-  div {
+  .status-div {
     width:100%;
     display:flex;
     justify-content:space-between;
   }
-  p {
-    color: ${props => props.theme.accent};
+  h4 {
+    color: ${props => props.theme.themeWhite};
+    font-size:1.5rem;
+    font-weight: normal;
   }
+  p {
+    
+    color: ${props => props.theme.accent};  }
 `;
 const PremiumStyle = styled.div`
   color: ${props => props.theme.themeWhite};
