@@ -9,7 +9,7 @@ import firebase from "firebase";
 const WorkoutDetails = props => {
   const { state, dispatch } = useContext(Store);
 
-  const [sWorkouts, setSWorkouts] = useState(state.scheduleWorkouts);
+  const [selectedDate, setSelectedDate] = useState(state.selectedDate);
 
   const dateStringParser = date => {
     if (date.length === 10) {
@@ -69,47 +69,87 @@ const WorkoutDetails = props => {
         type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newScheduleWorkouts.data
       });
-      setSWorkouts();
     }
   };
 
+  const renderWorkout = () => {
+    if (props.datePopulated === false) {
+      return (
+        <WorkoutDetailsDiv>No workouts Scheduled</WorkoutDetailsDiv>
+      )
+    }
+  }
+
   return (
     <WorkoutContainer>
-      {sWorkouts &&
-        sWorkouts.map(scheduleWorkout => {
-          if (
-            dateFormat(dateStringParser(scheduleWorkout.date)) ===
-            dateFormat(props.selectedDate)
-          ) {
-            return (
-              <WorkoutDetailsDiv key={scheduleWorkout.id}>
-              <WorkoutTitleDiv>
-                <p>{scheduleWorkout.title}</p>
-                <button
-                  type="button"
-                  onClick={e => unscheduleWorkout(e, scheduleWorkout)}
-                >
-                  Unschedule
-                </button>
-              </WorkoutTitleDiv>
-              <ExerciseListDiv>
-
-        
-                {scheduleWorkout.exercises &&
-                  scheduleWorkout.exercises.map(exercise => {
-                    return (
-                      <ExerciseDetails
-                        dispatch={props.dispatch}
-                        key={exercise.id}
-                        exercise={exercise}
-                      />
-                    );
-                  })}
-                        </ExerciseListDiv>
-              </WorkoutDetailsDiv>
-            );
-          }
-        })}
+      {renderWorkout()}
+      {props.selectedDate === null
+        ? state.scheduleWorkouts &&
+          state.scheduleWorkouts.map(scheduleWorkout => {
+            if (
+              dateFormat(dateStringParser(scheduleWorkout.date)) ===
+              dateFormat(props.currentDay)
+            ) {
+              return (
+                <WorkoutDetailsDiv key={scheduleWorkout.id}>
+                  <WorkoutTitleDiv>
+                    <h3>{scheduleWorkout.title}</h3>
+                    <UnscheduleButton
+                      type="button"
+                      onClick={e => unscheduleWorkout(e, scheduleWorkout)}
+                    >
+                      Unschedule
+                    </UnscheduleButton>
+                  </WorkoutTitleDiv>
+                  <ExerciseListDiv>
+                    {scheduleWorkout.exercises &&
+                      scheduleWorkout.exercises.map(exercise => {
+                        return (
+                          <ExerciseDetails
+                            dispatch={props.dispatch}
+                            key={exercise.id}
+                            exercise={exercise}
+                          />
+                        );
+                      })}
+                  </ExerciseListDiv>
+                </WorkoutDetailsDiv>
+              );
+            }
+          })
+        : state.scheduleWorkouts &&
+          state.scheduleWorkouts.map(scheduleWorkout => {
+            if (
+              dateFormat(dateStringParser(scheduleWorkout.date)) ===
+              dateFormat(props.selectedDate)
+            ) {
+              return (
+                <WorkoutDetailsDiv key={scheduleWorkout.id}>
+                  <WorkoutTitleDiv>
+                    <h3>{scheduleWorkout.title}</h3>
+                    <UnscheduleButton
+                      type="button"
+                      onClick={e => unscheduleWorkout(e, scheduleWorkout)}
+                    >
+                      Unschedule
+                    </UnscheduleButton>
+                  </WorkoutTitleDiv>
+                  <ExerciseListDiv>
+                    {scheduleWorkout.exercises &&
+                      scheduleWorkout.exercises.map(exercise => {
+                        return (
+                          <ExerciseDetails
+                            dispatch={props.dispatch}
+                            key={exercise.id}
+                            exercise={exercise}
+                          />
+                        );
+                      })}
+                  </ExerciseListDiv>
+                </WorkoutDetailsDiv>
+              );
+            }
+          })}
     </WorkoutContainer>
   );
 };
@@ -117,27 +157,37 @@ const WorkoutDetails = props => {
 export default WorkoutDetails;
 
 const WorkoutContainer = styled.div`
-justify-content: space-around;
+  justify-content: space-around;
+  background-color: white;
 `;
 const WorkoutDetailsDiv = styled.div`
 display:flex
-border:1px solid gray;
+border:1px solid #eee;
 border-radius: 4px;
 padding: 10px;
 width:100%
 justify-content: space-around;
+flex-direction:column;
+align-items: center;
 `;
 
-
 const WorkoutTitleDiv = styled.div`
-display:flex;
-flex-direction:column;
-width:40%;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content:space-around;
 `;
 
 const ExerciseListDiv = styled.div`
-display:flex;
-flex-direction:column;
-justify-content:space-evenly;
-width:40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  div:last-child {
+    border-bottom: none;
+  }
+`;
+
+const UnscheduleButton = styled.button`
+
 `;

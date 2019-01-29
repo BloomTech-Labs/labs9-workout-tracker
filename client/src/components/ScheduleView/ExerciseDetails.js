@@ -36,10 +36,11 @@ const ExerciseDetails = props => {
 
   return (
     <ExerciseDetailsDiv key={props.exercise.id}>
-      <h4> {props.exercise.name}</h4>
-      <p>Weight: {props.exercise.weight}</p>
-      <p>Sets: {props.exercise.sets}</p>
-      <p>Reps: {props.exercise.reps}</p>
+      <ExerciseDetailsP> {props.exercise.name}</ExerciseDetailsP>
+      <ExerciseDetailsP>Weight: {props.exercise.weight}</ExerciseDetailsP>
+      <ExerciseDetailsP>Sets: {props.exercise.sets}</ExerciseDetailsP>
+      <ExerciseDetailsP>Reps: {props.exercise.reps}</ExerciseDetailsP>
+      <ExerciseDetailsListDiv>
       <p>Done?</p>
       <input
         type="checkbox"
@@ -48,6 +49,7 @@ const ExerciseDetails = props => {
             setStatus(e.target.checked)
         } }
       />
+      </ExerciseDetailsListDiv>
     </ExerciseDetailsDiv>
   );
 };
@@ -56,7 +58,15 @@ export default ExerciseDetails;
 
 const ExerciseDetailsDiv = styled.div`
 display:flex;
-border-bottom:1px solid gray;
+border-bottom:1px solid #eee;
 align-items:center;
 justify-content:space-around;
+
 `;
+
+const ExerciseDetailsP= styled.p`
+width: calc(100%/5)`;
+const ExerciseDetailsListDiv= styled.div`
+display:flex;
+align-items:center;
+width: calc(100%/5)`;

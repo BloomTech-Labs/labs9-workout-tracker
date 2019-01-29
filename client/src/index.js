@@ -22,7 +22,8 @@ const initialState = {
   workouts: [],
   editMetric: null,
   showMetricForm: false,
-  selectedCategory: "default"
+  selectedCategory: "default",
+  selectedDate:new Date(),
 };
 
 const reducer = (state, action) => {

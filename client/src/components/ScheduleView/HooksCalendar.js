@@ -213,26 +213,17 @@ const HooksCalendar = props => {
         {renderDays()}
         {renderCells()}
       </div>
-
-      {/* if no date is selected, return null */}
-      {dateSelected !== true ? null : datePopulated === true ? ( // if date is selected, check if date is populated and return component based on that
-        <PopupModalDiv>
+      <PopupModalDiv>
           {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
           <WorkoutDetails
             selectedDate={selectedDate}
+            currentDay = {currentMonth}
             dispatch={dispatch}
             scheduleWorkouts={state.scheduleWorkouts}
+            datePopulated ={datePopulated}
           />
         </PopupModalDiv>
-      ) : (
-        <PopupModalDiv>
-          <AddWorkout
-            workouts={state.workouts}
-            scheduleWorkouts={state.scheduleWorkouts}
-            selectedDate={selectedDate}
-          />
-        </PopupModalDiv>
-      )}
+
     </div>
   );
 };
@@ -240,9 +231,15 @@ const HooksCalendar = props => {
 export default HooksCalendar;
 
 const PopupModalDiv = styled.div`
-width:100%;
+width:40%;
 justify-content: space-around;
-background-color:white;
 border-radius: 4px;
-margin-top:15px;
 `;
+
+{/* <PopupModalDiv>
+<AddWorkout
+  workouts={state.workouts}
+  scheduleWorkouts={state.scheduleWorkouts}
+  selectedDate={selectedDate}
+/>
+</PopupModalDiv> */}

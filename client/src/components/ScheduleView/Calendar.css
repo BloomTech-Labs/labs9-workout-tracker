@@ -114,14 +114,14 @@
   
   .calendar-div {
     display:flex;
-    flex-direction: column;
-    align-items: center;
     width:100%;
+    height:auto;
+    justify-content: space-around;
   }
   .calendar {
     display: block;
     position: relative;
-    width: 100%;
+    width: 55%;
     height:auto;
     background: var(--neutral-color);
     border: 1px solid var(--border-color);
@@ -163,14 +163,29 @@
   
   .calendar .body .cell {
     position: relative;
-    height: 8.5em;
+    height: 6.5em;
     border-right: 1px solid var(--border-color);
     overflow: hidden;
     cursor: pointer;
     background: var(--neutral-color);
     transition: 0.25s ease-out;
+    display:flex;
+    justify-content: center;
+    align-items: center;
   }
-  
+      @media(max-width:500px) {
+        .calendar .body .cell {
+          height: 5.5em;
+
+      }
+    }
+      @media(max-width:400px) {
+        .calendar .body .cell {
+          height: 4.5em;
+
+      }
+    }
+
   .calendar .body .cell:hover {
     background: var(--bg-color);
     transition: 0.5s ease-out;
