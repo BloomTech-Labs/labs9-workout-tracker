@@ -41,7 +41,7 @@ const StripeButton = () => {
       image="https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" //Pop-in header image
       billingAddress={false} //asks for less info. Delete to ask for billing address
     >
-      <StripeStyle>Upgrade</StripeStyle>
+      <StripeStyle>Upgrade to Premium</StripeStyle>
     </StyleCheckout>
   );
 };
@@ -59,10 +59,8 @@ const StripeStyle = styled.button`
   box-shadow: rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
   border-radius: 5px;
   text-align:center;
-  padding-top:5px;
-  padding-left: 50px;
-  padding-right: 50px;
-
+  width: 180px;
+  padding 5px 50 px;
 `;
 
 const StyleCheckout = styled(StripeCheckout)``;
