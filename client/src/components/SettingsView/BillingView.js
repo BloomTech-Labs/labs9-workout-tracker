@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import styled from "styled-components";
+import {Store} from '../../index'
+
+
 
 const StripeButton = () => {
   const publishableKey = "pk_test_UoZqVOHUhJfAEAvXBPJyzYNZ";
+
+  const {state, dispatch} = useContext(Store);
 
   const onToken = token => {
     const body = {
@@ -16,6 +21,7 @@ const StripeButton = () => {
       .then(response => {
         console.log(response);
         alert("Payment Success");
+        dispatch({type: 'USER_MODEL', payload:{premium: true}})
       })
       .catch(error => {
         console.log("Payment Error: ", error);
