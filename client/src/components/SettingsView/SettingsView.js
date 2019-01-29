@@ -39,7 +39,7 @@ const SettingsView = props => {
             alert("Email has changed")
           }
           console.log(res.data); 
-          props.dispatch({type: 'userModel', payload:res.data})
+          props.dispatch({type: 'USER_MODEL', payload:res.data})
           if (email === props.user.email) {
             changePasswordPress();
           } 
@@ -72,7 +72,7 @@ const SettingsView = props => {
       user.updatePassword(newPassword).then(() => {
       alert('Password was changed');
     }).catch((error) => {
-        alert(error.message, 'changePasswordPress function error');
+        alert( 'changePasswordPress function error/Password should be 6 characters or more');
     })
 
     }).catch((error) => {
