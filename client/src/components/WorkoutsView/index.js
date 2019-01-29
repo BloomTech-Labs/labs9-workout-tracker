@@ -16,9 +16,7 @@ const WorkoutsView = props => {
 export default requireAuth(WorkoutsView);
 
 const Container = styled.div`
-  display: flex;
   border: ${props => props.theme.primaryDark};
-  flex-direction: column;
   width: 100%;
   max-width: 950px;
   padding: 0px 30px;

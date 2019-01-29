@@ -76,6 +76,7 @@ const WorkoutDetails = props => {
         type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newScheduleWorkouts.data
       });
+
     }
   };
 
@@ -104,6 +105,14 @@ const WorkoutDetails = props => {
       );
     }
   };
+
+  const renderWorkout = () => {
+    if (props.datePopulated === false) {
+      return (
+        <WorkoutDetailsDiv>No workouts Scheduled</WorkoutDetailsDiv>
+      )
+    }
+  }
 
   return (
     <WorkoutContainer>

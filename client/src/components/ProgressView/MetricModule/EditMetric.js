@@ -3,20 +3,22 @@ import axios from "axios";
 import firebase from "firebase";
 import { Store } from "../../../index";
 import { dateFormat, dateStringParser } from "../../../shared";
-import DatePicker from "react-datepicker";
 import {
   StyledError,
-  StyledInput,
   ModuleActions,
-  MetricFormContainer,
-  MetricForm
+  CancelButton,
+  SubmitButton,
+  DeleteButton
 } from "./Style";
+import Input from '../../../shared/Input';
+import FormModal from '../../../shared/FormModal';
 
 const EditMetric = () => {
   const { state, dispatch } = useContext(Store);
   const [error, setError] = useState("");
 
   const [currentMetric, setCurrentMetric] = useState({
+    id: null,
     weight: "",
     hips: "",
     waist: "",
@@ -32,6 +34,7 @@ const EditMetric = () => {
       const editMetric = state.editMetric;
       if (editMetric !== null) {
         setCurrentMetric({
+          id: editMetric.id,
           weight: editMetric.weight,
           hips: editMetric.hips,
           waist: editMetric.waist,
@@ -46,6 +49,10 @@ const EditMetric = () => {
     [state.editMetric]
   );
 
+  const closeModal = () => {
+    dispatch({ type: "SHOW_METRIC_FORM" })
+    dispatch({ type: "RESET_EDIT_METRIC" })
+  }
   const editMetric = async e => {
     e.preventDefault();
 
@@ -100,6 +107,41 @@ const EditMetric = () => {
     setCurrentMetric({ ...currentMetric, [name]: value });
   };
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const deleteMetric = async e => {
+    e.preventDefault();
+
+    if(confirmDelete === false) {
+      setConfirmDelete(true)
+      return
+    }
+
+    const token = await firebase.auth().currentUser.getIdToken()
+    const deleteRes = await axios.delete(
+        `https://fitmetrix.herokuapp.com/api/progress/metrics/delete/${currentMetric.id}`,
+        {
+            headers: {
+              Authorization: token
+            }
+        }
+    );
+
+
+    if (deleteRes.status === 200) {
+        const newMetrics = await axios.get('https://fitmetrix.herokuapp.com/api/progress/metrics/get',
+        {
+            headers: {
+              Authorization: token
+            }
+        })
+        dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
+    }
+
+    setConfirmDelete(false);
+    closeModal();
+  }
+
   const {
     weight,
     hips,
@@ -112,77 +154,85 @@ const EditMetric = () => {
   } = currentMetric;
 
   return (
-    <MetricFormContainer>
-      <MetricForm onSubmit={e => editMetric(e)}>
-        <StyledInput
-          type="text"
-          placeholder="Weight"
-          value={weight}
-          name="weight"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="Hips"
-          value={hips}
-          name="hips"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="Waist"
-          value={waist}
-          name="waist"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmLeft"
-          value={arm_left}
-          name="arm_left"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmRight"
-          value={arm_right}
-          name="arm_right"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegLeft"
-          value={leg_left}
-          name="leg_left"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegRight"
-          value={leg_right}
-          name="leg_right"
-          onChange={e => setMetric(e)}
-          required
-        />
-        <DatePicker selected={date} onChange={changeDate} disabled />
-        {error !== "" ? <StyledError>{error}</StyledError> : null}
-        <ModuleActions>
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}
-          >
-            Cancel
-          </button>
-          <button type="submit">Edit</button>
-        </ModuleActions>
-      </MetricForm>
-    </MetricFormContainer>
+    <FormModal 
+      onSubmit={editMetric}
+      closeModal={e => closeModal()}
+      title={"Edit Progress"}
+    >
+      <Input
+        label="Date"
+        name="Date"
+        size="responsive"
+        onChange={changeDate}
+        value={date}
+        type="calendar"
+        isDisabled="true"
+      />
+      <Input
+        placeholder="Weight"
+        label="Weight"
+        value={weight}
+        name="weight"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Hips"
+        label="Hips"
+        value={hips}
+        name="hips"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Waist"
+        label="Waist"
+        value={waist}
+        name="waist"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Arm Left"
+        label="Arm Left"
+        value={arm_left}
+        name="arm_left"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Arm Right"
+        label="Arm Right"
+        value={arm_right}
+        name="arm_right"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Leg Left"
+        label="Leg Left"
+        value={leg_left}
+        name="leg_left"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      <Input
+        placeholder="Leg Right"
+        label="Leg Right"
+        value={leg_right}
+        name="leg_right"
+        size="responsive"
+        onChange={e => setMetric(e)}
+      />
+      {error !== "" ? <StyledError>{error}</StyledError> : null}
+      <ModuleActions>
+        <DeleteButton type="button" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</DeleteButton>
+        <SubmitButton type="submit" small >Submit</SubmitButton>
+      </ModuleActions>
+      <CancelButton type="button" onClick={e => closeModal()}>
+        Cancel
+      </CancelButton>
+    </FormModal>
   );
 };
 

@@ -23,7 +23,7 @@ const initialState = {
   editMetric: null,
   showMetricForm: false,
   selectedCategory: "default",
-  selectedWorkoutCategory: "default"
+  selectedWorkoutCategory: "all",
   selectedDate:new Date(),
 };
 

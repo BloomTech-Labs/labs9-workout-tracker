@@ -87,7 +87,7 @@ const AddWorkouts = () => {
     // console.log("state is: ", state);
     // console.log("state is: ", state.workouts);
     console.log("exercises are: ", exercises);
-    exercises.map(ex )
+    exercises.map()
   };
 
   return (
