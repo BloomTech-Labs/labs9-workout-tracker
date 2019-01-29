@@ -17,9 +17,9 @@ const MyWorkouts = () => {
     });
 
     options.unshift({
-      name: "Filter by Category",
-      value: "default",
-      key: "default"
+      name: "All",
+      value: "all",
+      key: "all"
     });
 
     return options;
@@ -33,22 +33,36 @@ const MyWorkouts = () => {
   };
 
   return (
-    console.log("workouts on state are: ", state.workouts),
-    console.log("state.selectedCategory: ", state.selectedWorkoutCategory),
     (
-      <Container>
+      <HeaderContainer>
         <Header>
           <DropDownContianer>
             <h2>My Workouts</h2>
             <DropDown
+              label={"Filter by Category"}
               options={getOptions()}
               onChange={handleChange}
-              value={state.selectedCategory}
+              value={state.selectedWorkoutCategory}
             />
           </DropDownContianer>
           <AddWorkoutButton type="button">Add Workout</AddWorkoutButton>
         </Header>
         {state.workouts.map((workout, i) => {
+          if (state.selectedWorkoutCategory === "all") {
+            return (
+              <Workout>
+                <h3>{workout.title}</h3>
+                <div>
+                  <span>
+                    <i class="fas fa-pen" />
+                  </span>
+                  <span>
+                    <i class="fas fa-times" />
+                  </span>
+                </div>
+              </Workout>
+            );
+          }
           if (workout.category_id == state.selectedWorkoutCategory) {
             return (
               <Workout>
@@ -66,7 +80,7 @@ const MyWorkouts = () => {
           }
           return null;
         })}
-      </Container>
+      </HeaderContainer>
     )
   );
 };
@@ -118,10 +132,11 @@ const Workout = styled.div`
   }
 `;
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  height: auto;
 `;

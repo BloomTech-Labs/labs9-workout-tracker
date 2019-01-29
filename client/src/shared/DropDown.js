@@ -1,31 +1,52 @@
 import React from "react";
 import styled from "styled-components";
 
-const DropDown = ({ options, value, onChange }) => {
+const DropDown = ({ options, value, onChange, label }) => {
   return (
     <Container>
-      <StyledDropDown onChange={e => onChange(e.target.value)} value={value}>
-        {options &&
-          options.map(option => (
-            <StyledOption value={option.value} key={option.key}>
-              {option.name}
-            </StyledOption>
-          ))}
-      </StyledDropDown>
-      <DropDownArrow>
-        <i className="fas fa-chevron-down" />
-      </DropDownArrow>
+      <StyledLabel>{label}</StyledLabel>
+      <DropDownContainer>
+        <StyledDropDown onChange={e => onChange(e.target.value)} value={value}>
+          {options &&
+            options.map(option => (
+              <StyledOption value={option.value} key={option.key}>
+                {option.name}
+              </StyledOption>
+            ))}
+        </StyledDropDown>
+        <DropDownArrow>
+          <i className="fas fa-chevron-down" />
+        </DropDownArrow>
+      </DropDownContainer>
     </Container>
   );
 };
+
+
+export default DropDown;
+
+const Container = styled.div`
+  width: 245px;
+  height: 62px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
+
+
+const StyledLabel = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+`;
 
 const StyledOption = styled.option`
   width: 100%;
   border: none;
 `;
 
-const Container = styled.div`
-  width: 250px;
+const DropDownContainer = styled.div`
+  width: 100%;
   height: 36px;
   position: relative;
   border-radius: 6px;
@@ -55,4 +76,3 @@ const DropDownArrow = styled.span`
   color: black;
 `;
 
-export default DropDown;

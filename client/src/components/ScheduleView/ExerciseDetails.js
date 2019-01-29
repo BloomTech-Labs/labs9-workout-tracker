@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from 'styled-components';
 import axios from "axios";
 
 const ExerciseDetails = props => {
@@ -34,7 +35,13 @@ const ExerciseDetails = props => {
   };
 
   return (
-    <div key={props.exercise.id}>
+    <ExerciseDetailsDiv key={props.exercise.id}>
+      <ExerciseDetailsP> {props.exercise.name}</ExerciseDetailsP>
+      <ExerciseDetailsP>Weight: {props.exercise.weight}</ExerciseDetailsP>
+      <ExerciseDetailsP>Sets: {props.exercise.sets}</ExerciseDetailsP>
+      <ExerciseDetailsP>Reps: {props.exercise.reps}</ExerciseDetailsP>
+      <ExerciseDetailsListDiv>
+      <p>Done?</p>
       <input
         type="checkbox"
         checked={status}
@@ -42,13 +49,24 @@ const ExerciseDetails = props => {
             setStatus(e.target.checked)
         } }
       />
-      <p> {props.exercise.name}</p>
-      <p>completed? {status.toString()}</p>
-      <p>Weight: {props.exercise.weight}</p>
-      <p>Sets: {props.exercise.sets}</p>
-      <p>Reps: {props.exercise.reps}</p>
-    </div>
+      </ExerciseDetailsListDiv>
+    </ExerciseDetailsDiv>
   );
 };
 
 export default ExerciseDetails;
+
+const ExerciseDetailsDiv = styled.div`
+display:flex;
+border-bottom:1px solid #eee;
+align-items:center;
+justify-content:space-around;
+
+`;
+
+const ExerciseDetailsP= styled.p`
+width: calc(100%/5)`;
+const ExerciseDetailsListDiv= styled.div`
+display:flex;
+align-items:center;
+width: calc(100%/5)`;
