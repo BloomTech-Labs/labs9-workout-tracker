@@ -120,6 +120,9 @@ const HeaderBlue = styled.h1`
   font-size:1.5rem;
   color:${props => props.theme.themeWhite};
   height:40px;
+  :hover {
+    cursor: pointer;
+}
 
   @media(max-width:420px) {
     font-size:1.1rem;
@@ -137,6 +140,9 @@ const HeaderBlank = styled.h1`
   font-size:1.5rem;
   color:${props => props.theme.themeWhite};
   height:40px;
+  :hover {
+      cursor: pointer;
+  }
 
   @media(max-width:420px) {
     font-size:1.1rem;

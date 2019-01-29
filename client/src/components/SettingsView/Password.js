@@ -114,7 +114,6 @@ const FormStyle = styled.form`
   margin: 0 2%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   padding: 20px 7%;
   align-items: center;
   max-width: 616px;
@@ -131,6 +130,8 @@ const Div = styled.div`
   flex-direction: column;
   width: 50%;
   align-items: center;
+  margin-top: 25px;
+
 `;
 const LabelStyle = styled.label`
   display: flex;
@@ -158,4 +159,5 @@ const Button = styled.button`
   width: 40%;
   min-width: 161.438px;
   padding 5px 50 px;
+  margin-top:40px;
 `;
