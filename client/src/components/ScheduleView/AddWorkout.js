@@ -145,8 +145,6 @@ const AddWorkout = props => {
           <div>{categoryComponent}</div>
           {props.workouts &&
             props.workouts.map(workout => {
-              console.log("map workout:", workout);
-              console.log("map categoryID:", categoryID);
               if (workout.id === categoryID) {
                 return (
                   <div>
