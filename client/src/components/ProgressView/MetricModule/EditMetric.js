@@ -18,6 +18,7 @@ const EditMetric = () => {
   const [error, setError] = useState("");
 
   const [currentMetric, setCurrentMetric] = useState({
+    id: null,
     weight: "",
     hips: "",
     waist: "",
@@ -33,6 +34,7 @@ const EditMetric = () => {
       const editMetric = state.editMetric;
       if (editMetric !== null) {
         setCurrentMetric({
+          id: editMetric.id,
           weight: editMetric.weight,
           hips: editMetric.hips,
           waist: editMetric.waist,
@@ -107,16 +109,39 @@ const EditMetric = () => {
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const deleteMetric = e => {
+  const deleteMetric = async e => {
     e.preventDefault();
 
     if(confirmDelete === false) {
       setConfirmDelete(true)
       return
     }
+
+    const token = await firebase.auth().currentUser.getIdToken()
+    const deleteRes = await axios.delete(
+        `https://fitmetrix.herokuapp.com/api/progress/metrics/delete/${currentMetric.id}`,
+        {
+            headers: {
+              Authorization: token
+            }
+        }
+    );
+
+
+    if (deleteRes.status === 200) {
+        const newMetrics = await axios.get('https://fitmetrix.herokuapp.com/api/progress/metrics/get',
+        {
+            headers: {
+              Authorization: token
+            }
+        })
+        dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
+    }
+
     setConfirmDelete(false);
     closeModal();
   }
+
   const {
     weight,
     hips,

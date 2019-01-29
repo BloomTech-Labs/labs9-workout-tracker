@@ -117,9 +117,7 @@ const ProgressGraph = props => {
         <ProgressHeader setType={setType} />
       </ProgressInfo>
       <GraphContainer>
-        <div>
           <svg/>
-        </div>
         <SelectedMetric>
           {type
             .toUpperCase()
@@ -139,11 +137,13 @@ const GraphContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 600px;
 `;
 
 
 const ProgressInfo = styled.div`
   width: 100%;
+  height: 250px;
   display: flex;
   justify-content: center;
   flex-direction: column;
