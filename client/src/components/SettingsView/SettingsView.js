@@ -94,16 +94,16 @@ const SettingsView = props => {
           <Div>
             <LabelStyle >Email:</LabelStyle>
             <InputStyle
-              type="text"
+              type="email"
               placholder="hello"
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
           </Div>
           <Div>
-            <LabelStyle label for='choose'>Phone:</LabelStyle>
+            <LabelStyle  >Phone:</LabelStyle>
             <InputStyle
-              type="text"
+              type="tel"
               placeholder={phone}
               value={phone}
               onChange={e => setPhone(e.target.value)}
@@ -112,7 +112,6 @@ const SettingsView = props => {
 
           <ChangePasswordDiv>
             <InputStyle
-            id='choose'
               type="password"
               value={currentPassword}
               placeholder="Current Password"
@@ -186,10 +185,6 @@ const InputStyle = styled.input`
   width: 100%;
   min-width: 161.438px;
 
-  :invalid {
-    background-color:pink;
-
-  }
 `;
 
 const Button = styled.button`

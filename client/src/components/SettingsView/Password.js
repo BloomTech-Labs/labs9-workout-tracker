@@ -60,6 +60,7 @@ const PasswordView = props => {
             placeholder="Current Password"
             autoCapitalize="none"
             onChange={e => setcurrentPassword(e.target.value)}
+            required
           />
         </Div>
         <Div>
@@ -71,6 +72,7 @@ const PasswordView = props => {
             placeholder="New Password"
             autoCapitalize="none"
             onChange={e => setPassword(e.target.value)}
+            required
           />
         </Div>
         <Div>
@@ -82,6 +84,7 @@ const PasswordView = props => {
             placeholder="Confirm Password"
             autoCapitalize="none"
             onChange={e => setConfirmNewPassword(e.target.value)}
+            required
           />
         </Div>
         <Button title="Change Password">Update Info</Button>
