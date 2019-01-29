@@ -4,7 +4,7 @@ import axios from "axios";
 import * as firebase from "firebase";
 import styled from "styled-components";
 import CategoryDropDown from "./CategoryDropDown";
-
+import Input from "../../../shared/Input";
 const AddWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
@@ -50,31 +50,13 @@ const AddWorkouts = () => {
     setReps("");
   };
 
-  //add Workout handler
-  const addWorkout = async e => {
-    e.preventDefault();
-
-    let nExercise = {
-      name: exerciseName,
-      weight: Number(weight),
-      sets: Number(sets),
-      reps: Number(reps)
-    };
-
-    //adds exercise to exercises array in the workout being created/edited and resets the input fields
-    setExercises([...exercises, nExercise]);
-    setExerciseName("");
-    setWeight("");
-    setSets("");
-    setReps("");
-  };
-
   // add new workout handler to add workout to database
   const addNewWorkout = async e => {
     e.preventDefault();
     console.log("hello from addNewWorkout");
     const token = window.localStorage.getItem("login_token");
     console.log("the state.selectedCategory is: ", state.selectedCategory);
+
     //Sets the workout title and category id and sends a POST request to the backend to add the created workout
 
     const workout = {
@@ -101,56 +83,95 @@ const AddWorkouts = () => {
     setSelectedCategory("default");
   };
 
+  const inputOnChange = async e => {
+    // console.log("state is: ", state);
+    // console.log("state is: ", state.workouts);
+    console.log("exercises are: ", exercises);
+    exercises.map(ex )
+  };
+
   return (
     <Container onSubmit={e => addNewWorkout(e)}>
       <h2>Add Workouts</h2>
       <Row>
-        <NameInput
+        <Input
           value={title}
-          placeholder="Workout Title"
-          type="text"
+          placeholder="Legs"
           onChange={e => setTitle(e.target.value)}
-          required
+          size="large"
+          label="Workout Title"
         />
         <CategoryDropDown />
       </Row>
+
+      {/* Conditional that renders the exercises that have been added to the workout that is being created */}
+
+      {exercises &&
+        exercises.map(ex => {
+          return (
+            <Row>
+              <Input
+                value={ex.name}
+                placeholder="Exercise Name"
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                label="Exercise Name"
+                size="large"
+              />
+              <Input
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                value={ex.weight}
+                placeholder="Weight"
+                label="Weight"
+              />
+              <Input
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                value={ex.sets}
+                placeholder="Sets"
+                label="Sets"
+              />
+              <Input
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                value={ex.reps}
+                placeholder="Reps"
+                label="Reps"
+              />
+              <span>x</span>
+            </Row>
+          );
+        })}
+
       <Row>
-        <NameInput
+        <Input
           value={exerciseName}
-          type="text"
-          placeholder="Exercise Name"
+          placeholder="Lunges"
           onChange={e => setExerciseName(e.target.value)}
+          label="Exercise Name"
+          size="large"
         />
-        <ExerciseInput
+        <Input
           value={weight}
           type="text"
-          placeholder="Weight"
+          placeholder="50"
           onChange={e => setWeight(e.target.value)}
+          label="Weight"
         />
-
-        <ExerciseInput
+        <Input
           value={sets}
           type="text"
-          placeholder="Sets"
+          placeholder="3"
           onChange={e => setSets(e.target.value)}
+          label="Sets"
         />
-        <ExerciseInput
+        <Input
           value={reps}
           type="text"
-          placeholder="Reps"
+          placeholder="12"
           onChange={e => setReps(e.target.value)}
+          label="Reps"
         />
         <span>x</span>
       </Row>
-      {/* Conditional that renders the exercises that have been added to the workout that is being created */}
-      <div>
-        {exercises &&
-          exercises.map(ex => {
-            return (
-              <div>{`${ex.name}: ${ex.weight}x${ex.sets}x${ex.reps}`}</div>
-            );
-          })}
-      </div>
+
       <Row>
         <AddExerciseButton type="button" onClick={e => addExercise(e)}>
           Add Exercise to Workout
@@ -169,30 +190,21 @@ export default AddWorkouts;
 const AddExerciseButton = styled.button`
   width: 100%;
   height: 36px;
-  color: ${props => props.theme.primaryDark};
+  background-color: white;
+  box-shadow: ${props => props.theme.boxShadow};
+  border: none;
   border-radius: 4px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
+  cursor: none;
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
   height: 36px;
-  color: ${props => props.theme.primaryDark};
+  color: white;
   background-color: ${props => props.theme.accent};
   border-radius: 4px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
-`;
-
-const NameInput = styled.input`
-  width: 245px;
-  height: 36px;
-  border-radius: 4px;
-`;
-
-const ExerciseInput = styled.input`
-  width: 100px;
-  height: 36px;
-  border-radius: 4px;
+  box-shadow: ${props => props.theme.boxShadow};
+  border: none;
 `;
 
 const Container = styled.form`
@@ -206,8 +218,8 @@ const Container = styled.form`
 
 const Row = styled.div`
   width: 100%;
-  height: 80px;
+  height: 75px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 `;
