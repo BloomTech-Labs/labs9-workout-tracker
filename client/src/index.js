@@ -22,7 +22,8 @@ const initialState = {
   workouts: [],
   editMetric: null,
   showMetricForm: false,
-  selectedCategory: "default"
+  selectedCategory: "default",
+  selectedWorkoutCategory: "default"
 };
 
 const reducer = (state, action) => {
@@ -47,6 +48,8 @@ const reducer = (state, action) => {
       return { ...state, showMetricForm: !state.showMetricForm };
     case "UPDATE_SELECTED_CATEGORY":
       return { ...state, selectedCategory: action.payload };
+    case "UPDATE_SELECTED_WORKOUTS_CATEGORY":
+      return { ...state, selectedWorkoutCategory: action.payload };
     default:
       // A reducer must always return a valid state.
       // Alternatively you can throw an error if an invalid action is dispatched.

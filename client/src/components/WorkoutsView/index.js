@@ -7,8 +7,8 @@ import styled from "styled-components";
 const WorkoutsView = props => {
   return (
     <Container>
-      <AddWorkouts />
       <MyWorkouts />
+      <AddWorkouts />
     </Container>
   );
 };

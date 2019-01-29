@@ -83,6 +83,13 @@ const AddWorkouts = () => {
     setSelectedCategory("default");
   };
 
+  const inputOnChange = async e => {
+    // console.log("state is: ", state);
+    // console.log("state is: ", state.workouts);
+    console.log("exercises are: ", exercises);
+    exercises.map(ex )
+  };
+
   return (
     <Container onSubmit={e => addNewWorkout(e)}>
       <h2>Add Workouts</h2>
@@ -106,24 +113,24 @@ const AddWorkouts = () => {
               <Input
                 value={ex.name}
                 placeholder="Exercise Name"
-                onChange={e => setExerciseName(e.target.value)}
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
                 label="Exercise Name"
                 size="large"
               />
               <Input
-                onChange={e => setWeight(e.target.value)}
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
                 value={ex.weight}
                 placeholder="Weight"
                 label="Weight"
               />
               <Input
-                onChange={e => setSets(e.target.value)}
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
                 value={ex.sets}
                 placeholder="Sets"
                 label="Sets"
               />
               <Input
-                onChange={e => setReps(e.target.value)}
+                onChange={(e, index) => inputOnChange(e.target.value, index)}
                 value={ex.reps}
                 placeholder="Reps"
                 label="Reps"
