@@ -50,18 +50,24 @@ const Login = props => {
     <LoginContainer>
       <Container>
         <FormStyle onSubmit={e => loginUser(e)}>
+        <InputDiv>
+        <p>Email:</p>
           <InputStyle
             type="text"
-            placeholder="Email"
+            placeholder="example@example.com"
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
+        </InputDiv>
+        <InputDiv>
+        <p>Password:</p>
           <InputStyle
             type="password"
             placeholder="Password"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          </InputDiv>
           <Button type="submit">Sign In</Button>
         </FormStyle>
       </Container>
@@ -98,6 +104,10 @@ const FormStyle = styled.form`
   border-radius: 6px;
   background-color: ${props => props.theme.primary};
   margin: 0 2%;
+  display:flex;
+  flex-direction:column;
+  padding: 20px 7%;
+  align-items:center;
   @media(max-width:450px) {
     display:flex;
     flex-direction:column;
@@ -105,19 +115,27 @@ const FormStyle = styled.form`
     width:85%;
   }
 `;
+const InputDiv = styled.div`
+margin-top:20px;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+  p {
+  color:white;
+}
+`;
 
 const InputStyle = styled.input`
   font-family: ${props => props.theme.roboto};
   height: 30px;
-  margin-top: 30px;
   background-color: ${props => props.theme.themeWhite};
-  margin-left: 20px;
-  margin-right: 20px;
+  width:100%;
+  width:150px;
 `;
 
 const Button = styled.button`
   height: 40px;
-  width: 30%;
+  width: 80%;
   margin-top: 30px;
   margin-bottom: 30px;
   font-family: ${props => props.theme.roboto};

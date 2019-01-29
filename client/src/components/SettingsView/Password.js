@@ -12,7 +12,7 @@ const PasswordView = props => {
 
     const reauthenticate = (currentPassword) => {
         var user = firebase.auth().currentUser;
-        var cred = firebase.auth.EmailAuthProvider.credential(props.user.email, currenPassword);
+        var cred = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
         return user.reauthenticateWithCredential(cred)
     }
 
@@ -24,19 +24,20 @@ const PasswordView = props => {
             }).catch((error) => {
                 alert(error.message);
             })
+        }).catch((error) => {
+            alert(error.message);
         })
     }
 
 
 return (
     <div>
-        <form>
+        <form onSubmit={() => changePassword()}>
             <input 
                 type='password'
                 value={currentPassword}
                 placeholder='Current Password'
                 autoCapitalize='none'
-                secureTextEntry={true}
                 onChange={(e) => setcurrentPassword(e.target.value)}
             />
             <input
@@ -44,9 +45,9 @@ return (
                 value={newPassword}
                 placeholder='New Password'
                 autoCapitalize='none'
-                secureTextEntry={true}
                 onChange={(e) => setPassword(e.target.value)}
             />
+            <button title='Change Password'>Update Info</button>
         </form>
     </div>
     )

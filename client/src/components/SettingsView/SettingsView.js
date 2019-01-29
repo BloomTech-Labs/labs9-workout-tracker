@@ -4,6 +4,8 @@ import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from 'firebase';
 import requireAuth from '../../requireAuth';
+import MainSettings from './MainSettings';
+import './settings.css';
 //working on updating info
 
 const SettingsView = props => {
@@ -13,9 +15,7 @@ const SettingsView = props => {
   const [premium, displayPremium] = useState(props.user.premium);
   const [newPassword, setPassword] = useState('');
   const [currentPassword, setcurrentPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [passwordFlag, setPasswordFlag] = useState(false)
-  const [premiumFlag, setpremiumFlag] = useState(false)
+
   
 
   const updateUser = async e => {
@@ -91,19 +91,12 @@ const SettingsView = props => {
   return (
     <ContainerDiv>
     <SettingsViewStyle>
-      <div>
-      
-
-        <h1>Account</h1>
-        <h1>Premium</h1>
-        <h1>Password</h1>
-
-      </div>
       <FormStyle onSubmit={e => updateUser(e)}>
         <Div>
           <LabelStyle>Email:</LabelStyle>
           <InputStyle
             type="text"
+            placholder='hello'
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
@@ -141,15 +134,13 @@ const SettingsView = props => {
         </ChangePasswordDiv>
         <RecEmailDiv>
           <LabelStyle >Want to Recieve Email?</LabelStyle>
-          <SliderLabel class="switch">
-          <InputCheckStyle
-            name="Recieve Email"
-            type="checkbox"
-            checked={recieves_email}
-            onChange={e => setRecieveEmail(e.target.checked)}
-          />
-            <Slider class="slider"></Slider>
-          </SliderLabel> 
+          <label className="switch">
+            <input type="checkbox" 
+                    name="Recieve Email"
+                  checked={recieves_email}
+                    onChange={e => setRecieveEmail(e.target.checked)}/>
+              <span className="slider round"></span>
+          </label>
         </RecEmailDiv>
         <ButtonDiv>
           {renderPremium()}
@@ -161,54 +152,7 @@ const SettingsView = props => {
 };
 
 export default requireAuth(SettingsView);
-const SliderLabel = styled.label`
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
 
-`;
-
-const Slider = styled.span`
-position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 34px;
-  
-  InputCheckStyle:checked + & {
-    background-color: #2196F3;
-  }
-  
-  InputCheckStyle:focus + &  {
-    box-shadow: 0 0 1px #2196F3;
-  }
-
-  ::before {
-    position: absolute;
-    border-radius: 50%;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-
-  
-  InputCheckStyle:checked {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  }
-`;
 
 const ContainerDiv = styled.div`
   width:100%;

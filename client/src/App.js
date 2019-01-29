@@ -11,6 +11,7 @@ import Navigation from "./components/Navigation";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "./StyleTheme";
 import { Store } from "./index";
+import MainSettingsView from "./components/SettingsView/MainSettings";
 
 // export const AppState = createContext({ state: {}, dispatch: () => {} });
 
@@ -51,7 +52,7 @@ const App = props => {
             exact
             path="/settings"
             render={props => (
-              <SettingsView dispatch={dispatch} user={state} {...props} />
+              <MainSettingsView dispatch={dispatch} user={state} {...props} />
             )}
           />
         </StyledApp>
