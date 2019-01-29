@@ -16,40 +16,44 @@ const MainSettingsView = props => {
     if (passwordFlag === true && accountFlag === false) {
      return (
      <SubNav>
-        <HeaderBlank
-          onClick={() => {
-            accountClick();
-          }}
+     <HeaderTab>
+     <HeaderBlank
+     onClick={() => {
+         accountClick();
+        }}
         >
-          Account
+        Account
         </HeaderBlank>
         <HeaderBlue
-          onClick={() => {
+        onClick={() => {
             passwordClick();
-          }}
+        }}
         >
-          Password
+        Password
         </HeaderBlue>
-      </SubNav>
+        </HeaderTab>
+        </SubNav>
      ) 
     } else if (passwordFlag === false && accountFlag === true) {
         return (
                 <SubNav>
-        <HeaderBlue
-          onClick={() => {
-            accountClick();
-          }}
-        >
-          Account
-        </HeaderBlue>
-        <HeaderBlank
-          onClick={() => {
-            passwordClick();
-          }}
-        >
-          Password
-        </HeaderBlank>
-      </SubNav>
+                <HeaderTab>
+                <HeaderBlue
+                onClick={() => {
+                    accountClick();
+                }}
+                >
+                Account
+                </HeaderBlue>
+                <HeaderBlank
+                onClick={() => {
+                    passwordClick();
+                }}
+                >
+                Password
+                </HeaderBlank>
+                </HeaderTab>
+                </SubNav>
             )  
     }
   };
@@ -93,17 +97,48 @@ const MainSettingsDiv = styled.div`
 const SubNav = styled.div`
   display: flex;
   width: 100%;
-  max-width: 844px;
+  max-width: 880px;
+  justify-content:center;
+  height 30px:
+`;
+
+const HeaderTab = styled.div`
+display:flex;
+width:70%;
+height 30px:
+
 `;
 
 const HeaderBlue = styled.h1`
   margin: 0;
-  padding-right: 10px;
-  background-color: blue;
+  width: 25%;
+  background-color: ${props => props.theme.primary};
+  border-radius: 10px 10px 0 0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:1.5rem;
+  color:${props => props.theme.themeWhite};
+  height:40px;
+
+  @media(max-width:420px) {
+    font-size:1.1rem;
+  }
 `;
 
 const HeaderBlank = styled.h1`
   margin: 0;
-  padding-right: 10px;
-  background-color: green;
-`;
+  width: 25%;
+  background-color: ${props => props.theme.accent};
+  border-radius: 10px 10px 0 0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:1.5rem;
+  color:${props => props.theme.themeWhite};
+  height:40px;
+
+  @media(max-width:420px) {
+    font-size:1.1rem;
+  }
+  `;

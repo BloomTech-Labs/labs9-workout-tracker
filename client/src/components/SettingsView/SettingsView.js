@@ -120,10 +120,9 @@ const SettingsView = props => {
             secureTextEntry={true}
             onChange={(e) =>  setcurrentPassword(e.target.value) } 
           />
-
         </ChangePasswordDiv>
         <RecEmailDiv>
-          <LabelStyle >Want to Recieve Email?</LabelStyle>
+          <LabelStyle >Recieve Email?</LabelStyle>
           <label className="switch">
             <input type="checkbox" 
                     name="Recieve Email"
@@ -132,6 +131,7 @@ const SettingsView = props => {
               <span className="slider round"></span>
           </label>
         </RecEmailDiv>
+        <Button title='Change Password'>Update Info</Button>
         <ButtonDiv>
           {renderPremium()}
         </ButtonDiv>
@@ -156,25 +156,27 @@ const SettingsViewStyle = styled.div`
   display: flex;
   flex-direction:column;
   justify-content:center;
-  padding-bottom: 100px;
   font-size: 1.6rem;
+  align-items:center;
+  height:651px;
+  padding-bottom:100px;
 `;
 
 const FormStyle = styled.form`
   border: 1px solid ${props => props.theme.primaryDark};
-  border-radius: 6px;
+  border-radius: 0 6px 6px 6px;
   background-color: ${props => props.theme.primary};
   margin: 0 2%;
   display:flex;
+  width:70%;
   flex-direction:column;
+  justify-content:space-evenly;
   padding: 20px 7%;
   align-items:center;
-  @media(max-width:634px) {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    width:60%;
-  }
+  border-top:0px;
+  height:651px;
+
+  
 `;
 
 const InputStyle = styled.input`
@@ -183,7 +185,7 @@ const InputStyle = styled.input`
   text-align: center;
   display:flex;
   justify-content:center;
-  width:60%;
+  width:100%;
   min-width:161.438px;
 `;
 
@@ -202,21 +204,22 @@ const Button = styled.button`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
+  width:50%;
   align-items:center;
-  width:60%;
+
 `;
 const ChangePasswordDiv = styled.div`
 display: flex;
 flex-direction: column;
-align-items:center;
-width:60%;
+width:50%;
   justify-content:space-evenly;
-  height:200px;
+  align-items:center;
+  margin-top:24px;
 `;
 const RecEmailDiv = styled.div`
   display:flex;
-  width:50%;
-  justify-content:center;
+  justify-content:space-between;
+  align-items:center;
 
 `;
 const ButtonDiv = styled.div`
@@ -231,6 +234,9 @@ const ButtonDiv = styled.div`
 
 const LabelStyle = styled.label`
   width: 40%;
+  display:flex;
+  align-self:flex-start;
+  color:${props => props.theme.themeWhite};
 `;
 
 const PremiumStyle = styled.div`
