@@ -7,7 +7,8 @@ import {
   StyledError,
   ModuleActions,
   CancelButton,
-  SubmitButton
+  SubmitButton,
+  DeleteButton
 } from "./Style";
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
@@ -46,8 +47,7 @@ const EditMetric = () => {
     [state.editMetric]
   );
 
-  const closeWindow = e => {
-    e.preventDefault();
+  const closeModal = () => {
     dispatch({ type: "SHOW_METRIC_FORM" })
     dispatch({ type: "RESET_EDIT_METRIC" })
   }
@@ -105,6 +105,18 @@ const EditMetric = () => {
     setCurrentMetric({ ...currentMetric, [name]: value });
   };
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const deleteMetric = e => {
+    e.preventDefault();
+
+    if(confirmDelete === false) {
+      setConfirmDelete(true)
+      return
+    }
+    setConfirmDelete(false);
+    closeModal();
+  }
   const {
     weight,
     hips,
@@ -119,7 +131,7 @@ const EditMetric = () => {
   return (
     <FormModal 
       onSubmit={editMetric}
-      closeModal={e => closeWindow(e)}
+      closeModal={e => closeModal()}
       title={"Edit Progress"}
     >
       <Input
@@ -189,14 +201,12 @@ const EditMetric = () => {
       />
       {error !== "" ? <StyledError>{error}</StyledError> : null}
       <ModuleActions>
-        <CancelButton
-          type="button"
-          onClick={e => closeWindow(e)}
-        >
-          Cancel
-        </CancelButton>
-        <SubmitButton type="submit">Submit</SubmitButton>
+        <DeleteButton type="button" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</DeleteButton>
+        <SubmitButton type="submit" small >Submit</SubmitButton>
       </ModuleActions>
+      <CancelButton type="button" onClick={e => closeModal()}>
+        Cancel
+      </CancelButton>
     </FormModal>
   );
 };

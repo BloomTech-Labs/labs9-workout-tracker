@@ -1,12 +1,26 @@
 import styled from "styled-components";
 
 export const CancelButton = styled.button`
-  width: 140px;
-  height: 45px;
+  width: 100%;
+  height: 38px;
+  border-radius: 12px;
+  border: 2px solid ${props => props.theme.primaryDark};
+  color: ${props => props.theme.primaryDark};
+  background-color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  margin-top: 10px;
+`;
+
+export const DeleteButton = styled.button`
+  width: 165px;
+  height: 38px;
   border-radius: 12px;
   border: 2px solid ${props => props.theme.accent};
-  color: ${props => props.theme.accent};
-  background-color: white;
+  background-color: ${props => props.theme.accent};
+  color: white;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
@@ -14,12 +28,12 @@ export const CancelButton = styled.button`
 `;
 
 export const SubmitButton = styled.button`
-  width: 140px;
-  height: 45px;
+  width: ${props => props.small ? "165px" : "100%"};
+  height: 38px;
   border-radius: 12px;
-  border: 2px solid ${props => props.theme.accent};
+  border: 2px solid ${props => props.theme.primaryDark};
+  background-color: ${props => props.theme.primaryDark};
   color: white;
-  background-color: ${props => props.theme.accent};
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;

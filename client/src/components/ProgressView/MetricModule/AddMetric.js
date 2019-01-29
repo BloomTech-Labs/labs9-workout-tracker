@@ -7,7 +7,7 @@ import {
   StyledError,
   ModuleActions,
   CancelButton,
-  SubmitButton
+  SubmitButton,
 } from "./Style";
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
@@ -169,14 +169,11 @@ const AddMetric = () => {
       />
       {error !== "" ? <StyledError>{error}</StyledError> : null}
       <ModuleActions>
-        <CancelButton
-          type="button"
-          onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}
-        >
-          Cancel
-        </CancelButton>
         <SubmitButton type="submit">Submit</SubmitButton>
       </ModuleActions>
+      <CancelButton type="button" onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>
+        Cancel
+      </CancelButton>
     </FormModal>
   );
 };
