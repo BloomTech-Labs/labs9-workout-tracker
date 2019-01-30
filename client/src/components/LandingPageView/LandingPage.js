@@ -152,26 +152,27 @@ const BlankImage = styled.div`
 const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
-  height: 600px;
+  height: 350px;
   background-color: white;
   font-size: 3.3rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid blue;
+  // border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
+  margin-bottom: 200px;
 `;
 
 const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
-  height: 50%;
+  width: 60%;
+  height: 100%;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -184,7 +185,7 @@ const CalendarDemo = styled.div`
   width: 50%;
   height: 50%;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -192,26 +193,27 @@ const CalendarDemo = styled.div`
 
 const Part3 = styled.div`
   width: 100%;
-  height: 600px;
+  height: 350px;
   background-color: #f4f5f5;
   font-size: 3.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
+  // border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
+  margin-bottom: 200px;
 `;
 
 const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
-  height: 50%;
+  width: 35%;
+  height: 100%;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -223,7 +225,7 @@ const WorkoutDemo = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -231,16 +233,17 @@ const WorkoutDemo = styled.div`
 
 const Part4 = styled.div`
   width: 100%;
-  height: 600px;
+  height: 350px;
   background-color: white;
   font-size: 3.3rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid blue;
+  // border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
+  margin-bottom: 100px;
 `;
 
 const ProgressDemo = styled.div`
@@ -249,7 +252,7 @@ const ProgressDemo = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -259,10 +262,10 @@ const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 100%;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -277,7 +280,7 @@ const Part5 = styled.div`
   font-size: 1.6rem;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
+  // border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
