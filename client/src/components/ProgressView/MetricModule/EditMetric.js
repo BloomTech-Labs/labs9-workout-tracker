@@ -5,14 +5,12 @@ import { Store } from "../../../index";
 import { dateFormat, dateStringParser } from "../../../shared";
 import {
   StyledError,
-  ModuleActions,
-  CancelButton,
-  SubmitButton,
   DeleteButton,
   Row
 } from "./Style";
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
+import Button from '../../../shared/Button';
 
 const EditMetric = () => {
   const { state, dispatch } = useContext(Store);
@@ -161,8 +159,7 @@ const EditMetric = () => {
       closeModal={e => closeModal()}
       title={"Edit Progress"}
     >
-      <DeleteButton type="button" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</DeleteButton>
-
+      <Button type="button" scheme="delete" size="responsive" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</Button>
       <Row>
         <Input
           label="Date"
@@ -240,12 +237,8 @@ const EditMetric = () => {
           />
       </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}
-      <ModuleActions>
-        <SubmitButton type="submit" >Submit</SubmitButton>
-      </ModuleActions>
-      <CancelButton type="button" onClick={e => closeModal()}>
-        Cancel
-      </CancelButton>
+      <Button type="submit" size="responsive">Submit</Button>
+      <Button type="button" scheme="cancel" size="responsive" onClick={e => closeModal()}>Cancel</Button>
     </FormModal>
   );
 };
