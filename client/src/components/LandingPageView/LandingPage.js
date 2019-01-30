@@ -168,21 +168,22 @@ const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
-  height: 200px;
+  width: 50%;
+  height: 50%;
+  align-items: center;
   border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
-  object-fit: fill;
 `;
 
 const CalendarDemo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
-  height: 200px;
+  width: 50%;
+  height: 50%;
+  align-items: center;
   border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
@@ -208,7 +209,7 @@ const WorkoutPic = styled.img`
   justify-content: flex-start;
   align-items: flex-start;
   width: 50%;
-  height: 200px;
+  height: 50%;
   align-items: center;
   border: 1px solid red;
   @media (max-width: 900px) {
@@ -246,7 +247,7 @@ const ProgressDemo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 45%;
+  width: 50%;
   height: 200px;
   border: 1px solid red;
   @media (max-width: 900px) {
@@ -258,8 +259,9 @@ const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 45%;
-  height: 200px;
+  width: 50%;
+  height: 50%;
+  align-items: center;
   border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
