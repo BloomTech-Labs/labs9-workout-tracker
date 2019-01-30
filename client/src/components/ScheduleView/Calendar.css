@@ -117,6 +117,7 @@
     width:100%;
     height:auto;
     justify-content: space-around;
+    flex-direction:column;
   }
   .calendar {
     display: block;
@@ -155,7 +156,7 @@
   .calendar .days {
     text-transform: uppercase;
     font-weight: 400;
-    color: var(--text-color-light);
+    color:#2B3A42;
     font-size: 70%;
     padding: 0.75em 0;
     border-bottom: 1px solid var(--border-color);
@@ -196,12 +197,13 @@
   }
 
   .calendar .body .cell:hover {
-    background: var(--bg-color);
+    background-color:#BED3DD;
     transition: 0.5s ease-out;
   }
   
   .calendar .body .selected {
-    border: 2px solid #405865;  }
+    background-color:#BED3DD
+  }
   
   .calendar .body .row {
     border-bottom: 1px solid var(--border-color);

@@ -162,7 +162,7 @@ const HooksCalendar = props => {
                         return (
                           <CellDiv>
                             <i className="fas fa-dumbbell"key={`${day}${Math.random()}`}></i>
-                            <p >{sworkout.title}</p>
+                            <p >{sworkout.title.substring(0, 9)}...</p>
                           </CellDiv>
                         )
                       }
@@ -223,12 +223,18 @@ const HooksCalendar = props => {
 
   return (
     <div className="calendar-div">
+    <Legend>
+    <i className="fas fa-dumbbell completed"></i>
+    <p>Complete</p>
+    <i className="fas fa-dumbbell"></i>
+    <p>Incomplete</p>
+      </Legend>
       <div className="calendar">
         {renderHeader()}
         {renderDays()}
         {renderCells()}
       </div>
-      <PopupModalDiv>
+      {/* <PopupModalDiv>
           <WorkoutDetails
             selectedDate={selectedDate}
             currentDay = {currentMonth}
@@ -236,13 +242,32 @@ const HooksCalendar = props => {
             scheduleWorkouts={state.scheduleWorkouts}
             datePopulated ={datePopulated}
           />
-        </PopupModalDiv>
+        </PopupModalDiv> */}
 
     </div>
   );
 };
 
 export default HooksCalendar;
+
+const Legend = styled.div`
+display:flex;
+align-items:center;
+margin-bottom: 5px;
+i {
+  color: rgb(253, 143, 37);
+  margin-left: 4%;
+}
+i.completed {
+  color:  rgb(64, 88, 101)
+}
+p {
+  margin: 0 2% 0 1%;
+
+
+}
+
+`;
 
 const PopupModalDiv = styled.div`
 width:40%;
@@ -255,21 +280,32 @@ display:flex;
 flex-direction:column;
 justify-content:space-between;
 width:100%;
-height:100%;
+height:100%; 
+@media(max-width: 690px) {
+  justify-content: center;
+}
 i {
   margin-right: 70%;
   margin-top:5px;
+  @media(max-width:690px) {
+    margin: 0;
+    align-self:center;
+  }
 }
 p {
   font-weight:bold;
   background: rgb(253, 143, 37, 0.8);
-  border-radius:4px;
+  border-radius:10px;
   margin: 2px auto; 
   color:white;
-  padding: 3px 5%;
+  padding: 1px 5%;
+  width:93%
+  @media(max-width:690px) {
+    display:none;
+  }
 
 }
  p.completed {
-  background: rgb(43, 58, 66, 0.8)
+  background:  rgb(64, 88, 101, .8)
 }
 `;
