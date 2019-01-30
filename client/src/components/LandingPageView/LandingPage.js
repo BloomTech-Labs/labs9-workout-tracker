@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Button from '../../shared/Button';
 import deadliftImg from '../assets/deadlift-filter.jpg';
 import squatImg from '../assets/squat-filter.jpg';
 import fitnesstrackerImg from '../assets/fitness-tracker.svg';
@@ -20,7 +21,7 @@ const LandingPage = () => {
           <CallToAction>
             <Action>{preCallToAction}</Action>
             <Action>{callToAction}</Action>
-            <StyledButton to="/register">START TRACKING NOW</StyledButton>
+            <Button to="/register">START TRACKING NOW</Button>
           </CallToAction>
           <BlankImage />
         </CtaDiv>
@@ -102,6 +103,7 @@ const CallToAction = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   
+  
   @media(max-width:900px){
     top:200px;
     margin: 0 auto;
@@ -111,24 +113,24 @@ const CallToAction = styled.div`
   }
 `;
 
-const StyledButton = styled(Link)`
-  max-width: 350px;
-  min-width: 100px;
-  width: 60%;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: white;
-  background-color: ${props => props.theme.primary};
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    color: ${props => props.theme.accent};
-  }
-`;
+// const StyledButton = styled(Link)`
+//   max-width: 350px;
+//   min-width: 100px;
+//   width: 60%;
+//   height: 40px;
+//   line-height: 40px;
+//   border-radius: 6px;
+//   border: none;
+//   font-size: 1.6rem;
+//   font-weight: 700;
+//   color: white;
+//   background-color: ${props => props.theme.accent};
+//   cursor: pointer;
+//   text-decoration: none;
+//   &:hover {
+//     color: ${props => props.theme.dark};
+//   }
+// `;
 
 const BlankImage = styled.div`
   width: 400px;
