@@ -29,15 +29,15 @@ const LandingPage = () => {
         </DownArrow> */}
       </LandingStyle>
       <Part2>
-        <CalendarPic>{CalendarView}</CalendarPic>
+        <CalendarPic />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
       <Part3>
         <WorkoutDemo>Plan ahead, execute your plan.</WorkoutDemo>
-        <WorkoutPic>{WorkoutsView}</WorkoutPic>
+        <WorkoutPic />
       </Part3>
       <Part4>
-        <ProgressPic>{ProgressView}</ProgressPic>
+        <ProgressPic />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
       <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
@@ -178,6 +178,7 @@ const Part2 = styled.div`
 `;
 
 const CalendarPic = styled.div`
+  background-image: url(${CalendarView});
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -216,6 +217,7 @@ const Part3 = styled.div`
 `;
 
 const WorkoutPic = styled.div`
+  background-image: url(${WorkoutsView});
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -267,6 +269,7 @@ const ProgressDemo = styled.div`
 `;
 
 const ProgressPic = styled.div`
+  background-image: url(${ProgressView});
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -281,7 +284,7 @@ const ProgressPic = styled.div`
 const Part5 = styled.div`
   width: 100%;
   background: no-repeat center center fixed;
-  background-image: url(${deadliftImg});
+  src: url(${deadliftImg});
   background-size: cover;
   color: white;
   font-size: 1.6rem;
