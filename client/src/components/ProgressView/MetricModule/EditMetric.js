@@ -158,6 +158,7 @@ const EditMetric = () => {
       onSubmit={editMetric}
       closeModal={e => closeModal()}
       title={"Edit Progress"}
+      size="small"
     >
       <Button type="button" scheme="delete" size="responsive" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</Button>
       <Row>

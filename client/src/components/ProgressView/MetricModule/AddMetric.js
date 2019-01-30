@@ -101,6 +101,7 @@ const AddMetric = () => {
       onSubmit={addMetric}
       closeModal={() => dispatch({ type: "SHOW_METRIC_FORM" })}
       title={"Update Progress"}
+      size="small"
     >
       <Row>
         <Input

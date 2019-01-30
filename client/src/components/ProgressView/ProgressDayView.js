@@ -77,14 +77,14 @@ const ProgressDayView = props => {
                         <DayItem key={i}>
                             <StyledDate>
                                 <span>{day.toDateString()} </span>
+                                <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
                             </StyledDate>
                             <StyledStats isPositive={isPositive}>
-                                <span>{m[state.graphType]}lbs</span>
+                                <span>{m[state.graphType]}{state.graphType === "weight" ? "lbs" : "in"}</span>
                                 <Percentage>
                                     {progress}%
                                     {isPositive ? <i class="fas fa-arrow-up"></i> : <i class="fas fa-arrow-down"></i>}
                                 </Percentage>
-                                <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
                             </StyledStats>
                         </DayItem>
                     );
@@ -159,14 +159,12 @@ const StyledIcon = styled.span`
 
 const StyledContainer = styled.div`
     width: 100%;
-    max-width: 720px;
-    margin: 0 auto;
-    margin-top: 140px;
+    margin-top: 40px;
 `;
 
  const DayItem = styled.div`
     width: 100%;
-    height: 70px;
+    height: 85px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

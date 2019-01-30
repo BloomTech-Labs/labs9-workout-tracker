@@ -25,4 +25,5 @@ const ProgressView = props => {
 export default requireAuth(ProgressView);
 
 const ProgressViewStyle = styled.div`
+width: 100%;
 `;

@@ -17,7 +17,7 @@ const ProgressGraph = props => {
       <TabSelection />
       <GraphContainer>
         <Graph />
-        <Details></Details>
+        <Details />
       </GraphContainer>
     </>
   );
@@ -27,7 +27,7 @@ export default ProgressGraph;
 
 const GraphContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
 `;
 

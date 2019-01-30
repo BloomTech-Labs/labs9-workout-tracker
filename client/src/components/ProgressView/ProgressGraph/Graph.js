@@ -214,7 +214,7 @@ const Graph = () => {
         })
 
 
-    }, [state.metrics, state.graphType, state]);
+    }, [state.metrics, state.graphType]);
 
 
     return (
@@ -231,7 +231,6 @@ const StyledGraph = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 225px;
-  width: 550px;
+  width: 80%;
   background-color: white;
 `;
