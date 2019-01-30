@@ -38,7 +38,7 @@ const TabSelection = ({setType}) => {
 export default TabSelection;
 
 const Metric = styled.div`
-  width: 80px;
+  width: 20%;
   height: 100%;
   display: flex;
   font-size: 18px;
@@ -68,4 +68,5 @@ const MetricContainer = styled.div`
   background-color: white;
   color: ${props => props.theme.primaryDark};
   margin-bottom: 20px;
+  margin-top: 40px;
 `;

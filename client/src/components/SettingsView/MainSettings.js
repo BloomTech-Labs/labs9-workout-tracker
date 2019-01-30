@@ -99,14 +99,13 @@ const SubNav = styled.div`
   width: 100%;
   max-width: 880px;
   justify-content:center;
-  height 30px:
+  height: 30px;
 `;
 
 const HeaderTab = styled.div`
 display:flex;
 width:70%;
-height 30px:
-
+height: 30px;
 `;
 
 const HeaderBlue = styled.h1`
