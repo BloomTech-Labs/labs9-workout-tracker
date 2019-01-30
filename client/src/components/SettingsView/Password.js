@@ -3,6 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import * as firebase from "firebase";
 import requireAuth from "../../requireAuth";
+import FormInput from '../../shared/FormInput'
+import Button from '../../shared/Button'
 
 const PasswordView = props => {
   const [currentPassword, setcurrentPassword] = useState("");
@@ -51,43 +53,31 @@ const PasswordView = props => {
   return (
     <SettingsViewStyle>
       <FormStyle onSubmit={e => changePassword(e)}>
-        <Div>
-          <LabelStyle>Old Password:</LabelStyle>
-
-          <InputStyle
+          <FormInput 
+            label={"old password"}
             type="password"
             value={currentPassword}
             placeholder="Current Password"
-            autoCapitalize="none"
             onChange={e => setcurrentPassword(e.target.value)}
-            required
+            lableColor="white"
           />
-        </Div>
-        <Div>
-          <LabelStyle>New Password:</LabelStyle>
-
-          <InputStyle
+          <FormInput 
+            label={"new password"}
             type="password"
             value={newPassword}
             placeholder="New Password"
-            autoCapitalize="none"
             onChange={e => setPassword(e.target.value)}
-            required
+            lableColor="white"
           />
-        </Div>
-        <Div>
-          <LabelStyle>Confirm Password:</LabelStyle>
-
-          <InputStyle
+          <FormInput 
+            label={"confirm password"}
             type="password"
             value={confirmNewPassword}
             placeholder="Confirm Password"
-            autoCapitalize="none"
             onChange={e => setConfirmNewPassword(e.target.value)}
-            required
+            lableColor="white"
           />
-        </Div>
-        <Button title="Change Password">Update Info</Button>
+        <Button type="button" onClick={e => changePassword(e)}>Update Info</Button>
       </FormStyle>
     </SettingsViewStyle>
   );
@@ -125,39 +115,4 @@ const FormStyle = styled.form`
     align-items: center;
   }
 `;
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  align-items: center;
-  margin-top: 25px;
 
-`;
-const LabelStyle = styled.label`
-  display: flex;
-  align-self: flex-start;
-  color: ${props => props.theme.themeWhite};
-`;
-
-const InputStyle = styled.input`
-  height: 40px;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-width: 161.438px;
-`;
-
-const Button = styled.button`
-  border-radius: 5px;
-  height: 40px;
-  color: white;
-  font-size:1.4rem;
-  background: ${props => props.theme.primaryDark};
-  font-weight: bold;
-  width: 40%;
-  min-width: 161.438px;
-  padding 5px 50 px;
-  margin-top:40px;
-`;

@@ -6,6 +6,8 @@ import * as firebase from "firebase";
 import requireAuth from "../../requireAuth";
 import MainSettings from "./MainSettings";
 import "./settings.css";
+import FormInput from '../../shared/FormInput'
+import Button from '../../shared/Button'
 //working on updating info
 
 const SettingsView = props => {
@@ -65,35 +67,31 @@ const SettingsView = props => {
     ) {
       return (
         <ChangePasswordDiv>
-          <LabelStyle for="error">Verify Password:</LabelStyle>
-          <InputStyle
-            id="error"
-            type="password"
+          <FormInput 
+            label={"Verify password"}
             value={currentPassword}
-            placeholder="Enter password"
-            autoCapitalize="none"
-            secureTextEntry={true}
+            placeholder={"Enter Password"}
             onChange={e => setcurrentPassword(e.target.value)}
-            required
+            type="password"
+            lableColor="white"
+            secureTextEntry={true}
           />
-          <Button title="Change Password">Update Info</Button>
+          <Button>Update Info</Button>
         </ChangePasswordDiv>
       );
     } else {
       return (
         <ChangePasswordDivInvis>
-          <LabelStyle for="error">Verify Password:</LabelStyle>
-          <InputStyle
-            id="error"
-            type="password"
+          <FormInput 
+            label={"Verify password"}
             value={currentPassword}
-            placeholder="Enter password"
-            autoCapitalize="none"
-            secureTextEntry={true}
+            placeholder={"Enter Password"}
             onChange={e => setcurrentPassword(e.target.value)}
-            required
+            type="password"
+            lableColor="white"
+            secureTextEntry={true}
           />
-          <Button title="Change Password">Update Info</Button>
+          <Button>Update Info</Button>
         </ChangePasswordDivInvis>
       );
     }
@@ -137,24 +135,22 @@ const SettingsView = props => {
     <ContainerDiv>
       <SettingsViewStyle>
         <FormStyle onSubmit={e => updateUser(e)}>
-          <Div>
-            <LabelStyle>Email:</LabelStyle>
-            <InputStyle
-              type="email"
-              placholder="hello"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </Div>
-          <Div>
-            <LabelStyle>Phone:</LabelStyle>
-            <InputStyle
-              type="tel"
-              placeholder={phone}
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-            />
-          </Div>
+          <FormInput 
+            label={"Email"}
+            value={email}
+            placeholder={"jack@fitmetrix.me"}
+            onChange={e => setEmail(e.target.value)}
+            type="email"
+            lableColor="white"
+          />
+          <FormInput 
+            label={"Phone"}
+            value={phone}
+            placeholder={"555-555-555"}
+            onChange={e => setPhone(e.target.value)}
+            type="tel"
+            lableColor="white"
+          />
           <RecEmailDiv>
             <LabelStyle>Recieve Email?</LabelStyle>
             <label className="switch">
@@ -209,42 +205,6 @@ const FormStyle = styled.form`
   height: 651px;
 `;
 
-const InputStyle = styled.input`
-  height: 40px;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-width: 161.438px;
-  :invalid {
-    border: 2px solid gray;
-    background-color: pink;
-  }
-`;
-
-const Button = styled.button`
-  border-radius: 5px;
-  height: 40px;
-  color: white;
-  font-size:1.4rem;
-  background: ${props => props.theme.primaryDark};
-  font-weight: bold;
-  width: 180px;
-  padding 5px 50 px;
-  margin-top:10px;
-`;
-
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  align-items: center;
-  margin-top: 25px;
-  @media (max-width: 550px) {
-    width: 100%;
-  }
-`;
 const ChangePasswordDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -323,11 +283,6 @@ const PremiumStyle = styled.div`
   justify-content: flex-start;
 `;
 
-const InputCheckStyle = styled.input`
-  opacity: 0;
-  width: 0;
-  height: 0;
-`;
 const StripeStyle = styled.div`
   display: flex;
   justify-content: center;
