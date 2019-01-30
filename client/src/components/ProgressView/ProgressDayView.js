@@ -47,7 +47,12 @@ const ProgressDayView = props => {
     const renderDays = () => {
         return (
             <StyledContainer>
-                <h2>Daily Stats</h2>
+                <StyledHeader>
+                    <h2>Daily Entrys: Weight</h2>
+                    <StyledButton onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>
+                        Add Progress
+                    </StyledButton>
+                </StyledHeader>
             {
                 state.metrics && sortMetrics(state.metrics).map((m, i) => {
                     return (
@@ -78,6 +83,28 @@ const ProgressDayView = props => {
 }
 
 export default ProgressDayView;
+
+const StyledHeader = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+    }
+`;
+
+const StyledButton = styled.button`
+    width: 120px;
+    height: 36px;
+    background-color: ${props => props.theme.accent};
+    color: white;
+    border-radius: 8px;
+    border: none;
+`;
 
 const StyledStats = styled.div`
     width: 100%;
@@ -110,7 +137,7 @@ const StyledContainer = styled.div`
     width: 100%;
     max-width: 720px;
     margin: 0 auto;
-    margin-top: 120px;
+    margin-top: 140px;
 `;
 
  const DayItem = styled.div`

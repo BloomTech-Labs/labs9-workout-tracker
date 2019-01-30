@@ -1,12 +1,20 @@
 import styled from "styled-components";
 
+export const Row = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0px;
+`;
+
 export const CancelButton = styled.button`
   width: 100%;
   height: 38px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 2px solid ${props => props.theme.primaryDark};
-  color: ${props => props.theme.primaryDark};
-  background-color: white;
+  background-color: ${props => props.theme.primaryDark};
+  color: white;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
@@ -15,12 +23,12 @@ export const CancelButton = styled.button`
 `;
 
 export const DeleteButton = styled.button`
-  width: 165px;
+  width: 100%;
   height: 38px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 2px solid ${props => props.theme.accent};
-  background-color: ${props => props.theme.accent};
-  color: white;
+  color: ${props => props.theme.accent};
+  background-color: white;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
@@ -30,9 +38,9 @@ export const DeleteButton = styled.button`
 export const SubmitButton = styled.button`
   width: ${props => props.small ? "165px" : "100%"};
   height: 38px;
-  border-radius: 12px;
-  border: 2px solid ${props => props.theme.primaryDark};
-  background-color: ${props => props.theme.primaryDark};
+  border-radius: 8px;
+  border: 2px solid ${props => props.theme.accent};
+  background-color: ${props => props.theme.accent};
   color: white;
   font-size: 18px;
   font-weight: 600;
