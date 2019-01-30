@@ -39,14 +39,26 @@ const Navigation = props => {
         <NavBar>
           <StyledLink to="/schedule" activeClassName="active">
             <i className="far fa-calendar-alt" />
+            <span>Schedule</span>
           </StyledLink>
           <StyledLink to="/workouts" activeClassName="active">
             <i className="fas fa-dumbbell" />
+            <span>Workouts</span>
           </StyledLink>
           <StyledLink to="/progress" activeClassName="active">
             <i className="fas fa-chart-line" />
+            <span>Progress</span>
           </StyledLink>
-          <StyledUserIcon onClick={() => setAccount(!account)}>
+          <StyledLink to="/settings" activeClassName="active">
+            <i className="fas fa-user"  />
+            <span>Account</span>
+          </StyledLink>
+          <StyledLink to="/login" onClick={() => logOut()} activeClassName="active">
+            <i className="fas fa-sign-out-alt" />
+            <span>Logout</span>
+          </StyledLink>
+          {/* <StyledUserIcon onClick={() => setAccount(!account)}>
+            <span>Account</span>
             <i className="fas fa-user" />
           </StyledUserIcon>
 
@@ -59,7 +71,7 @@ const Navigation = props => {
               <span>Logout</span>
               <i className="fas fa-sign-out-alt" />
             </OptionRow>
-          </AccountOptions>
+          </AccountOptions> */}
           {/* <StyledLink to="/settings" activeClassName='active'>Settings</StyledLink> */}
         </NavBar>
       </NavStyle>
@@ -71,77 +83,8 @@ const Navigation = props => {
 
 export default Navigation;
 
-const OptionRow = styled.span`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  color: ${props => props.theme.primaryDark};
-  padding: 0px 15px;
-  font-size: 16px;
-  user-select: none;
-  cursor: pointer;
-  .fas {
-    font-size: 18px;
-  }
-`;
-
-const OptionRowLink = styled(NavLink)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  color: ${props => props.theme.primaryDark};
-  padding: 0px 15px;
-  font-size: 16px;
-  user-select: none;
-  text-decoration: none;
-  cursor: pointer;
-  .fas {
-    font-size: 18px;
-  }
-`;
-
-const AccountOptions = styled.span`
-  display: ${props => (props.show ? "flex" : "none")};
-  width: 130px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: space-between;
-  position: absolute;
-  background-color: white;
-  right: 10px;
-  bottom: -90px;
-  width: 130px;
-  border-radius: 8px;
-  z-index: 6;
-  border: 1px solid rgb(218, 220, 224);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
-`;
-
-const StyledUserIcon = styled.span`
-  width: 100px;
-  line-height: 51px;
-  color: ${props => props.theme.white};
-  text-decoration: none;
-  text-align: center;
-  font-size: ${props => (props.landing ? "16px" : "26px")};
-  font-family: ${props => props.theme.roboto};
-  font-weight: 500;
-  &.active {
-    border-bottom: solid 2px ${props => props.theme.accent};
-  }
-  &:hover {
-    /* border-bottom: solid 2px ${props => props.theme.accent}; */
-    color: ${props => props.theme.accent};
-  }
-`;
-
 const NavContainer = styled.div`
-  height: 54px;
+  height: 72px;
   width: 100%;
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
@@ -166,13 +109,23 @@ const NavStyle = styled.div`
 
 const StyledLink = styled(NavLink)`
   width: 100px;
-  line-height: 51px;
+  height: 72px;
   color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
   font-size: ${props => (props.landing ? "16px" : "26px")};
   font-family: ${props => props.theme.roboto};
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  i {
+    font-size: 22px;
+  }
+  span {
+    font-size: 16px;
+    font-weight: 500;
+  }
   &.active {
     border-bottom: solid 2px ${props => props.theme.accent};
   }
