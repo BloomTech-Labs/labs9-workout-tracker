@@ -32,6 +32,7 @@ const AddWorkout = () => {
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
   const [exercises, setExercises] = useState([]);
+  const [newCategory, setNewCategory] = useState('');
 
   //add Exercise handler
   const addExercise = async e => {
@@ -93,6 +94,11 @@ const AddWorkout = () => {
     setExercises(exerciseCopy);
   };
 
+  const categoryOnChange = async e => {
+    const value = e.target.value;
+    setNewCategory(value);
+  };
+
   return (
     <FormModal
       onSubmit={e => addNewWorkout(e)}
@@ -109,6 +115,22 @@ const AddWorkout = () => {
         />
         <CategoryDropDown />
       </Row>
+
+      {/* Conditional that renders the category Input field when a user wants to add a category */}
+
+      {state.selectedCategory === 'add' ? (
+        <Row>
+          <Input
+            value={newCategory}
+            placeholder="Arms #2"
+            onChange={e => categoryOnChange(e)}
+            label="New Category Name"
+            size="large"
+          />
+          <SubmitButton type="button">Add Category</SubmitButton>
+          <span>x</span>
+        </Row>
+      ) : null}
 
       {/* Conditional that renders the exercises that have been added to the workout that is being created */}
 
