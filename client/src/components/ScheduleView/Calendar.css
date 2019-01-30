@@ -187,7 +187,11 @@
     }
 
   .calendar .body .cell .fa-square-full {
-    color: rgb(253, 143, 37, 0.9)
+    color: rgb(253, 143, 37, 0.8)
+   
+  }
+  .calendar .body .cell .completed {
+    color: rgb(43, 58, 66, 0.8)
    
   }
 

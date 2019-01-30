@@ -52,6 +52,7 @@ const HooksCalendar = props => {
     return <div className="days row">{days}</div>;
   };
 
+
   const renderCells = () => {
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
@@ -84,6 +85,7 @@ const HooksCalendar = props => {
         formattedDate = dateFns.format(day, dateFormat);
         //matched date to check against scheduled workout date
         matchedDate = dateFns.format(day, dateMatch);
+        console.log(matchedDate)
         //create a clone of the day to update selected date when cell is clicked
         const cloneDay = day;
 
@@ -117,10 +119,10 @@ const HooksCalendar = props => {
                     : ""
                 } ${dateFns.isSameDay(day, selectedDate)}`}
                 key={`${day}${Math.random()}`}
-                sworkout={state.scheduleWorkouts.map(sworkout => {
+                sworkout={state.scheduleWorkouts.filter(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
                   const splitDate = sworkout.date.split("T")[0];
-                  return splitDate === matchedDate ? sworkout : null;
+                  if( splitDate === matchedDate) return sworkout;
                 })}
                 onClick={
                   //Check whether the matchedDate is inside of scheduled workouts
@@ -143,10 +145,18 @@ const HooksCalendar = props => {
                   state.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
                     const splitDate = sworkout.date.split("T")[0];
-                    return splitDate === matchedDate ? (
-                      <i className="fas fa-square-full fa-7x"key={`${day}${Math.random()}`}></i>
-                    ) : null;
+                    if (splitDate === matchedDate)  {
+                      console.log("Match", sworkout)
+                      console.log("completed?", sworkout.completed)
+                      if (sworkout.completed === true) {
+                        return  <i className="fas fa-square-full completed fa-7x"key={`${day}${Math.random()}`}></i>
+                      } else {
+                        return  <i className="fas fa-square-full fa-7x"key={`${day}${Math.random()}`}></i>
+                      }
+                    }
+                    ;
                   })}
+                
     
               </div>
             )}
@@ -180,14 +190,6 @@ const HooksCalendar = props => {
       setdatePopulated(isPopulated);
       setdateSelected(false);
     }
-    // isPopulated: If the date has a scheduled workout true/false
-    // dateSelected: If any date on the calendar is selected true/false
-    // selectedDate: What current date is being highlighted null/date
-    // week selected: If a week is selected true/false not used yet
-
-    //when selecting first date, selectedDate becomes the highlighted day
-    //date populated takes care of itself. Incoming flag
-    //
   };
 
   const nextMonth = () => {
@@ -214,7 +216,6 @@ const HooksCalendar = props => {
         {renderCells()}
       </div>
       <PopupModalDiv>
-          {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
           <WorkoutDetails
             selectedDate={selectedDate}
             currentDay = {currentMonth}
