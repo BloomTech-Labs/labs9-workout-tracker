@@ -34,6 +34,16 @@ const MyWorkouts = () => {
     });
   };
 
+  const handleAdd = e => {
+    console.log('in handleAdd');
+    dispatch({ type: 'RESET_EDIT_WORKOUT' });
+
+    dispatch({
+      type: 'SHOW_WORKOUT_FORM',
+      payload: true
+    });
+  };
+
   const handleDelete = async (workoutID, i) => {
     const newWorkouts = state.workouts;
 
@@ -64,6 +74,11 @@ const MyWorkouts = () => {
 
   const handleEdit = async (workoutID, i) => {
     console.log('in handleEdit');
+
+    dispatch({
+      type: 'SHOW_WORKOUT_FORM',
+      payload: true
+    });
 
     dispatch({
       type: 'EDIT_WORKOUT',
@@ -105,7 +120,7 @@ const MyWorkouts = () => {
   return (
     <HeaderContainer>
       <Header>
-        <DropDownContianer>
+        <DropDownContainer>
           <h2>My Workouts</h2>
           <DropDown
             label={'Filter by Category'}
@@ -113,8 +128,10 @@ const MyWorkouts = () => {
             onChange={handleChange}
             value={state.selectedWorkoutCategory}
           />
-        </DropDownContianer>
-        <AddWorkoutButton type="button">Add Workout</AddWorkoutButton>
+        </DropDownContainer>
+        <AddWorkoutButton onClick={() => handleAdd()} type="button">
+          Add Workout
+        </AddWorkoutButton>
       </Header>
       {state.workouts.map((workout, i) => {
         if (state.selectedWorkoutCategory === 'all') {
@@ -174,7 +191,7 @@ const Header = styled.div`
   margin-bottom: 20px;
 `;
 
-const DropDownContianer = styled.div`
+const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -1,19 +1,19 @@
 import React from 'react';
-import styled, {keyframes} from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 
-const FormModal = ({onSubmit, closeModal, children, title}) => {
-    return (
-        <ModalContainer>
-            <ModalForm onSubmit={e => onSubmit(e)}>
-              <ModalHeader>
-                  <h2>{title}</h2>
-                  <i onClick={e => closeModal(e)} className="fas fa-times"></i>
-              </ModalHeader>
-              {children}
-            </ModalForm>
-        </ModalContainer>
-    );
-}
+const FormModal = ({ onSubmit, closeModal, children, title }) => {
+  return (
+    <ModalContainer>
+      <ModalForm onSubmit={e => onSubmit(e)}>
+        <ModalHeader>
+          <h2>{title}</h2>
+          <i onClick={e => closeModal(e)} className="fas fa-times" />
+        </ModalHeader>
+        {children}
+      </ModalForm>
+    </ModalContainer>
+  );
+};
 
 export default FormModal;
 
@@ -54,10 +54,10 @@ const slideIn = keyframes`
 `;
 
 const ModalForm = styled.form`
-  width: 450px;
+  width: 800px;
   height: 100vh;
   background-color: white;
-  box-shadow: 1px 0px 10px 1px rgba(0,0,0,0.75);
+  box-shadow: 1px 0px 10px 1px rgba(0, 0, 0, 0.75);
   padding: 0px 40px;
   overflow: scroll;
   position: fixed;
