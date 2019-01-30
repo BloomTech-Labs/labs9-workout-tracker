@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Store } from "../../../index";
-import axios from "axios";
-import * as firebase from "firebase";
-import styled from "styled-components";
-import CategoryDropDown from "./CategoryDropDown";
-import Input from "../../../shared/Input";
+import React, { useContext, useState, useEffect } from 'react';
+import { Store } from '../../../index';
+import axios from 'axios';
+import * as firebase from 'firebase';
+import styled from 'styled-components';
+import CategoryDropDown from './CategoryDropDown';
+import Input from '../../../shared/Input';
 const AddWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
@@ -12,7 +12,7 @@ const AddWorkouts = () => {
   const { category } = state;
 
   //A useState Hook to update the selected category on state.
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   //Maps through the user's categories on state and returns the category names. Is used in the dropdown onChange.
   const categoryOptions = category.map(cate => {
@@ -24,11 +24,11 @@ const AddWorkouts = () => {
   });
 
   //Hook to set workout Title
-  const [title, setTitle] = useState("");
-  const [exerciseName, setExerciseName] = useState("");
-  const [weight, setWeight] = useState("");
-  const [sets, setSets] = useState("");
-  const [reps, setReps] = useState("");
+  const [title, setTitle] = useState('');
+  const [exerciseName, setExerciseName] = useState('');
+  const [weight, setWeight] = useState('');
+  const [sets, setSets] = useState('');
+  const [reps, setReps] = useState('');
   const [exercises, setExercises] = useState([]);
 
   //add Exercise handler
@@ -44,18 +44,18 @@ const AddWorkouts = () => {
 
     //adds exercise to exercises array in the workout being created/edited and resets the input fields
     setExercises([...exercises, nExercise]);
-    setExerciseName("");
-    setWeight("");
-    setSets("");
-    setReps("");
+    setExerciseName('');
+    setWeight('');
+    setSets('');
+    setReps('');
   };
 
   // add new workout handler to add workout to database
   const addNewWorkout = async e => {
     e.preventDefault();
-    console.log("hello from addNewWorkout");
-    const token = window.localStorage.getItem("login_token");
-    console.log("the state.selectedCategory is: ", state.selectedCategory);
+    console.log('hello from addNewWorkout');
+    const token = window.localStorage.getItem('login_token');
+    console.log('the state.selectedCategory is: ', state.selectedCategory);
 
     //Sets the workout title and category id and sends a POST request to the backend to add the created workout
 
@@ -63,31 +63,36 @@ const AddWorkouts = () => {
       title,
       category_id: Number(state.selectedCategory)
     };
-    console.log("the current workout is: ", workout);
+    console.log('the current workout is: ', workout);
 
     if (token !== undefined) {
-      const res = await axios.post(
-        "https://fitmetrix.herokuapp.com/api/workouts/",
-        workout,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token
-          }
+      const res = await axios.post('https://fitmetrix.herokuapp.com/api/workouts/', workout, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
         }
-      );
-      console.log("the current workout is: ", workout);
+      });
+      console.log('the current workout is: ', workout);
     }
     //Resets the title and category after workout is added
-    setTitle("");
-    setSelectedCategory("default");
+    setTitle('');
+    setSelectedCategory('default');
   };
 
-  const inputOnChange = async e => {
-    // console.log("state is: ", state);
+  const inputOnChange = async (e, index) => {
+    // console.log("state is:", state);
     // console.log("state is: ", state.workouts);
-    console.log("exercises are: ", exercises);
-    exercises.map()
+    console.log('e is: ', e);
+    console.log('index is: ', index);
+
+    const name = e.target.name;
+    const value = e.target.value;
+
+    const exerciseCopy = exercises;
+
+    exerciseCopy[index][name] = value;
+
+    setExercises(exerciseCopy);
   };
 
   return (
@@ -107,30 +112,34 @@ const AddWorkouts = () => {
       {/* Conditional that renders the exercises that have been added to the workout that is being created */}
 
       {exercises &&
-        exercises.map(ex => {
+        exercises.map((ex, index) => {
           return (
             <Row>
               <Input
+                name="name"
                 value={ex.name}
                 placeholder="Exercise Name"
-                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                onChange={e => inputOnChange(e, index)}
                 label="Exercise Name"
                 size="large"
               />
               <Input
-                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                name="weight"
+                onChange={e => inputOnChange(e, index)}
                 value={ex.weight}
                 placeholder="Weight"
                 label="Weight"
               />
               <Input
-                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                name="sets"
+                onChange={e => inputOnChange(e, index)}
                 value={ex.sets}
                 placeholder="Sets"
                 label="Sets"
               />
               <Input
-                onChange={(e, index) => inputOnChange(e.target.value, index)}
+                name="reps"
+                onChange={e => inputOnChange(e, index)}
                 value={ex.reps}
                 placeholder="Reps"
                 label="Reps"
@@ -148,27 +157,9 @@ const AddWorkouts = () => {
           label="Exercise Name"
           size="large"
         />
-        <Input
-          value={weight}
-          type="text"
-          placeholder="50"
-          onChange={e => setWeight(e.target.value)}
-          label="Weight"
-        />
-        <Input
-          value={sets}
-          type="text"
-          placeholder="3"
-          onChange={e => setSets(e.target.value)}
-          label="Sets"
-        />
-        <Input
-          value={reps}
-          type="text"
-          placeholder="12"
-          onChange={e => setReps(e.target.value)}
-          label="Reps"
-        />
+        <Input value={weight} type="text" placeholder="50" onChange={e => setWeight(e.target.value)} label="Weight" />
+        <Input value={sets} type="text" placeholder="3" onChange={e => setSets(e.target.value)} label="Sets" />
+        <Input value={reps} type="text" placeholder="12" onChange={e => setReps(e.target.value)} label="Reps" />
         <span>x</span>
       </Row>
 

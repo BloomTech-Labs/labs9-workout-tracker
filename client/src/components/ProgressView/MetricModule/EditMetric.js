@@ -110,6 +110,7 @@ const EditMetric = () => {
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+
   const deleteMetric = async e => {
     e.preventDefault();
 
