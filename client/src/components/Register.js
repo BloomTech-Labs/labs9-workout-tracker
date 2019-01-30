@@ -16,53 +16,77 @@ const Register = props => {
     e.preventDefault();
     // Initialize Firebase
     console.log("email: ", email, "password: ", password, "name: ", name);
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        res.user
-          .getIdToken()
-          .then(token => {
-            console.log(email, name, token)
-            axios.post(
-              "https://fitmetrix.herokuapp.com/auth/register",
-              { email, name },
-              { headers: { Authorization: token } }
-            );
-          })
-          .then(props.history.push("/login"))
-          .catch();
-      })
-      .catch(function(error) {
-        var errorCode = error.code;
-        console.log(errorCode);
-        var errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    if (password === confirmPassword) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(res => {
+          res.user
+            .getIdToken()
+            .then(token => {
+              console.log(email, name, token)
+              axios.post(
+                "https://fitmetrix.herokuapp.com/auth/register",
+                { email, name },
+                { headers: { Authorization: token } }
+              );
+            })
+            .then(props.history.push("/login"))
+            .catch();
+        })
+        .catch(function(error) {
+          var errorCode = error.code;
+          console.log(errorCode);
+          var errorMessage = error.message;
+          console.log(errorMessage);
+        });
+    } else {
+      alert("Passwords must match!")
+    }
   };
 
   return (
     <RegisterContainer>
       <Container>
         <FormStyle onSubmit={e => registerUser(e)}>
+        <InputDiv>
+        <p> Name:</p>  
+        <InputStyle
+          type="text"
+          placeholder="John Doe"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        </InputDiv>
+        <InputDiv>
+        <p>  Email:</p>
+      
           <InputStyle
             type="text"
-            placeholder="Email"
+            placeholder="example@example.com"
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          <InputStyle
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+          </InputDiv>
+          <InputDiv>
+          <p>  Password:</p>
+          
           <InputStyle
             type="password"
             placeholder="Password"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          </InputDiv>
+          <InputDiv>
+          <p> Confirm Password:</p>
+          <InputStyle
+            type="password"
+            placeholder="Password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
+          </InputDiv>
           <Button type="submit">Sign Up</Button>
         </FormStyle>
       </Container>
@@ -100,6 +124,10 @@ const FormStyle = styled.form`
   border-radius: 6px;
   background-color: ${props => props.theme.primary};
   margin: 0 2%;
+  display:flex;
+  flex-direction:column;
+  padding: 20px 7%;
+  align-items:center;
   @media(max-width:634px) {
     display:flex;
     flex-direction:column;
@@ -108,18 +136,26 @@ const FormStyle = styled.form`
   }
   `;
 
+  const InputDiv = styled.div`
+  margin-top:20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+    p {
+    color:white;
+  }
+  `;
 const InputStyle = styled.input`
   font-family: ${props => props.theme.roboto};
   height: 30px;
-  margin-top: 30px;
-  margin-left: 20px;
-  margin-right: 20px;
   background-color: ${props => props.theme.themeWhite};
+  width:100%;
+  width:150px;
 `;
 
 const Button = styled.button`
   height: 40px;
-  width: 30%;
+  width: 80%;
   margin-top: 30px;
   margin-bottom: 30px;
   font-family: ${props => props.theme.roboto};

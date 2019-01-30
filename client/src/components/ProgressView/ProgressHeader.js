@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Store } from '../../../index';
+import { Store } from '../../index';
 import styled from "styled-components";
 
 const ProgressHeader = ({setType}) => {

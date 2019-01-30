@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
-import * as firebase from 'firebase';
-import requireAuth from '../../requireAuth';
+import * as firebase from "firebase";
+import requireAuth from "../../requireAuth";
+import MainSettings from "./MainSettings";
+import "./settings.css";
 //working on updating info
 
 const SettingsView = props => {
@@ -11,139 +13,164 @@ const SettingsView = props => {
   const [phone, setPhone] = useState(props.user.phone);
   const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
   const [premium, displayPremium] = useState(props.user.premium);
-  const [newPassword, setPassword] = useState('');
-  const [currentPassword, setcurrentPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-
-  
+  const [newPassword, setPassword] = useState("");
+  const [currentPassword, setcurrentPassword] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const updateUser = async e => {
     e.preventDefault();
     const token = window.localStorage.getItem("login_token");
-    reauthenticate(currentPassword).then(() => {
-      var user = firebase.auth().currentUser;
-      user.updateEmail(email).then( async () => {
-        if (token !== undefined) {
-          const res = await axios.put(
-            "https://fitmetrix.herokuapp.com/api/user/edit",
-            { email, phone, recieves_email },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: token
+    reauthenticate(currentPassword)
+      .then(() => {
+        var user = firebase.auth().currentUser;
+        user
+          .updateEmail(email)
+          .then(async () => {
+            if (token !== undefined) {
+              const res = await axios.put(
+                "https://fitmetrix.herokuapp.com/api/user/edit",
+                { email, phone, recieves_email },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token
+                  }
+                }
+              );
+              if (props.user.email !== email) {
+                alert("Email has changed");
               }
-            },
-            
-          );
-          if (props.user.email !== email) {
-            alert("Email has changed")
-          }
-          console.log(res.data); 
-          props.dispatch({type: 'USER_MODEL', payload:res.data})
-          if (email === props.user.email) {
-            changePasswordPress();
-          } 
-          setPassword('');
-          setcurrentPassword('');
-        }
-    }).catch((error) => {
-        alert('Reformat email to update email');
-    })
+              console.log(res.data);
+              props.dispatch({ type: "USER_MODEL", payload: res.data });
 
-    }).catch((error) => {
-      alert('not sure of this catch');
-    })
+              setcurrentPassword("");
+            }
+          })
+          .catch(error => {
+            alert("Reformat email to update email");
+          });
+      })
+      .catch(error => {
+        alert("not sure of this catch");
+      });
+  };
+
+  
+
+  const renderVerifyPassword = () => {
+    if (
+      email !== props.user.email ||
+      phone !== props.user.phone ||
+      recieves_email !== props.user.recieves_email
+    ) {
+      return (
+        <ChangePasswordDiv>
+          <LabelStyle for="error">Verify Password:</LabelStyle>
+          <InputStyle
+            id="error"
+            type="password"
+            value={currentPassword}
+            placeholder="Enter password"
+            autoCapitalize="none"
+            secureTextEntry={true}
+            onChange={e => setcurrentPassword(e.target.value)}
+            required
+          />
+          <Button title="Change Password">Update Info</Button>
+        </ChangePasswordDiv>
+      );
+    } else {
+      return (
+        <ChangePasswordDivInvis>
+          <LabelStyle for="error">Verify Password:</LabelStyle>
+          <InputStyle
+            id="error"
+            type="password"
+            value={currentPassword}
+            placeholder="Enter password"
+            autoCapitalize="none"
+            secureTextEntry={true}
+            onChange={e => setcurrentPassword(e.target.value)}
+            required
+          />
+          <Button title="Change Password">Update Info</Button>
+        </ChangePasswordDivInvis>
+      );
+    }
   };
 
   const renderPremium = () => {
     if (props.user.premium === true) {
-      return <PremiumStyle>You are premium</PremiumStyle>;
+      return (
+        <PremiumDiv>
+          <div>
+            <PremiumStyle>Account Status:</PremiumStyle>
+            <p>Premium</p>
+          </div>
+        </PremiumDiv>
+      );
     } else {
-      return  (
-      <StripeStyle>
-        <StripeButton />;
-      </StripeStyle>
-      )}
+      return (
+        <PremiumDiv>
+          <div className="status-div">
+            <LabelStyle>Account Status:</LabelStyle>
+            <p>Basic</p>
+          </div>
+          <StripeStyle>
+            <StripeButton />
+          </StripeStyle>
+        </PremiumDiv>
+      );
+    }
   };
 
-  const changePasswordPress = () => {
-    reauthenticate(currentPassword).then(() => {
-      var user = firebase.auth().currentUser;
-      user.updatePassword(newPassword).then(() => {
-      alert('Password was changed');
-    }).catch((error) => {
-        alert( 'changePasswordPress function error/Password should be 6 characters or more');
-    })
-
-    }).catch((error) => {
-      alert(error.message, 'error message catch 2 for password');
-    })
-  }
-
-  const reauthenticate = (currentPassword) => {
+  const reauthenticate = currentPassword => {
     var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(props.user.email, currentPassword);
+    var cred = firebase.auth.EmailAuthProvider.credential(
+      props.user.email,
+      currentPassword
+    );
     return user.reauthenticateWithCredential(cred);
-  }
-  
+  };
 
   return (
     <ContainerDiv>
-    <SettingsViewStyle>
-      <FormStyle onSubmit={e => updateUser(e)}>
-        <Div>
-          <LabelStyle>Email:</LabelStyle>
-          <InputStyle
-            type="text"
-            placeholder="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </Div>
-        <Div>
-          <LabelStyle>Phone:</LabelStyle>
-          <InputStyle
-            type="text"
-            placeholder="phone"
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-          />
-        </Div>
-       
-        <ChangePasswordDiv>
-          <InputStyle 
-          type='password'
-            value={currentPassword} 
-            placeholder='Current Password' 
-            autoCapitalize='none' 
-            secureTextEntry={true}
-            onChange={(e) =>  setcurrentPassword(e.target.value) } 
-          />
-          <InputStyle 
-          type='password'
-            value={newPassword} 
-            placeholder='New Password' 
-            autoCapitalize='none' 
-            secureTextEntry={true}
-            onChange={(e) =>  setPassword(e.target.value) } 
+      <SettingsViewStyle>
+        <FormStyle onSubmit={e => updateUser(e)}>
+          <Div>
+            <LabelStyle>Email:</LabelStyle>
+            <InputStyle
+              type="email"
+              placholder="hello"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
-            <Button title='Change Password'>Update Info</Button>
-
-        </ChangePasswordDiv>
-        <RecEmailDiv>
-          <LabelStyle>Want to Recieve Email?</LabelStyle>
-          <InputCheckStyle
-            name="Recieve Email"
-            type="checkbox"
-            checked={recieves_email}
-            onChange={e => setRecieveEmail(e.target.checked)}
-          />
-        </RecEmailDiv>
-        <ButtonDiv>
-          {renderPremium()}
-        </ButtonDiv>
-      </FormStyle>
-    </SettingsViewStyle>
+          </Div>
+          <Div>
+            <LabelStyle>Phone:</LabelStyle>
+            <InputStyle
+              type="tel"
+              placeholder={phone}
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+            />
+          </Div>
+          <RecEmailDiv>
+            <LabelStyle>Recieve Email?</LabelStyle>
+            <label className="switch">
+              <input
+                type="checkbox"
+                name="Recieve Email"
+                checked={recieves_email}
+                onChange={e => setRecieveEmail(e.target.checked)}
+              />
+              <span className="slider round" />
+            </label>
+          </RecEmailDiv>
+          <ButtonDiv>{renderPremium()}</ButtonDiv>
+          {renderVerifyPassword()}
+        </FormStyle>
+      </SettingsViewStyle>
     </ContainerDiv>
   );
 };
@@ -151,39 +178,49 @@ const SettingsView = props => {
 export default requireAuth(SettingsView);
 
 const ContainerDiv = styled.div`
-  width:100%;
-  display:flex;
-  justify-content:center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const SettingsViewStyle = styled.div`
   width: 100%;
   max-width: 880px;
   display: flex;
-  justify-content:center;
-  padding-bottom: 100px;
-  position: absolute;
-  top: 74px;
+  flex-direction: column;
+  justify-content: center;
   font-size: 1.6rem;
+  align-items: center;
+  height: 651px;
+  padding-bottom: 100px;
 `;
 
 const FormStyle = styled.form`
+  border: 1px solid ${props => props.theme.primaryDark};
+  border-radius: 0 6px 6px 6px;
+  background-color: ${props => props.theme.primary};
+  margin: 0 2%;
   display: flex;
-  flex-direction:column;
-  justify-content: space-evenly;
   width: 70%;
-  border: 1px solid blue;
-  align-items:center;
+  flex-direction: column;
+  padding: 20px 7%;
+  align-items: center;
+  border-top: 0px;
+  height: 651px;
 `;
 
 const InputStyle = styled.input`
   height: 40px;
   border-radius: 5px;
   text-align: center;
-  display:flex;
-  justify-content:center;
-  width:60%;
-  min-width:161.438px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 161.438px;
+  :invalid {
+    border: 2px solid gray;
+    background-color: pink;
+  }
 `;
 
 const Button = styled.button`
@@ -193,30 +230,54 @@ const Button = styled.button`
   font-size:1.4rem;
   background: ${props => props.theme.primaryDark};
   font-weight: bold;
-  width: 40%;
-  min-width: 161.438px;
+  width: 180px;
   padding 5px 50 px;
+  margin-top:10px;
 `;
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  align-items:center;
-  width:60%;
+  width: 50%;
+  align-items: center;
+  margin-top: 25px;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
 `;
 const ChangePasswordDiv = styled.div`
-display: flex;
-flex-direction: column;
-align-items:center;
-width:60%;
-  justify-content:space-evenly;
-  height:200px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+`;
+
+const ChangePasswordDivInvis = styled.div`
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  width: 50%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
 `;
 const RecEmailDiv = styled.div`
-  display:flex;
-  width:50%;
-  justify-content:center;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin-top: 25px;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
 `;
 const ButtonDiv = styled.div`
   display: flex;
@@ -224,27 +285,52 @@ const ButtonDiv = styled.div`
   width: 100%;
   height: 70px;
   justify-content: space-around;
-  align-items:center;
-
+  align-items: center;
+  margin-top: 25px;
 `;
 
 const LabelStyle = styled.label`
-  width: 40%;
+  display: flex;
+  align-self: flex-start;
+  color: ${props => props.theme.themeWhite};
 `;
 
+const PremiumDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+  .status-div {
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
+  h4 {
+    color: ${props => props.theme.themeWhite};
+    font-size:1.5rem;
+    font-weight: normal;
+  }
+  p {
+    
+    color: ${props => props.theme.accent};  }
+`;
 const PremiumStyle = styled.div`
-color:${props => props.theme.accent};
-display: flex;
-justify-content: flex-start;
-padding-left: 5%;
+  color: ${props => props.theme.themeWhite};
+  display: flex;
+  justify-content: flex-start;
 `;
 
 const InputCheckStyle = styled.input`
-  margin-left: 18%;
-  margin-top:15px;
+  opacity: 0;
+  width: 0;
+  height: 0;
 `;
 const StripeStyle = styled.div`
-display:flex;
-justify-content:center;
-width:100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
 `;

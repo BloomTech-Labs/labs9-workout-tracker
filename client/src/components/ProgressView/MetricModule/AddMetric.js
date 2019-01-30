@@ -2,15 +2,16 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import firebase from "firebase";
 import { Store } from "../../../index";
-import { dateFormat, dateStringParser } from "../../../shared";
-import DatePicker from "react-datepicker";
+import { dateFormat} from "../../../shared";
 import {
   StyledError,
-  StyledInput,
   ModuleActions,
-  MetricFormContainer,
-  MetricForm
+  CancelButton,
+  SubmitButton,
+  Row
 } from "./Style";
+import Input from '../../../shared/Input';
+import FormModal from '../../../shared/FormModal';
 
 const AddMetric = () => {
   const { state, dispatch } = useContext(Store);
@@ -30,7 +31,7 @@ const AddMetric = () => {
   const addMetric = async e => {
     e.preventDefault();
 
-    const dates = state.metrics.map(m => dateFormat(dateStringParser(m.date)));
+    const dates = state.metrics.map(m => dateFormat(new Date(m.date)));
 
     if (dates.includes(dateFormat(currentMetric.date))) {
       setError("Metric for date already exists");
@@ -68,7 +69,8 @@ const AddMetric = () => {
   };
 
   const changeDate = nDate => {
-    const dates = state.metrics.map(m => dateFormat(dateStringParser(m.date)));
+    const dates = state.metrics.map(m => dateFormat(new Date(m.date)));
+
 
     if (dates.includes(dateFormat(nDate))) {
       setError("Metric for date already exists");
@@ -97,77 +99,94 @@ const AddMetric = () => {
   } = currentMetric;
 
   return (
-    <MetricFormContainer>
-      <MetricForm onSubmit={e => addMetric(e)}>
-        <StyledInput
-          type="text"
+    <FormModal 
+      onSubmit={addMetric}
+      closeModal={() => dispatch({ type: "SHOW_METRIC_FORM" })}
+      title={"Update Progress"}
+    >
+      <Row>
+        <Input
+          label="Date"
+          name="Date"
+          size="medium"
+          onChange={changeDate}
+          value={date}
+          type="calendar"
+          />
+        <Input
           placeholder="Weight"
+          label="Weight"
           value={weight}
+          size="medium"
           name="weight"
           onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
+          />
+      </Row>
+
+      <Row>
+        <Input
           placeholder="Hips"
+          label="Hips"
           value={hips}
           name="hips"
+          size="medium"
           onChange={e => setMetric(e)}
-          required
         />
-        <StyledInput
-          type="text"
+        <Input
           placeholder="Waist"
+          label="Waist"
           value={waist}
           name="waist"
+          size="medium"
           onChange={e => setMetric(e)}
-          required
         />
-        <StyledInput
-          type="text"
-          placeholder="ArmLeft"
+      </Row>
+
+      <Row>
+        <Input
+          placeholder="Arm Left"
+          label="Arm Left"
           value={arm_left}
           name="arm_left"
+          size="medium"
           onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="ArmRight"
+          />
+        <Input
+          placeholder="Arm Right"
+          label="Arm Right"
           value={arm_right}
           name="arm_right"
+          size="medium"
           onChange={e => setMetric(e)}
-          required
         />
-        <StyledInput
-          type="text"
-          placeholder="LegLeft"
+      </Row>
+
+      <Row>
+        <Input
+          placeholder="Leg Left"
+          label="Leg Left"
           value={leg_left}
           name="leg_left"
+          size="medium"
           onChange={e => setMetric(e)}
-          required
-        />
-        <StyledInput
-          type="text"
-          placeholder="LegRight"
+          />
+        <Input
+          placeholder="Leg Right"
+          label="Leg Right"
           value={leg_right}
           name="leg_right"
+          size="medium"
           onChange={e => setMetric(e)}
-          required
-        />
-        <DatePicker selected={date} onChange={changeDate} />
-        {error !== "" ? <StyledError>{error}</StyledError> : null}
-        <ModuleActions>
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}
-          >
-            Cancel
-          </button>
-          <button type="submit">Submit</button>
-        </ModuleActions>
-      </MetricForm>
-    </MetricFormContainer>
+          />
+      </Row>
+      {error !== "" ? <StyledError>{error}</StyledError> : null}
+      <ModuleActions>
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </ModuleActions>
+      <CancelButton type="button" onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>
+        Cancel
+      </CancelButton>
+    </FormModal>
   );
 };
 

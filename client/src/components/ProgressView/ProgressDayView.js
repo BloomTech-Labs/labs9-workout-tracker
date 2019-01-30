@@ -9,9 +9,6 @@ const ProgressDayView = props => {
 
     const { state, dispatch } = useContext(Store);
 
-    const [showDelete, setDelete] = useState(false);
-    const [currentMetric, setCurrentMetric] = useState({})
-
     const sortMetrics = (metrics) => {
         const nM = metrics.map(m => {
             const copy = m;
@@ -47,73 +44,35 @@ const ProgressDayView = props => {
         dispatch({type:'SHOW_METRIC_FORM'})
     };
 
-    const deleteMetric = async () => {
-        const token = await firebase.auth().currentUser.getIdToken()
-        const deleteRes = await axios.delete(
-            `https://fitmetrix.herokuapp.com/api/progress/metrics/delete/${currentMetric.id}`,
-            {
-                headers: {
-                  Authorization: token
-                }
-            }
-        );
-
-        console.log(deleteRes)
-
-        if (deleteRes.status === 200) {
-            const newMetrics = await axios.get('https://fitmetrix.herokuapp.com/api/progress/metrics/get',
-            {
-                headers: {
-                  Authorization: token
-                }
-            })
-
-            setDelete(false);
-            dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
-        }
-
-    }
-
-    const deleteCheck = (m) => {
-        setCurrentMetric(m);
-        setDelete(true);
-    };
-
     const renderDays = () => {
         return (
             <StyledContainer>
+                <StyledHeader>
+                    <h2>Daily Entrys: Weight</h2>
+                    <StyledButton onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>
+                        Add Progress
+                    </StyledButton>
+                </StyledHeader>
             {
                 state.metrics && sortMetrics(state.metrics).map((m, i) => {
                     return (
                         <DayItem key={i}>
-                            <span>Date: {m.date} </span>
-                            <span>Weight:{m.weight} </span>
-                            <span>Hips:{m.hips} </span>
-                            <span>Waist:{m.waist} </span>
-                            <span>LeftArm:{m.arm_left} </span>
-                            <span>RightArm:{m.arm_right} </span>
-                            <span>LeftLeg:{m.leg_left} </span>
-                            <span>RightLeg:{m.leg_right} </span>
-                            <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
-                            <StyledIcon onClick={() => deleteCheck(m)} delete><i className="fas fa-trash-alt"></i></StyledIcon>
+                            <StyledDate>
+                                <span>{m.date} </span>
+                                <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                            </StyledDate>
+                            <StyledStats>
+                                <span>Weight: {m.weight} </span>
+                                <span>Hips: {m.hips} </span>
+                                <span>Waist: {m.waist} </span>
+                                <span>LeftArm: {m.arm_left} </span>
+                                <span>RightArm: {m.arm_right} </span>
+                                <span>LeftLeg: {m.leg_left} </span>
+                                <span>RightLeg: {m.leg_right} </span>
+                            </StyledStats>
                         </DayItem>
                     );
                 })
-            }
-    
-            {
-            showDelete
-                ? (
-                    <DeleteContainer>
-                        <DeleteComponent>
-                            <h3>Delete Metric</h3>
-                            <div>Date: {currentMetric.date}</div>
-                            <DeleteButton type="button" onClick={e => deleteMetric()}>Delete</DeleteButton>
-                            <button type="button" onClick={e => setDelete(false)}>Cancel</button>
-                        </DeleteComponent>
-                    </DeleteContainer>
-                )
-                : null
             }
     
             </StyledContainer>
@@ -125,34 +84,48 @@ const ProgressDayView = props => {
 
 export default ProgressDayView;
 
-const DeleteButton = styled.button`
-    width: 100px;
-    height: 35px;
-    color: white;
-    background-color: ${props => props.theme.primaryDark};
-    &:hover {
-        color: ${props => props.theme.accent};
+const StyledHeader = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
     }
 `;
 
-const DeleteComponent = styled.div`
-    width: 200px;
-    height: 200px;
-    background: white;
-    border-radius: 12px;
-    margin: 0 auto;
+const StyledButton = styled.button`
+    width: 120px;
+    height: 36px;
+    background-color: ${props => props.theme.accent};
+    color: white;
+    border-radius: 8px;
+    border: none;
 `;
 
-const DeleteContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 99;
-    background-color: rgba(0,0,0,0.4);
-    padding-top: 200px;
+const StyledStats = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 500;
 `;
+
+const StyledDate = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20px;
+    font-size: 22px;
+    font-weight: 600;
+`;
+
 
 const StyledIcon = styled.span`
     font-size: 18px;
@@ -162,9 +135,18 @@ const StyledIcon = styled.span`
 
 const StyledContainer = styled.div`
     width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    margin-top: 140px;
 `;
 
  const DayItem = styled.div`
     width: 100%;
-    height: 50px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-top: solid 1px ${props => props.theme.primaryDark};
+    padding: 10px;
  `;
