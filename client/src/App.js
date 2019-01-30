@@ -77,4 +77,6 @@ const StyledApp = styled.div`
   flex-direction: column;
   margin-top: 105px;
   font-family: ${props => props.theme.opensans};
+  display:flex;
+  justify-content:center;
 `;

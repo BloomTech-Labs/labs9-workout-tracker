@@ -5,11 +5,13 @@ import ExerciseDetails from "./ExerciseDetails";
 import axios from "axios";
 import styled from "styled-components";
 import firebase from "firebase";
+import AddWorkout from "./AddWorkout";
 
 const WorkoutDetails = props => {
   const { state, dispatch } = useContext(Store);
 
   const [selectedDate, setSelectedDate] = useState(state.selectedDate);
+  const [addingWorkout, setAddingWorkout] = useState(false);
 
   const dateStringParser = date => {
     if (date.length === 10) {
@@ -20,6 +22,11 @@ const WorkoutDetails = props => {
     const newDate = date[0] + "/" + date[1] + "/" + date[2];
 
     return new Date(newDate);
+  };
+
+  const toggleAddingWorkout = e => {
+    e.preventDefault();
+    setAddingWorkout(!addingWorkout);
   };
 
   const dateFormat = d => {
@@ -69,6 +76,33 @@ const WorkoutDetails = props => {
         type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newScheduleWorkouts.data
       });
+
+    }
+  };
+
+  const renderWorkout = () => {
+    if (props.datePopulated === false) {
+      return (
+        <div>
+          <WorkoutDetailsDiv>
+            No workouts Scheduled
+            <button
+              onClick={e => {
+                toggleAddingWorkout(e);
+              }}
+            >
+              Schedule Workout
+            </button>
+            {addingWorkout === true ? (
+              <AddWorkout
+                workouts={state.workouts}
+                scheduleWorkouts={state.scheduleWorkouts}
+                selectedDate={props.selectedDate}
+              />
+            ) : null}
+          </WorkoutDetailsDiv>
+        </div>
+      );
     }
   };
 
@@ -175,7 +209,7 @@ const WorkoutTitleDiv = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content:space-around;
+  justify-content: space-around;
 `;
 
 const ExerciseListDiv = styled.div`
@@ -188,6 +222,4 @@ const ExerciseListDiv = styled.div`
   }
 `;
 
-const UnscheduleButton = styled.button`
-
-`;
+const UnscheduleButton = styled.button``;
