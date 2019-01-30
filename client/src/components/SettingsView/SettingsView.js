@@ -157,7 +157,7 @@ const SettingsView = props => {
           </Div>
           <RecEmailDiv>
             <LabelStyle>Recieve Email?</LabelStyle>
-            <label className="switch">
+            <StyledLabel className="switch">
               <input
                 type="checkbox"
                 name="Recieve Email"
@@ -165,7 +165,7 @@ const SettingsView = props => {
                 onChange={e => setRecieveEmail(e.target.checked)}
               />
               <span className="slider round" />
-            </label>
+            </StyledLabel>
           </RecEmailDiv>
           <ButtonDiv>{renderPremium()}</ButtonDiv>
           {renderVerifyPassword()}
@@ -333,4 +333,7 @@ const StripeStyle = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 10px;
+`;
+
+const StyledLabel = styled.label`
 `;
