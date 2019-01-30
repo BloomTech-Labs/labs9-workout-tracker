@@ -190,6 +190,10 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 100px;
+  @media (max-width: 1076px) {
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 
 const SideImage = styled.div`
@@ -201,6 +205,9 @@ const SideImage = styled.div`
   background: no-repeat left left fixed;
   background-image: url(${barbell});
   background-size: cover;
+  @media (max-width: 1076px) {
+    width: 0px;
+  }
 `;
 
 
