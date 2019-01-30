@@ -15,6 +15,7 @@ const SettingsView = props => {
   const [premium, displayPremium] = useState(props.user.premium);
   const [newPassword, setPassword] = useState("");
   const [currentPassword, setcurrentPassword] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const updateUser = async e => {
     e.preventDefault();
@@ -54,26 +55,71 @@ const SettingsView = props => {
       });
   };
 
-  const errorHandle = () => {
+  
 
-  }
+  const renderVerifyPassword = () => {
+    if (
+      email !== props.user.email ||
+      phone !== props.user.phone ||
+      recieves_email !== props.user.recieves_email
+    ) {
+      return (
+        <ChangePasswordDiv>
+          <LabelStyle for="error">Verify Password:</LabelStyle>
+          <InputStyle
+            id="error"
+            type="password"
+            value={currentPassword}
+            placeholder="Enter password"
+            autoCapitalize="none"
+            secureTextEntry={true}
+            onChange={e => setcurrentPassword(e.target.value)}
+            required
+          />
+          <Button title="Change Password">Update Info</Button>
+        </ChangePasswordDiv>
+      );
+    } else {
+      return (
+        <ChangePasswordDivInvis>
+          <LabelStyle for="error">Verify Password:</LabelStyle>
+          <InputStyle
+            id="error"
+            type="password"
+            value={currentPassword}
+            placeholder="Enter password"
+            autoCapitalize="none"
+            secureTextEntry={true}
+            onChange={e => setcurrentPassword(e.target.value)}
+            required
+          />
+          <Button title="Change Password">Update Info</Button>
+        </ChangePasswordDivInvis>
+      );
+    }
+  };
 
   const renderPremium = () => {
     if (props.user.premium === true) {
       return (
-        <Div>
-          <PremiumStyle>Account Status: Premium</PremiumStyle>
-          <Button>Cancel</Button>
-        </Div>
+        <PremiumDiv>
+          <div>
+            <PremiumStyle>Account Status:</PremiumStyle>
+            <p>Premium</p>
+          </div>
+        </PremiumDiv>
       );
     } else {
       return (
-        <Div>
-          <PremiumStyle>Account Status: Basic</PremiumStyle>
+        <PremiumDiv>
+          <div className="status-div">
+            <LabelStyle>Account Status:</LabelStyle>
+            <p>Basic</p>
+          </div>
           <StripeStyle>
-            <StripeButton />;
+            <StripeButton />
           </StripeStyle>
-        </Div>
+        </PremiumDiv>
       );
     }
   };
@@ -92,7 +138,7 @@ const SettingsView = props => {
       <SettingsViewStyle>
         <FormStyle onSubmit={e => updateUser(e)}>
           <Div>
-            <LabelStyle >Email:</LabelStyle>
+            <LabelStyle>Email:</LabelStyle>
             <InputStyle
               type="email"
               placholder="hello"
@@ -101,7 +147,7 @@ const SettingsView = props => {
             />
           </Div>
           <Div>
-            <LabelStyle  >Phone:</LabelStyle>
+            <LabelStyle>Phone:</LabelStyle>
             <InputStyle
               type="tel"
               placeholder={phone}
@@ -109,18 +155,6 @@ const SettingsView = props => {
               onChange={e => setPhone(e.target.value)}
             />
           </Div>
-
-          <ChangePasswordDiv>
-            <InputStyle
-              type="password"
-              value={currentPassword}
-              placeholder="Current Password"
-              autoCapitalize="none"
-              secureTextEntry={true}
-              onChange={e => setcurrentPassword(e.target.value)}
-              required
-            />
-          </ChangePasswordDiv>
           <RecEmailDiv>
             <LabelStyle>Recieve Email?</LabelStyle>
             <label className="switch">
@@ -133,8 +167,8 @@ const SettingsView = props => {
               <span className="slider round" />
             </label>
           </RecEmailDiv>
-          <Button title="Change Password">Update Info</Button>
           <ButtonDiv>{renderPremium()}</ButtonDiv>
+          {renderVerifyPassword()}
         </FormStyle>
       </SettingsViewStyle>
     </ContainerDiv>
@@ -169,7 +203,6 @@ const FormStyle = styled.form`
   display: flex;
   width: 70%;
   flex-direction: column;
-  justify-content: space-evenly;
   padding: 20px 7%;
   align-items: center;
   border-top: 0px;
@@ -184,7 +217,10 @@ const InputStyle = styled.input`
   justify-content: center;
   width: 100%;
   min-width: 161.438px;
-
+  :invalid {
+    border: 2px solid gray;
+    background-color: pink;
+  }
 `;
 
 const Button = styled.button`
@@ -196,6 +232,7 @@ const Button = styled.button`
   font-weight: bold;
   width: 180px;
   padding 5px 50 px;
+  margin-top:10px;
 `;
 
 const Div = styled.div`
@@ -203,8 +240,9 @@ const Div = styled.div`
   flex-direction: column;
   width: 50%;
   align-items: center;
-  @media (max-width:550px) {
-    width:100%
+  margin-top: 25px;
+  @media (max-width: 550px) {
+    width: 100%;
   }
 `;
 const ChangePasswordDiv = styled.div`
@@ -213,17 +251,32 @@ const ChangePasswordDiv = styled.div`
   width: 50%;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 24px;
-  @media (max-width:550px) {
-    width:100%
+  margin-top: 20px;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+`;
+
+const ChangePasswordDivInvis = styled.div`
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  width: 50%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+  @media (max-width: 550px) {
+    width: 100%;
   }
 `;
 const RecEmailDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width:550px) {
-    width:100%
+  width: 50%;
+  margin-top: 25px;
+  @media (max-width: 550px) {
+    width: 100%;
   }
 `;
 const ButtonDiv = styled.div`
@@ -232,19 +285,40 @@ const ButtonDiv = styled.div`
   width: 100%;
   height: 70px;
   justify-content: space-around;
-  align-items:center;
-
+  align-items: center;
+  margin-top: 25px;
 `;
 
 const LabelStyle = styled.label`
-  width: 40%;
   display: flex;
   align-self: flex-start;
   color: ${props => props.theme.themeWhite};
 `;
 
+const PremiumDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+  .status-div {
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
+  h4 {
+    color: ${props => props.theme.themeWhite};
+    font-size:1.5rem;
+    font-weight: normal;
+  }
+  p {
+    
+    color: ${props => props.theme.accent};  }
+`;
 const PremiumStyle = styled.div`
-  color: ${props => props.theme.accent};
+  color: ${props => props.theme.themeWhite};
   display: flex;
   justify-content: flex-start;
 `;
@@ -258,5 +332,5 @@ const StripeStyle = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top:10px;
+  margin-top: 10px;
 `;

@@ -61,6 +61,9 @@ const StripeStyle = styled.button`
   text-align:center;
   width: 180px;
   padding 5px 50 px;
+  justify-content:center;
 `;
 
-const StyleCheckout = styled(StripeCheckout)``;
+const StyleCheckout = styled(StripeCheckout)`
+
+`;
