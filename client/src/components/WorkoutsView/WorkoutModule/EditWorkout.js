@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../index';
+import { Store } from '../../../index';
 import axios from 'axios';
 import * as firebase from 'firebase';
 import styled from 'styled-components';
-import CategoryDropDown from './CategoryDropDown';
-import Input from '../../shared/Input';
+import CategoryDropDown from '../CategoryDropDown';
+import Input from '../../../shared/Input';
+import FormModal from '../../../shared/FormModal';
 
 const EditWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
@@ -64,7 +65,7 @@ const EditWorkout = () => {
       id: state.editWorkout.id
     };
 
-    console.log('editedWorkout', editedWorkout)
+    console.log('editedWorkout: ', editedWorkout);
 
     if (token !== undefined) {
       const res = await axios.put(
@@ -83,6 +84,7 @@ const EditWorkout = () => {
     //Resets the title and category after workout is added
     setTitle('');
     setExercises([]);
+    dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
   const inputOnChange = async (e, index) => {
@@ -97,8 +99,11 @@ const EditWorkout = () => {
   };
 
   return (
-    <Container onSubmit={e => editWorkout(e)}>
-      <h2>Edit Workouts</h2>
+    <FormModal
+      onSubmit={e => editWorkout(e)}
+      closeModal={() => dispatch({ type: 'SHOW_WORKOUT_FORM' })}
+      title={'Edit a Workout'}
+    >
       <Row>
         <Input
           value={title}
@@ -158,7 +163,7 @@ const EditWorkout = () => {
       <Row>
         <SubmitButton type="submit">Update Workout</SubmitButton>
       </Row>
-    </Container>
+    </FormModal>
   );
 };
 

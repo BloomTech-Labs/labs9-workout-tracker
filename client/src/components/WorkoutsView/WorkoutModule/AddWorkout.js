@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../index';
+import { Store } from '../../../index';
 import axios from 'axios';
 import * as firebase from 'firebase';
 import styled from 'styled-components';
-import CategoryDropDown from './CategoryDropDown';
-import Input from '../../shared/Input';
-const AddWorkouts = () => {
+import CategoryDropDown from '../CategoryDropDown';
+import Input from '../../../shared/Input';
+import FormModal from '../../../shared/FormModal';
+
+const AddWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
 
@@ -77,6 +79,7 @@ const AddWorkouts = () => {
     //Resets the title and category after workout is added
     setTitle('');
     setSelectedCategory('default');
+    dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
   const inputOnChange = async (e, index) => {
@@ -91,8 +94,11 @@ const AddWorkouts = () => {
   };
 
   return (
-    <Container onSubmit={e => addNewWorkout(e)}>
-      <h2>Add Workouts</h2>
+    <FormModal
+      onSubmit={e => addNewWorkout(e)}
+      closeModal={() => dispatch({ type: 'SHOW_WORKOUT_FORM' })}
+      title={'Add a Workout'}
+    >
       <Row>
         <Input
           value={title}
@@ -167,11 +173,11 @@ const AddWorkouts = () => {
       <Row>
         <SubmitButton type="submit">Submit Workout</SubmitButton>
       </Row>
-    </Container>
+    </FormModal>
   );
 };
 
-export default AddWorkouts;
+export default AddWorkout;
 
 const AddExerciseButton = styled.button`
   width: 100%;
