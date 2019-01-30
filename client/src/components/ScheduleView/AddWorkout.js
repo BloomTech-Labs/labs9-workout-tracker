@@ -4,6 +4,8 @@ import styled from "styled-components";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { getDate } from "date-fns";
+import FormModal from '../../shared/FormModal'
+
 
 const AddWorkout = props => {
   const { state, dispatch } = useContext(Store);
@@ -139,6 +141,11 @@ const AddWorkout = props => {
   };
 
   return (
+    <FormModal
+    onSubmit={{scheduleWorkoutHandler}}
+    closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
+    title={"Add Workout"}
+  >
     <AddWorkoutStyle>
       <form>
         <div>
@@ -181,6 +188,7 @@ const AddWorkout = props => {
         </div>
       </form>
     </AddWorkoutStyle>
+    </FormModal>
   );
 };
 

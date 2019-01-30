@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Store } from '../../index';
-
+import FormModal from '../../shared/FormModal'
 import ExerciseDetails from './ExerciseDetails';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ const WorkoutDetails = props => {
 
   const [selectedDate, setSelectedDate] = useState(state.selectedDate);
   const [addingWorkout, setAddingWorkout] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   const dateStringParser = date => {
     if (date.length === 10) {
@@ -100,7 +101,54 @@ const WorkoutDetails = props => {
     }
   };
 
+  const completedWorkout = async (e, scheduleWorkout) => {
+    e.preventDefault();
+    const token = await firebase.auth().currentUser.getIdToken();
+
+    const updateRes = await axios.put(
+      `https://fitmetrix.herokuapp.com/api/schedule/edit/workout/${scheduleWorkout.id}`, {completed:false},
+      {
+        headers: {
+          Authorization: token
+        }
+      }
+    ) .catch(err => console.log("err", err));
+    console.log("updateRes:", updateRes)
+    if (updateRes.status === 200) {
+      console.log('200 OK');
+      const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule', {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      dispatch({
+        type: 'UPDATE_SCHEDULE_WORKOUTS',
+        payload: newScheduleWorkouts.data
+      });
+    }
+  }
+
+  const calcPercentage = (workout) => {
+    const total = workout.exercises.length
+    const totalcomplete = 0
+   workout.exercises.map(exercise => {
+     if (exercise.completed === true) {
+      totalcomplete++
+     }
+   }) 
+  if (total !== 0 && total ===  totalcomplete) {
+    setCompleted(true)
+  }
+  return totalcomplete/total;
+  }
+
   return (
+    <FormModal
+    onSubmit={{completedWorkout}}
+    closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
+    title={"Workout Details"}
+  >
     <WorkoutContainer>
       {renderWorkout()}
       {props.selectedDate === null
@@ -132,6 +180,9 @@ const WorkoutDetails = props => {
                 <WorkoutDetailsDiv key={scheduleWorkout.id}>
                   <WorkoutTitleDiv>
                     <h3>{scheduleWorkout.title}</h3>
+                    {completed === true ? "Complete!" : "not complete"}
+                    {calcPercentage(scheduleWorkout)}
+                    <p>{scheduleWorkout.percentage}</p>
                     <UnscheduleButton type="button" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
                       Unschedule
                     </UnscheduleButton>
@@ -142,11 +193,15 @@ const WorkoutDetails = props => {
                         return <ExerciseDetails dispatch={props.dispatch} key={exercise.id} exercise={exercise} />;
                       })}
                   </ExerciseListDiv>
+                    <UnscheduleButton type="button" onClick={e => completedWorkout(e, scheduleWorkout) }>
+                      Complete
+                    </UnscheduleButton>
                 </WorkoutDetailsDiv>
               );
             }
           })}
     </WorkoutContainer>
+    </FormModal>
   );
 };
 

@@ -153,14 +153,14 @@ class Calendar extends React.Component {
               >
                 <span className="number">{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
-                <span>
+                {/* <span>
                   {//maps through scheduleworkouts
                   this.props.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
                     const splitDate = sworkout.date.split("T")[0];
-                    return splitDate === matchedDate ? sworkout.title : null;
+                     splitDate === matchedDate ? <p>yes</p> : null;
                   })}
-                </span>
+                </span> */}
               </div>
             )}
           </>

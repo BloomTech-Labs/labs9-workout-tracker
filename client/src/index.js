@@ -26,7 +26,8 @@ const initialState = {
   selectedCategory: 'default',
   selectedWorkoutCategory: 'all',
   selectedDate: new Date(),
-  graphType: 'weight'
+  graphType: 'weight',
+  dateSelected: false
 };
 
 const reducer = (state, action) => {
@@ -57,6 +58,8 @@ const reducer = (state, action) => {
       return { ...state, selectedWorkoutCategory: action.payload };
     case 'UPDATE_GRAPH_TYPE':
       return { ...state, graphType: action.payload };
+    case 'UPDATE_DATE_SELECTED':
+      return { ...state, dateSelected: !state.dateSelected };
     default:
       // A reducer must always return a valid state.
       // Alternatively you can throw an error if an invalid action is dispatched.
