@@ -3,7 +3,7 @@ import { Store } from "../index";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
-import Input from '../shared/Input';
+// import Input from '../shared/Input';
 
 import ropeImg from "./assets/rope.jpg";
 
@@ -50,27 +50,31 @@ const Login = props => {
   return (
       <Container>
         <SideImage/>
-
         <FormContainer>
           <FormStyle onSubmit={e => loginUser(e)}>
-            <Input 
-              size="large"
-              value={email}
-              placeholder="example@example.com"
-              label="Email"
-              name="email"
-              onChange={e => setEmail(e.target.value)}
-              labelColor="white"
-            />
-            <Input 
-              size="large"
-              value={password}
-              placeholder="password"
-              label="Password"
-              name="password"
-              labelColor="white"
-              onChange={e => setPassword(e.target.value)}
-            />
+            <h1>Sign into fitmetrix.</h1>
+            <p>Enter details below</p>
+            
+            <InputContainer>
+              <h3>EMAIL ADDRESS</h3>
+              <input
+                type="text"
+                value={email}
+                placeholder="jack@fitmetrix.me"
+                onChange={e => setEmail(e.target.value)}
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <h3>PASSWORD</h3>
+              <input
+                type="password"
+                value={email}
+                placeholder="Enter your password"
+                onChange={e => setPassword(e.target.value)}
+              />
+            </InputContainer>
+
             <Button type="submit">Sign In</Button>
           </FormStyle>
         </FormContainer>
@@ -80,10 +84,85 @@ const Login = props => {
 
 export default Login;
 
+
+const InputContainer = styled.div`
+  color: #5f697a;
+  width: 100%;
+  margin-bottom: 23px;
+  h3 {
+    display: block;
+    font-weight: 700;
+    font-size: 11px;
+    color: #434C5E;
+    margin-bottom: 8px;
+    text-align: left;
+    letter-spacing: 1px;
+    font-family: "Open Sans";
+  }
+  input {
+    border: 1px solid #D4D9E2;
+    border-radius: 3px;
+    padding: 15px;
+    font-size: 14px;
+    color: #596377;
+    outline: 0;
+    width: 100%;
+  }
+`
+
+const Button = styled.button`
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  display: inline-block;
+  margin: 20px auto;
+  background: ${props => props.theme.accent};
+  border-radius: 100px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 60px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFF;
+  cursor: pointer;
+  transition: box-shadow .2s ease,border .2s ease;
+  transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
+  &:hover {
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.2)
+  }
+`;
+
+const FormStyle = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  max-width: 540px;
+  margin: 0 auto;
+  h1 {
+    font-size: 28px;
+    font-weight: 400;
+    color: #434C5F;
+  }
+  p {
+    display: block;
+    font-size: 16px;
+    color: #596377;
+    font-weight: 400;
+    margin-bottom: 50px;
+  }
+`;
+
 const FormContainer = styled.div`
   width: calc(100% - 460px);
   height: 100%;
   margin-left: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 100px;
 `;
 
 const SideImage = styled.div`
@@ -107,23 +186,6 @@ const Container = styled.div`
   display:flex;
   justify-content: flex-start;
   align-items: flex-start;
+  font-family: "Open Sans";
 `;
 
-const FormStyle = styled.form`
-  
-`;
-
-const Button = styled.button`
-  height: 40px;
-  width: 80%;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  font-family: ${props => props.theme.roboto};
-  font-weight: bold;
-  font-size: 1.5rem;
-  background-color: ${props => props.theme.primaryLight};
-  border-radius: 6px;
-  &:hover {
-    color: ${props => props.theme.accent};
-  }
-`;
