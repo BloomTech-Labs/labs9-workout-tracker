@@ -48,27 +48,43 @@ const ProgressDayView = props => {
         return (
             <StyledContainer>
                 <StyledHeader>
-                    <h2>Daily Entrys: Weight</h2>
+                    <h2>Daily Entrys: {state.graphType}</h2>
                     <StyledButton onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>
                         Add Progress
                     </StyledButton>
                 </StyledHeader>
             {
                 state.metrics && sortMetrics(state.metrics).map((m, i) => {
+                    const day = new Date(m.date);
+                    let progress = 0.0;
+                    let isPositive = true;
+                    if(i !== state.metrics.length-1){
+                        const cur = Number(m[state.graphType]);
+                        const prev = Number(sortMetrics(state.metrics)[i+1][state.graphType])
+
+                        const percentage = (Math.abs(cur - prev) / ((cur+prev)/2)) * 100
+                        
+                        const rounded = Math.round(100 * percentage)/100;
+                        if (cur < prev) {
+                            progress = '-' + rounded.toString()
+                            isPositive = false
+                        } else {
+                            progress = '+' + rounded.toString()
+                        }
+                    }
+                    
                     return (
                         <DayItem key={i}>
                             <StyledDate>
-                                <span>{m.date} </span>
-                                <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                                <span>{day.toDateString()} </span>
                             </StyledDate>
-                            <StyledStats>
-                                <span>Weight: {m.weight} </span>
-                                <span>Hips: {m.hips} </span>
-                                <span>Waist: {m.waist} </span>
-                                <span>LeftArm: {m.arm_left} </span>
-                                <span>RightArm: {m.arm_right} </span>
-                                <span>LeftLeg: {m.leg_left} </span>
-                                <span>RightLeg: {m.leg_right} </span>
+                            <StyledStats isPositive={isPositive}>
+                                <span>{m[state.graphType]}lbs</span>
+                                <Percentage>
+                                    {progress}%
+                                    {isPositive ? <i class="fas fa-arrow-up"></i> : <i class="fas fa-arrow-down"></i>}
+                                </Percentage>
+                                <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
                             </StyledStats>
                         </DayItem>
                     );
@@ -94,6 +110,7 @@ const StyledHeader = styled.div`
         font-size: 18px;
         font-weight: 600;
         margin: 0;
+        text-transform: capitalize;
     }
 `;
 
@@ -106,14 +123,21 @@ const StyledButton = styled.button`
     border: none;
 `;
 
+const Percentage = styled.span``;
+
 const StyledStats = styled.div`
     width: 100%;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
     height: 40px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: 600;
+    ${Percentage} {
+        width: 150px;
+        text-align: right;
+        color: ${props => props.isPositive ? props.theme.accent : props.theme.primaryDark};
+    }
 `;
 
 const StyledDate = styled.div`
@@ -122,8 +146,8 @@ const StyledDate = styled.div`
     justify-content: space-between;
     align-items: center;
     height: 20px;
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
 `;
 
 
