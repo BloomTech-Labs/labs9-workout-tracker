@@ -183,14 +183,10 @@ router.put("/edit/workout/:id", async (req, res) => {
   const schedWorkoutID = req.params.id;
   const body = req.body;
   // checks if proper id is passed
-  if (Number.isInteger(body.schedWorkoutID)) {
-    res.status(400).json({ message: "id is required" });
-    return;
-  }
 
   //checks if the request body has all required fields for an workout
-  const { id, date, completed, percentage, title, category_id } = body;
-  if (!id && !date && completed && !percentage && !title && !category_id) {
+  const { date, completed, percentage, title, category_id } = body;
+  if (!date && completed && !percentage && !title && !category_id) {
     res.status(400).json({ message: "nothing to update" });
     return;
   }
