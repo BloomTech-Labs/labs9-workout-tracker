@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { Store } from "../../../index";
-import DropDown from "../../../shared/DropDown";
+import React, { useContext } from 'react';
+import { Store } from '../../index';
+import DropDown from '../../shared/DropDown';
 
 const CategoryDropDown = props => {
   const { state, dispatch } = useContext(Store);
 
   const handleChange = value => {
     dispatch({
-      type: "UPDATE_SELECTED_CATEGORY",
+      type: 'UPDATE_SELECTED_CATEGORY',
       payload: value
     });
   };
@@ -22,21 +22,15 @@ const CategoryDropDown = props => {
     });
 
     options.unshift({
-      name: "Select Category",
-      value: "default",
-      key: "default"
+      name: 'Select Category',
+      value: 'default',
+      key: 'default'
     });
 
     return options;
   };
 
-  return (
-    <DropDown
-      options={getOptions()}
-      onChange={handleChange}
-      value={state.selectedCategory}
-    />
-  );
+  return <DropDown options={getOptions()} onChange={handleChange} value={state.selectedCategory} />;
 };
 
 export default CategoryDropDown;
