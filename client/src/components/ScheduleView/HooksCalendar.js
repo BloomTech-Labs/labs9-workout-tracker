@@ -84,7 +84,6 @@ const HooksCalendar = props => {
         formattedDate = dateFns.format(day, dateFormat);
         //matched date to check against scheduled workout date
         matchedDate = dateFns.format(day, dateMatch);
-        console.log(matchedDate);
         //create a clone of the day to update selected date when cell is clicked
         const cloneDay = day;
 

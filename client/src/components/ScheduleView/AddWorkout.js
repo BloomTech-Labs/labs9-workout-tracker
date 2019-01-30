@@ -4,13 +4,41 @@ import styled from "styled-components";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { getDate } from "date-fns";
-import FormModal from '../../shared/FormModal'
-
+import FormModal from "../../shared/FormModal";
+import DropDown from "../../shared/DropDown";
+import Button from "../../shared/Button";
+import Input from "../../shared/Input";
 
 const AddWorkout = props => {
   const { state, dispatch } = useContext(Store);
   const key = window.localStorage.getItem("login_token");
   const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
+
+  const getOptions = () => {
+    let options = state.category.map((cat, i) => {
+      return {
+        name: cat.name,
+        value: cat.id,
+        key: cat.id
+      };
+    });
+
+    options.unshift({
+      name: "All",
+      value: "all",
+      key: "all"
+    });
+
+    return options;
+  };
+
+  const handleChange = value => {
+    console.log("value:", value);
+    dispatch({
+      type: "UPDATE_SELECTED_WORKOUTS_CATEGORY",
+      payload: value
+    });
+  };
 
   const initialCategoryValue = [
     { id: null, name: " --- Select a Category --- " }
@@ -19,51 +47,6 @@ const AddWorkout = props => {
   const [categoryID, setCategoryID] = useState(null);
   const [recurring, setRecurring] = useState(false);
   const [recurringWeeks, setRecurringWeeks] = useState(false);
-
-  //create category component variable to put in the dropdown.
-  let categoryComponent = null;
-
-  // useEffect to get Categories from the backend
-  useEffect(() => {
-    axios.get(reqUrl, { headers: { Authorization: key } }).then(
-      result => (
-        console.log("the result is: ", result.data),
-        result.data.map(res => {
-          console.log("the res is: ", res);
-          initialCategoryValue.push(res);
-          console.log("initialCategoryValue:", initialCategoryValue);
-          return setCategory(initialCategoryValue);
-        })
-      )
-    );
-  }, []);
-
-  // method to handle selecting a category from dropdown
-  const categorySelectionHandler = event => {
-    let value = event.target.value;
-    console.log("value", value);
-    console.log("categories", categories);
-    const categoryIndex = categories.filter(category => {
-      return category.id === Number(value);
-    });
-    setCategoryID(categoryIndex[0].id);
-  };
-
-  //Puts the categories into a component
-  categoryComponent = (
-    <select
-      onChange={e => {
-        categorySelectionHandler(e);
-      }}
-      value={categories}
-    >
-      {categories.map((category, index) => (
-        <option value={category.id} key={index}>
-          {category.name}
-        </option>
-      ))}
-    </select>
-  );
 
   //handler to schedule the workout and add it to Sworkout Database
   const scheduleWorkoutHandler = async (e, workout, date, recurringWeeks) => {
@@ -142,20 +125,26 @@ const AddWorkout = props => {
 
   return (
     <FormModal
-    onSubmit={{scheduleWorkoutHandler}}
-    closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
-    title={"Add Workout"}
-  >
-    <AddWorkoutStyle>
-      <form>
+      onSubmit={{ scheduleWorkoutHandler }}
+      closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
+      title={"Add Workout"}
+    >
+      <AddWorkoutStyle>
         <div>
-          <div>{categoryComponent}</div>
+          <DropDown
+            label={"Select Category"}
+            options={getOptions()}
+            onChange={handleChange}
+            value={state.selectedWorkoutCategory}
+          />
           {props.workouts &&
             props.workouts.map(workout => {
-              if (workout.id === categoryID) {
+              if (
+                workout.category_id === Number(state.selectedWorkoutCategory)
+              ) {
                 return (
-                  <div>
-                    <div>{workout.title}</div>
+                  <WorkoutsMenu>
+                    <p>{workout.title}</p>
                     Recurring ?{" "}
                     <input
                       type="checkbox"
@@ -169,7 +158,7 @@ const AddWorkout = props => {
                       onChange={e => setRecurringWeeks(e.target.value)}
                     />{" "}
                     weeks
-                    <button
+                    <Button
                       onClick={e => {
                         scheduleWorkoutHandler(
                           e,
@@ -180,20 +169,30 @@ const AddWorkout = props => {
                       }}
                     >
                       Schedule
-                    </button>
-                  </div>
+                    </Button>
+                  </WorkoutsMenu>
                 );
               }
             })}
         </div>
-      </form>
-    </AddWorkoutStyle>
+      </AddWorkoutStyle>
     </FormModal>
   );
 };
 
-const AddWorkoutStyle = styled.div`
-  border: 1px solid purple;
+const AddWorkoutStyle = styled.div``;
+
+const WorkoutsMenu = styled.div`
+  display: flex;
+  align-items:center;
+  input {
+    height: 20px;
+    width: 20px;
+
+  }
+  Button {
+    margin: 0;
+  }
 `;
 
 export default AddWorkout;
