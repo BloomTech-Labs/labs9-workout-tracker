@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
-import { Store } from "../../../index";
-import styled from "styled-components";
-import DropDown from "../../../shared/DropDown";
+import React, { useContext, useState } from 'react';
+import { Store } from '../../../index';
+import firebase from 'firebase';
+import styled from 'styled-components';
+import DropDown from '../../../shared/DropDown';
+import axios from 'axios';
 
 const MyWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
@@ -17,9 +19,9 @@ const MyWorkouts = () => {
     });
 
     options.unshift({
-      name: "All",
-      value: "all",
-      key: "all"
+      name: 'All',
+      value: 'all',
+      key: 'all'
     });
 
     return options;
@@ -27,61 +29,93 @@ const MyWorkouts = () => {
 
   const handleChange = value => {
     dispatch({
-      type: "UPDATE_SELECTED_WORKOUTS_CATEGORY",
+      type: 'UPDATE_SELECTED_WORKOUTS_CATEGORY',
       payload: value
     });
   };
 
+  const handleDelete = async (workoutID, i) => {
+    console.log('In handleDelete');
+    console.log('index is: ', workoutID);
+
+    const newWorkouts = state.workouts;
+    console.log('before splice newWorkouts are:', newWorkouts);
+
+    newWorkouts.splice(i, 1);
+
+    console.log('after splice newWorkouts are:', newWorkouts);
+
+    const token = await firebase.auth().currentUser.getIdToken();
+
+    if (token !== undefined) {
+      const res = await axios.delete(`https://fitmetrix.herokuapp.com/api/workouts/delete/${workoutID}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
+        }
+      });
+      console.log('the res is: ', res);
+
+      if (res.status === 200) {
+        dispatch({
+          type: 'UPDATE_WORKOUTS',
+          payload: newWorkouts
+        });
+      } else {
+        console.log('error deleting');
+      }
+    }
+    //Resets the title and category after workout is added
+  };
+
   return (
-    (
-      <HeaderContainer>
-        <Header>
-          <DropDownContianer>
-            <h2>My Workouts</h2>
-            <DropDown
-              label={"Filter by Category"}
-              options={getOptions()}
-              onChange={handleChange}
-              value={state.selectedWorkoutCategory}
-            />
-          </DropDownContianer>
-          <AddWorkoutButton type="button">Add Workout</AddWorkoutButton>
-        </Header>
-        {state.workouts.map((workout, i) => {
-          if (state.selectedWorkoutCategory === "all") {
-            return (
-              <Workout>
-                <h3>{workout.title}</h3>
-                <div>
-                  <span>
-                    <i class="fas fa-pen" />
-                  </span>
-                  <span>
-                    <i class="fas fa-times" />
-                  </span>
-                </div>
-              </Workout>
-            );
-          }
-          if (workout.category_id == state.selectedWorkoutCategory) {
-            return (
-              <Workout>
-                <h3>{workout.title}</h3>
-                <div>
-                  <span>
-                    <i class="fas fa-pen" />
-                  </span>
-                  <span>
-                    <i class="fas fa-times" />
-                  </span>
-                </div>
-              </Workout>
-            );
-          }
-          return null;
-        })}
-      </HeaderContainer>
-    )
+    <HeaderContainer>
+      <Header>
+        <DropDownContianer>
+          <h2>My Workouts</h2>
+          <DropDown
+            label={'Filter by Category'}
+            options={getOptions()}
+            onChange={handleChange}
+            value={state.selectedWorkoutCategory}
+          />
+        </DropDownContianer>
+        <AddWorkoutButton type="button">Add Workout</AddWorkoutButton>
+      </Header>
+      {state.workouts.map((workout, i) => {
+        if (state.selectedWorkoutCategory === 'all') {
+          return (
+            <Workout key={i}>
+              <h3>{workout.title}</h3>
+              <div>
+                <span>
+                  <i className="fas fa-pen" />
+                </span>
+                <span onClick={() => handleDelete(workout.id, i)}>
+                  <i className="fas fa-times" />
+                </span>
+              </div>
+            </Workout>
+          );
+        }
+        if (workout.category_id == state.selectedWorkoutCategory) {
+          return (
+            <Workout key={i}>
+              <h3>{workout.title}</h3>
+              <div>
+                <span>
+                  <i className="fas fa-pen" />
+                </span>
+                <span onClick={() => handleDelete(workout.id, i)}>
+                  <i className="fas fa-times" />
+                </span>
+              </div>
+            </Workout>
+          );
+        }
+        return null;
+      })}
+    </HeaderContainer>
   );
 };
 

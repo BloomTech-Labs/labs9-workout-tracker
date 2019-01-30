@@ -80,11 +80,6 @@ const AddWorkouts = () => {
   };
 
   const inputOnChange = async (e, index) => {
-    // console.log("state is:", state);
-    // console.log("state is: ", state.workouts);
-    console.log('e is: ', e);
-    console.log('index is: ', index);
-
     const name = e.target.name;
     const value = e.target.value;
 
