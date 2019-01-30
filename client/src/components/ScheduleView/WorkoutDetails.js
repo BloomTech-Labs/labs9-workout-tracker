@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
-import { Store } from "../../index";
+import React, { useState, useContext } from 'react';
+import { Store } from '../../index';
 
-import ExerciseDetails from "./ExerciseDetails";
-import axios from "axios";
-import styled from "styled-components";
-import firebase from "firebase";
-import AddWorkout from "./AddWorkout";
+import ExerciseDetails from './ExerciseDetails';
+import axios from 'axios';
+import styled from 'styled-components';
+import firebase from 'firebase';
+import AddWorkout from './AddWorkout';
 
 const WorkoutDetails = props => {
   const { state, dispatch } = useContext(Store);
@@ -17,9 +17,9 @@ const WorkoutDetails = props => {
     if (date.length === 10) {
       return date;
     }
-    date = date.split("T")[0].split("-");
+    date = date.split('T')[0].split('-');
 
-    const newDate = date[0] + "/" + date[1] + "/" + date[2];
+    const newDate = date[0] + '/' + date[1] + '/' + date[2];
 
     return new Date(newDate);
   };
@@ -34,11 +34,11 @@ const WorkoutDetails = props => {
     let day = d.getDate();
 
     if (day < 10) {
-      day = "0" + day;
+      day = '0' + day;
     }
 
     if (month < 10) {
-      month = "0" + month;
+      month = '0' + month;
     }
 
     return `${d.getFullYear()}-${month}-${day}`;
@@ -49,9 +49,7 @@ const WorkoutDetails = props => {
     const token = await firebase.auth().currentUser.getIdToken();
 
     const deleteRes = await axios.delete(
-      `https://fitmetrix.herokuapp.com/api/schedule/delete/workout/${
-        scheduleWorkout.id
-      }`,
+      `https://fitmetrix.herokuapp.com/api/schedule/delete/workout/${scheduleWorkout.id}`,
       {
         headers: {
           Authorization: token
@@ -59,24 +57,20 @@ const WorkoutDetails = props => {
       }
     );
 
-    console.log("deleteRes:", deleteRes);
+    console.log('deleteRes:', deleteRes);
 
     if (deleteRes.status === 200) {
-      console.log("200 OK");
-      const newScheduleWorkouts = await axios.get(
-        "https://fitmetrix.herokuapp.com/api/schedule",
-        {
-          headers: {
-            Authorization: token
-          }
+      console.log('200 OK');
+      const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule', {
+        headers: {
+          Authorization: token
         }
-      );
-
-      dispatch({
-        type: "UPDATE_SCHEDULE_WORKOUTS",
-        payload: newScheduleWorkouts.data
       });
 
+      dispatch({
+        type: 'UPDATE_SCHEDULE_WORKOUTS',
+        payload: newScheduleWorkouts.data
+      });
     }
   };
 
@@ -86,13 +80,13 @@ const WorkoutDetails = props => {
         <div>
           <WorkoutDetailsDiv>
             No workouts Scheduled
-            <button
+            <ScheduleButton
               onClick={e => {
                 toggleAddingWorkout(e);
               }}
             >
               Schedule Workout
-            </button>
+            </ScheduleButton>
             {addingWorkout === true ? (
               <AddWorkout
                 workouts={state.workouts}
@@ -106,38 +100,25 @@ const WorkoutDetails = props => {
     }
   };
 
-
   return (
     <WorkoutContainer>
       {renderWorkout()}
       {props.selectedDate === null
         ? state.scheduleWorkouts &&
           state.scheduleWorkouts.map(scheduleWorkout => {
-            if (
-              dateFormat(dateStringParser(scheduleWorkout.date)) ===
-              dateFormat(props.currentDay)
-            ) {
+            if (dateFormat(dateStringParser(scheduleWorkout.date)) === dateFormat(props.currentDay)) {
               return (
                 <WorkoutDetailsDiv key={scheduleWorkout.id}>
                   <WorkoutTitleDiv>
                     <h3>{scheduleWorkout.title}</h3>
-                    <UnscheduleButton
-                      type="button"
-                      onClick={e => unscheduleWorkout(e, scheduleWorkout)}
-                    >
+                    <UnscheduleButton type="button" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
                       Unschedule
                     </UnscheduleButton>
                   </WorkoutTitleDiv>
                   <ExerciseListDiv>
                     {scheduleWorkout.exercises &&
                       scheduleWorkout.exercises.map(exercise => {
-                        return (
-                          <ExerciseDetails
-                            dispatch={props.dispatch}
-                            key={exercise.id}
-                            exercise={exercise}
-                          />
-                        );
+                        return <ExerciseDetails dispatch={props.dispatch} key={exercise.id} exercise={exercise} />;
                       })}
                   </ExerciseListDiv>
                 </WorkoutDetailsDiv>
@@ -146,31 +127,19 @@ const WorkoutDetails = props => {
           })
         : state.scheduleWorkouts &&
           state.scheduleWorkouts.map(scheduleWorkout => {
-            if (
-              dateFormat(dateStringParser(scheduleWorkout.date)) ===
-              dateFormat(props.selectedDate)
-            ) {
+            if (dateFormat(dateStringParser(scheduleWorkout.date)) === dateFormat(props.selectedDate)) {
               return (
                 <WorkoutDetailsDiv key={scheduleWorkout.id}>
                   <WorkoutTitleDiv>
                     <h3>{scheduleWorkout.title}</h3>
-                    <UnscheduleButton
-                      type="button"
-                      onClick={e => unscheduleWorkout(e, scheduleWorkout)}
-                    >
+                    <UnscheduleButton type="button" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
                       Unschedule
                     </UnscheduleButton>
                   </WorkoutTitleDiv>
                   <ExerciseListDiv>
                     {scheduleWorkout.exercises &&
                       scheduleWorkout.exercises.map(exercise => {
-                        return (
-                          <ExerciseDetails
-                            dispatch={props.dispatch}
-                            key={exercise.id}
-                            exercise={exercise}
-                          />
-                        );
+                        return <ExerciseDetails dispatch={props.dispatch} key={exercise.id} exercise={exercise} />;
                       })}
                   </ExerciseListDiv>
                 </WorkoutDetailsDiv>
@@ -215,4 +184,18 @@ const ExerciseListDiv = styled.div`
   }
 `;
 
-const UnscheduleButton = styled.button``;
+const ScheduleButton = styled.button`
+  color: white;
+  background-color: ${props => props.theme.accent};
+  border-radius: 4px;
+  box-shadow: ${props => props.theme.boxShadow};
+  border: none;
+`;
+
+const UnscheduleButton = styled.button`
+  color: white;
+  background-color: ${props => props.theme.accent};
+  border-radius: 4px;
+  box-shadow: ${props => props.theme.boxShadow};
+  border: none;
+`;
