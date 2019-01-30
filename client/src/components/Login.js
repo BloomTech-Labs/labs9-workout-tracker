@@ -4,6 +4,7 @@ import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
 // import Input from '../shared/Input';
+import Button from '../shared/Button';
 
 import ropeImg from "./assets/rope.jpg";
 
@@ -115,28 +116,6 @@ const InputContainer = styled.div`
     }
   }
 `
-
-const Button = styled.button`
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: none;
-  display: inline-block;
-  margin: 20px auto;
-  background: ${props => props.theme.accent};
-  border-radius: 100px;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 60px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #FFF;
-  cursor: pointer;
-  transition: box-shadow .2s ease,border .2s ease;
-  transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
-  &:hover {
-    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.2)
-  }
-`;
 
 const FormStyle = styled.form`
   display: flex;

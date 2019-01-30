@@ -53,7 +53,6 @@ const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabl
         name={name}
         onChange={onChange}
         placeholder={placeholder}
-        type={name === "password" ? "password" : "text"}
         required
       />
     </Container>
@@ -87,5 +86,4 @@ const StyledInput = styled.input`
   border-radius: 4px;
   padding: 0px 10px;
   border: 1px solid rgba(0,0,0,0.24);
-  /* box-shadow: ${props => props.theme.boxShadow}; */
 `;
