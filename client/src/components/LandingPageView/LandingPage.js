@@ -24,20 +24,17 @@ const LandingPage = () => {
           </CallToAction>
           <BlankImage />
         </CtaDiv>
-        {/* <DownArrow>
-          <i className="fas fa-arrow-down" />
-        </DownArrow> */}
       </LandingStyle>
       <Part2>
-        <CalendarPic />
+        <CalendarPic src={CalendarView} alt="A picture of the calendar" />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
       <Part3>
         <WorkoutDemo>Plan ahead, execute your plan.</WorkoutDemo>
-        <WorkoutPic />
+        <WorkoutPic src={WorkoutsView} alt="A picture of the workouts view" />
       </Part3>
       <Part4>
-        <ProgressPic />
+        <ProgressPic src={ProgressView} alt="A picture of the progress view" />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
       <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
@@ -152,16 +149,6 @@ const BlankImage = styled.div`
   }
 `;
 
-// const DownArrow = styled.span`
-//   width: 60px;
-//   height: 80px;
-//   position: absolute;
-//   top: 500px;
-//   left: 0;
-//   font-size: 5.5rem;
-//   text-align: center;
-// `;
-
 const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -177,8 +164,7 @@ const Part2 = styled.div`
   }
 `;
 
-const CalendarPic = styled.div`
-  background-image: url(${CalendarView});
+const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -188,6 +174,7 @@ const CalendarPic = styled.div`
   @media (max-width: 900px) {
     width: 65%;
   }
+  object-fit: fill;
 `;
 
 const CalendarDemo = styled.div`
@@ -216,8 +203,7 @@ const Part3 = styled.div`
   }
 `;
 
-const WorkoutPic = styled.div`
-  background-image: url(${WorkoutsView});
+const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -268,8 +254,7 @@ const ProgressDemo = styled.div`
   }
 `;
 
-const ProgressPic = styled.div`
-  background-image: url(${ProgressView});
+const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
