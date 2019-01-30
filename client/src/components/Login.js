@@ -3,7 +3,8 @@ import { Store } from "../index";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
-import Input from '../shared/Input';
+// import Input from '../shared/Input';
+import Button from '../shared/Button';
 
 import ropeImg from "./assets/rope.jpg";
 
@@ -50,27 +51,33 @@ const Login = props => {
   return (
       <Container>
         <SideImage/>
-
         <FormContainer>
           <FormStyle onSubmit={e => loginUser(e)}>
-            <Input 
-              size="large"
-              value={email}
-              placeholder="example@example.com"
-              label="Email"
-              name="email"
-              onChange={e => setEmail(e.target.value)}
-              labelColor="white"
-            />
-            <Input 
-              size="large"
-              value={password}
-              placeholder="password"
-              label="Password"
-              name="password"
-              labelColor="white"
-              onChange={e => setPassword(e.target.value)}
-            />
+            <h1>Sign into fitmetrix.</h1>
+            <p>Enter details below</p>
+            
+            <InputContainer>
+              <h3>EMAIL ADDRESS</h3>
+              <input
+                type="text"
+                value={email}
+                placeholder="jack@fitmetrix.me"
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <h3>PASSWORD</h3>
+              <input
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </InputContainer>
+
             <Button type="submit">Sign In</Button>
           </FormStyle>
         </FormContainer>
@@ -80,21 +87,85 @@ const Login = props => {
 
 export default Login;
 
+
+const InputContainer = styled.div`
+  color: #5f697a;
+  width: 100%;
+  margin-bottom: 23px;
+  h3 {
+    display: block;
+    font-weight: 700;
+    font-size: 11px;
+    color: #434C5E;
+    margin-bottom: 8px;
+    text-align: left;
+    letter-spacing: 1px;
+    font-family: "Open Sans";
+    text-transform: uppercase;
+  }
+  input {
+    border: 1px solid #D4D9E2;
+    border-radius: 3px;
+    padding: 15px;
+    font-size: 14px;
+    color: #596377;
+    outline: 0;
+    width: 100%;
+    &::-webkit-input-placeholder {
+      opacity: 0.50;
+    }
+  }
+`
+
+const FormStyle = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  max-width: 540px;
+  margin: 0 auto;
+  h1 {
+    font-size: 28px;
+    font-weight: 400;
+    color: #434C5F;
+  }
+  p {
+    display: block;
+    font-size: 16px;
+    color: #596377;
+    font-weight: 400;
+    margin-bottom: 50px;
+  }
+`;
+
 const FormContainer = styled.div`
   width: calc(100% - 460px);
   height: 100%;
   margin-left: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+  @media (max-width: 1076px) {
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 
 const SideImage = styled.div`
-  width: 460px;
+  width: calc(460px + 150px);
   height: 100%;
   position: absolute;
   top: 0;
-  left: 0;
-  background: no-repeat center center fixed;
+  left: -150px;
+  background: no-repeat left left fixed;
   background-image: url(${ropeImg});
   background-size: cover;
+  @media (max-width: 1076px) {
+    width: 0px;
+  }
 `;
 
 
@@ -102,28 +173,11 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 54px;
+  top: 0;
   left: 0;
   display:flex;
   justify-content: flex-start;
   align-items: flex-start;
+  font-family: "Open Sans";
 `;
 
-const FormStyle = styled.form`
-  
-`;
-
-const Button = styled.button`
-  height: 40px;
-  width: 80%;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  font-family: ${props => props.theme.roboto};
-  font-weight: bold;
-  font-size: 1.5rem;
-  background-color: ${props => props.theme.primaryLight};
-  border-radius: 6px;
-  &:hover {
-    color: ${props => props.theme.accent};
-  }
-`;
