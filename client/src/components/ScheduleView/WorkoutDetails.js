@@ -100,14 +100,6 @@ const WorkoutDetails = props => {
     }
   };
 
-  // const renderWorkout = () => {
-  //   if (props.datePopulated === false) {
-  //     return (
-  //       <WorkoutDetailsDiv>No workouts Scheduled</WorkoutDetailsDiv>
-  //     )
-  //   }
-  // }
-
   return (
     <WorkoutContainer>
       {renderWorkout()}
