@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Store } from '../../../index';
 import firebase from 'firebase';
 import styled from 'styled-components';
@@ -35,15 +35,9 @@ const MyWorkouts = () => {
   };
 
   const handleDelete = async (workoutID, i) => {
-    console.log('In handleDelete');
-    console.log('index is: ', workoutID);
-
     const newWorkouts = state.workouts;
-    console.log('before splice newWorkouts are:', newWorkouts);
 
     newWorkouts.splice(i, 1);
-
-    console.log('after splice newWorkouts are:', newWorkouts);
 
     const token = await firebase.auth().currentUser.getIdToken();
 
@@ -68,6 +62,46 @@ const MyWorkouts = () => {
     //Resets the title and category after workout is added
   };
 
+  const handleEdit = async (workoutID, i) => {
+    console.log('in handleEdit');
+
+    dispatch({
+      type: 'EDIT_WORKOUT',
+      payload: state.workouts[i]
+    });
+
+    // const editedWorkoutTitle = editedWorkout.title;
+    // const editedWorkoutExercise = editedWorkout.exercises;
+    // const editedWorkoutCategory = editedWorkout.category_id;
+
+    // const token = await firebase.auth().currentUser.getIdToken();
+
+    // if (token !== undefined) {
+    //   const res = await axios.put(`https://fitmetrix.herokuapp.com/api/workouts/edit/${workoutID}`,
+    //   {
+    //     editedWorkoutTitle,
+    //     editedWorkoutExercise,
+    //     category_id: editedWorkoutCategory
+    //   },
+    //   {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: token
+    //     }
+    //   });
+    //   console.log('the res is: ', res);
+
+    //   if (res.status === 200) {
+    //     dispatch({
+    //       type: 'EDIT_WORKOUT',
+    //       payload: editedWorkout
+    //     });
+    //   } else {
+    //     console.log('error deleting');
+    //   }
+    // }
+  };
+
   return (
     <HeaderContainer>
       <Header>
@@ -89,10 +123,10 @@ const MyWorkouts = () => {
               <h3>{workout.title}</h3>
               <div>
                 <span>
-                  <i className="fas fa-pen" />
+                  <i onClick={() => handleEdit(workout.id, i)} className="fas fa-pen" />
                 </span>
-                <span onClick={() => handleDelete(workout.id, i)}>
-                  <i className="fas fa-times" />
+                <span>
+                  <i onClick={() => handleDelete(workout.id, i)} className="fas fa-times" />
                 </span>
               </div>
             </Workout>
@@ -104,10 +138,10 @@ const MyWorkouts = () => {
               <h3>{workout.title}</h3>
               <div>
                 <span>
-                  <i className="fas fa-pen" />
+                  <i onClick={() => handleEdit(workout.id, i)} className="fas fa-pen" />
                 </span>
-                <span onClick={() => handleDelete(workout.id, i)}>
-                  <i className="fas fa-times" />
+                <span>
+                  <i onClick={() => handleDelete(workout.id, i)} className="fas fa-times" />
                 </span>
               </div>
             </Workout>
