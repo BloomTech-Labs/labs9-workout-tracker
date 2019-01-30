@@ -3,6 +3,7 @@ import { Store } from "../index";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
+import Input from '../shared/Input';
 
 import ropeImg from "./assets/rope.jpg";
 
@@ -47,90 +48,69 @@ const Login = props => {
   };
 
   return (
-    <LoginContainer>
       <Container>
-        <FormStyle onSubmit={e => loginUser(e)}>
-        <InputDiv>
-        <p>Email:</p>
-          <InputStyle
-            type="text"
-            placeholder="example@example.com"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </InputDiv>
-        <InputDiv>
-        <p>Password:</p>
-          <InputStyle
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          </InputDiv>
-          <Button type="submit">Sign In</Button>
-        </FormStyle>
+        <SideImage/>
+
+        <FormContainer>
+          <FormStyle onSubmit={e => loginUser(e)}>
+            <Input 
+              size="large"
+              value={email}
+              placeholder="example@example.com"
+              label="Email"
+              name="email"
+              onChange={e => setEmail(e.target.value)}
+              labelColor="white"
+            />
+            <Input 
+              size="large"
+              value={password}
+              placeholder="password"
+              label="Password"
+              name="password"
+              labelColor="white"
+              onChange={e => setPassword(e.target.value)}
+            />
+            <Button type="submit">Sign In</Button>
+          </FormStyle>
+        </FormContainer>
       </Container>
-    </LoginContainer>
   );
 };
 
 export default Login;
 
-const LoginContainer = styled.div`
-  width: 100%;
+const FormContainer = styled.div`
+  width: calc(100% - 460px);
   height: 100%;
-  min-height: 500px;
-  position: fixed;
+  margin-left: 460px;
+`;
+
+const SideImage = styled.div`
+  width: 460px;
+  height: 100%;
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: 0;
   background: no-repeat center center fixed;
   background-image: url(${ropeImg});
   background-size: cover;
 `;
 
+
 const Container = styled.div`
-  margin: 0 auto;
-  height: auto;
-  margin-top: 200px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 54px;
+  left: 0;
   display:flex;
-  justify-content: center;
-  align-items:center;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
 
 const FormStyle = styled.form`
-  border: 1px solid ${props => props.theme.primaryDark};
-  border-radius: 6px;
-  background-color: ${props => props.theme.primary};
-  margin: 0 2%;
-  display:flex;
-  flex-direction:column;
-  padding: 20px 7%;
-  align-items:center;
-  @media(max-width:450px) {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    width:85%;
-  }
-`;
-const InputDiv = styled.div`
-margin-top:20px;
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-  p {
-  color:white;
-}
-`;
-
-const InputStyle = styled.input`
-  font-family: ${props => props.theme.roboto};
-  height: 30px;
-  background-color: ${props => props.theme.themeWhite};
-  width:100%;
-  width:150px;
+  
 `;
 
 const Button = styled.button`
