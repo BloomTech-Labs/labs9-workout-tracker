@@ -62,6 +62,7 @@ const Login = props => {
                 value={email}
                 placeholder="jack@fitmetrix.me"
                 onChange={e => setEmail(e.target.value)}
+                required
               />
             </InputContainer>
 
@@ -69,9 +70,10 @@ const Login = props => {
               <h3>PASSWORD</h3>
               <input
                 type="password"
-                value={email}
+                value={password}
                 placeholder="Enter your password"
                 onChange={e => setPassword(e.target.value)}
+                required
               />
             </InputContainer>
 
@@ -98,6 +100,7 @@ const InputContainer = styled.div`
     text-align: left;
     letter-spacing: 1px;
     font-family: "Open Sans";
+    text-transform: uppercase;
   }
   input {
     border: 1px solid #D4D9E2;
@@ -107,6 +110,9 @@ const InputContainer = styled.div`
     color: #596377;
     outline: 0;
     width: 100%;
+    &::-webkit-input-placeholder {
+      opacity: 0.50;
+    }
   }
 `
 
@@ -160,18 +166,18 @@ const FormContainer = styled.div`
   margin-left: 460px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   padding-top: 100px;
 `;
 
 const SideImage = styled.div`
-  width: 460px;
+  width: calc(460px + 150px);
   height: 100%;
   position: absolute;
   top: 0;
-  left: 0;
-  background: no-repeat center center fixed;
+  left: -150px;
+  background: no-repeat left left fixed;
   background-image: url(${ropeImg});
   background-size: cover;
 `;
@@ -181,7 +187,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 54px;
+  top: 0;
   left: 0;
   display:flex;
   justify-content: flex-start;

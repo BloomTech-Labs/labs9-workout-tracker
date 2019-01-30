@@ -12,6 +12,7 @@ const Register = props => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
 
+  
   const registerUser = e => {
     e.preventDefault();
     // Initialize Firebase
@@ -46,124 +47,172 @@ const Register = props => {
   };
 
   return (
-    <RegisterContainer>
       <Container>
-        <FormStyle onSubmit={e => registerUser(e)}>
-        <InputDiv>
-        <p> Name:</p>  
-        <InputStyle
-          type="text"
-          placeholder="John Doe"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
-        </InputDiv>
-        <InputDiv>
-        <p>  Email:</p>
-      
-          <InputStyle
-            type="text"
-            placeholder="example@example.com"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          </InputDiv>
-          <InputDiv>
-          <p>  Password:</p>
-          
-          <InputStyle
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          </InputDiv>
-          <InputDiv>
-          <p> Confirm Password:</p>
-          <InputStyle
-            type="password"
-            placeholder="Password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-          />
-          </InputDiv>
-          <Button type="submit">Sign Up</Button>
-        </FormStyle>
+        <SideImage/>
+        <FormContainer>
+          <FormStyle onSubmit={e => registerUser(e)}>
+            <h1>Start tracking now!</h1>
+            <p>Enter details below</p>
+            
+            <InputContainer>
+              <h3>EMAIL ADDRESS</h3>
+              <input
+                type="text"
+                value={email}
+                placeholder="jack@fitmetrix.me"
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <h3>Name</h3>
+              <input
+                type="text"
+                value={name}
+                placeholder="Jack"
+                onChange={e => setName(e.target.value)}
+                required
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <h3>PASSWORD</h3>
+              <input
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <h3>CONFIRM PASSWORD</h3>
+              <input
+                type="password"
+                value={confirmPassword}
+                placeholder="Confirm your password"
+                onChange={e => setConfirmPassword(e.target.value)}
+                required
+              />
+            </InputContainer>
+
+            <Button type="submit">Register</Button>
+          </FormStyle>
+        </FormContainer>
       </Container>
-    </RegisterContainer>
   );
 };
 
 export default Register;
 
-const RegisterContainer = styled.div`
+
+const InputContainer = styled.div`
+  color: #5f697a;
   width: 100%;
+  margin-bottom: 23px;
+  h3 {
+    display: block;
+    font-weight: 700;
+    font-size: 11px;
+    color: #434C5E;
+    margin-bottom: 8px;
+    text-align: left;
+    letter-spacing: 1px;
+    font-family: "Open Sans";
+    text-transform: uppercase;
+  }
+  input {
+    border: 1px solid #D4D9E2;
+    border-radius: 3px;
+    padding: 15px;
+    font-size: 14px;
+    color: #596377;
+    outline: 0;
+    width: 100%;
+    &::-webkit-input-placeholder {
+      opacity: 0.50;
+    }
+  }
+`
+
+const Button = styled.button`
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  display: inline-block;
+  margin: 20px auto;
+  background: ${props => props.theme.accent};
+  border-radius: 100px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 60px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFF;
+  cursor: pointer;
+  transition: box-shadow .2s ease,border .2s ease;
+  transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
+  &:hover {
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.2)
+  }
+`;
+
+const FormStyle = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  max-width: 540px;
+  margin: 0 auto;
+  h1 {
+    font-size: 28px;
+    font-weight: 400;
+    color: #434C5F;
+  }
+  p {
+    display: block;
+    font-size: 16px;
+    color: #596377;
+    font-weight: 400;
+    margin-bottom: 50px;
+  }
+`;
+
+const FormContainer = styled.div`
+  width: calc(100% - 460px);
   height: 100%;
-  min-height: 500px;
-  position: fixed;
-  margin:0 auto;
+  margin-left: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+`;
+
+const SideImage = styled.div`
+  width: calc(460px + 260px);
+  height: 100%;
+  position: absolute;
   top: 0;
-  left: 0;
-  z-index: 0;
-  background: no-repeat center center fixed;
+  left: -260px;
+  background: no-repeat left left fixed;
   background-image: url(${barbell});
   background-size: cover;
 `;
 
+
 const Container = styled.div`
-margin: 0 auto;
-height: auto;
-margin-top: 200px;
-display:flex;
-justify-content: center;
-align-items:center;
-`;
-
-const FormStyle = styled.form`
-  border: 1px solid ${props => props.theme.primaryDark};
-  border-radius: 6px;
-  background-color: ${props => props.theme.primary};
-  margin: 0 2%;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   display:flex;
-  flex-direction:column;
-  padding: 20px 7%;
-  align-items:center;
-  @media(max-width:634px) {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    width:60%;
-  }
-  `;
-
-  const InputDiv = styled.div`
-  margin-top:20px;
-  display: flex;
-  flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-start;
-    p {
-    color:white;
-  }
-  `;
-const InputStyle = styled.input`
-  font-family: ${props => props.theme.roboto};
-  height: 30px;
-  background-color: ${props => props.theme.themeWhite};
-  width:100%;
-  width:150px;
+  font-family: "Open Sans";
 `;
 
-const Button = styled.button`
-  height: 40px;
-  width: 80%;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  font-family: ${props => props.theme.roboto};
-  font-weight: bold;
-  font-size: 1.5rem;
-  background-color: ${props => props.theme.primaryLight};
-  border-radius: 6px;
-  &:hover {
-    color: ${props => props.theme.accent};
-  }
-`;
