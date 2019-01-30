@@ -8,7 +8,8 @@ import {
   ModuleActions,
   CancelButton,
   SubmitButton,
-  DeleteButton
+  DeleteButton,
+  Row
 } from "./Style";
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
@@ -159,75 +160,87 @@ const EditMetric = () => {
       closeModal={e => closeModal()}
       title={"Edit Progress"}
     >
-      <Input
-        label="Date"
-        name="Date"
-        size="responsive"
-        onChange={changeDate}
-        value={date}
-        type="calendar"
-        isDisabled="true"
-      />
-      <Input
-        placeholder="Weight"
-        label="Weight"
-        value={weight}
-        name="weight"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
-      <Input
-        placeholder="Hips"
-        label="Hips"
-        value={hips}
-        name="hips"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
-      <Input
-        placeholder="Waist"
-        label="Waist"
-        value={waist}
-        name="waist"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
-      <Input
-        placeholder="Arm Left"
-        label="Arm Left"
-        value={arm_left}
-        name="arm_left"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
-      <Input
-        placeholder="Arm Right"
-        label="Arm Right"
-        value={arm_right}
-        name="arm_right"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
-      <Input
-        placeholder="Leg Left"
-        label="Leg Left"
-        value={leg_left}
-        name="leg_left"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
-      <Input
-        placeholder="Leg Right"
-        label="Leg Right"
-        value={leg_right}
-        name="leg_right"
-        size="responsive"
-        onChange={e => setMetric(e)}
-      />
+      <DeleteButton type="button" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</DeleteButton>
+
+      <Row>
+        <Input
+          label="Date"
+          name="Date"
+          size="medium"
+          onChange={changeDate}
+          value={date}
+          type="calendar"
+          isDisabled="true"
+          />
+        <Input
+          placeholder="Weight"
+          label="Weight"
+          value={weight}
+          size="medium"
+          name="weight"
+          onChange={e => setMetric(e)}
+          />
+      </Row>
+
+      <Row>
+        <Input
+          placeholder="Hips"
+          label="Hips"
+          value={hips}
+          name="hips"
+          size="medium"
+          onChange={e => setMetric(e)}
+        />
+        <Input
+          placeholder="Waist"
+          label="Waist"
+          value={waist}
+          name="waist"
+          size="medium"
+          onChange={e => setMetric(e)}
+        />
+      </Row>
+
+      <Row>
+        <Input
+          placeholder="Arm Left"
+          label="Arm Left"
+          value={arm_left}
+          name="arm_left"
+          size="medium"
+          onChange={e => setMetric(e)}
+          />
+        <Input
+          placeholder="Arm Right"
+          label="Arm Right"
+          value={arm_right}
+          name="arm_right"
+          size="medium"
+          onChange={e => setMetric(e)}
+        />
+      </Row>
+
+      <Row>
+        <Input
+          placeholder="Leg Left"
+          label="Leg Left"
+          value={leg_left}
+          name="leg_left"
+          size="medium"
+          onChange={e => setMetric(e)}
+          />
+        <Input
+          placeholder="Leg Right"
+          label="Leg Right"
+          value={leg_right}
+          name="leg_right"
+          size="medium"
+          onChange={e => setMetric(e)}
+          />
+      </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}
       <ModuleActions>
-        <DeleteButton type="button" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</DeleteButton>
-        <SubmitButton type="submit" small >Submit</SubmitButton>
+        <SubmitButton type="submit" >Submit</SubmitButton>
       </ModuleActions>
       <CancelButton type="button" onClick={e => closeModal()}>
         Cancel

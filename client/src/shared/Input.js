@@ -65,7 +65,7 @@ const StyledLabel = styled.span`
 `;
 
 const Container = styled.div`
-  width: ${props => (props.size === "large" ? "245px" : props.size === "responsive" ? "100%" : "100px")};
+  width: ${props => (props.size === "large" ? "245px" : props.size === "responsive" ? "100%" : props.size === "medium" ? "155px" : "100px")};
   ${props => props.size === "responsive" ? "margin: 10px 0px;" : ""}
   height: 62px;
   display: flex;
