@@ -1,14 +1,16 @@
-import React from "react";
-import requireAuth from "../../requireAuth";
-import AddWorkouts from "./Semantic/AddWorkouts";
-import MyWorkouts from "./Semantic/MyWorkouts";
-import styled from "styled-components";
+import React from 'react';
+import requireAuth from '../../requireAuth';
+import AddWorkouts from './AddWorkouts';
+import MyWorkouts from './MyWorkouts';
+import EditWorkout from './EditWorkout';
+import styled from 'styled-components';
 
 const WorkoutsView = props => {
   return (
     <Container>
       <MyWorkouts />
       <AddWorkouts />
+      <EditWorkout />
     </Container>
   );
 };
