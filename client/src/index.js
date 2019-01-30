@@ -39,6 +39,8 @@ const reducer = (state, action) => {
       return { ...state, metrics: [...action.payload] };
     case 'UPDATE_SCHEDULE_WORKOUTS':
       return { ...state, scheduleWorkouts: [...action.payload] };
+    case 'UPDATE_CATEGORIES':
+      return { ...state, category: [...action.payload] };
     case 'EDIT_WORKOUT':
       return { ...state, editWorkout: { ...action.payload } };
     case 'RESET_EDIT_WORKOUT':

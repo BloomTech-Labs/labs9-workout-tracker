@@ -99,6 +99,31 @@ const AddWorkout = () => {
     setNewCategory(value);
   };
 
+  const addNewCategory = async e => {
+    e.preventDefault();
+    console.log('event(e) is: ', e);
+
+    const newCatObj = {
+      name: newCategory
+    };
+
+    console.log('newCategory is: ', newCategory);
+    const token = await firebase.auth().currentUser.getIdToken();
+
+    const res = await axios.post('https://fitmetrix.herokuapp.com/api/category/create/', newCatObj, {
+      headers: {
+        Authorization: token
+      }
+    });
+
+    dispatch({
+      type: 'UPDATE_CATEGORIES',
+      payload: newCategory
+    });
+
+    dispatch({ type: 'ADD_CATEGORY' });
+  };
+
   return (
     <FormModal
       onSubmit={e => addNewWorkout(e)}
@@ -127,7 +152,9 @@ const AddWorkout = () => {
             label="New Category Name"
             size="large"
           />
-          <SubmitButton type="button">Add Category</SubmitButton>
+          <SubmitButton onClick={e => addNewCategory(e)} type="button">
+            Add Category
+          </SubmitButton>
           <span>x</span>
         </Row>
       ) : null}
