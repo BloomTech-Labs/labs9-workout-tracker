@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import DatePicker from "react-datepicker";
 
 const CalendarInput = ({onChange, placeholder, value, isSecure, id, onClick, isDisabled}) => {
@@ -30,7 +30,7 @@ const CalendarInput = ({onChange, placeholder, value, isSecure, id, onClick, isD
     );
 };
 
-const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabled}) => {
+const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabled, labelColor}) => {
   if (type === "calendar") {
     return (
       <Container size={size}>
@@ -45,7 +45,9 @@ const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabl
   }
   return (
     <Container size={size}>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledLabel 
+        labelColor={labelColor}
+      >{label}</StyledLabel>
       <StyledInput
         value={value}
         name={name}
@@ -62,6 +64,9 @@ export default Input;
 const StyledLabel = styled.span`
   font-size: 14px;
   font-weight: 500;
+  ${props => props.labelColor && css`
+    color: ${props.labelColor}
+  `}
 `;
 
 const Container = styled.div`
@@ -81,5 +86,4 @@ const StyledInput = styled.input`
   border-radius: 4px;
   padding: 0px 10px;
   border: 1px solid rgba(0,0,0,0.24);
-  /* box-shadow: ${props => props.theme.boxShadow}; */
 `;
