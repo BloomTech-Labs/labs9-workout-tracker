@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Button from '../../shared/Button';
 import deadliftImg from '../assets/deadlift-filter.jpg';
 import squatImg from '../assets/squat-filter.jpg';
 import fitnesstrackerImg from '../assets/fitness-tracker.svg';
@@ -20,9 +21,11 @@ const LandingPage = () => {
           <CallToAction>
             <Action>{preCallToAction}</Action>
             <Action>{callToAction}</Action>
-            <StyledButton to="/register">START TRACKING NOW</StyledButton>
+            <Link to="/register">
+              <Button>START TRACKING NOW</Button>
+            </Link>
           </CallToAction>
-          <BlankImage />
+          {/* <BlankImage /> */}
         </CtaDiv>
       </LandingStyle>
       <Part2>
@@ -48,7 +51,7 @@ const LandingStyle = styled.div`
   width: 100%;
   max-width: ${props => props.theme.containingWidth};
   height: calc(100% - 54px);
-  min-height: 1200px;
+  min-height: 900px;
   color: white;
   font-family: ${props => props.theme.roboto};
   position: relative;
@@ -95,12 +98,13 @@ const CallToAction = styled.div`
   height: 200px;
   z-index: 2;
   position: absolute;
-  top: 350px;
+  top: 250px;
   margin-left: 2%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  
   
   @media(max-width:900px){
     top:200px;
@@ -111,43 +115,24 @@ const CallToAction = styled.div`
   }
 `;
 
-const StyledButton = styled(Link)`
-  max-width: 350px;
-  min-width: 100px;
-  width: 60%;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: white;
-  background-color: ${props => props.theme.primary};
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    color: ${props => props.theme.accent};
-  }
-`;
+// const BlankImage = styled.div`
+//   width: 400px;
+//   height: 400px;
+//   border-radius: 18px;
+//   position: absolute;
+//   margin-right: 2%;
+//   top: 360px;
+//   right: 0px;
+//   background-color: ${props => props.theme.primaryDark};
+//   background-image: url(${fitnesstrackerImg});
+//   background-size: 400px 400px;
+//   background-repeat: no-repeat;
+//   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
 
-const BlankImage = styled.div`
-  width: 400px;
-  height: 400px;
-  border-radius: 18px;
-  position: absolute;
-  margin-right: 2%;
-  top: 360px;
-  right: 0px;
-  background-color: ${props => props.theme.primaryDark};
-  background-image: url(${fitnesstrackerImg});
-  background-size: 400px 400px;
-  background-repeat: no-repeat;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-`;
+//   @media (max-width: 900px) {
+//     display: none;
+//   }
+// `;
 
 const Part2 = styled.div`
   width: 100%;
