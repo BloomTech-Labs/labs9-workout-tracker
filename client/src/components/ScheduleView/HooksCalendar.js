@@ -115,7 +115,7 @@ const HooksCalendar = props => {
                     : dateFns.isSameDay(day, selectedDate)
                     ? "selected"
                     : ""
-                }`}
+                } ${dateFns.isSameDay(day, selectedDate)}`}
                 key={`${day}${Math.random()}`}
                 sworkout={state.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
@@ -138,16 +138,16 @@ const HooksCalendar = props => {
               >
                 <span className="number">{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
-                <span>
+        
                   {//maps through scheduleworkouts
                   state.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
                     const splitDate = sworkout.date.split("T")[0];
                     return splitDate === matchedDate ? (
-                      <span key={sworkout.id}>{sworkout.title}</span>
+                      <i className="fas fa-square-full fa-7x"key={`${day}${Math.random()}`}></i>
                     ) : null;
                   })}
-                </span>
+    
               </div>
             )}
           </React.Fragment>
@@ -236,10 +236,3 @@ justify-content: space-around;
 border-radius: 4px;
 `;
 
-{/* <PopupModalDiv>
-<AddWorkout
-  workouts={state.workouts}
-  scheduleWorkouts={state.scheduleWorkouts}
-  selectedDate={selectedDate}
-/>
-</PopupModalDiv> */}

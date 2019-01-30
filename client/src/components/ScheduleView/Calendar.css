@@ -186,16 +186,18 @@
       }
     }
 
+  .calendar .body .cell .fa-square-full {
+    color: rgb(253, 143, 37, 0.9)
+   
+  }
+
   .calendar .body .cell:hover {
     background: var(--bg-color);
     transition: 0.5s ease-out;
   }
   
   .calendar .body .selected {
-    border-left: 10px solid transparent;
-    border-image: linear-gradient(45deg, #d0d4d8 0%, #53cbf1 40%);
-    border-image-slice: 1;
-  }
+    border: 2px solid #405865;  }
   
   .calendar .body .row {
     border-bottom: 1px solid var(--border-color);
