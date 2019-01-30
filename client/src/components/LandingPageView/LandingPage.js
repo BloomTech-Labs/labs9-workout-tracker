@@ -21,7 +21,9 @@ const LandingPage = () => {
           <CallToAction>
             <Action>{preCallToAction}</Action>
             <Action>{callToAction}</Action>
-            <Button to="/register">START TRACKING NOW</Button>
+            <Link to="/register">
+              <Button>START TRACKING NOW</Button>
+            </Link>
           </CallToAction>
           <BlankImage />
         </CtaDiv>
@@ -112,25 +114,6 @@ const CallToAction = styled.div`
     width:100%;
   }
 `;
-
-// const StyledButton = styled(Link)`
-//   max-width: 350px;
-//   min-width: 100px;
-//   width: 60%;
-//   height: 40px;
-//   line-height: 40px;
-//   border-radius: 6px;
-//   border: none;
-//   font-size: 1.6rem;
-//   font-weight: 700;
-//   color: white;
-//   background-color: ${props => props.theme.accent};
-//   cursor: pointer;
-//   text-decoration: none;
-//   &:hover {
-//     color: ${props => props.theme.dark};
-//   }
-// `;
 
 const BlankImage = styled.div`
   width: 400px;
