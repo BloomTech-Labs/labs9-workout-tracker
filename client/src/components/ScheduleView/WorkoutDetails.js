@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Store } from '../../index';
-
+import FormModal from '../../shared/FormModal'
 import ExerciseDetails from './ExerciseDetails';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -144,6 +144,11 @@ const WorkoutDetails = props => {
   }
 
   return (
+    <FormModal
+    onSubmit={{completedWorkout}}
+    closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
+    title={"Workout Details"}
+  >
     <WorkoutContainer>
       {renderWorkout()}
       {props.selectedDate === null
@@ -196,6 +201,7 @@ const WorkoutDetails = props => {
             }
           })}
     </WorkoutContainer>
+    </FormModal>
   );
 };
 
