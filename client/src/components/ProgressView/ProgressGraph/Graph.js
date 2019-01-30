@@ -233,4 +233,5 @@ const StyledGraph = styled.div`
   align-items: flex-start;
   width: 80%;
   background-color: white;
+  margin-top: 30px;
 `;

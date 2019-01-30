@@ -68,4 +68,5 @@ const MetricContainer = styled.div`
   background-color: white;
   color: ${props => props.theme.primaryDark};
   margin-bottom: 20px;
+  margin-top: 40px;
 `;

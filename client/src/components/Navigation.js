@@ -57,22 +57,6 @@ const Navigation = props => {
             <i className="fas fa-sign-out-alt" />
             <span>Logout</span>
           </StyledLink>
-          {/* <StyledUserIcon onClick={() => setAccount(!account)}>
-            <span>Account</span>
-            <i className="fas fa-user" />
-          </StyledUserIcon>
-
-          <AccountOptions show={account}>
-            <OptionRowLink to="/settings" onClick={() => setAccount(!account)}>
-              <span>Settings</span>
-              <i className="fas fa-cog" />
-            </OptionRowLink>
-            <OptionRow onClick={() => logOut()}>
-              <span>Logout</span>
-              <i className="fas fa-sign-out-alt" />
-            </OptionRow>
-          </AccountOptions> */}
-          {/* <StyledLink to="/settings" activeClassName='active'>Settings</StyledLink> */}
         </NavBar>
       </NavStyle>
     );
