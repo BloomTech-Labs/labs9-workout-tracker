@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Store } from '../../index';
 import requireAuth from '../../requireAuth';
-import AddWorkouts from './AddWorkouts';
 import MyWorkouts from './MyWorkouts';
-import EditWorkout from './EditWorkout';
 import styled from 'styled-components';
+import WorkoutModule from './WorkoutModule';
 
 const WorkoutsView = props => {
+  const { state, dispatch } = useContext(Store);
+
   return (
     <Container>
       <MyWorkouts />
-      <AddWorkouts />
-      <EditWorkout />
+      {state.showWorkoutForm ? <WorkoutModule /> : null}
     </Container>
   );
 };
