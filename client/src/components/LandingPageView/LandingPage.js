@@ -1,41 +1,40 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import deadliftImg from "../assets/deadlift-filter.jpg";
-import squatImg from "../assets/squat-filter.jpg";
-import fitnesstrackerImg from "../assets/fitness-tracker.svg";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import deadliftImg from '../assets/deadlift-filter.jpg';
+import squatImg from '../assets/squat-filter.jpg';
+import fitnesstrackerImg from '../assets/fitness-tracker.svg';
+import CalendarView from '../assets/CalendarView.png';
+import ProgressView from '../assets/ProgressView.png';
+import WorkoutsView from '../assets/WorkoutsView.png';
 
 const LandingPage = () => {
-  const preCallToAction = "Progress starts with a plan.";
-  const callToAction = "Track your fitness journey with us.";
+  const preCallToAction = 'Progress starts with a plan.';
+  const callToAction = 'Track your fitness journey with us.';
+
   return (
     <LandingContainer>
       <LandingStyle>
         <BackgroundImage />
         <CtaDiv>
-        <CallToAction>
-          <Action>{preCallToAction}</Action>
-          <Action>{callToAction}</Action>
-          <StyledButton to="/register">
-            START TRACKING NOW
-          </StyledButton>
-        </CallToAction>
-        <BlankImage />
+          <CallToAction>
+            <Action>{preCallToAction}</Action>
+            <Action>{callToAction}</Action>
+            <StyledButton to="/register">START TRACKING NOW</StyledButton>
+          </CallToAction>
+          <BlankImage />
         </CtaDiv>
-        {/* <DownArrow>
-          <i className="fas fa-arrow-down" />
-        </DownArrow> */}
       </LandingStyle>
       <Part2>
-        <CalendarPic>Calendar pic goes here.</CalendarPic>
+        <CalendarPic src={CalendarView} alt="A picture of the calendar" />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
       <Part3>
         <WorkoutDemo>Plan ahead, execute your plan.</WorkoutDemo>
-        <WorkoutPic>Workout pic goes heres.</WorkoutPic>
+        <WorkoutPic src={WorkoutsView} alt="A picture of the workouts view" />
       </Part3>
       <Part4>
-        <ProgressPic>Progress pic goes here.</ProgressPic>
+        <ProgressPic src={ProgressView} alt="A picture of the progress view" />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
       <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
@@ -58,7 +57,6 @@ const LandingStyle = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     min-height: 600px;
-
   }
 `;
 
@@ -69,8 +67,8 @@ const Action = styled.div`
   text-align: left;
   color: white;
 
-  @media(max-width:900px) {
-    text-align:center;
+  @media (max-width: 900px) {
+    text-align: center;
   }
 `;
 
@@ -88,13 +86,11 @@ const BackgroundImage = styled.span`
 `;
 
 const CtaDiv = styled.div`
-display:flex
-
-@media(max-width:900px){
-  flex-direction:column;
-  align-items:center;
-}
-`
+  display:flex @media(max-width:900px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 const CallToAction = styled.div`
   height: 200px;
   z-index: 2;
@@ -139,7 +135,7 @@ const BlankImage = styled.div`
   height: 400px;
   border-radius: 18px;
   position: absolute;
-  margin-right:2%;
+  margin-right: 2%;
   top: 360px;
   right: 0px;
   background-color: ${props => props.theme.primaryDark};
@@ -148,44 +144,36 @@ const BlankImage = styled.div`
   background-repeat: no-repeat;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
 
-  @media(max-width:900px) {
-    display:none;
+  @media (max-width: 900px) {
+    display: none;
   }
 `;
-
-// const DownArrow = styled.span`
-//   width: 60px;
-//   height: 80px;
-//   position: absolute;
-//   top: 500px;
-//   left: 0;
-//   font-size: 5.5rem;
-//   text-align: center;
-// `;
 
 const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
-  height: 600px;
+  height: 350px;
   background-color: white;
   font-size: 3.3rem;
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
-  border: 1px solid blue;
-  @media(max-width:900px) {
-    flex-direction:column
-    }
+  // border: 1px solid blue;
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+  margin-bottom: 200px;
 `;
 
-const CalendarPic = styled.div`
+const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
-  height: 200px;
-  border: 1px solid red;
-  @media(max-width:900px) {
+  width: 60%;
+  height: 100%;
+  align-items: center;
+  // border: 1px solid red;
+  @media (max-width: 900px) {
     width: 65%;
   }
 `;
@@ -194,37 +182,39 @@ const CalendarDemo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
-  height: 200px;
-   border: 1px solid red;
-   @media(max-width:900px) {
+  width: 50%;
+  height: 50%;
+  align-items: center;
+  // border: 1px solid red;
+  @media (max-width: 900px) {
     width: 65%;
   }
 `;
 
 const Part3 = styled.div`
   width: 100%;
-  height: 600px;
+  height: 350px;
   background-color: #f4f5f5;
   font-size: 3.3rem;
   display: flex;
-  justify-content:center;
-  align-items:center;
-  border: 1px solid blue;
-  @media(max-width:900px) {
-  flex-direction:column
+  justify-content: center;
+  align-items: center;
+  // border: 1px solid blue;
+  @media (max-width: 900px) {
+    flex-direction: column;
   }
+  margin-bottom: 200px;
 `;
 
-const WorkoutPic = styled.div`
+const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
-  height: 200px;
+  width: 35%;
+  height: 100%;
   align-items: center;
-  border: 1px solid red;
-  @media(max-width:900px) {
+  // border: 1px solid red;
+  @media (max-width: 900px) {
     width: 65%;
   }
 `;
@@ -235,63 +225,65 @@ const WorkoutDemo = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  border: 1px solid red;
-  @media(max-width:900px) {
+  // border: 1px solid red;
+  @media (max-width: 900px) {
     width: 65%;
   }
 `;
 
 const Part4 = styled.div`
   width: 100%;
-  height: 600px;
+  height: 350px;
   background-color: white;
   font-size: 3.3rem;
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
-  border: 1px solid blue;
-  @media(max-width:900px) {
-    flex-direction:column
-    }
+  // border: 1px solid blue;
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+  margin-bottom: 100px;
 `;
 
 const ProgressDemo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 45%;
+  width: 50%;
   height: 200px;
-  border: 1px solid red;
-  @media(max-width:900px) {
+  // border: 1px solid red;
+  @media (max-width: 900px) {
     width: 65%;
   }
 `;
 
-const ProgressPic = styled.div`
+const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 45%;
-  height: 200px;
-    border: 1px solid red;
-    @media(max-width:900px) {
-      width: 65%;
-    }
+  width: 40%;
+  height: 100%;
+  align-items: center;
+  // border: 1px solid red;
+  @media (max-width: 900px) {
+    width: 65%;
+  }
 `;
 
 const Part5 = styled.div`
   width: 100%;
   background: no-repeat center center fixed;
-  background-image: url(${deadliftImg});
+  src: url(${deadliftImg});
   background-size: cover;
   color: white;
   font-size: 1.6rem;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
-  border: 1px solid blue;
-  @media(max-width:900px) {
-    flex-direction:column
-    }
+  // border: 1px solid blue;
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `;
 
 const LandingContainer = styled.div``;
