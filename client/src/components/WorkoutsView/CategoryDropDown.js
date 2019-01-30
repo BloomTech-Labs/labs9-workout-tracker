@@ -27,6 +27,12 @@ const CategoryDropDown = props => {
       key: 'default'
     });
 
+    options.push({
+      name: 'Add a Category',
+      value: 'add',
+      key: 'add'
+    });
+
     return options;
   };
 

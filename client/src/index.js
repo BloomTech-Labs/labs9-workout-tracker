@@ -23,6 +23,8 @@ const initialState = {
   showWorkoutForm: false,
   editMetric: null,
   showMetricForm: false,
+  addingCategory: false,
+  newCategory: '',
   selectedCategory: 'default',
   selectedWorkoutCategory: 'all',
   selectedDate: new Date(),
@@ -38,6 +40,8 @@ const reducer = (state, action) => {
       return { ...state, metrics: [...action.payload] };
     case 'UPDATE_SCHEDULE_WORKOUTS':
       return { ...state, scheduleWorkouts: [...action.payload] };
+    case 'UPDATE_CATEGORIES':
+      return { ...state, category: [...action.payload] };
     case 'EDIT_WORKOUT':
       return { ...state, editWorkout: { ...action.payload } };
     case 'RESET_EDIT_WORKOUT':
@@ -52,6 +56,8 @@ const reducer = (state, action) => {
       return { ...state, showMetricForm: !state.showMetricForm };
     case 'SHOW_WORKOUT_FORM':
       return { ...state, showWorkoutForm: !state.showWorkoutForm };
+    case 'ADD_CATEGORY':
+      return { ...state, showCategoryInput: !state.addingCategory };
     case 'UPDATE_SELECTED_CATEGORY':
       return { ...state, selectedCategory: action.payload };
     case 'UPDATE_SELECTED_WORKOUTS_CATEGORY':
