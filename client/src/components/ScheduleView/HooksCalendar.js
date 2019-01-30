@@ -117,9 +117,14 @@ const HooksCalendar = props => {
                     : dateFns.isSameDay(day, selectedDate)
                     ? "selected"
                     : ""
-                } ${dateFns.isSameDay(day, selectedDate)}`}
+                }`}
                 key={`${day}${Math.random()}`}
                 sworkout={state.scheduleWorkouts.filter(sworkout => {
+                  // returns the title of the scheduled workout if it matches matchedDate
+                  const splitDate = sworkout.date.split("T")[0];
+                  if( splitDate === matchedDate) return sworkout;
+                })}
+                completed= {state.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
                   const splitDate = sworkout.date.split("T")[0];
                   if( splitDate === matchedDate) return sworkout;
@@ -138,9 +143,6 @@ const HooksCalendar = props => {
                       }
                 }
               >
-                <span className="number">{formattedDate}</span>
-                <span className="bg">{formattedDate}</span>
-        
                   {//maps through scheduleworkouts
                   state.scheduleWorkouts.map(sworkout => {
                     // returns the title of the scheduled workout if it matches matchedDate
@@ -148,16 +150,27 @@ const HooksCalendar = props => {
                     if (splitDate === matchedDate)  {
                       console.log("Match", sworkout)
                       console.log("completed?", sworkout.completed)
+
                       if (sworkout.completed === true) {
-                        return  <i className="fas fa-square-full completed fa-7x"key={`${day}${Math.random()}`}></i>
+                        return (
+                          <CellDiv>
+                            <i className="fas fa-dumbbell completed"key={`${day}${Math.random()}`}></i>
+                            <p className='completed'>{sworkout.title}</p>
+                          </CellDiv>
+                        )
                       } else {
-                        return  <i className="fas fa-square-full fa-7x"key={`${day}${Math.random()}`}></i>
+                        return (
+                          <CellDiv>
+                            <i className="fas fa-dumbbell"key={`${day}${Math.random()}`}></i>
+                            <p >{sworkout.title}</p>
+                          </CellDiv>
+                        )
                       }
                     }
-                    ;
                   })}
-                
-    
+                <span className="number">{formattedDate}</span>
+                <span className="bg">{formattedDate}</span>
+        
               </div>
             )}
           </React.Fragment>
@@ -237,3 +250,26 @@ justify-content: space-around;
 border-radius: 4px;
 `;
 
+const CellDiv = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+width:100%;
+height:100%;
+i {
+  margin-right: 70%;
+  margin-top:5px;
+}
+p {
+  font-weight:bold;
+  background: rgb(253, 143, 37, 0.8);
+  border-radius:4px;
+  margin: 2px auto; 
+  color:white;
+  padding: 3px 5%;
+
+}
+ p.completed {
+  background: rgb(43, 58, 66, 0.8)
+}
+`;

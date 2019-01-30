@@ -154,8 +154,6 @@ const WorkoutDetails = props => {
                 <WorkoutDetailsDiv key={scheduleWorkout.id}>
                   <WorkoutTitleDiv>
                     <h3>{scheduleWorkout.title}</h3>
-                    {scheduleWorkout.completed === true ? "Complete!" : "not complete"}
-                    <p>{scheduleWorkout.percentage}</p>
                     <UnscheduleButton type="button" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
                       Unschedule
                     </UnscheduleButton>

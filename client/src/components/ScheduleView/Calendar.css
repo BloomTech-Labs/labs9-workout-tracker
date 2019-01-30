@@ -25,9 +25,9 @@
   
   :root {
     --main-color: #1a8fff;
-    --text-color: #777;
+    --text-color: rgb(43, 58, 66, 0.8);
     --text-color-light: #ccc;
-    --border-color: #eee;
+    --border-color: rgb(43, 58, 66, 0.8);
     --bg-color: #fff;
     --neutral-color: #fff;
   }
@@ -121,7 +121,7 @@
   .calendar {
     display: block;
     position: relative;
-    width: 55%;
+    width: 100%;
     height:auto;
     background: var(--neutral-color);
     border: 1px solid var(--border-color);
@@ -163,7 +163,7 @@
   
   .calendar .body .cell {
     position: relative;
-    height: 6.5em;
+    height: 8.5em;
     border-right: 1px solid var(--border-color);
     overflow: hidden;
     cursor: pointer;
@@ -186,11 +186,11 @@
       }
     }
 
-  .calendar .body .cell .fa-square-full {
+  .calendar .body .cell .fa-dumbbell {
     color: rgb(253, 143, 37, 0.8)
    
   }
-  .calendar .body .cell .completed {
+  .calendar .body .cell i.completed {
     color: rgb(43, 58, 66, 0.8)
    
   }
@@ -223,6 +223,11 @@
     right: 0.75em;
     font-weight: 700;
   }
+  .calendar .body .cell:hover .number,
+  .calendar .body .selected .number {
+display:none;
+transition: 0.5s ease-in;
+  }
   
   .calendar .body .disabled {
     color: var(--text-color-light);
@@ -232,9 +237,9 @@
   .calendar .body .cell .bg {
     font-weight: 700;
     line-height: 1;
-    color: var(--main-color);
+    color: rgb(253, 143, 37);
     opacity: 0;
-    font-size: 8em;
+    font-size: 5em;
     position: absolute;
     top: -0.2em;
     right: -0.05em;
@@ -244,7 +249,7 @@
   
   .calendar .body .cell:hover .bg,
   .calendar .body .selected .bg {
-    opacity: 0.05;
+    opacity: 0.75;
     transition: 0.5s ease-in;
   }
   
