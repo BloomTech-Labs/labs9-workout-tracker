@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../../index';
+import { Store } from '../../index';
 import firebase from 'firebase';
 import styled from 'styled-components';
-import DropDown from '../../../shared/DropDown';
+import DropDown from '../../shared/DropDown';
 import axios from 'axios';
 
 const MyWorkouts = () => {

@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../../index';
+import { Store } from '../../index';
 import axios from 'axios';
 import * as firebase from 'firebase';
 import styled from 'styled-components';
 import CategoryDropDown from './CategoryDropDown';
-import Input from '../../../shared/Input';
+import Input from '../../shared/Input';
 const AddWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
