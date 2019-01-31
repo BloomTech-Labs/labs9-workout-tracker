@@ -148,7 +148,7 @@ const HooksCalendar = props => {
                   if (splitDate === matchedDate) {
                     if (sworkout.completed === true) {
                       return (
-                        <CellDiv>
+                        <CellDiv key={sworkout.id}>
                           <i
                             className="fas fa-dumbbell completed"
                             key={`${day}${Math.random()}`}
@@ -158,12 +158,12 @@ const HooksCalendar = props => {
                       );
                     } else {
                       return (
-                        <CellDiv>
+                        <CellDiv key={sworkout.id}>
                           <i
                             className="fas fa-dumbbell"
                             key={`${day}${Math.random()}`}
                           />
-                          <p>{sworkout.title.substring(0, 9)}...</p>
+                          <p>{sworkout.title.substring(0, 13)}...</p>
                         </CellDiv>
                       );
                     }
@@ -259,13 +259,14 @@ export default HooksCalendar;
 const Legend = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   i {
     color: rgb(253, 143, 37);
     margin-left: 4%;
   }
   i.completed {
     color: rgb(64, 88, 101);
+    margin-left: 2%;
   }
   p {
     margin: 0 2% 0 1%;
@@ -302,7 +303,8 @@ const CellDiv = styled.div`
     margin: 2px auto;
     color: white;
     padding: 1px 5%;
-    width: 93% @media (max-width: 690px) {
+    width: 93%;
+    @media (max-width: 690px) {
       display: none;
     }
   }
