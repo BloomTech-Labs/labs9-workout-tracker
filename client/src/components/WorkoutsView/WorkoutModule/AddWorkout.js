@@ -35,6 +35,16 @@ const AddWorkout = () => {
   const [exercises, setExercises] = useState([]);
   const [newCategory, setNewCategory] = useState('');
 
+  useEffect(
+    () => {
+      const selectedWorkoutCategory = state.selectedWorkoutCategory;
+      if (selectedWorkoutCategory === 'add') {
+        dispatch({ type: 'ADDING_CATEGORY' });
+      }
+    },
+    [state.selectedWorkoutCategory]
+  );
+
   //add Exercise handler
   const addExercise = async e => {
     e.preventDefault();
@@ -70,16 +80,12 @@ const AddWorkout = () => {
     console.log('the current workout is: ', workout);
 
     if (token !== undefined) {
-      const res = await axios.post(
-        'https://fitmetrix.herokuapp.com/api/workouts/',
-        workout,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token
-          }
+      const res = await axios.post('https://fitmetrix.herokuapp.com/api/workouts/', workout, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
         }
-      );
+      });
       console.log('the current workout is: ', workout);
     }
     //Resets the title and category after workout is added
@@ -115,15 +121,11 @@ const AddWorkout = () => {
     console.log('newCategory is: ', newCategory);
     const token = await firebase.auth().currentUser.getIdToken();
 
-    const res = await axios.post(
-      'https://fitmetrix.herokuapp.com/api/category/create/',
-      newCatObj,
-      {
-        headers: {
-          Authorization: token
-        }
+    const res = await axios.post('https://fitmetrix.herokuapp.com/api/category/create/', newCatObj, {
+      headers: {
+        Authorization: token
       }
-    );
+    });
 
     dispatch({
       type: 'UPDATE_CATEGORIES',
@@ -131,6 +133,11 @@ const AddWorkout = () => {
     });
 
     dispatch({ type: 'ADD_CATEGORY' });
+  };
+
+  const removeExercise = () => {
+    // dispatch({ type: "SHOW_METRIC_FORM" })
+    // dispatch({ type: "RESET_EDIT_METRIC" })
   };
 
   return (
@@ -164,7 +171,6 @@ const AddWorkout = () => {
           <SubmitButton onClick={e => addNewCategory(e)} type="button">
             Add Category
           </SubmitButton>
-          <span>x</span>
         </Row>
       ) : null}
 
@@ -203,7 +209,7 @@ const AddWorkout = () => {
                 placeholder="Reps"
                 label="Reps"
               />
-              <span>x</span>
+              <i onClick={e => removeExercise(e)} className="fas fa-times" />
             </Row>
           );
         })}
@@ -216,37 +222,14 @@ const AddWorkout = () => {
           label="Exercise Name"
           size="large"
         />
-        <Input
-          value={weight}
-          type="text"
-          placeholder="50"
-          onChange={e => setWeight(e.target.value)}
-          label="Weight"
-        />
-        <Input
-          value={sets}
-          type="text"
-          placeholder="3"
-          onChange={e => setSets(e.target.value)}
-          label="Sets"
-        />
-        <Input
-          value={reps}
-          type="text"
-          placeholder="12"
-          onChange={e => setReps(e.target.value)}
-          label="Reps"
-        />
-        <span>x</span>
+        <Input value={weight} type="text" placeholder="50" onChange={e => setWeight(e.target.value)} label="Weight" />
+        <Input value={sets} type="text" placeholder="3" onChange={e => setSets(e.target.value)} label="Sets" />
+        <Input value={reps} type="text" placeholder="12" onChange={e => setReps(e.target.value)} label="Reps" />
+        <i onClick={e => removeExercise(e)} className="fas fa-times" />
       </Row>
 
       <Row>
-        <Button
-          type="button"
-          scheme="delete"
-          size="responsive"
-          onClick={e => addExercise(e)}
-        >
+        <Button type="button" scheme="delete" size="responsive" onClick={e => addExercise(e)}>
           Add Exercise to Workout
         </Button>
       </Row>

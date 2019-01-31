@@ -45,37 +45,6 @@ const MyWorkouts = () => {
     });
   };
 
-  const handleDelete = async (workoutID, i) => {
-    const newWorkouts = state.workouts;
-
-    newWorkouts.splice(i, 1);
-
-    const token = await firebase.auth().currentUser.getIdToken();
-
-    if (token !== undefined) {
-      const res = await axios.delete(
-        `https://fitmetrix.herokuapp.com/api/workouts/delete/${workoutID}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token
-          }
-        }
-      );
-      console.log('the res is: ', res);
-
-      if (res.status === 200) {
-        dispatch({
-          type: 'UPDATE_WORKOUTS',
-          payload: newWorkouts
-        });
-      } else {
-        console.log('error deleting');
-      }
-    }
-    //Resets the title and category after workout is added
-  };
-
   const handleEdit = async (workoutID, i) => {
     console.log('in handleEdit');
 
@@ -88,44 +57,13 @@ const MyWorkouts = () => {
       type: 'EDIT_WORKOUT',
       payload: state.workouts[i]
     });
-
-    // const editedWorkoutTitle = editedWorkout.title;
-    // const editedWorkoutExercise = editedWorkout.exercises;
-    // const editedWorkoutCategory = editedWorkout.category_id;
-
-    // const token = await firebase.auth().currentUser.getIdToken();
-
-    // if (token !== undefined) {
-    //   const res = await axios.put(`https://fitmetrix.herokuapp.com/api/workouts/edit/${workoutID}`,
-    //   {
-    //     editedWorkoutTitle,
-    //     editedWorkoutExercise,
-    //     category_id: editedWorkoutCategory
-    //   },
-    //   {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: token
-    //     }
-    //   });
-    //   console.log('the res is: ', res);
-
-    //   if (res.status === 200) {
-    //     dispatch({
-    //       type: 'EDIT_WORKOUT',
-    //       payload: editedWorkout
-    //     });
-    //   } else {
-    //     console.log('error deleting');
-    //   }
-    // }
   };
 
   return (
     <HeaderContainer>
       <Header>
         <DropDownContainer>
-          <h2>My Workouts</h2>
+          <h1>My Workouts</h1>
           <DropDown
             label={'Filter by Category'}
             options={getOptions()}
@@ -146,16 +84,7 @@ const MyWorkouts = () => {
               <h3>{workout.title}</h3>
               <div>
                 <span>
-                  <i
-                    onClick={() => handleEdit(workout.id, i)}
-                    className="fas fa-pen"
-                  />
-                </span>
-                <span>
-                  <i
-                    onClick={() => handleDelete(workout.id, i)}
-                    className="fas fa-times"
-                  />
+                  <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
                 </span>
               </div>
             </Workout>
@@ -167,16 +96,7 @@ const MyWorkouts = () => {
               <h3>{workout.title}</h3>
               <div>
                 <span>
-                  <i
-                    onClick={() => handleEdit(workout.id, i)}
-                    className="fas fa-pen"
-                  />
-                </span>
-                <span>
-                  <i
-                    onClick={() => handleDelete(workout.id, i)}
-                    className="fas fa-times"
-                  />
+                  <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
                 </span>
               </div>
             </Workout>

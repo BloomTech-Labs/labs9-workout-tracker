@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import CategoryDropDown from '../CategoryDropDown';
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
+import { StyledError, DeleteButton } from '../../ProgressView/MetricModule/Style';
 import Button from '../../../shared/Button';
 
 const EditWorkout = () => {
@@ -19,6 +20,8 @@ const EditWorkout = () => {
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
   const [exercises, setExercises] = useState([]);
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(
     () => {
@@ -73,9 +76,7 @@ const EditWorkout = () => {
 
     if (token !== undefined) {
       const res = await axios.put(
-        `https://fitmetrix.herokuapp.com/api/workouts/edit/${
-          state.editWorkout.id
-        }`,
+        `https://fitmetrix.herokuapp.com/api/workouts/edit/${state.editWorkout.id}`,
         editedWorkout,
         {
           headers: {
@@ -104,12 +105,55 @@ const EditWorkout = () => {
     setExercises(exerciseCopy);
   };
 
+  const handleDelete = async e => {
+    console.log('are you sure?');
+    if (confirmDelete === false) {
+      setConfirmDelete(true);
+      return;
+    }
+
+    console.log('trying to delete: state.editWorkout.id', state.editWorkout.id);
+
+    const deleteID = state.editWorkout.id;
+
+    const newWorkouts = state.workouts;
+
+    newWorkouts.splice(deleteID, 1);
+
+    const token = await firebase.auth().currentUser.getIdToken();
+
+    if (token !== undefined) {
+      const res = await axios.delete(`https://fitmetrix.herokuapp.com/api/workouts/delete/${deleteID}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
+        }
+      });
+      console.log('the res is: ', res);
+
+      if (res.status === 200) {
+        dispatch({
+          type: 'UPDATE_WORKOUTS',
+          payload: newWorkouts
+        });
+      } else {
+        console.log('error deleting');
+      }
+    }
+
+    dispatch({ type: 'SHOW_WORKOUT_FORM' });
+  };
+
   return (
     <FormModal
       onSubmit={e => editWorkout(e)}
       closeModal={() => dispatch({ type: 'SHOW_WORKOUT_FORM' })}
       title={'Edit a Workout'}
     >
+      <Button type="button" scheme="delete" size="responsive" onClick={e => handleDelete(e)}>
+        {confirmDelete ? 'Click to confirm' : 'Delete'}
+      </Button>
+
       <Row>
         <Input
           value={title}
@@ -161,12 +205,7 @@ const EditWorkout = () => {
           );
         })}
       <Row>
-        <Button
-          type="button"
-          size="responsive"
-          scheme="delete"
-          onClick={e => addExercise(e)}
-        >
+        <Button type="button" size="responsive" scheme="delete" onClick={e => addExercise(e)}>
           Add Exercise to Workout
         </Button>
       </Row>
