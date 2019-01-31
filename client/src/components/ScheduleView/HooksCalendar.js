@@ -262,8 +262,8 @@ const HooksCalendar = props => {
           } else if (i % 2 === 1 && i <7) {
             return (<div key={sworkout.id}>
             <h3>{sworkout.title}</h3>
+            <p>{sworkout.category.name}</p>
             <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-            <p>Category: {sworkout.category.name}</p>
           </div>)
           } else {return;}
         })}
