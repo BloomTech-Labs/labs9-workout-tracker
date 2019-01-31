@@ -126,6 +126,7 @@
     height:auto;
     background: var(--neutral-color);
     border: 1px solid var(--border-color);
+    border-radius: 10px 10px 0 0;
   }
   
   .calendar .header {
@@ -241,7 +242,7 @@ transition: 0.5s ease-in;
     line-height: 1;
     color: rgb(253, 143, 37);
     opacity: 0;
-    font-size: 5em;
+    font-size: 4.5em;
     position: absolute;
     top: -0.2em;
     right: -0.05em;
