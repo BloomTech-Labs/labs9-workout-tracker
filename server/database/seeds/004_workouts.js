@@ -22,6 +22,11 @@ exports.seed = function(knex, Promise) {
       user_id: 1,
       category_id: 2,
       title: "Chest Day #1"
+    },
+    {
+      user_id: 1,
+      category_id: 2,
+      title: "Arm Day #1"
     }
   ]);
 };

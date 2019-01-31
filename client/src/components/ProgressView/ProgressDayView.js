@@ -55,6 +55,147 @@ const ProgressDayView = props => {
                 </StyledHeader>
             {
                 state.metrics && sortMetrics(state.metrics).map((m, i) => {
+                    
+                    if (state.graphType === "legs") {
+
+                        const day = new Date(m.date);
+                        let progressL = 0.0;
+                        let isPositiveL = true;
+                        if(i !== state.metrics.length-1){
+                            const cur = Number(m["leg_left"]);
+                            const prev = Number(sortMetrics(state.metrics)[i+1]["leg_left"])
+
+                            const percentage = (Math.abs(cur - prev) / ((cur+prev)/2)) * 100
+                            
+                            const rounded = Math.round(100 * percentage)/100;
+                            if (cur < prev) {
+                                progressL = '-' + rounded.toString()
+                                isPositiveL = false
+                            } else {
+                                progressL = '+' + rounded.toString()
+                            }
+                        }
+
+                        let progressR = 0.0;
+                        let isPositiveR = true;
+                        if(i !== state.metrics.length-1){
+                            const cur = Number(m["leg_right"]);
+                            const prev = Number(sortMetrics(state.metrics)[i+1]["leg_right"])
+
+                            const percentage = (Math.abs(cur - prev) / ((cur+prev)/2)) * 100
+                            
+                            const rounded = Math.round(100 * percentage)/100;
+                            if (cur < prev) {
+                                progressR = '-' + rounded.toString()
+                                isPositiveR = false
+                            } else {
+                                progressR = '+' + rounded.toString()
+                            }
+                        }
+
+
+                        return (
+                            <>
+                            <DayItem key={i}>
+                                <StyledDate>
+                                    <span>{day.toDateString()} </span>
+                                    <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                                </StyledDate>
+                                <StyledStats isPositive={isPositiveL}>
+                                    <span>Left {m["leg_left"]}in</span>
+                                    <Percentage>
+                                        {progressL}%
+                                        {isPositiveL ? <i class="fas fa-arrow-up"></i> : <i class="fas fa-arrow-down"></i>}
+                                    </Percentage>
+                                </StyledStats>
+                            </DayItem>
+                            <DayItem key={i}>
+                                <StyledDate>
+                                    <span>{day.toDateString()} </span>
+                                    <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                                </StyledDate>
+                                <StyledStats isPositive={isPositiveR}>
+                                    <span>Right {m["leg_right"]}in</span>
+                                    <Percentage>
+                                        {progressR}%
+                                        {isPositiveR ? <i class="fas fa-arrow-up"></i> : <i class="fas fa-arrow-down"></i>}
+                                    </Percentage>
+                                </StyledStats>
+                            </DayItem>
+                            </>
+                        );
+                    }
+                    
+                    if (state.graphType === "arms") {
+
+                        const day = new Date(m.date);
+                        let progressL = 0.0;
+                        let isPositiveL = true;
+                        if(i !== state.metrics.length-1){
+                            const cur = Number(m["arm_left"]);
+                            const prev = Number(sortMetrics(state.metrics)[i+1]["arm_left"])
+
+                            const percentage = (Math.abs(cur - prev) / ((cur+prev)/2)) * 100
+                            
+                            const rounded = Math.round(100 * percentage)/100;
+                            if (cur < prev) {
+                                progressL = '-' + rounded.toString()
+                                isPositiveL = false
+                            } else {
+                                progressL = '+' + rounded.toString()
+                            }
+                        }
+
+                        let progressR = 0.0;
+                        let isPositiveR = true;
+                        if(i !== state.metrics.length-1){
+                            const cur = Number(m["arm_right"]);
+                            const prev = Number(sortMetrics(state.metrics)[i+1]["arm_right"])
+
+                            const percentage = (Math.abs(cur - prev) / ((cur+prev)/2)) * 100
+                            
+                            const rounded = Math.round(100 * percentage)/100;
+                            if (cur < prev) {
+                                progressR = '-' + rounded.toString()
+                                isPositiveR = false
+                            } else {
+                                progressR = '+' + rounded.toString()
+                            }
+                        }
+
+
+                        return (
+                            <>
+                            <DayItem key={i}>
+                                <StyledDate>
+                                    <span>{day.toDateString()} </span>
+                                    <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                                </StyledDate>
+                                <StyledStats isPositive={isPositiveL}>
+                                    <span>Left {m["arm_left"]}in</span>
+                                    <Percentage>
+                                        {progressL}%
+                                        {isPositiveL ? <i class="fas fa-arrow-up"></i> : <i class="fas fa-arrow-down"></i>}
+                                    </Percentage>
+                                </StyledStats>
+                            </DayItem>
+                            <DayItem key={i}>
+                                <StyledDate>
+                                    <span>{day.toDateString()} </span>
+                                    <StyledIcon onClick={() => editMetric(m)}><i className="fas fa-edit"></i></StyledIcon>
+                                </StyledDate>
+                                <StyledStats isPositive={isPositiveR}>
+                                    <span>Right {m["arm_right"]}in</span>
+                                    <Percentage>
+                                        {progressR}%
+                                        {isPositiveR ? <i class="fas fa-arrow-up"></i> : <i class="fas fa-arrow-down"></i>}
+                                    </Percentage>
+                                </StyledStats>
+                            </DayItem>
+                            </>
+                        );
+                    }
+                    
                     const day = new Date(m.date);
                     let progress = 0.0;
                     let isPositive = true;
@@ -72,7 +213,6 @@ const ProgressDayView = props => {
                             progress = '+' + rounded.toString()
                         }
                     }
-                    
                     return (
                         <DayItem key={i}>
                             <StyledDate>

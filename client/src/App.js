@@ -69,7 +69,7 @@ const StyledApp = styled.div`
   font-size: 62.5%;
   font-size: 1.2rem;
   height: 100vh;
-  max-width: 1000px;
+  max-width: 1040px;
   position: relative;
   background-color: transparent;
   display: flex;
@@ -77,5 +77,6 @@ const StyledApp = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 105px;
+  padding: 0 20px;
   font-family: ${props => props.theme.opensans};
 `;
