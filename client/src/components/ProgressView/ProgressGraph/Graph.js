@@ -124,12 +124,18 @@ const Graph = () => {
             }
         }
 
+        const firstUpper = (word) => {
+            const split = word.toLowerCase().split(''); 
+            split[0] = split[0].toUpperCase(); 
+            return split.join('')
+        }
+
         const nData = state.metrics.map(m => m[type]);
         return {
             labels,
             datasets: [
               {
-                label: 'Left Arm',
+                label: firstUpper(type),
                 fill: "start",
                 lineTension: 0.4,
                 backgroundColor: 'rgba(253, 143, 37, 0.4)',
