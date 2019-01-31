@@ -124,13 +124,15 @@ const AddWorkout = props => {
         type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newSW.data
       });
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
+      dispatch({type:"UPDATE_SELECTED_DATE"});
     }
   };
 
   return (
     <FormModal
       onSubmit={{ scheduleWorkoutHandler }}
-      closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
+      closeModal={() => {dispatch({ type: "UPDATE_DATE_SELECTED" });  dispatch({type:"UPDATE_SELECTED_DATE"})}}
       title={"Add Workout"}
     >
       <AddWorkoutStyle>
@@ -147,7 +149,7 @@ const AddWorkout = props => {
                 workout.category_id === Number(state.selectedWorkoutCategory)
               ) {
                 return (
-                  <WorkoutsMenu>
+                  <WorkoutsMenu key={workout.id}>
                     <h3>{workout.title}</h3>
                     <p>Recurring ?</p>
                     <input

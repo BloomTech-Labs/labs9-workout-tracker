@@ -197,7 +197,7 @@ const HooksCalendar = props => {
     if (selectedDate === null) {
       setselectedDate(day);
       setdatePopulated(isPopulated);
-      dispatch({type: "UPDATE_DATE_SELECTED"})
+      dispatch({type: "UPDATE_DATE_SELECTED"});
 
     } else {
       setselectedDate(null);
@@ -253,7 +253,6 @@ const HooksCalendar = props => {
         <h3>Upcoming workouts:</h3>
       <DisplayWorkouts>
         {state.scheduleWorkouts.map((sworkout, i) => {
-          console.log(i)
           if (i % 2 === 0 && i <7) {
           return (<div className="gray" key={sworkout.id}>
             <h3>{sworkout.title}</h3>

@@ -81,42 +81,17 @@ const WorkoutDetails = props => {
     }
   };
 
-  // const renderWorkout = () => {
-  //   if (props.datePopulated === false) {
-  //     return (
-  //       <div>
-  //         <WorkoutDetailsDiv>
-  //           No workouts Scheduled
-  //           <Button
-  //             onClick={e => {
-  //               toggleAddingWorkout(e);
-  //             }}
-  //           >
-  //             Schedule Workout
-  //           </Button>
-  //           {addingWorkout === true ? (
-  //             <AddWorkout
-  //               workouts={state.workouts}
-  //               scheduleWorkouts={state.scheduleWorkouts}
-  //               selectedDate={props.selectedDate}
-  //             />
-  //           ) : null}
-  //         </WorkoutDetailsDiv>
-  //       </div>
-  //     );
-  //   }
-  // };
-
   const completedWorkout = async (e, scheduleWorkout) => {
     e.preventDefault();
     const token = await firebase.auth().currentUser.getIdToken();
+    console.log("swkt:", scheduleWorkout)
 
     const updateRes = await axios
       .put(
         `https://fitmetrix.herokuapp.com/api/schedule/edit/workout/${
           scheduleWorkout.id
         }`,
-        { completed: false },
+        {completed:true},
         {
           headers: {
             Authorization: token
@@ -140,31 +115,16 @@ const WorkoutDetails = props => {
         type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newScheduleWorkouts.data
       });
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
     }
-  };
-
-  const calcPercentage = workout => {
-    const total = workout.exercises.length;
-    const totalcomplete = 0;
-    workout.exercises.map(exercise => {
-      if (exercise.completed === true) {
-        totalcomplete++;
-      }
-    });
-    if (total !== 0 && total === totalcomplete) {
-      setCompleted(true);
-    }
-    return totalcomplete / total;
   };
 
   return (
     <FormModal
-      onSubmit={{ completedWorkout }}
-      closeModal={() => dispatch({ type: "UPDATE_DATE_SELECTED" })}
+      closeModal={() => {dispatch({ type: "UPDATE_DATE_SELECTED" }); dispatch({type:"UPDATE_SELECTED_DATE"})}}
       title={"Workout Details"}
     >
       <WorkoutContainer>
-        {/* {renderWorkout()} */}
         {props.selectedDate === null
           ? state.scheduleWorkouts &&
             state.scheduleWorkouts.map(scheduleWorkout => {
@@ -226,7 +186,7 @@ const WorkoutDetails = props => {
                       type="button"
                       onClick={e => completedWorkout(e, scheduleWorkout)}
                     >
-                       Workout Complete
+                      Workout Complete
                     </Button>
                     <Button
                       type="button"

@@ -62,11 +62,11 @@ const updateScheduledWorkout = async (e) => {
 
   return (
     <ExerciseDetailsDiv key={props.exercise.id}>
-      <ExerciseDetailsP> {props.exercise.name}</ExerciseDetailsP>
+      <h3> {props.exercise.name}</h3>
+      <ExerciseDetailsListDiv>
       <ExerciseDetailsP>Weight: {props.exercise.weight}</ExerciseDetailsP>
       <ExerciseDetailsP>Sets: {props.exercise.sets}</ExerciseDetailsP>
       <ExerciseDetailsP>Reps: {props.exercise.reps}</ExerciseDetailsP>
-      <ExerciseDetailsListDiv>
       <p>Done</p>
       <input
         type="checkbox"
@@ -88,12 +88,19 @@ display:flex;
 border-bottom:1px solid #eee;
 align-items:center;
 justify-content:space-around;
-
+padding: 20px 0;
 `;
 
 const ExerciseDetailsP= styled.p`
 width: calc(100%/5)`;
+
 const ExerciseDetailsListDiv= styled.div`
 display:flex;
 align-items:center;
-width: calc(100%/5)`;
+justify-content: space-around;
+width: 60%;
+input {
+   margin-left: 3%;
+   margin-bottom:12px;
+ }
+`;
