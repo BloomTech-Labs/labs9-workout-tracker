@@ -17,10 +17,18 @@ const Graph = () => {
 
     const getLineData = () => {
         if (!state.metrics) return{};
+
+        const sortedMetrics = state.metrics;
+        sortedMetrics.sort((a, b) => {
+            const newA = Number(dateParser(a.date).split('/').join(''))
+            const newB = Number(dateParser(b.date).split('/').join(''))
+            return newA - newB;
+        });
+
         if (type === "arms" || type === "legs") {
             if(type === "arms") {
-                const leftArm = state.metrics.map(m => m.arm_left);
-                const rightArm = state.metrics.map(m => m.arm_right);
+                const leftArm = sortedMetrics.map(m => m.arm_left);
+                const rightArm = sortedMetrics.map(m => m.arm_right);
 
                 return {
                     labels,
@@ -71,8 +79,8 @@ const Graph = () => {
                 };
             }
             if(type === "legs") {
-                const leftLeg = state.metrics.map(m => m.leg_left);
-                const rightLeg = state.metrics.map(m => m.leg_right);
+                const leftLeg = sortedMetrics.map(m => m.leg_left);
+                const rightLeg = sortedMetrics.map(m => m.leg_right);
 
                 return {
                     labels,
@@ -124,13 +132,16 @@ const Graph = () => {
             }
         }
 
+
         const firstUpper = (word) => {
             const split = word.toLowerCase().split(''); 
             split[0] = split[0].toUpperCase(); 
             return split.join('')
         }
 
-        const nData = state.metrics.map(m => m[type]);
+        const nData = sortedMetrics.map(m => m[type]);
+
+
         return {
             labels,
             datasets: [
@@ -169,10 +180,10 @@ const Graph = () => {
                 }
             }],
             yAxes: [{
-                stacked: true,
+                stacked: state.graphType == "legs" || state.graphType == "arms" ? true : false,
                 scaleLabel: {
                     display: true,
-                    labelString: 'lbs'
+                    labelString: 'lbs',
                 }
             }]
         }
@@ -183,6 +194,13 @@ const Graph = () => {
         if (!state.metrics) return;
 
         const nDates = state.metrics.map(m => dateParser(m.date));
+        console.log(nDates)
+        nDates.sort((a, b) => {
+            const newA = Number(a.split('/').join(''))
+            const newB = Number(b.split('/').join(''))
+            return newA - newB;
+        });
+        console.log(nDates)
         setLabels(nDates);
 
 
