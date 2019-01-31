@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import CategoryDropDown from '../CategoryDropDown';
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
+import Button from '../../../shared/Button';
 
 const EditWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
@@ -25,7 +26,10 @@ const EditWorkout = () => {
       if (editWorkout !== null) {
         setTitle(editWorkout.title);
         setExercises(editWorkout.exercises);
-        dispatch({ type: 'UPDATE_SELECTED_CATEGORY', payload: editWorkout.category_id });
+        dispatch({
+          type: 'UPDATE_SELECTED_CATEGORY',
+          payload: editWorkout.category_id
+        });
       }
     },
     [state.editWorkout]
@@ -69,7 +73,9 @@ const EditWorkout = () => {
 
     if (token !== undefined) {
       const res = await axios.put(
-        `https://fitmetrix.herokuapp.com/api/workouts/edit/${state.editWorkout.id}`,
+        `https://fitmetrix.herokuapp.com/api/workouts/edit/${
+          state.editWorkout.id
+        }`,
         editedWorkout,
         {
           headers: {
@@ -155,13 +161,20 @@ const EditWorkout = () => {
           );
         })}
       <Row>
-        <AddExerciseButton type="button" onClick={e => addExercise(e)}>
+        <Button
+          type="button"
+          size="responsive"
+          scheme="delete"
+          onClick={e => addExercise(e)}
+        >
           Add Exercise to Workout
-        </AddExerciseButton>
+        </Button>
       </Row>
 
       <Row>
-        <SubmitButton type="submit">Update Workout</SubmitButton>
+        <Button type="submit" size="responsive">
+          Update Workout
+        </Button>
       </Row>
     </FormModal>
   );
@@ -169,25 +182,25 @@ const EditWorkout = () => {
 
 export default EditWorkout;
 
-const AddExerciseButton = styled.button`
-  width: 100%;
-  height: 36px;
-  background-color: white;
-  box-shadow: ${props => props.theme.boxShadow};
-  border: none;
-  border-radius: 4px;
-  cursor: none;
-`;
+// const AddExerciseButton = styled.button`
+//   width: 100%;
+//   height: 36px;
+//   background-color: white;
+//   box-shadow: ${props => props.theme.boxShadow};
+//   border: none;
+//   border-radius: 4px;
+//   cursor: none;
+// `;
 
-const SubmitButton = styled.button`
-  width: 100%;
-  height: 36px;
-  color: white;
-  background-color: ${props => props.theme.accent};
-  border-radius: 4px;
-  box-shadow: ${props => props.theme.boxShadow};
-  border: none;
-`;
+// const SubmitButton = styled.button`
+//   width: 100%;
+//   height: 36px;
+//   color: white;
+//   background-color: ${props => props.theme.accent};
+//   border-radius: 4px;
+//   box-shadow: ${props => props.theme.boxShadow};
+//   border: none;
+// `;
 
 const Container = styled.form`
   width: 100%;
