@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const FormModal = ({ onSubmit, closeModal, children, title }) => {
+const FormModal = ({ onSubmit, closeModal, children, title, size }) => {
   return (
     <ModalContainer>
-      <ModalForm onSubmit={e => onSubmit(e)}>
+      <ModalForm onSubmit={e => onSubmit(e)} size={size}>
         <ModalHeader>
           <h2>{title}</h2>
           <i onClick={e => closeModal(e)} className="fas fa-times" />
@@ -54,7 +54,8 @@ const slideIn = keyframes`
 `;
 
 const ModalForm = styled.form`
-  width: 800px;
+  width: 100%;
+  max-width: ${props => props.size=== "small" ? "450px" : "800px"};
   height: 100vh;
   background-color: white;
   box-shadow: 1px 0px 10px 1px rgba(0, 0, 0, 0.75);
@@ -64,4 +65,8 @@ const ModalForm = styled.form`
   right: -450px;
   top: 0;
   animation: ${slideIn} 250ms ease-in forwards;
+  @media(max-width: 800px) {
+    width:100%;
+    max-width: 500px;
+  }
 `;

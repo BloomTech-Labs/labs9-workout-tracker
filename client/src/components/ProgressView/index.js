@@ -13,7 +13,7 @@ const ProgressView = props => {
 
   return (
     <ProgressViewStyle>
-
+      <h1>Progress</h1>
       <ProgressGraph />
       <ProgressDayView />
 
@@ -25,4 +25,9 @@ const ProgressView = props => {
 export default requireAuth(ProgressView);
 
 const ProgressViewStyle = styled.div`
+  width: 100%;
+  h1 {
+    position: absolute;
+    left: 20px;
+  }
 `;

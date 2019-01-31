@@ -8,76 +8,21 @@ const Graph = () => {
     const type = state.graphType;
     
     const dateParser = date => {
-
-        console.log(date);
         date = date.split("/")
 
         return date[1] + "/" + date[2];
     };
 
-    const [ data, setData ] = useState([])
-    const [ data2, setData2 ] = useState([])
     const [ labels, setLabels ] = useState([])
 
-    const [lineData, setLineData] = useState({
-        labels,
-        datasets: [
-          {
-            label: 'Weight',
-            fill: "start",
-            lineTension: 0.4,
-            backgroundColor: 'rgba(253, 143, 37, 0.4)',
-            borderColor: 'rgba(253, 143, 37, 1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(253, 143, 37, 1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(253, 143, 37, 1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data,
-          }
-        ],
-    })
-
-    const options = {
-        scales: {
-            xAxes: [{
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Day'
-                }
-            }],
-            yAxes: [{
-                stacked: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'lbs'
-                }
-            }]
-        }
-    }
-
-    useEffect(() => {
-        if (!state.metrics) return;
-
-        const nDates = state.metrics.map(m => dateParser(m.date));
-        setLabels(nDates);
-
+    const getLineData = () => {
+        if (!state.metrics) return{};
         if (type === "arms" || type === "legs") {
             if(type === "arms") {
                 const leftArm = state.metrics.map(m => m.arm_left);
-                setData(leftArm)
                 const rightArm = state.metrics.map(m => m.arm_right);
-                setData2(rightArm)
 
-                setLineData({
+                return {
                     labels,
                     datasets: [
                       {
@@ -99,7 +44,7 @@ const Graph = () => {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: data,
+                        data: leftArm,
                       },
                       {
                         label: 'Right Arm',
@@ -120,19 +65,16 @@ const Graph = () => {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: data2
+                        data: rightArm
                       }
                     ],
-                });
-                return;
+                };
             }
             if(type === "legs") {
                 const leftLeg = state.metrics.map(m => m.leg_left);
-                setData(leftLeg)
                 const rightLeg = state.metrics.map(m => m.leg_right);
-                setData2(rightLeg)
 
-                setLineData({
+                return {
                     labels,
                     datasets: [
                       {
@@ -154,7 +96,7 @@ const Graph = () => {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: data,
+                        data: leftLeg,
                       },
                       {
                         label: 'Right Leg',
@@ -175,22 +117,19 @@ const Graph = () => {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: data2
+                        data: rightLeg
                       }
                     ],
-                });
-                return;
+                };
             }
         }
 
         const nData = state.metrics.map(m => m[type]);
-        setData(nData)
-
-        setLineData({
+        return {
             labels,
             datasets: [
               {
-                label: 'Weight',
+                label: 'Left Arm',
                 fill: "start",
                 lineTension: 0.4,
                 backgroundColor: 'rgba(253, 143, 37, 0.4)',
@@ -208,18 +147,45 @@ const Graph = () => {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data,
+                data: nData,
               }
             ],
-        })
+        };
+
+    }
+
+    const options = {
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Day'
+                }
+            }],
+            yAxes: [{
+                stacked: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'lbs'
+                }
+            }]
+        }
+    }
 
 
-    }, [state.metrics, state.graphType, state]);
+    useEffect(() => {
+        if (!state.metrics) return;
+
+        const nDates = state.metrics.map(m => dateParser(m.date));
+        setLabels(nDates);
+
+
+    }, [state.metrics, state.graphType]);
 
 
     return (
         <StyledGraph>
-            <Line data={lineData} options={options}/>
+            <Line data={getLineData()} options={options}/>
         </StyledGraph>
     );
 }
@@ -231,7 +197,10 @@ const StyledGraph = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 225px;
-  width: 550px;
+  width: 80%;
   background-color: white;
+  margin-top: 30px;
+  @media (max-width: 1040px) {
+      width: 100%;
+  }
 `;

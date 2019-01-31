@@ -1,7 +1,7 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
 const db = require('../database/dbConfig');
-const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n");
 const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 
 admin.initializeApp({

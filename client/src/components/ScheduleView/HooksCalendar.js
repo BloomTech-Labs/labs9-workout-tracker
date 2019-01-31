@@ -3,15 +3,15 @@ import React, { useContext, useState } from "react";
 import { Store } from "../../index";
 import dateFns from "date-fns";
 import AddWorkout from "./AddWorkout";
-import styled from 'styled-components';
+import styled from "styled-components";
 import WorkoutDetails from "./WorkoutDetails";
 import "./Calendar.css";
+import FormModal from "../../shared/FormModal";
 
 const HooksCalendar = props => {
   const { state, dispatch } = useContext(Store);
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [dateSelected, setdateSelected] = useState(false);
   const [selectedDate, setselectedDate] = useState(null);
   const [datePopulated, setdatePopulated] = useState(false);
 
@@ -117,10 +117,15 @@ const HooksCalendar = props => {
                     : ""
                 }`}
                 key={`${day}${Math.random()}`}
-                sworkout={state.scheduleWorkouts.map(sworkout => {
+                sworkout={state.scheduleWorkouts.filter(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
                   const splitDate = sworkout.date.split("T")[0];
-                  return splitDate === matchedDate ? sworkout : null;
+                  if (splitDate === matchedDate) return sworkout;
+                })}
+                completed={state.scheduleWorkouts.map(sworkout => {
+                  // returns the title of the scheduled workout if it matches matchedDate
+                  const splitDate = sworkout.date.split("T")[0];
+                  if (splitDate === matchedDate) return sworkout;
                 })}
                 onClick={
                   //Check whether the matchedDate is inside of scheduled workouts
@@ -136,18 +141,36 @@ const HooksCalendar = props => {
                       }
                 }
               >
+                {//maps through scheduleworkouts
+                state.scheduleWorkouts.map(sworkout => {
+                  // returns the title of the scheduled workout if it matches matchedDate
+                  const splitDate = sworkout.date.split("T")[0];
+                  if (splitDate === matchedDate) {
+                    if (sworkout.completed === true) {
+                      return (
+                        <CellDiv key={sworkout.id}>
+                          <i
+                            className="fas fa-dumbbell completed"
+                            key={`${day}${Math.random()}`}
+                          />
+                          <p className="completed">{sworkout.title}</p>
+                        </CellDiv>
+                      );
+                    } else {
+                      return (
+                        <CellDiv key={sworkout.id}>
+                          <i
+                            className="fas fa-dumbbell"
+                            key={`${day}${Math.random()}`}
+                          />
+                          <p>{sworkout.title.substring(0, 13)}...</p>
+                        </CellDiv>
+                      );
+                    }
+                  }
+                })}
                 <span className="number">{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
-                <span>
-                  {//maps through scheduleworkouts
-                  state.scheduleWorkouts.map(sworkout => {
-                    // returns the title of the scheduled workout if it matches matchedDate
-                    const splitDate = sworkout.date.split("T")[0];
-                    return splitDate === matchedDate ? (
-                      <span key={sworkout.id}>{sworkout.title}</span>
-                    ) : null;
-                  })}
-                </span>
               </div>
             )}
           </React.Fragment>
@@ -174,20 +197,13 @@ const HooksCalendar = props => {
     if (selectedDate === null) {
       setselectedDate(day);
       setdatePopulated(isPopulated);
-      setdateSelected(true);
+      dispatch({type: "UPDATE_DATE_SELECTED"})
+
     } else {
       setselectedDate(null);
       setdatePopulated(isPopulated);
-      setdateSelected(false);
+      dispatch({type: "UPDATE_DATE_SELECTED"})
     }
-    // isPopulated: If the date has a scheduled workout true/false
-    // dateSelected: If any date on the calendar is selected true/false
-    // selectedDate: What current date is being highlighted null/date
-    // week selected: If a week is selected true/false not used yet
-
-    //when selecting first date, selectedDate becomes the highlighted day
-    //date populated takes care of itself. Incoming flag
-    //
   };
 
   const nextMonth = () => {
@@ -208,38 +224,91 @@ const HooksCalendar = props => {
 
   return (
     <div className="calendar-div">
+      <Legend>
+        <i className="fas fa-dumbbell completed" />
+        <p>Complete</p>
+        <i className="fas fa-dumbbell 3x" />
+        <p>Incomplete</p>
+      </Legend>
       <div className="calendar">
         {renderHeader()}
         {renderDays()}
         {renderCells()}
       </div>
-      <PopupModalDiv>
-          {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
-          <WorkoutDetails
-            selectedDate={selectedDate}
-            currentDay = {currentMonth}
-            dispatch={dispatch}
-            scheduleWorkouts={state.scheduleWorkouts}
-            datePopulated ={datePopulated}
-          />
-        </PopupModalDiv>
-
+      {state.dateSelected === false ? null : datePopulated === true ? (
+        <WorkoutDetails
+          selectedDate={selectedDate}
+          currentDay={currentMonth}
+          dispatch={dispatch}
+          scheduleWorkouts={state.scheduleWorkouts}
+          datePopulated={datePopulated}
+        />
+      ) : (
+        <AddWorkout
+          workouts={state.workouts}
+          scheduleWorkouts={state.scheduleWorkouts}
+          selectedDate={selectedDate}
+        />
+      )}
     </div>
   );
 };
 
 export default HooksCalendar;
 
-const PopupModalDiv = styled.div`
-width:40%;
-justify-content: space-around;
-border-radius: 4px;
+const Legend = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  i {
+    color: rgb(253, 143, 37);
+    margin-left: 4%;
+  }
+  i.completed {
+    color: rgb(64, 88, 101);
+    margin-left: 2%;
+  }
+  p {
+    margin: 0 2% 0 1%;
+  }
 `;
 
-{/* <PopupModalDiv>
-<AddWorkout
-  workouts={state.workouts}
-  scheduleWorkouts={state.scheduleWorkouts}
-  selectedDate={selectedDate}
-/>
-</PopupModalDiv> */}
+const PopupModalDiv = styled.div`
+  width: 40%;
+  justify-content: space-around;
+  border-radius: 4px;
+`;
+
+const CellDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  @media (max-width: 690px) {
+    justify-content: center;
+  }
+  i {
+    margin-right: 70%;
+    margin-top: 5px;
+    @media (max-width: 690px) {
+      margin: 0;
+      align-self: center;
+    }
+  }
+  p {
+    font-weight: bold;
+    background: rgb(253, 143, 37, 0.8);
+    border-radius: 10px;
+    margin: 2px auto;
+    color: white;
+    padding: 1px 5%;
+    width: 93%;
+    @media (max-width: 690px) {
+      display: none;
+    }
+  }
+  p.completed {
+    background: rgb(64, 88, 101, 0.8);
+  }
+`;

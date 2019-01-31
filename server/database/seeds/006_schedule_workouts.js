@@ -53,6 +53,20 @@ exports.seed = function(knex, Promise) {
       title: "Chest Day #1",
       date: "2019-1-25",
       category_id: 2
+    },
+    {
+      user_id: 1,
+      title: "Chest Day #1",
+      date: "2019-1-26",
+      category_id: 2,
+      completed: true
+    },
+    {
+      user_id: 1,
+      title: "Chest Day #1",
+      date: "2019-1-27",
+      category_id: 2,
+      completed: true
     }
   ]);
 };

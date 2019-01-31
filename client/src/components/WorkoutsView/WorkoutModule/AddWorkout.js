@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import CategoryDropDown from '../CategoryDropDown';
 import Input from '../../../shared/Input';
 import FormModal from '../../../shared/FormModal';
+import Button from '../../../shared/Button';
 
 const AddWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
@@ -230,7 +231,7 @@ const AddWorkout = () => {
       </Row>
 
       <Row>
-        <SubmitButton type="submit">Submit Workout</SubmitButton>
+        <Button type="submit" size="responsive">Submit</Button>
       </Row>
     </FormModal>
   );

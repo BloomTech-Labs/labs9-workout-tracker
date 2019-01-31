@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Store } from '../../index';
 import styled from 'styled-components';
+import * as firebase from 'firebase';
 import axios from "axios";
+
 
 const ExerciseDetails = props => {
   //update state using hook
+  const { state, dispatch } = useContext(Store);
+
   const [status, setStatus] = useState(props.exercise.completed);
 
   const updateExercise = () => {
@@ -34,6 +39,27 @@ const ExerciseDetails = props => {
       })
   };
 
+const updateScheduledWorkout = async (e) => {
+  console.log("update sched workout")
+  setStatus(e.target.checked);
+  const token = await firebase.auth().currentUser.getIdToken();
+  console.log("status:", status)
+  console.log("completed:", props.exercise.completed)
+  // if (status !== props.exercise.completed) {
+  //   console.log("updating scheduled workout")
+  //   const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule', {
+  //     headers: {
+  //       Authorization: token
+  //     }
+  //   });
+
+  //   dispatch({
+  //     type: 'UPDATE_SCHEDULE_WORKOUTS',
+  //     payload: newScheduleWorkouts.data
+  //   });
+  // }
+}
+
   return (
     <ExerciseDetailsDiv key={props.exercise.id}>
       <ExerciseDetailsP> {props.exercise.name}</ExerciseDetailsP>
@@ -41,12 +67,13 @@ const ExerciseDetails = props => {
       <ExerciseDetailsP>Sets: {props.exercise.sets}</ExerciseDetailsP>
       <ExerciseDetailsP>Reps: {props.exercise.reps}</ExerciseDetailsP>
       <ExerciseDetailsListDiv>
-      <p>Done?</p>
+      <p>Done</p>
       <input
         type="checkbox"
         checked={status}
         onChange={e => {
-            setStatus(e.target.checked)
+           
+            updateScheduledWorkout( e)
         } }
       />
       </ExerciseDetailsListDiv>
