@@ -3,6 +3,7 @@ import { Store } from '../../index';
 import firebase from 'firebase';
 import styled from 'styled-components';
 import DropDown from '../../shared/DropDown';
+import Button from '../../shared/Button';
 import axios from 'axios';
 
 const MyWorkouts = () => {
@@ -70,9 +71,11 @@ const MyWorkouts = () => {
             value={state.selectedWorkoutCategory}
           />
         </DropDownContainer>
-        <AddWorkoutButton onClick={() => handleAdd()} type="button">
-          Add Workout
-        </AddWorkoutButton>
+        <ButtonContainer>
+          <Button onClick={() => handleAdd()} type="button">
+            Add Workout
+          </Button>
+        </ButtonContainer>
       </Header>
       {state.workouts.map((workout, i) => {
         if (state.selectedWorkoutCategory === 'all') {
@@ -107,15 +110,15 @@ const MyWorkouts = () => {
 
 export default MyWorkouts;
 
-const AddWorkoutButton = styled.button`
-  height: 36px;
-  width: 150px;
-  background-color: ${props => props.theme.accent};
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-`;
+// const AddWorkoutButton = styled.button`
+//   height: 36px;
+//   width: 150px;
+//   background-color: ${props => props.theme.accent};
+//   border: none;
+//   border-radius: 4px;
+//   color: white;
+//   cursor: pointer;
+// `;
 
 const Header = styled.div`
   width: 100%;
@@ -131,6 +134,10 @@ const DropDownContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
+`;
+
+const ButtonContainer = styled.div`
+  margin: 0;
 `;
 
 const Workout = styled.div`

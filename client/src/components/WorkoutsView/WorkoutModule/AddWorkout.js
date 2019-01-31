@@ -80,12 +80,16 @@ const AddWorkout = () => {
     console.log('the current workout is: ', workout);
 
     if (token !== undefined) {
-      const res = await axios.post('https://fitmetrix.herokuapp.com/api/workouts/', workout, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token
+      const res = await axios.post(
+        'https://fitmetrix.herokuapp.com/api/workouts/',
+        workout,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+          }
         }
-      });
+      );
       console.log('the current workout is: ', workout);
     }
     //Resets the title and category after workout is added
@@ -121,11 +125,15 @@ const AddWorkout = () => {
     console.log('newCategory is: ', newCategory);
     const token = await firebase.auth().currentUser.getIdToken();
 
-    const res = await axios.post('https://fitmetrix.herokuapp.com/api/category/create/', newCatObj, {
-      headers: {
-        Authorization: token
+    const res = await axios.post(
+      'https://fitmetrix.herokuapp.com/api/category/create/',
+      newCatObj,
+      {
+        headers: {
+          Authorization: token
+        }
       }
-    });
+    );
 
     dispatch({
       type: 'UPDATE_CATEGORIES',
@@ -218,20 +226,45 @@ const AddWorkout = () => {
           label="Exercise Name"
           size="large"
         />
-        <Input value={weight} type="text" placeholder="50" onChange={e => setWeight(e.target.value)} label="Weight" />
-        <Input value={sets} type="text" placeholder="3" onChange={e => setSets(e.target.value)} label="Sets" />
-        <Input value={reps} type="text" placeholder="12" onChange={e => setReps(e.target.value)} label="Reps" />
+        <Input
+          value={weight}
+          type="text"
+          placeholder="50"
+          onChange={e => setWeight(e.target.value)}
+          label="Weight"
+        />
+        <Input
+          value={sets}
+          type="text"
+          placeholder="3"
+          onChange={e => setSets(e.target.value)}
+          label="Sets"
+        />
+        <Input
+          value={reps}
+          type="text"
+          placeholder="12"
+          onChange={e => setReps(e.target.value)}
+          label="Reps"
+        />
         <span>x</span>
       </Row>
 
       <Row>
-        <AddExerciseButton type="button" onClick={e => addExercise(e)}>
+        <Button
+          type="button"
+          scheme="delete"
+          size="responsive"
+          onClick={e => addExercise(e)}
+        >
           Add Exercise to Workout
-        </AddExerciseButton>
+        </Button>
       </Row>
 
       <Row>
-        <Button type="submit" size="responsive">Submit</Button>
+        <Button type="submit" size="responsive">
+          Submit
+        </Button>
       </Row>
     </FormModal>
   );
