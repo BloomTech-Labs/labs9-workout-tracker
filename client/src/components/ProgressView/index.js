@@ -28,6 +28,6 @@ const ProgressViewStyle = styled.div`
   width: 100%;
   h1 {
     position: absolute;
-    left: 0;
+    left: 20px;
   }
 `;

@@ -161,6 +161,15 @@ const RadarContianer = styled.div`
     position: absolute;
     right: -90px;
     top: 200px;
+    @media (max-width: 1040px) {
+      top: 10px;
+    }
+    @media (max-width: 475px) {
+      top: 210px;
+      left: 50%;
+      width: 380px;
+      margin-left: -190px;
+    }
 `;
 
 const Row = styled.div`
@@ -183,6 +192,16 @@ const Row = styled.div`
       color: ${props => props.theme.primaryLight};
     `}
   }
+  @media (max-width: 1040px) {
+    width: 50%;
+  }
+  @media (max-width: 500px) {
+    width: 180px;
+  }
+  @media (max-width: 475px) {
+    width: 100%;
+  }
+  
 `;
 
 
@@ -193,13 +212,21 @@ const DetailsContainer = styled.div`
   align-items: flex-start;
   width: 20%;
   position: relative;
-  /* background-color: ${props => props.theme.primaryDark}; */
   padding: 20px 10px;
-
   h2 {
       font-size: 20px;
       font-weight: 600;
       text-transform: uppercase;
       color: ${props => props.theme.primaryDark};
+  }
+  @media (max-width: 1040px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 200px;
+  }
+  @media (max-width: 475px) {
+    height: 400px;
   }
 `;

@@ -200,4 +200,7 @@ const StyledGraph = styled.div`
   width: 80%;
   background-color: white;
   margin-top: 30px;
+  @media (max-width: 1040px) {
+      width: 100%;
+  }
 `;
