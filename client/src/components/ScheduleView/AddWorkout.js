@@ -14,6 +14,10 @@ const AddWorkout = props => {
   const key = window.localStorage.getItem("login_token");
   const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
 
+  // const inputStyle = {
+  //   visibility:"hidden"
+  // }
+
   const getOptions = () => {
     let options = state.category.map((cat, i) => {
       return {
@@ -46,7 +50,7 @@ const AddWorkout = props => {
   const [categories, setCategory] = useState(initialCategoryValue);
   const [categoryID, setCategoryID] = useState(null);
   const [recurring, setRecurring] = useState(false);
-  const [recurringWeeks, setRecurringWeeks] = useState(false);
+  const [recurringWeeks, setRecurringWeeks] = useState(0);
 
   //handler to schedule the workout and add it to Sworkout Database
   const scheduleWorkoutHandler = async (e, workout, date, recurringWeeks) => {
@@ -144,20 +148,44 @@ const AddWorkout = props => {
               ) {
                 return (
                   <WorkoutsMenu>
-                    <p>{workout.title}</p>
-                    Recurring ?{" "}
+                    <h3>{workout.title}</h3>
+                    <p>Recurring ?</p>
                     <input
+                      size="medium"
                       type="checkbox"
                       checked={recurring}
                       onChange={e => setRecurring(e.target.checked)}
                     />
-                    next{" "}
-                    <input
-                      type="number"
-                      value={recurringWeeks}
-                      onChange={e => setRecurringWeeks(e.target.value)}
-                    />{" "}
-                    weeks
+                    {recurring ? (
+                      <Input
+                        name="recurringWeeks"
+                        placeholder="?"
+                        label="# Weeks"
+                        type="number"
+                        value={recurringWeeks}
+                        onChange={e => setRecurringWeeks(e.target.value)}
+                      />
+                    ) : (
+                      <Input
+                        name="recurringWeeks"
+                        placeholder="?"
+                        isDisabled="true"
+                        label="# Weeks"
+                        type="number"
+                        value={recurringWeeks}
+                        onChange={e => setRecurringWeeks(e.target.value)}
+                      />
+                    //   <Input
+                    //   name="recurringWeeks"
+                    //   placeholder="?"
+                    //   label="# Weeks"
+                    //   type="number"
+                    //   value={recurringWeeks}
+                    //   onChange={e => setRecurringWeeks(e.target.value)}
+                    //   style={inputStyle}
+                    // />
+                    )}
+
                     <Button
                       onClick={e => {
                         scheduleWorkoutHandler(
@@ -184,15 +212,20 @@ const AddWorkoutStyle = styled.div``;
 
 const WorkoutsMenu = styled.div`
   display: flex;
-  align-items:center;
-  input {
-    height: 20px;
-    width: 20px;
+  align-items: center;
+  justify-content:space-evenly;
 
+  margin: 10px 0;
+  input {
   }
-  Button {
-    margin: 0;
+  button {
+    margin: 0 5%;
+  }
+  p {
+    margin-left: 10%;
   }
 `;
+
+
 
 export default AddWorkout;

@@ -77,6 +77,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+
 `;
 
 const StyledInput = styled.input`
@@ -86,4 +87,5 @@ const StyledInput = styled.input`
   border-radius: 4px;
   padding: 0px 10px;
   border: 1px solid rgba(0,0,0,0.24);
+
 `;
