@@ -77,23 +77,29 @@ const NavContainer = styled.div`
   top: 0;
   left: 0;
   margin: 0 auto;
-  padding: 0 2%;
 `;
 
 const NavStyle = styled.div`
   width: 100%;
   max-width: ${props =>
-    props.isApp ? "1200 px" : props.theme.containingWidth};
+  props.isApp ? "1200 px" : props.theme.containingWidth};
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
+  padding: 0 20px;
+  @media (max-width: 560px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+  }
 `;
 
 const StyledLink = styled(NavLink)`
-  width: 100px;
-  height: 72px;
+  width: 120px;
+  height: 100%;
   color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
@@ -117,6 +123,15 @@ const StyledLink = styled(NavLink)`
     /* border-bottom: solid 2px ${props => props.theme.accent}; */
     color: ${props => props.theme.accent};
   }
+  @media (max-width: 740px) {
+      width: 80px;
+      span {
+        display: none;
+      }
+  }
+  @media (max-width: 560px) {
+      width: 60px;
+  }
 `;
 
 const Logo = styled(Link)`
@@ -130,5 +145,8 @@ const Logo = styled(Link)`
 const NavBar = styled.div`
   display: flex;
   justify-content: flex-end;
-  width: 42%;
+  height: 100%;
+  @media (max-width: 560px) {
+      height: 42px;
+  }
 `;
