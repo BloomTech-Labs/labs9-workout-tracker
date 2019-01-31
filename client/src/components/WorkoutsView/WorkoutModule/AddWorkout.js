@@ -32,7 +32,14 @@ const AddWorkout = () => {
   const [weight, setWeight] = useState('');
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
-  const [exercises, setExercises] = useState([]);
+  const [exercises, setExercises] = useState([
+    {
+      name: '',
+      weight: '',
+      sets: '',
+      reps: ''
+    }
+  ]);
   const [newCategory, setNewCategory] = useState('');
 
   useEffect(
@@ -75,7 +82,8 @@ const AddWorkout = () => {
 
     const workout = {
       title,
-      category_id: Number(state.selectedCategory)
+      category_id: Number(state.selectedCategory),
+      exercises
     };
     console.log('the current workout is: ', workout);
 
@@ -87,6 +95,16 @@ const AddWorkout = () => {
         }
       });
       console.log('the current workout is: ', workout);
+
+      if (res.status === 201) {
+        const newWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/workouts/', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+          }
+        });
+        dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+      }
     }
     //Resets the title and category after workout is added
     setTitle('');
@@ -135,9 +153,18 @@ const AddWorkout = () => {
     dispatch({ type: 'ADD_CATEGORY' });
   };
 
-  const removeExercise = () => {
-    // dispatch({ type: "SHOW_METRIC_FORM" })
-    // dispatch({ type: "RESET_EDIT_METRIC" })
+  const removeExercise = async (e, index) => {
+    console.log('exercises length is:', exercises.length);
+    console.log('exercises are:', exercises);
+    console.log('index is:', index);
+
+    const newExercises = exercises;
+
+    if (!isNaN(index)) {
+      newExercises.splice(index, 1);
+      setExercises(newExercises);
+      console.log('exercises are: ', exercises);
+    }
   };
 
   return (
@@ -209,24 +236,10 @@ const AddWorkout = () => {
                 placeholder="Reps"
                 label="Reps"
               />
-              <i onClick={e => removeExercise(e)} className="fas fa-times" />
+              {exercises.length === 1 ? null : <i onClick={e => removeExercise(e, index)} className="fas fa-times" />}
             </Row>
           );
         })}
-
-      <Row>
-        <Input
-          value={exerciseName}
-          placeholder="Lunges"
-          onChange={e => setExerciseName(e.target.value)}
-          label="Exercise Name"
-          size="large"
-        />
-        <Input value={weight} type="text" placeholder="50" onChange={e => setWeight(e.target.value)} label="Weight" />
-        <Input value={sets} type="text" placeholder="3" onChange={e => setSets(e.target.value)} label="Sets" />
-        <Input value={reps} type="text" placeholder="12" onChange={e => setReps(e.target.value)} label="Reps" />
-        <i onClick={e => removeExercise(e)} className="fas fa-times" />
-      </Row>
 
       <Row>
         <Button type="button" scheme="delete" size="responsive" onClick={e => addExercise(e)}>
