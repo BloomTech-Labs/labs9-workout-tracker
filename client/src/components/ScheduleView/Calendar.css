@@ -119,6 +119,12 @@
     justify-content: space-around;
     flex-direction:column;
   }
+      @media(max-width: 690px) {
+        .calendar-div {
+        flex-direction: column-reverse;
+      }
+    }
+
   .calendar {
     display: block;
     position: relative;

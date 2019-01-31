@@ -169,7 +169,13 @@ const HooksCalendar = props => {
                     }
                   }
                 })}
-                <span className={`number ${dateFns.isSameDay(day, new Date()) ? "today" : null}`}>{formattedDate}</span>
+                <span
+                  className={`number ${
+                    dateFns.isSameDay(day, new Date()) ? "today" : null
+                  }`}
+                >
+                  {formattedDate}
+                </span>
                 <span className="bg">{formattedDate}</span>
               </div>
             )}
@@ -197,12 +203,11 @@ const HooksCalendar = props => {
     if (selectedDate === null) {
       setselectedDate(day);
       setdatePopulated(isPopulated);
-      dispatch({type: "UPDATE_DATE_SELECTED"});
-
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
     } else {
       setselectedDate(null);
       setdatePopulated(isPopulated);
-      dispatch({type: "UPDATE_DATE_SELECTED"})
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
     }
   };
 
@@ -224,6 +229,30 @@ const HooksCalendar = props => {
 
   return (
     <div className="calendar-div">
+      <h3>Upcoming workouts</h3>
+      <DisplayWorkouts>
+        {state.scheduleWorkouts.map((sworkout, i) => {
+          if (i % 2 === 0 && i < 7) {
+            return (
+              <div className="gray" key={sworkout.id}>
+                <h3>{sworkout.title}</h3>
+                <p>{sworkout.category.name}</p>
+                <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
+              </div>
+            );
+          } else if (i % 2 === 1 && i < 7) {
+            return (
+              <div key={sworkout.id}>
+                <h3>{sworkout.title}</h3>
+                <p>{sworkout.category.name}</p>
+                <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
+              </div>
+            );
+          } else {
+            return;
+          }
+        })}
+      </DisplayWorkouts>
       <Legend>
         <i className="fas fa-dumbbell completed" />
         <p>Complete</p>
@@ -250,24 +279,6 @@ const HooksCalendar = props => {
           selectedDate={selectedDate}
         />
       )}
-        <h3>Upcoming workouts:</h3>
-      <DisplayWorkouts>
-        {state.scheduleWorkouts.map((sworkout, i) => {
-          if (i % 2 === 0 && i <7) {
-          return (<div className="gray" key={sworkout.id}>
-            <h3>{sworkout.title}</h3>
-            <p>{sworkout.category.name}</p>
-            <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-          </div>)
-          } else if (i % 2 === 1 && i <7) {
-            return (<div key={sworkout.id}>
-            <h3>{sworkout.title}</h3>
-            <p>{sworkout.category.name}</p>
-            <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-          </div>)
-          } else {return;}
-        })}
-      </DisplayWorkouts>
     </div>
   );
 };
@@ -291,9 +302,8 @@ const Legend = styled.div`
   }
 `;
 
-
 const DisplayWorkouts = styled.div`
- margin-top: 15px;
+ margin-bottom: 20px;
  display:flex;
  align-items:center;
 
