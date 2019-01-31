@@ -165,10 +165,11 @@ const RadarContianer = styled.div`
       top: 10px;
     }
     @media (max-width: 475px) {
-      top: 210px;
-      left: 50%;
-      width: 380px;
-      margin-left: -190px;
+      position: relative;
+      display: flex;
+      width: 120%;
+      right: 0;
+      top: 0;
     }
 `;
 
