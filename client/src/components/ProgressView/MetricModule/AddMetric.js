@@ -38,15 +38,17 @@ const AddMetric = () => {
 
     const token = await firebase.auth().currentUser.getIdToken();
 
+    console.log(currentMetric);
     const res = await axios.post(
       "https://fitmetrix.herokuapp.com/api/progress/metrics/create/",
-      { currentMetric, date: dateFormat(currentMetric.date) },
+      { ...currentMetric, date: dateFormat(currentMetric.date) },
       {
         headers: {
           Authorization: token
         }
       }
     );
+    console.log(res);
 
     if (res.status === 201) {
       const nMetrics = await axios.get(
