@@ -57,6 +57,8 @@ const reducer = (state, action) => {
       return { ...state, showWorkoutForm: !state.showWorkoutForm };
     case 'ADD_CATEGORY':
       return { ...state, showCategoryInput: !state.addingCategory };
+    case 'ADDING_CATEGORY':
+      return { ...state, addingCategory: !state.addingCategory };
     case 'UPDATE_SELECTED_CATEGORY':
       return { ...state, selectedCategory: action.payload };
     case 'UPDATE_SELECTED_WORKOUTS_CATEGORY':

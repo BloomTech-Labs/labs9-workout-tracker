@@ -34,6 +34,16 @@ const AddWorkout = () => {
   const [exercises, setExercises] = useState([]);
   const [newCategory, setNewCategory] = useState('');
 
+  useEffect(
+    () => {
+      const selectedWorkoutCategory = state.selectedWorkoutCategory;
+      if (selectedWorkoutCategory === 'add') {
+        dispatch({ type: 'ADDING_CATEGORY' });
+      }
+    },
+    [state.selectedWorkoutCategory]
+  );
+
   //add Exercise handler
   const addExercise = async e => {
     e.preventDefault();
