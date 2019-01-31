@@ -9,23 +9,6 @@ const Details = () => {
     const type = state.graphType;
     const metrics = state.metrics;
 
-    const [data, setData] = useState([]);
-
-    const options = {
-      title: {
-        display: true,
-        text: 'Progress Radar'
-      },
-      elements: {
-        line: {
-          tension: 1.0,
-        }
-      },
-      scale: {
-        beginAtZero: true,
-      }
-    }
-
     const getData = () => {
       let earliest = { date: null, index: null };
       let latest = { date: null, index: null };
@@ -43,14 +26,18 @@ const Details = () => {
         }
       });
 
-      const rData = Object.keys(metrics[0]).map(m => {
-        console.log(m)
-        if(m === "id" || m === "date" || m === "user_id")
-        return metrics[latest.index][m] - metrics[earliest.index][m]
-      })
+      let radarData = [];
+      const keys = Object.keys(metrics[0]);
 
-      console.log(rData);
-      setData(rData)
+      for (let i = 1; i < 8; i++) {
+        if (i > 1 || i < 8){
+          const value = metrics[latest.index][keys[i]] - metrics[earliest.index][keys[i]];
+
+          radarData.push(value > 0 ? value : 0)
+        }
+      }
+
+      return  radarData;
     }
 
     const radarData = {
@@ -60,12 +47,10 @@ const Details = () => {
         borderColor: 'rgba(253, 143, 37, 1)',
         backgroundColor: 'rgba(253, 143, 37, 0.4)',
         pointBackgroundColor: 'rgba(253, 143, 37, 1)',
-        data: [10.62, 20.57, 37, 20.01, 10.5, 20.01, 10.5]
+        // data: [10.62, 20.57, 37, 20.01, 10.5, 20.01, 10.5]
+        data: getData()
     }]}
 
-    useEffect(() => {
-      getData();
-    }, [state.metrics])
 
     const renderDetails = () => {
         if (!metrics) return (<span></span>);
@@ -94,10 +79,10 @@ const Details = () => {
                 </Row>
                 <Row>
                   <h3>Current: </h3>
-                  <span>{metrics[earliest.index][type]}</span>
+                  <span>{metrics[latest.index][type]}</span>
                 </Row>
                 <RadarContianer>
-                  <Radar data={radarData} options={options}/>
+                  <Radar data={radarData}/>
                 </RadarContianer>
             </DetailsContainer>
         );
@@ -111,7 +96,10 @@ const Details = () => {
 export default Details;
 
 const RadarContianer = styled.div`
-  width: 100%;
+    width: 375px;
+    position: absolute;
+    right: -90px;
+    top: 137px;
 `;
 
 const Row = styled.div`
@@ -137,6 +125,7 @@ const DetailsContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 20%;
+  position: relative;
   /* background-color: ${props => props.theme.primaryDark}; */
   color: ${props => props.theme.primaryDark};
   padding: 20px 10px;
