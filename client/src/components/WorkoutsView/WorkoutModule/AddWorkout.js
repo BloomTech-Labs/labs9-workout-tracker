@@ -285,6 +285,9 @@ const Container = styled.form`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  @media (max-width: 800px) {
+    border: solid red;
+  }
 `;
 
 const Row = styled.div`
