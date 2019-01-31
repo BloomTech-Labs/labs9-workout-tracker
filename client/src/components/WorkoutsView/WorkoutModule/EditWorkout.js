@@ -102,20 +102,25 @@ const EditWorkout = () => {
     setExercises(exerciseCopy);
   };
 
-  const handleDelete = async (workoutID, i) => {
+  const handleDelete = async e => {
+    console.log('are you sure?');
     if (confirmDelete === false) {
       setConfirmDelete(true);
       return;
     }
 
+    console.log('trying to delete: state.editWorkout.id', state.editWorkout.id);
+
+    const deleteID = state.editWorkout.id;
+
     const newWorkouts = state.workouts;
 
-    newWorkouts.splice(i, 1);
+    newWorkouts.splice(deleteID, 1);
 
     const token = await firebase.auth().currentUser.getIdToken();
 
     if (token !== undefined) {
-      const res = await axios.delete(`https://fitmetrix.herokuapp.com/api/workouts/delete/${workoutID}`, {
+      const res = await axios.delete(`https://fitmetrix.herokuapp.com/api/workouts/delete/${deleteID}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: token
@@ -132,6 +137,8 @@ const EditWorkout = () => {
         console.log('error deleting');
       }
     }
+
+    dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
   return (

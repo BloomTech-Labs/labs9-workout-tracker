@@ -44,33 +44,6 @@ const MyWorkouts = () => {
     });
   };
 
-  const handleDelete = async (workoutID, i) => {
-    const newWorkouts = state.workouts;
-
-    newWorkouts.splice(i, 1);
-
-    const token = await firebase.auth().currentUser.getIdToken();
-
-    if (token !== undefined) {
-      const res = await axios.delete(`https://fitmetrix.herokuapp.com/api/workouts/delete/${workoutID}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token
-        }
-      });
-      console.log('the res is: ', res);
-
-      if (res.status === 200) {
-        dispatch({
-          type: 'UPDATE_WORKOUTS',
-          payload: newWorkouts
-        });
-      } else {
-        console.log('error deleting');
-      }
-    }
-  };
-
   const handleEdit = async (workoutID, i) => {
     console.log('in handleEdit');
 
