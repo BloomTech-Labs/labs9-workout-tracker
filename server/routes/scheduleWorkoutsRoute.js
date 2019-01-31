@@ -186,7 +186,7 @@ router.put("/edit/workout/:id", async (req, res) => {
 
   //checks if the request body has all required fields for an workout
   const { date, completed, percentage, title, category_id } = body;
-  if (!date && completed && !percentage && !title && !category_id) {
+  if (!date && !completed && !percentage && !title && !category_id) {
     res.status(400).json({ message: "nothing to update" });
     return;
   }

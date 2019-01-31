@@ -169,7 +169,7 @@ const HooksCalendar = props => {
                     }
                   }
                 })}
-                <span className="number">{formattedDate}</span>
+                <span className={`number ${dateFns.isSameDay(day, new Date()) ? "today" : null}`}>{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
               </div>
             )}
@@ -197,7 +197,7 @@ const HooksCalendar = props => {
     if (selectedDate === null) {
       setselectedDate(day);
       setdatePopulated(isPopulated);
-      dispatch({type: "UPDATE_DATE_SELECTED"})
+      dispatch({type: "UPDATE_DATE_SELECTED"});
 
     } else {
       setselectedDate(null);
@@ -250,6 +250,24 @@ const HooksCalendar = props => {
           selectedDate={selectedDate}
         />
       )}
+        <h3>Upcoming workouts:</h3>
+      <DisplayWorkouts>
+        {state.scheduleWorkouts.map((sworkout, i) => {
+          if (i % 2 === 0 && i <7) {
+          return (<div className="gray" key={sworkout.id}>
+            <h3>{sworkout.title}</h3>
+            <p>{sworkout.category.name}</p>
+            <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
+          </div>)
+          } else if (i % 2 === 1 && i <7) {
+            return (<div key={sworkout.id}>
+            <h3>{sworkout.title}</h3>
+            <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
+            <p>Category: {sworkout.category.name}</p>
+          </div>)
+          } else {return;}
+        })}
+      </DisplayWorkouts>
     </div>
   );
 };
@@ -273,10 +291,36 @@ const Legend = styled.div`
   }
 `;
 
-const PopupModalDiv = styled.div`
-  width: 40%;
-  justify-content: space-around;
-  border-radius: 4px;
+
+const DisplayWorkouts = styled.div`
+ margin-top: 15px;
+ display:flex;
+ align-items:center;
+
+ @media (max-width: 690px) {
+   flex-direction:column
+  justify-content: center;
+}
+
+div {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  width: 70%;
+  align-items:center;
+  padding: 5px 0;
+  
+  
+  h3 {
+    margin-left: 5%;
+    margin-top: 7px;
+  }
+  p {
+  }
+}
+.gray {
+  background-color:rgb(43, 58, 66, 0.1);
+}
 `;
 
 const CellDiv = styled.div`
