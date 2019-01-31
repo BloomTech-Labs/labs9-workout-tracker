@@ -132,10 +132,13 @@ const EditWorkout = () => {
       console.log('the res is: ', res);
 
       if (res.status === 200) {
-        dispatch({
-          type: 'UPDATE_WORKOUTS',
-          payload: newWorkouts
+        const newWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/workouts/', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+          }
         });
+        dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
       } else {
         console.log('error deleting');
       }
