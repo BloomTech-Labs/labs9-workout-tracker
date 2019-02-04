@@ -137,16 +137,21 @@ const CallToAction = styled.div`
 const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
-  height: 450px;
+  height: auto;
   background-color: transparent;
   font-size: 3.3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  align-items: cente @media (max-width: 900px) {
+  align-items: center @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 200px;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 0px;
+  }
 `;
 
 const CalendarPic = styled.img`
@@ -177,12 +182,13 @@ const CalendarDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
+    height: 200px;
   }
 `;
 
 const Part3 = styled.div`
   width: 100%;
-  height: 450px;
+  height: auto;
   background-color: transparent;
   font-size: 3.3rem;
   display: flex;
@@ -192,6 +198,11 @@ const Part3 = styled.div`
     flex-direction: column;
   }
   margin-bottom: 200px;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column-reverse;
+    margin-bottom: 0px;
+  }
 `;
 
 const WorkoutPic = styled.img`
@@ -221,12 +232,13 @@ const WorkoutDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
+    height: 200px;
   }
 `;
 
 const Part4 = styled.div`
   width: 100%;
-  height: 450px;
+  height: auto;
   background-color: transparent;
   font-size: 3.3rem;
   display: flex;
@@ -236,6 +248,11 @@ const Part4 = styled.div`
     flex-direction: column;
   }
   margin-bottom: 100px;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
 `;
 
 const ProgressDemo = styled.div`
@@ -252,6 +269,7 @@ const ProgressDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
+    height: 200px;
   }
 `;
 
