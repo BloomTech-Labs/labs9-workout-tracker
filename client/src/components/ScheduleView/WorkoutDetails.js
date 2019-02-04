@@ -1,19 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Store } from "../../index";
 import FormModal from "../../shared/FormModal";
 import ExerciseDetails from "./ExerciseDetails";
 import axios from "axios";
 import styled from "styled-components";
 import firebase from "firebase";
-import AddWorkout from "./AddWorkout";
 import Button from "../../shared/Button";
 
 const WorkoutDetails = props => {
+
+
   const { state, dispatch } = useContext(Store);
 
-  const [selectedDate, setSelectedDate] = useState(state.selectedDate);
-  const [addingWorkout, setAddingWorkout] = useState(false);
-  const [completed, setCompleted] = useState(false);
+  const { currentDay } = state;
 
   const dateStringParser = date => {
     if (date.length === 10) {
@@ -24,11 +23,6 @@ const WorkoutDetails = props => {
     const newDate = date[0] + "/" + date[1] + "/" + date[2];
 
     return new Date(newDate);
-  };
-
-  const toggleAddingWorkout = e => {
-    e.preventDefault();
-    setAddingWorkout(!addingWorkout);
   };
 
   const dateFormat = d => {
@@ -91,7 +85,7 @@ const WorkoutDetails = props => {
         `https://fitmetrix.herokuapp.com/api/schedule/edit/workout/${
           scheduleWorkout.id
         }`,
-        {completed:true},
+        { completed: true },
         {
           headers: {
             Authorization: token
@@ -121,54 +115,20 @@ const WorkoutDetails = props => {
 
   return (
     <FormModal
-      closeModal={() => {dispatch({ type: "UPDATE_DATE_SELECTED" }); dispatch({type:"UPDATE_SELECTED_DATE"})}}
+      closeModal={() => {dispatch({ type: "UPDATE_DATE_SELECTED" })}}
       title={"Workout Details"}
     >
       <WorkoutContainer>
-        {props.selectedDate === null
-          ? state.scheduleWorkouts &&
+      {state.scheduleWorkouts &&
             state.scheduleWorkouts.map(scheduleWorkout => {
-              if (
-                dateFormat(dateStringParser(scheduleWorkout.date)) ===
-                dateFormat(props.currentDay)
-              ) {
+              const sDate = dateFormat(dateStringParser(scheduleWorkout.date));
+              const cDay = dateFormat(currentDay);
+              if ( sDate === cDay ) {
                 return (
                   <WorkoutDetailsDiv key={scheduleWorkout.id}>
                     <WorkoutTitleDiv>
                       <h3>{scheduleWorkout.title}</h3>
-                      <Button
-                        type="button"
-                        onClick={e => unscheduleWorkout(e, scheduleWorkout)}
-                      >
-                        Unschedule
-                      </Button>
-                    </WorkoutTitleDiv>
-                    <ExerciseListDiv>
-                      {scheduleWorkout.exercises &&
-                        scheduleWorkout.exercises.map(exercise => {
-                          return (
-                            <ExerciseDetails
-                              dispatch={props.dispatch}
-                              key={exercise.id}
-                              exercise={exercise}
-                            />
-                          );
-                        })}
-                    </ExerciseListDiv>
-                  </WorkoutDetailsDiv>
-                );
-              }
-            })
-          : state.scheduleWorkouts &&
-            state.scheduleWorkouts.map(scheduleWorkout => {
-              if (
-                dateFormat(dateStringParser(scheduleWorkout.date)) ===
-                dateFormat(props.selectedDate)
-              ) {
-                return (
-                  <WorkoutDetailsDiv key={scheduleWorkout.id}>
-                    <WorkoutTitleDiv>
-                      <h3>{scheduleWorkout.title}</h3>
+                      <h3>{scheduleWorkout.date}</h3>
                     </WorkoutTitleDiv>
                     <ExerciseListDiv>
                       {scheduleWorkout.exercises &&
@@ -197,6 +157,7 @@ const WorkoutDetails = props => {
                   </WorkoutDetailsDiv>
                 );
               }
+              return null;
             })}
       </WorkoutContainer>
     </FormModal>
@@ -210,9 +171,9 @@ const WorkoutContainer = styled.div`
   background-color: white;
 `;
 const WorkoutDetailsDiv = styled.div`
-display:flex
+display:flex;
 padding: 10px;
-width:100%
+width: 100%;
 flex-direction:column;
 align-items: center;
 height: 600px;

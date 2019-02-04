@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
-import { Route } from 'react-router-dom';
-import LandingPage from './components/LandingPageView/LandingPage';
-import ScheduleView from './components/ScheduleView/ScheduleView';
-import ProgressView from './components/ProgressView';
-import WorkoutsView from './components/WorkoutsView/';
-import SettingsView from './components/SettingsView/SettingsView';
-import Login from './components/Login';
-import Register from './components/Register';
-import Navigation from './components/Navigation';
-import styled, { ThemeProvider } from 'styled-components';
-import { theme } from './StyleTheme';
-import { Store } from './index';
-import MainSettingsView from './components/SettingsView/MainSettings';
+import React, { useContext } from "react";
+import { Route } from "react-router-dom";
+import LandingPage from "./components/LandingPageView/LandingPage";
+import ScheduleView from "./components/ScheduleView";
+import ProgressView from "./components/ProgressView";
+import WorkoutsView from "./components/WorkoutsView";
+import SettingsView from "./components/SettingsView/SettingsView";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Navigation from "./components/Navigation";
+import styled, { ThemeProvider } from "styled-components";
+import { theme } from "./StyleTheme";
+import { Store } from "./index";
+import MainSettingsView from "./components/SettingsView/MainSettings";
+
 
 // export const AppState = createContext({ state: {}, dispatch: () => {} });
 
