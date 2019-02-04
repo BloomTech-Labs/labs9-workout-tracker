@@ -138,12 +138,12 @@ const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
   height: 350px;
-  background-color: white;
+  background-color: transparent;
   font-size: 3.3rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  // border: 1px solid blue;
+  border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
@@ -157,7 +157,7 @@ const CalendarPic = styled.img`
   width: 60%;
   height: 100%;
   align-items: center;
-  // border: 1px solid red;
+  border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -170,7 +170,8 @@ const CalendarDemo = styled.div`
   width: 50%;
   height: 50%;
   align-items: center;
-  // border: 1px solid red;
+  color: white;
+  border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -184,7 +185,8 @@ const Part3 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // border: 1px solid blue;
+  background-color: transparent;
+  border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
@@ -198,7 +200,7 @@ const WorkoutPic = styled.img`
   width: 35%;
   height: 100%;
   align-items: center;
-  // border: 1px solid red;
+  border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -210,7 +212,8 @@ const WorkoutDemo = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  // border: 1px solid red;
+  color: white;
+  border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -224,7 +227,8 @@ const Part4 = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  // border: 1px solid blue;
+  background-color: transparent;
+  border: 1px solid blue;
   @media (max-width: 900px) {
     flex-direction: column;
   }
@@ -237,7 +241,8 @@ const ProgressDemo = styled.div`
   align-items: flex-start;
   width: 50%;
   height: 200px;
-  // border: 1px solid red;
+  color: white;
+  border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -250,7 +255,7 @@ const ProgressPic = styled.img`
   width: 40%;
   height: 100%;
   align-items: center;
-  // border: 1px solid red;
+  border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
