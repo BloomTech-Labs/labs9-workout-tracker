@@ -103,7 +103,7 @@ const SubNav = styled.div`
 `;
 
 const HeaderTab = styled.div`
-border-bottom: 1px solid black
+border-bottom: 1px solid #2B3A42
 display:flex;
 width:70%;
 height: 40px;
@@ -119,9 +119,9 @@ const HeaderBlue = styled.h1`
   font-size:1.5rem;
   color: black
   height:40px;
-  border-top:1px solid black;
-  border-left:1px solid black;
-  border-right:1px solid black;
+  border-top:1px solid #2B3A42;
+  border-left:1px solid #2B3A42;
+  border-right:1px solid #2B3A42;
   border-bottom:1px solid white;
   :hover {
     cursor: pointer;

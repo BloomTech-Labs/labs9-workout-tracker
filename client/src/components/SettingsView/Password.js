@@ -98,9 +98,9 @@ const SettingsViewStyle = styled.div`
 
 const FormStyle = styled.form`
   border-top: 0px;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border-left: 1px solid #2B3A42;
+  border-right: 1px solid #2B3A42;
+  border-bottom: 1px solid #2B3A42;
   border-radius: 0 0 6px 6px;
   margin: 0 2%;
   display: flex;
