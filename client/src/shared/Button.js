@@ -60,10 +60,13 @@ const StyledButton = styled.button`
       width: 155px;
     `}
   ${props =>
-    props.size === 'category' &&      
+    props.size === 'category' &&
     css`
-      width: 245px
-      align-self: flex-end;
-      margin-right: 0px; 
+      width: 245px;
+      margin-left: 0px;
+      margin-top: 20px;
+      @media (max-width: 550px) {
+        margin-left: auto;
+      }
     `}
 `;
