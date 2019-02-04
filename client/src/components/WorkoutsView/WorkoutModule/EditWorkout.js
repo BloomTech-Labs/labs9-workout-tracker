@@ -144,6 +144,20 @@ const EditWorkout = () => {
     dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
+  const removeExercise = async (e, index) => {
+    console.log('exercises length is:', exercises.length);
+    console.log('exercises are:', exercises);
+    console.log('index is:', index);
+
+    const newExercises = exercises;
+
+    if (!isNaN(index)) {
+      newExercises.splice(index, 1);
+      setExercises(newExercises);
+      console.log('exercises are: ', exercises);
+    }
+  };
+
   return (
     <FormModal
       onSubmit={e => editWorkout(e)}
@@ -162,46 +176,54 @@ const EditWorkout = () => {
           size="large"
           label="Workout Title"
         />
-        <CategoryDropDown />
       </Row>
+      <CategoryDropDown />
 
       {/* Conditional that renders the exercises that have been added to the workout that is being created */}
 
       {exercises &&
         exercises.map((ex, index) => {
           return (
-            <Row>
-              <Input
-                name="name"
-                value={ex.name}
-                placeholder="Exercise Name"
-                onChange={e => inputOnChange(e, index)}
-                label="Exercise Name"
-                size="large"
-              />
-              <Input
-                name="weight"
-                onChange={e => inputOnChange(e, index)}
-                value={ex.weight}
-                placeholder="Weight"
-                label="Weight"
-              />
-              <Input
-                name="sets"
-                onChange={e => inputOnChange(e, index)}
-                value={ex.sets}
-                placeholder="Sets"
-                label="Sets"
-              />
-              <Input
-                name="reps"
-                onChange={e => inputOnChange(e, index)}
-                value={ex.reps}
-                placeholder="Reps"
-                label="Reps"
-              />
-              <span>x</span>
-            </Row>
+            <div>
+              {' '}
+              <Row>
+                <Input
+                  name="name"
+                  value={ex.name}
+                  placeholder="Exercise Name"
+                  onChange={e => inputOnChange(e, index)}
+                  label="Exercise Name"
+                  size="large"
+                />
+              </Row>
+              <ExerciseRow>
+                <Input
+                  name="weight"
+                  onChange={e => inputOnChange(e, index)}
+                  value={ex.weight}
+                  placeholder="Weight"
+                  label="Weight"
+                  size="small"
+                />
+                <Input
+                  name="sets"
+                  onChange={e => inputOnChange(e, index)}
+                  value={ex.sets}
+                  placeholder="Sets"
+                  label="Sets"
+                  size="small"
+                />
+                <Input
+                  name="reps"
+                  onChange={e => inputOnChange(e, index)}
+                  value={ex.reps}
+                  placeholder="Reps"
+                  label="Reps"
+                  size="small"
+                />
+                <i onClick={e => removeExercise(e, index)} className="fas fa-times" />
+              </ExerciseRow>
+            </div>
           );
         })}
       <Row>
@@ -235,4 +257,13 @@ const Row = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+`;
+
+const ExerciseRow = styled.div`
+  display: flex;
+  margin-top: 10px;
+  margin-right: 20px;
+  @media (max-width: 550px) {
+    margin-right: auto;
+  }
 `;

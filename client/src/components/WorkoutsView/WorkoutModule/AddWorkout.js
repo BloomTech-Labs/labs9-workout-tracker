@@ -284,7 +284,7 @@ const CategoryRow = styled.div`
 
 const ExerciseRow = styled.div`
   display: flex;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-right: 20px;
   @media (max-width: 550px) {
     margin-right: auto;
