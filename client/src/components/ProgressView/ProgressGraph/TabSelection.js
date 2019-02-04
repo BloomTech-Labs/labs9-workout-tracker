@@ -47,14 +47,16 @@ const Metric = styled.div`
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  border-bottom: 1px solid ${props => props.theme.primaryDark};
+  border-bottom: 2px solid ${props => props.theme.accent};
   ${props => props.selected && css`
-    border-top: 1px solid ${props => props.theme.primaryDark};
-    border-left: 1px solid ${props => props.theme.primaryDark};
-    border-right: 1px solid ${props => props.theme.primaryDark};
+    border-top: 2px solid ${props => props.theme.accent};
+    border-left: 2px solid ${props => props.theme.accent};
+    border-right: 2px solid ${props => props.theme.accent};
     border-bottom: none;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+    background: ${props => props.theme.accent}
+    color: white;
   `}
 
 `;

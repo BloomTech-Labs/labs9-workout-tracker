@@ -193,9 +193,6 @@ const SettingsViewStyle = styled.div`
 
 const FormStyle = styled.form`
   border-radius: 0 0 6px 6px;
-  border-left: 1px solid #2B3A42;
-  border-right: 1px solid #2B3A42;
-  border-bottom: 1px solid #2B3A42;
   background-color: white;;
   margin: 0 2%;
   display: flex;
@@ -205,6 +202,9 @@ const FormStyle = styled.form`
   align-items: center;
   border-top: 0px;
   height: 651px;
+  @media (max-width: 550px) {
+    width:100%;
+  }
 `;
 
 const ChangePasswordDiv = styled.div`
