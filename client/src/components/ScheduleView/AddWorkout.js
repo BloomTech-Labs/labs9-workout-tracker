@@ -119,7 +119,7 @@ const AddWorkout = props => {
     <FormModal
       onSubmit={{ scheduleWorkoutHandler }}
       closeModal={() => {dispatch({ type: "UPDATE_DATE_SELECTED" });  dispatch({type:"UPDATE_SELECTED_DATE"})}}
-      title={"Add Workout"}
+      title={"Schedule Workout"}
     >
       <AddWorkoutStyle>
         <div>

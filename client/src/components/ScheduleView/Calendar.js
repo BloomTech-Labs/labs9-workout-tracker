@@ -219,19 +219,19 @@ const HooksCalendar = props => {
         {state.scheduleWorkouts.map((sworkout, i) => {
           if (i % 2 === 0 && i < 7) {
             return (
-              <div className="gray" key={sworkout.id}>
+              <GrayWorkoutCard key={sworkout.id}>
                 <h3>{sworkout.title}</h3>
                 <p>{sworkout.category.name}</p>
                 <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-              </div>
+              </GrayWorkoutCard>
             );
           } else if (i % 2 === 1 && i < 7) {
             return (
-              <div key={sworkout.id}>
+              <WorkoutCard key={sworkout.id}>
                 <h3>{sworkout.title}</h3>
                 <p>{sworkout.category.name}</p>
                 <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-              </div>
+              </WorkoutCard>
             );
           }
         })}
@@ -247,17 +247,10 @@ const HooksCalendar = props => {
         {renderDays()}
         {renderCells()}
       </div>
-
-
-      
       {dateSelected === false ? null : datePopulated === true ? (
         <WorkoutDetails/>
       ) : (
-        <AddWorkout
-          workouts={state.workouts}
-          scheduleWorkouts={state.scheduleWorkouts}
-          selectedDate={currentDay}
-        />
+        <AddWorkout/>
       )}
     </div>
   );
@@ -283,34 +276,37 @@ const Legend = styled.div`
 `;
 
 const DisplayWorkouts = styled.div`
- margin-bottom: 20px;
- display:flex;
- align-items:center;
-
- @media (max-width: 690px) {
-   flex-direction:column;
-  justify-content: center;
-}
-
-div {
+  margin-bottom: 20px;
   display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  width: 70%;
   align-items:center;
-  padding: 5px 0;
-  
-  
-  h3 {
-    margin-left: 5%;
-    margin-top: 7px;
+
+  @media (max-width: 690px) {
+    flex-direction:column;
+    justify-content: center;
   }
-  p {
-  }
+
+`;
+
+const WorkoutCard = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+width: 70%;
+align-items:center;
+padding: 5px 0;
+
+h3 {
+  margin-left: 5%;
+  margin-top: 7px;
 }
-.gray {
-  background-color:rgb(43, 58, 66, 0.1);
+
+@media(max-width:690px) {
+  width:100%;
 }
+`;
+
+const GrayWorkoutCard = styled(WorkoutCard)`
+background-color:rgb(43, 58, 66, 0.1);
 `;
 
 const CellDiv = styled.div`

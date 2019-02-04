@@ -21,9 +21,14 @@ const ScheduleViewStyle = styled.div`
   h2 {
     align-self:baseline;
     margin-left: 2%;
+
+    @media(max-width:690px) {
+      align-self:center;
+    }
   }
-  @media(max-width:420px) {
-    top:10px;
+  @media(max-width:690px) {
+    width:100vw;
+    padding:0;
   }
 `;
 

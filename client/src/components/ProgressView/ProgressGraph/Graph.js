@@ -180,10 +180,10 @@ const Graph = () => {
                 }
             }],
             yAxes: [{
-                stacked: state.graphType == "legs" || state.graphType == "arms" ? true : false,
+                stacked: state.graphType === "legs" || state.graphType === "arms" ? true : false,
                 scaleLabel: {
                     display: true,
-                    labelString: 'lbs',
+                    labelString: state.graphType === "weight" ? 'lbs' : 'in',
                 }
             }]
         }
