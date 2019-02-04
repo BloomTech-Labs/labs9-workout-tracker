@@ -128,7 +128,7 @@ const WorkoutDetails = props => {
                   <WorkoutDetailsDiv key={scheduleWorkout.id}>
                     <WorkoutTitleDiv>
                       <h3>{scheduleWorkout.title}</h3>
-                      <h3>{scheduleWorkout.date}</h3>
+                      <h3>{sDate}</h3>
                     </WorkoutTitleDiv>
                     <ExerciseListDiv>
                       {scheduleWorkout.exercises &&
