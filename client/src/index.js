@@ -27,9 +27,10 @@ const initialState = {
   newCategory: '',
   selectedCategory: 'default',
   selectedWorkoutCategory: 'all',
-  selectedDate: new Date(),
   graphType: 'weight',
-  dateSelected: false
+  currentDate: new Date(),
+  dateSelected: false,
+  datePopulated: false,
 };
 
 const reducer = (state, action) => {
@@ -68,9 +69,11 @@ const reducer = (state, action) => {
       return { ...state, graphType: action.payload };
     case 'UPDATE_DATE_SELECTED':
       return { ...state, dateSelected: !state.dateSelected };
+    case 'UPDATE_CURRENT_DAY':
+      return { ...state, currentDay: action.payload};
+    case 'UPDATE_IS_POPULATED':
+      return { ...state, datePopulated: action.payload};
     default:
-      // A reducer must always return a valid state.
-      // Alternatively you can throw an error if an invalid action is dispatched.
       return state;
   }
 };
