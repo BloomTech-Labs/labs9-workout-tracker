@@ -3,20 +3,14 @@ import { Store } from "../../index";
 import styled from "styled-components";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
-import { getDate } from "date-fns";
 import FormModal from "../../shared/FormModal";
 import DropDown from "../../shared/DropDown";
 import Button from "../../shared/Button";
 import Input from "../../shared/Input";
 
 const AddWorkout = props => {
-  const { state, dispatch } = useContext(Store);
-  const key = window.localStorage.getItem("login_token");
-  const reqUrl = "https://fitmetrix.herokuapp.com/api/category/user";
 
-  // const inputStyle = {
-  //   visibility:"hidden"
-  // }
+  const { state, dispatch } = useContext(Store);
 
   const getOptions = () => {
     let options = state.category.map((cat, i) => {
@@ -44,11 +38,6 @@ const AddWorkout = props => {
     });
   };
 
-  const initialCategoryValue = [
-    { id: null, name: " --- Select a Category --- " }
-  ];
-  const [categories, setCategory] = useState(initialCategoryValue);
-  const [categoryID, setCategoryID] = useState(null);
   const [recurring, setRecurring] = useState(false);
   const [recurringWeeks, setRecurringWeeks] = useState(0);
 
@@ -57,13 +46,10 @@ const AddWorkout = props => {
     e.preventDefault();
     const token = window.localStorage.getItem("login_token");
 
-    // add to scheduled workout array
     const workoutObj = {
       date,
       workout_id: workout.id
     };
-
-    console.log("schedworkouthandler workoutObj:", workoutObj);
 
     const scheduleWorkout = await axios
       .post("https://fitmetrix.herokuapp.com/api/schedule/create", workoutObj, {
@@ -143,11 +129,11 @@ const AddWorkout = props => {
             onChange={handleChange}
             value={state.selectedWorkoutCategory}
           />
-          {props.workouts &&
-            props.workouts.map(workout => {
-              if (
-                workout.category_id === Number(state.selectedWorkoutCategory)
-              ) {
+          {state.workouts &&
+            state.workouts.map(workout => {
+              const wCat = workout.category_id;
+              const swCat = Number(state.selectedWorkoutCategory);
+              if ( wCat === swCat ) {
                 return (
                   <WorkoutsMenu key={workout.id}>
                     <h3>{workout.title}</h3>
@@ -172,20 +158,11 @@ const AddWorkout = props => {
                         name="recurringWeeks"
                         placeholder="?"
                         isDisabled="true"
-                        label="# Weeks"
+                        label="Weeks"
                         type="number"
                         value={recurringWeeks}
                         onChange={e => setRecurringWeeks(e.target.value)}
                       />
-                    //   <Input
-                    //   name="recurringWeeks"
-                    //   placeholder="?"
-                    //   label="# Weeks"
-                    //   type="number"
-                    //   value={recurringWeeks}
-                    //   onChange={e => setRecurringWeeks(e.target.value)}
-                    //   style={inputStyle}
-                    // />
                     )}
 
                     <Button
@@ -193,7 +170,7 @@ const AddWorkout = props => {
                         scheduleWorkoutHandler(
                           e,
                           workout,
-                          props.selectedDate,
+                          state.currentDate,
                           recurringWeeks
                         );
                       }}
@@ -203,6 +180,7 @@ const AddWorkout = props => {
                   </WorkoutsMenu>
                 );
               }
+              return null;
             })}
         </div>
       </AddWorkoutStyle>
@@ -215,9 +193,14 @@ const AddWorkoutStyle = styled.div``;
 const WorkoutsMenu = styled.div`
   display: flex;
   align-items: center;
-  justify-content:space-evenly;
-
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
   margin: 10px 0;
+  h3 {
+    width: 25%;
+    max-width: 200px;
+  }
   input {
   }
   button {

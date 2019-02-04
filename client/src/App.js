@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Route } from "react-router-dom";
 import LandingPage from "./components/LandingPageView/LandingPage";
-import ScheduleView from "./components/ScheduleView/ScheduleView";
+import ScheduleView from "./components/ScheduleView";
 import ProgressView from "./components/ProgressView";
-import WorkoutsView from "./components/WorkoutsView/";
+import WorkoutsView from "./components/WorkoutsView";
 import SettingsView from "./components/SettingsView/SettingsView";
 import Login from "./components/Login";
 import Register from "./components/Register";

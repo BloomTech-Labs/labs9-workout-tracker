@@ -40,24 +40,8 @@ const ExerciseDetails = props => {
   };
 
 const updateScheduledWorkout = async (e) => {
-  console.log("update sched workout")
   setStatus(e.target.checked);
   const token = await firebase.auth().currentUser.getIdToken();
-  console.log("status:", status)
-  console.log("completed:", props.exercise.completed)
-  // if (status !== props.exercise.completed) {
-  //   console.log("updating scheduled workout")
-  //   const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule', {
-  //     headers: {
-  //       Authorization: token
-  //     }
-  //   });
-
-  //   dispatch({
-  //     type: 'UPDATE_SCHEDULE_WORKOUTS',
-  //     payload: newScheduleWorkouts.data
-  //   });
-  // }
 }
 
   return (
@@ -72,8 +56,7 @@ const updateScheduledWorkout = async (e) => {
         type="checkbox"
         checked={status}
         onChange={e => {
-           
-            updateScheduledWorkout( e)
+            updateScheduledWorkout(e)
         } }
       />
       </ExerciseDetailsListDiv>

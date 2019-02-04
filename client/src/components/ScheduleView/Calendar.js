@@ -1,56 +1,45 @@
 /* eslint-disable no-loop-func */
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Store } from "../../index";
 import dateFns from "date-fns";
 import AddWorkout from "./AddWorkout";
+import styled from "styled-components";
 import WorkoutDetails from "./WorkoutDetails";
 import "./Calendar.css";
 
-class Calendar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentMonth: new Date(),
-      dateSelected: false,
-      datePopulated: false,
-      selectedDate: null,
+const HooksCalendar = props => {
+  const { state, dispatch } = useContext(Store);
 
-      //Dup week func
-      weekSelected: false,
-      datesSelected: []
-    };
-  }
+  // const { selectedDate } = state;
+  const { currentDay, datePopulated, dateSelected } = state;
 
-// componentDidMount() {
-  
-//     this.setState({...this.props})
-//   }
-// }
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  renderHeader() {
+  const renderHeader = () => {
     const dateFormat = "MMM YYYY";
 
     return (
       <div className="header row flex-middle">
         <div className="col col-start">
-          <div className="icon" onClick={this.prevMonth}>
+          <div className="icon" onClick={prevMonth}>
             chevron_left
           </div>
         </div>
         <div className="col col-center">
-          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
+          <span>{dateFns.format(currentMonth, dateFormat)}</span>
         </div>
-        <div className="col col-end" onClick={this.nextMonth}>
+        <div className="col col-end" onClick={nextMonth}>
           <div className="icon">chevron_right</div>
         </div>
       </div>
     );
-  }
+  };
 
-  renderDays() {
+  const renderDays = () => {
     const dateFormat = "ddd";
     const days = [];
 
-    let startDate = dateFns.startOfWeek(this.state.currentMonth);
+    let startDate = dateFns.startOfWeek(currentMonth);
 
     for (let i = 0; i < 7; i++) {
       days.push(
@@ -61,10 +50,9 @@ class Calendar extends React.Component {
     }
 
     return <div className="days row">{days}</div>;
-  }
+  };
 
-  renderCells() {
-    const { currentMonth, selectedDate } = this.state;
+  const renderCells = () => {
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
@@ -89,8 +77,6 @@ class Calendar extends React.Component {
       return populated;
     };
 
-  
-
     while (day <= endDate) {
       //Loop through days 1-7
       for (let i = 0; i < 7; i++) {
@@ -103,20 +89,20 @@ class Calendar extends React.Component {
 
         //pushing into the days array
         days.push(
-          <>
+          <React.Fragment key={`${day}${Math.random()}`}>
             {/* checking if scheduleWorkouts is defined */}
-            {this.props.scheduleWorkouts === undefined ? (
+            {state.scheduleWorkouts === undefined ? (
               // IF no scheduled workouts, renders an empty calendar
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
                     ? "disabled"
-                    : dateFns.isSameDay(day, selectedDate)
+                    : dateFns.isSameDay(day, currentDay)
                     ? "selected"
                     : ""
                 }`}
-                key={day}
-                onClick={() => this.onDateClick(dateFns.parse(cloneDay), false)}
+                key={`${day}${Math.random()}`}
+                onClick={() => onDateClick(dateFns.parse(cloneDay), false)}
               >
                 <span className="number">{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
@@ -126,129 +112,237 @@ class Calendar extends React.Component {
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
                     ? "disabled"
-                    : dateFns.isSameDay(day, selectedDate)
+                    : dateFns.isSameDay(day, currentDay)
                     ? "selected"
                     : ""
                 }`}
-                key={day}
-                sworkout={this.props.scheduleWorkouts.map(sworkout => {
+                key={`${day}${Math.random()}`}
+                sworkout={state.scheduleWorkouts.filter(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
                   const splitDate = sworkout.date.split("T")[0];
-                  return splitDate === matchedDate ? sworkout : null;
+                  if (splitDate === matchedDate) return sworkout;
+                })}
+                completed={state.scheduleWorkouts.map(sworkout => {
+                  // returns the title of the scheduled workout if it matches matchedDate
+                  const splitDate = sworkout.date.split("T")[0];
+                  if (splitDate === matchedDate) return sworkout;
                 })}
                 onClick={
                   //Check whether the matchedDate is inside of scheduled workouts
                   // using arrayContains method
-                  arrayContains(matchedDate, this.props.scheduleWorkouts) ===
-                  true
+                  arrayContains(matchedDate, state.scheduleWorkouts) === true
                     ? //if so, runs onDateClick with true
                       () => {
-                        this.onDateClick(dateFns.parse(cloneDay), true);
+                        onDateClick(dateFns.parse(cloneDay), true);
                       }
                     : //else runs onDateClick with false
                       () => {
-                        this.onDateClick(dateFns.parse(cloneDay), false);
+                        onDateClick(dateFns.parse(cloneDay), false);
                       }
                 }
               >
-                <span className="number">{formattedDate}</span>
+                {//maps through scheduleworkouts
+                state.scheduleWorkouts.map(sworkout => {
+                  // returns the title of the scheduled workout if it matches matchedDate
+                  const splitDate = sworkout.date.split("T")[0];
+                  if (splitDate === matchedDate) {
+                    if (sworkout.completed === true) {
+                      return (
+                        <CellDiv key={sworkout.id}>
+                          <i
+                            className="fas fa-dumbbell completed"
+                            key={`${day}${Math.random()}`}
+                          />
+                          <p className="completed">{sworkout.title}</p>
+                        </CellDiv>
+                      );
+                    } else {
+                      return (
+                        <CellDiv key={sworkout.id}>
+                          <i
+                            className="fas fa-dumbbell"
+                            key={`${day}${Math.random()}`}
+                          />
+                          <p>{sworkout.title.substring(0, 13)}...</p>
+                        </CellDiv>
+                      );
+                    }
+                  }
+                })}
+                <span
+                  className={`number ${
+                    dateFns.isSameDay(day, new Date()) ? "today" : null
+                  }`}
+                >
+                  {formattedDate}
+                </span>
                 <span className="bg">{formattedDate}</span>
-                {/* <span>
-                  {//maps through scheduleworkouts
-                  this.props.scheduleWorkouts.map(sworkout => {
-                    // returns the title of the scheduled workout if it matches matchedDate
-                    const splitDate = sworkout.date.split("T")[0];
-                     splitDate === matchedDate ? <p>yes</p> : null;
-                  })}
-                </span> */}
               </div>
             )}
-          </>
+          </React.Fragment>
         );
         day = dateFns.addDays(day, 1);
       }
       rows.push(
-        <div className="row" key={day}>
+        <div className="row" key={`${day}${Math.random()}`}>
           {days}
         </div>
       );
 
       days = [];
     }
-    return <div className="body">{rows}</div>;
-  }
-
-  onDateClick = (day, isPopulated) => {
-    // selecteddate null, dates length =0
-    if (this.state.selectedDate === null) {
-      this.setState({
-        selectedDate: day,
-        datePopulated: isPopulated,
-        dateSelected: true,
-        //dupweek func
-        datesSelected: [...this.state.datesSelected, day]
-      });
-    } else {
-      this.setState({
-        selectedDate: null,
-        datePopulated: false,
-        dateSelected: false
-      });
-    }
-    // isPopulated: If the date has a scheduled workout true/false
-    // dateSelected: If any date on the calendar is selected true/false
-    // selectedDate: What current date is being highlighted null/date
-    // week selected: If a week is selected true/false not used yet
-
-    //when selecting first date, selectedDate becomes the highlighted day
-    //date populated takes care of itself. Incoming flag
-    //
-  };
-
-  nextMonth = () => {
-    this.setState({
-      currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
-    });
-  };
-
-  prevMonth = () => {
-    this.setState({
-      currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
-    });
-  };
-
-  render() {
     return (
-      <div className="calendar-div">
-        <div className="calendar">
-          {this.renderHeader()}
-          {this.renderDays()}
-          {this.renderCells()}
-        </div>
-        {/* if no date is selected, return null */}
-        {this.state.dateSelected !==
-        true ? null : // if date is selected, check if date is populated and return component based on that
-        this.state.datePopulated === true ? (
-          <div>
-            {/* bug: upon re-render, seems to bring in entire scheduleWorkouts array */}
-            <WorkoutDetails
-              selectedDate={this.state.selectedDate}
-              dispatch={this.props.dispatch}
-              scheduleWorkouts={this.props.scheduleWorkouts}
-            />
-          </div>
-        ) : (
-          <div>
-            <AddWorkout
-              workouts={this.props.user.workouts}
-              scheduleWorkouts={this.props.user.scheduleWorkouts}
-              selectedDate={this.state.selectedDate}
-            />
-          </div>
-        )}
+      <div className="body" key={`${day}${Math.random()}`}>
+        {rows}
       </div>
     );
+  };
+
+  const onDateClick = (day, isPopulated) => {
+      dispatch({ type: "UPDATE_CURRENT_DAY", payload: day })
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
+      dispatch({ type: "UPDATE_IS_POPULATED", payload: isPopulated })
+  };
+
+  const nextMonth = () => {
+    setCurrentMonth(dateFns.addMonths(currentMonth, 1));
+  };
+
+  const prevMonth = () => {
+    setCurrentMonth(dateFns.subMonths(currentMonth, 1));
+  };
+
+  return (
+    <div className="calendar-div">
+      <h3>Upcoming workouts</h3>
+      <DisplayWorkouts>
+        {state.scheduleWorkouts.map((sworkout, i) => {
+          if (i % 2 === 0 && i < 7) {
+            return (
+              <div className="gray" key={sworkout.id}>
+                <h3>{sworkout.title}</h3>
+                <p>{sworkout.category.name}</p>
+                <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
+              </div>
+            );
+          } else if (i % 2 === 1 && i < 7) {
+            return (
+              <div key={sworkout.id}>
+                <h3>{sworkout.title}</h3>
+                <p>{sworkout.category.name}</p>
+                <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
+              </div>
+            );
+          }
+        })}
+      </DisplayWorkouts>
+      <Legend>
+        <i className="fas fa-dumbbell completed" />
+        <p>Complete</p>
+        <i className="fas fa-dumbbell 3x" />
+        <p>Incomplete</p>
+      </Legend>
+      <div className="calendar">
+        {renderHeader()}
+        {renderDays()}
+        {renderCells()}
+      </div>
+
+
+      
+      {dateSelected === false ? null : datePopulated === true ? (
+        <WorkoutDetails/>
+      ) : (
+        <AddWorkout
+          workouts={state.workouts}
+          scheduleWorkouts={state.scheduleWorkouts}
+          selectedDate={currentDay}
+        />
+      )}
+    </div>
+  );
+};
+
+export default HooksCalendar;
+
+const Legend = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  i {
+    color: rgb(253, 143, 37);
+    margin-left: 4%;
   }
+  i.completed {
+    color: rgb(64, 88, 101);
+    margin-left: 2%;
+  }
+  p {
+    margin: 0 2% 0 1%;
+  }
+`;
+
+const DisplayWorkouts = styled.div`
+ margin-bottom: 20px;
+ display:flex;
+ align-items:center;
+
+ @media (max-width: 690px) {
+   flex-direction:column;
+  justify-content: center;
 }
 
-export default Calendar;
+div {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  width: 70%;
+  align-items:center;
+  padding: 5px 0;
+  
+  
+  h3 {
+    margin-left: 5%;
+    margin-top: 7px;
+  }
+  p {
+  }
+}
+.gray {
+  background-color:rgb(43, 58, 66, 0.1);
+}
+`;
+
+const CellDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  @media (max-width: 690px) {
+    justify-content: center;
+  }
+  i {
+    margin-right: 70%;
+    margin-top: 5px;
+    @media (max-width: 690px) {
+      margin: 0;
+      align-self: center;
+    }
+  }
+  p {
+    font-weight: bold;
+    background: rgb(253, 143, 37, 0.8);
+    border-radius: 10px;
+    margin: 2px auto;
+    color: white;
+    padding: 1px 5%;
+    width: 93%;
+    @media (max-width: 690px) {
+      display: none;
+    }
+  }
+  p.completed {
+    background: rgb(64, 88, 101, 0.8);
+  }
+`;
