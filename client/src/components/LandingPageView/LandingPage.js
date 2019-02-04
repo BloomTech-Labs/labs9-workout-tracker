@@ -137,14 +137,13 @@ const CallToAction = styled.div`
 const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
-  height: 350px;
+  height: 450px;
   background-color: transparent;
   font-size: 3.3rem;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  border: 1px solid blue;
-  @media (max-width: 900px) {
+  justify-content: space-between;
+  align-items: cente @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 200px;
@@ -154,9 +153,10 @@ const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 60%;
+  width: 50%;
   height: 100%;
   align-items: center;
+
   border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
@@ -164,11 +164,13 @@ const CalendarPic = styled.img`
 `;
 
 const CalendarDemo = styled.div`
+display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 350px
   align-items: center;
   color: white;
   border: 1px solid red;
@@ -179,15 +181,13 @@ const CalendarDemo = styled.div`
 
 const Part3 = styled.div`
   width: 100%;
-  height: 350px;
-  background-color: #f4f5f5;
+  height: 450px;
+  background-color: transparent;
   font-size: 3.3rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background-color: transparent;
-  border: 1px solid blue;
-  @media (max-width: 900px) {
+  background-color: transparen @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 200px;
@@ -197,7 +197,7 @@ const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 35%;
+  width: 50%;
   height: 100%;
   align-items: center;
   border: 1px solid red;
@@ -207,11 +207,13 @@ const WorkoutPic = styled.img`
 `;
 
 const WorkoutDemo = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  width: 50%;
-  height: 200px;
+  width: 40%;
+  height: 350px;
   color: white;
   border: 1px solid red;
   @media (max-width: 900px) {
@@ -221,26 +223,26 @@ const WorkoutDemo = styled.div`
 
 const Part4 = styled.div`
   width: 100%;
-  height: 350px;
-  background-color: white;
+  height: 450px;
+  background-color: transparent;
   font-size: 3.3rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  background-color: transparent;
-  border: 1px solid blue;
-  @media (max-width: 900px) {
+  background-color: transparen @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 100px;
 `;
 
 const ProgressDemo = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  width: 50%;
-  height: 200px;
+  width: 40%;
+  height: 350px;
   color: white;
   border: 1px solid red;
   @media (max-width: 900px) {
@@ -252,7 +254,7 @@ const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 50%;
   height: 100%;
   align-items: center;
   border: 1px solid red;
@@ -270,7 +272,7 @@ const Part5 = styled.div`
   font-size: 1.6rem;
   justify-content: center;
   align-items: center;
-  // border: 1px solid blue;
+
   @media (max-width: 900px) {
     flex-direction: column;
   }
