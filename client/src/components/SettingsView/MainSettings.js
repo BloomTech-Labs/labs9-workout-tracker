@@ -99,26 +99,30 @@ const SubNav = styled.div`
   width: 100%;
   max-width: 880px;
   justify-content:center;
-  height: 30px;
+  height: 40px;
 `;
 
 const HeaderTab = styled.div`
+border-bottom: 1px solid #2B3A42
 display:flex;
 width:70%;
-height: 30px;
+height: 40px;
 `;
 
 const HeaderBlue = styled.h1`
   margin: 0;
   width: 25%;
-  background-color: ${props => props.theme.primary};
   border-radius: 10px 10px 0 0;
   display:flex;
   justify-content:center;
   align-items:center;
   font-size:1.5rem;
-  color:${props => props.theme.themeWhite};
+  color: #2B3A42
   height:40px;
+  border-top:1px solid #2B3A42;
+  border-left:1px solid #2B3A42;
+  border-right:1px solid #2B3A42;
+  border-bottom:1px solid white;
   :hover {
     cursor: pointer;
 }
@@ -131,13 +135,12 @@ const HeaderBlue = styled.h1`
 const HeaderBlank = styled.h1`
   margin: 0;
   width: 25%;
-  background-color: ${props => props.theme.accent};
   border-radius: 10px 10px 0 0;
   display:flex;
   justify-content:center;
   align-items:center;
   font-size:1.5rem;
-  color:${props => props.theme.themeWhite};
+  color:#2B3A42;
   height:40px;
   :hover {
       cursor: pointer;

@@ -29,15 +29,15 @@ const LandingPage = () => {
         </CtaDiv>
       </LandingStyle>
       <Part2>
-        <CalendarPic src={CalendarView} alt="A picture of the calendar" />
+        <CalendarPic src={CalendarView} alt="A picture of the calendar view." />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
       <Part3>
         <WorkoutDemo>Plan ahead, execute your plan.</WorkoutDemo>
-        <WorkoutPic src={WorkoutsView} alt="A picture of the workouts view" />
+        <WorkoutPic src={WorkoutsView} alt="A picture of the workouts view." />
       </Part3>
       <Part4>
-        <ProgressPic src={ProgressView} alt="A picture of the progress view" />
+        <ProgressPic src={ProgressView} alt="A picture of the progress view." />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
       <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
@@ -137,24 +137,28 @@ const CallToAction = styled.div`
 const Part2 = styled.div`
   width: 100%;
   margin: 0 auto;
-  height: 350px;
-  background-color: white;
+  height: auto;
+  background-color: transparent;
   font-size: 3.3rem;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  // border: 1px solid blue;
-  @media (max-width: 900px) {
+  justify-content: space-between;
+  align-items: center @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 200px;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 0px;
+  }
 `;
 
 const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 60%;
+  width: 50%;
   height: 100%;
   align-items: center;
   // border: 1px solid red;
@@ -164,38 +168,48 @@ const CalendarPic = styled.img`
 `;
 
 const CalendarDemo = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 350px
   align-items: center;
+  color: white;
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
+    height: 200px;
   }
 `;
 
 const Part3 = styled.div`
   width: 100%;
-  height: 350px;
-  background-color: #f4f5f5;
+  height: auto;
+  background-color: transparent;
   font-size: 3.3rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  // border: 1px solid blue;
-  @media (max-width: 900px) {
+  background-color: transparen @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 200px;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column-reverse;
+    margin-bottom: 0px;
+  }
 `;
 
 const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 35%;
+  width: 50%;
   height: 100%;
   align-items: center;
   // border: 1px solid red;
@@ -205,41 +219,57 @@ const WorkoutPic = styled.img`
 `;
 
 const WorkoutDemo = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  width: 50%;
-  height: 200px;
+  width: 40%;
+  height: 350px;
+  color: white;
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
+    height: 200px;
   }
 `;
 
 const Part4 = styled.div`
   width: 100%;
-  height: 350px;
-  background-color: white;
+  height: auto;
+  background-color: transparent;
   font-size: 3.3rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  // border: 1px solid blue;
-  @media (max-width: 900px) {
+  background-color: transparen @media (max-width: 900px) {
     flex-direction: column;
   }
   margin-bottom: 100px;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
 `;
 
 const ProgressDemo = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  width: 50%;
-  height: 200px;
+  width: 40%;
+  height: 350px;
+  color: white;
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
+    height: 200px;
   }
 `;
 
@@ -247,7 +277,7 @@ const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 50%;
   height: 100%;
   align-items: center;
   // border: 1px solid red;
@@ -265,7 +295,7 @@ const Part5 = styled.div`
   font-size: 1.6rem;
   justify-content: center;
   align-items: center;
-  // border: 1px solid blue;
+
   @media (max-width: 900px) {
     flex-direction: column;
   }
