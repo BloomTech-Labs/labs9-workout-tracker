@@ -42,15 +42,12 @@ const AddWorkout = () => {
   ]);
   const [newCategory, setNewCategory] = useState('');
 
-  useEffect(
-    () => {
-      const selectedWorkoutCategory = state.selectedWorkoutCategory;
-      if (selectedWorkoutCategory === 'add') {
-        dispatch({ type: 'ADDING_CATEGORY' });
-      }
-    },
-    [state.selectedWorkoutCategory]
-  );
+  useEffect(() => {
+    const selectedWorkoutCategory = state.selectedWorkoutCategory;
+    if (selectedWorkoutCategory === 'add') {
+      dispatch({ type: 'ADDING_CATEGORY' });
+    }
+  }, [state.selectedWorkoutCategory]);
 
   //add Exercise handler
   const addExercise = async e => {
@@ -187,7 +184,7 @@ const AddWorkout = () => {
       {/* Conditional that renders the category Input field when a user wants to add a category */}
 
       {state.selectedCategory === 'add' ? (
-        <Row>
+        <CategoryRow>
           <Input
             value={newCategory}
             placeholder="Arms #2"
@@ -195,10 +192,10 @@ const AddWorkout = () => {
             label="New Category Name"
             size="large"
           />
-          <SubmitButton onClick={e => addNewCategory(e)} type="button">
+          <Button size="category" onClick={e => addNewCategory(e)} type="button">
             Add Category
-          </SubmitButton>
-        </Row>
+          </Button>
+        </CategoryRow>
       ) : null}
 
       {/* Conditional that renders the exercises that have been added to the workout that is being created */}
@@ -258,39 +255,15 @@ const AddWorkout = () => {
 
 export default AddWorkout;
 
-const AddExerciseButton = styled.button`
-  width: 100%;
-  height: 36px;
-  background-color: white;
-  box-shadow: ${props => props.theme.boxShadow};
-  border: none;
-  border-radius: 4px;
-  cursor: none;
-`;
-
-const SubmitButton = styled.button`
-  width: 100%;
-  height: 36px;
-  color: white;
-  background-color: ${props => props.theme.accent};
-  border-radius: 4px;
-  box-shadow: ${props => props.theme.boxShadow};
-  border: none;
-`;
-
-const Container = styled.form`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  @media (max-width: 800px) {
-    border: solid red;
-  }
-`;
-
 const Row = styled.div`
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
+
+const CategoryRow = styled.div`
   width: 100%;
   height: 75px;
   display: flex;

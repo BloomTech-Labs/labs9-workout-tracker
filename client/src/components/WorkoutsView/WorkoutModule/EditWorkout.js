@@ -23,20 +23,17 @@ const EditWorkout = () => {
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  useEffect(
-    () => {
-      const editWorkout = state.editWorkout;
-      if (editWorkout !== null) {
-        setTitle(editWorkout.title);
-        setExercises(editWorkout.exercises);
-        dispatch({
-          type: 'UPDATE_SELECTED_CATEGORY',
-          payload: editWorkout.category_id
-        });
-      }
-    },
-    [state.editWorkout]
-  );
+  useEffect(() => {
+    const editWorkout = state.editWorkout;
+    if (editWorkout !== null) {
+      setTitle(editWorkout.title);
+      setExercises(editWorkout.exercises);
+      dispatch({
+        type: 'UPDATE_SELECTED_CATEGORY',
+        payload: editWorkout.category_id
+      });
+    }
+  }, [state.editWorkout]);
 
   //add Exercise handler
   const addExercise = async e => {
@@ -224,29 +221,8 @@ const EditWorkout = () => {
 
 export default EditWorkout;
 
-// const AddExerciseButton = styled.button`
-//   width: 100%;
-//   height: 36px;
-//   background-color: white;
-//   box-shadow: ${props => props.theme.boxShadow};
-//   border: none;
-//   border-radius: 4px;
-//   cursor: none;
-// `;
-
-// const SubmitButton = styled.button`
-//   width: 100%;
-//   height: 36px;
-//   color: white;
-//   background-color: ${props => props.theme.accent};
-//   border-radius: 4px;
-//   box-shadow: ${props => props.theme.boxShadow};
-//   border: none;
-// `;
-
 const Container = styled.form`
   width: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
