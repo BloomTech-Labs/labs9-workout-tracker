@@ -170,16 +170,21 @@ const AddWorkout = () => {
       closeModal={() => dispatch({ type: 'SHOW_WORKOUT_FORM' })}
       title={'Add a Workout'}
     >
-      <Row>
-        <Input
-          value={title}
-          placeholder="Legs"
-          onChange={e => setTitle(e.target.value)}
-          size="large"
-          label="Workout Title"
-        />
-      </Row>
-      <CategoryDropDown />
+      <TitleRow>
+        <Row>
+          <Input
+            value={title}
+            placeholder="Legs"
+            onChange={e => setTitle(e.target.value)}
+            size="large"
+            label="Workout Title"
+          />
+        </Row>
+        <CategoryDropdownContainer>
+          {' '}
+          <CategoryDropDown />
+        </CategoryDropdownContainer>
+      </TitleRow>
 
       {/* Conditional that renders the category Input field when a user wants to add a category */}
 
@@ -203,8 +208,8 @@ const AddWorkout = () => {
       {exercises &&
         exercises.map((ex, index) => {
           return (
-            <div>
-              <Row>
+            <WorkoutRow>
+              <ExerciseTitleRow>
                 <Input
                   name="name"
                   value={ex.name}
@@ -213,7 +218,7 @@ const AddWorkout = () => {
                   label="Exercise Name"
                   size="large"
                 />
-              </Row>
+              </ExerciseTitleRow>
               <ExerciseRow>
                 <Input
                   name="weight"
@@ -241,7 +246,7 @@ const AddWorkout = () => {
                 />
                 {exercises.length === 1 ? null : <i onClick={e => removeExercise(e, index)} className="fas fa-times" />}
               </ExerciseRow>
-            </div>
+            </WorkoutRow>
           );
         })}
 
@@ -278,15 +283,57 @@ const CategoryRow = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   @media (max-width: 550px) {
-    /* align-items: center; */
+    margin-top: 10px;
+    /* border: solid purple; */
   }
 `;
 
 const ExerciseRow = styled.div`
   display: flex;
-  margin-top: 10px;
-  margin-right: 20px;
+  width: 100%;
+  padding: 0px 20px;
+  /* border: solid purple; */
   @media (max-width: 550px) {
-    margin-right: auto;
+    justify-content: space-between;
+    padding: 0px;
+    padding-top: 10px;
+  }
+`;
+
+const WorkoutRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px 0px;
+  /* border: solid green; */
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0px;
+    margin-top: 10px;
+    /* border: solid purple; */
+  }
+`;
+
+const TitleRow = styled.div`
+  display: flex;
+  align-items: flex-end;
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const ExerciseTitleRow = styled.div`
+  /* border: solid red; */
+  @media (max-width: 550px) {
+  }
+`;
+
+const CategoryDropdownContainer = styled.div`
+  padding: 0px 20px;
+  @media (max-width: 550px) {
+    padding: 10px 0px;
   }
 `;

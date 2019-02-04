@@ -65,6 +65,7 @@ const StyledButton = styled.button`
       width: 245px;
       margin-left: 0px;
       margin-top: 20px;
+      padding: 0 20px;
       @media (max-width: 550px) {
         margin-left: auto;
       }
