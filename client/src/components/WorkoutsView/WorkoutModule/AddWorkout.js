@@ -181,7 +181,6 @@ const AddWorkout = () => {
           />
         </Row>
         <CategoryDropdownContainer>
-          {' '}
           <CategoryDropDown />
         </CategoryDropdownContainer>
       </TitleRow>
