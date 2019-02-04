@@ -117,7 +117,7 @@ const HeaderBlue = styled.h1`
   justify-content:center;
   align-items:center;
   font-size:1.5rem;
-  color: black
+  color: #2B3A42
   height:40px;
   border-top:1px solid #2B3A42;
   border-left:1px solid #2B3A42;
@@ -140,7 +140,7 @@ const HeaderBlank = styled.h1`
   justify-content:center;
   align-items:center;
   font-size:1.5rem;
-  color:black;
+  color:#2B3A42;
   height:40px;
   :hover {
       cursor: pointer;
