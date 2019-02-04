@@ -7,7 +7,7 @@ import requireAuth from "../../requireAuth";
 import MainSettings from "./MainSettings";
 import "./settings.css";
 import FormInput from '../../shared/FormInput'
-import Button from '../../shared/Button'
+import Button from '../../shared/Button';
 //working on updating info
 
 const SettingsView = props => {
@@ -192,9 +192,8 @@ const SettingsViewStyle = styled.div`
 `;
 
 const FormStyle = styled.form`
-  border: 1px solid ${props => props.theme.primaryDark};
   border-radius: 0 6px 6px 6px;
-  background-color: ${props => props.theme.primary};
+  background-color: white;;
   margin: 0 2%;
   display: flex;
   width: 70%;
