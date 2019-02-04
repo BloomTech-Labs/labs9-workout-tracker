@@ -13,6 +13,7 @@ import { theme } from "./StyleTheme";
 import { Store } from "./index";
 import MainSettingsView from "./components/SettingsView/MainSettings";
 
+
 // export const AppState = createContext({ state: {}, dispatch: () => {} });
 
 const App = props => {
