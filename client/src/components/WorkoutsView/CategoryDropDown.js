@@ -36,7 +36,9 @@ const CategoryDropDown = props => {
     return options;
   };
 
-  return <DropDown options={getOptions()} onChange={handleChange} value={state.selectedCategory} />;
+  return (
+    <DropDown label="Workout Category" options={getOptions()} onChange={handleChange} value={state.selectedCategory} />
+  );
 };
 
 export default CategoryDropDown;
