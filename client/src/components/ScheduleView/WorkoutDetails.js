@@ -12,7 +12,7 @@ const WorkoutDetails = props => {
 
   const { state, dispatch } = useContext(Store);
 
-  const { currentDay } = state;
+  const { currentDate } = state;
 
   const dateStringParser = date => {
     if (date.length === 10) {
@@ -67,7 +67,7 @@ const WorkoutDetails = props => {
           }
         }
       );
-
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
       dispatch({
         type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newScheduleWorkouts.data
@@ -94,6 +94,7 @@ const WorkoutDetails = props => {
       )
       .catch(err => console.log("err", err));
     if (updateRes.status === 200) {
+      console.log("200 OK");
       const newScheduleWorkouts = await axios.get(
         "https://fitmetrix.herokuapp.com/api/schedule",
         {
@@ -119,14 +120,16 @@ const WorkoutDetails = props => {
       <WorkoutContainer>
       {state.scheduleWorkouts &&
             state.scheduleWorkouts.map(scheduleWorkout => {
-              const sDate = dateFormat(dateStringParser(scheduleWorkout.date));
-              const cDay = dateFormat(currentDay);
-              if ( sDate === cDay ) {
+              const sDay = dateFormat(dateStringParser(scheduleWorkout.date));
+              const cDay = dateFormat(new Date(currentDate));
+              console.log('sDay: ', sDay)
+              console.log('cDay: ', cDay)
+              if ( sDay === cDay ) {
                 return (
                   <WorkoutDetailsDiv key={scheduleWorkout.id}>
                     <WorkoutTitleDiv>
                       <h3>{scheduleWorkout.title}</h3>
-                      <h3>{sDate}</h3>
+                      <h3>{sDay}</h3>
                     </WorkoutTitleDiv>
                     <ExerciseListDiv>
                       {scheduleWorkout.exercises &&
@@ -140,17 +143,24 @@ const WorkoutDetails = props => {
                           );
                         })}
                     </ExerciseListDiv>
-                    <Button
-                      type="button"
-                      onClick={e => completedWorkout(e, scheduleWorkout)}
-                    >
-                      Workout Complete
-                    </Button>
+
+                    {
+                      scheduleWorkout.completed 
+                        ? null
+                        : (
+                          <Button
+                            type="button"
+                            onClick={e => completedWorkout(e, scheduleWorkout)}
+                          >
+                            Complete
+                          </Button>
+                        )
+                    }
                     <Button
                       type="button"
                       onClick={e => unscheduleWorkout(e, scheduleWorkout)}
                     >
-                      Unschedule Workout
+                      Unschedule
                     </Button>
                   </WorkoutDetailsDiv>
                 );

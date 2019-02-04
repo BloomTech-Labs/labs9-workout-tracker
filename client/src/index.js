@@ -70,7 +70,7 @@ const reducer = (state, action) => {
     case 'UPDATE_DATE_SELECTED':
       return { ...state, dateSelected: !state.dateSelected };
     case 'UPDATE_CURRENT_DAY':
-      return { ...state, currentDay: action.payload};
+      return { ...state, currentDate: action.payload};
     case 'UPDATE_IS_POPULATED':
       return { ...state, datePopulated: action.payload};
     default:
