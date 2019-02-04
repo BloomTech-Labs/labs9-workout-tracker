@@ -117,16 +117,15 @@ const HeaderBlue = styled.h1`
   color: white;
   margin: 0;
   width: 25%;
-  border-radius: 10px 10px 0 0;
+  border-radius: 6px 6px 0 0;
   display:flex;
   justify-content:center;
   align-items:center;
   font-size:1.5rem;
   height:40px;
-  border-top:1px solid ${props => props.theme.accent};;
-  border-left:1px solid ${props => props.theme.accent};;
-  border-right:1px solid ${props => props.theme.accent};;
-  box-shadow: 5px 0px ${props => props.theme.accent};;
+  border-top:1px solid ${props => props.theme.accent};
+  border-left:1px solid ${props => props.theme.accent};
+  border-right:1px solid ${props => props.theme.accent};
   :hover {
     cursor: pointer;
 }
@@ -139,7 +138,7 @@ const HeaderBlue = styled.h1`
 const HeaderBlank = styled.h1`
   margin: 0;
   width: 25%;
-  border-radius: 10px 10px 0 0;
+  border-radius: 6px 6px 0 0;
   display:flex;
   justify-content:center;
   align-items:center;
