@@ -29,15 +29,15 @@ const LandingPage = () => {
         </CtaDiv>
       </LandingStyle>
       <Part2>
-        <CalendarPic src={CalendarView} alt="A picture of the calendar" />
+        <CalendarPic src={CalendarView} alt="A picture of the calendar view." />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
       <Part3>
         <WorkoutDemo>Plan ahead, execute your plan.</WorkoutDemo>
-        <WorkoutPic src={WorkoutsView} alt="A picture of the workouts view" />
+        <WorkoutPic src={WorkoutsView} alt="A picture of the workouts view." />
       </Part3>
       <Part4>
-        <ProgressPic src={ProgressView} alt="A picture of the progress view" />
+        <ProgressPic src={ProgressView} alt="A picture of the progress view." />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
       <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
@@ -156,15 +156,16 @@ const CalendarPic = styled.img`
   width: 50%;
   height: 100%;
   align-items: center;
-
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
 `;
 
 const CalendarDemo = styled.div`
-display: flex;
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   justify-content: center;
@@ -173,7 +174,7 @@ display: flex;
   height: 350px
   align-items: center;
   color: white;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -200,13 +201,15 @@ const WorkoutPic = styled.img`
   width: 50%;
   height: 100%;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
 `;
 
 const WorkoutDemo = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -215,7 +218,7 @@ const WorkoutDemo = styled.div`
   width: 40%;
   height: 350px;
   color: white;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -236,6 +239,8 @@ const Part4 = styled.div`
 `;
 
 const ProgressDemo = styled.div`
+  font-family: ${props => props.theme.roboto};
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -244,7 +249,7 @@ const ProgressDemo = styled.div`
   width: 40%;
   height: 350px;
   color: white;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -257,7 +262,7 @@ const ProgressPic = styled.img`
   width: 50%;
   height: 100%;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
   }
