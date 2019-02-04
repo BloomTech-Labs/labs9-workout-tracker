@@ -119,9 +119,11 @@
     justify-content: space-around;
     flex-direction:column;
   }
-      @media(max-width: 690px) {
+     @media(max-width: 690px) {
         .calendar-div {
         flex-direction: column-reverse;
+        width:100vw;
+        border:none;
       }
     }
 
@@ -134,6 +136,11 @@
     border: 1px solid var(--border-color);
     border-radius: 10px 10px 0 0;
   }
+      @media(max-width: 690px) {
+        .calendar {
+          border:none;
+      }
+    }
   
   .calendar .header {
     text-transform: uppercase;

@@ -93,9 +93,7 @@ const WorkoutDetails = props => {
         }
       )
       .catch(err => console.log("err", err));
-    console.log("updateRes:", updateRes);
     if (updateRes.status === 200) {
-      console.log("200 OK");
       const newScheduleWorkouts = await axios.get(
         "https://fitmetrix.herokuapp.com/api/schedule",
         {
