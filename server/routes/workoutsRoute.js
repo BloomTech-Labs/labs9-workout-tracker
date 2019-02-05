@@ -264,6 +264,21 @@ router.put('/edit/exercise/:id', async (req, res) => {
   res.status(200).json(newEx[0]);
 });
 
+router.delete('/exercise/delete', async (req, res) => {
+  try {
+    const deleteWorkoutData = await db('exercises')
+      .whereIn(['id', 'workout_id'], [[req.body.id, req.body.workout_id]])
+      .del();
+    {
+      deleteWorkoutData === 0
+        ? res.status(404).json({ message: 'Workout ID does not exist' })
+        : res.status(200).json({ deleteWorkoutData });
+    }
+  } catch (error) {
+    res.status(500).json(error, 'error message');
+  }
+})
+
 //Delete workout
 router.delete('/delete/:id', async (req, res) => {
   try {
