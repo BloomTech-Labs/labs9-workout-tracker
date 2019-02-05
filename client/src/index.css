@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-
 }
 
 html {
@@ -17,6 +16,32 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.workoutsCard-hideEx {
+  height: 46px;
+}
+
+.workoutsCard-showEx {
+  height: auto;
+  border: solid #2B3A42;
+  padding: 20px;
+}
+
+.exerciseCard-showEx {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin: 10px 0px;
+}
+
+.exerciseCard-hideEx {
+  display: none;
+}
+
+.upArrow {
+  align-self: flex-end;
+  /* border: solid red; */
 }
