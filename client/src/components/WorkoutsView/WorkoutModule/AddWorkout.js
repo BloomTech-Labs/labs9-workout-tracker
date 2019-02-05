@@ -267,10 +267,12 @@ const AddWorkout = () => {
 export default AddWorkout;
 
 const Row = styled.div`
-  height: 75px;
+  height: 62px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
 `;
 
 const CategoryRow = styled.div`
@@ -281,7 +283,7 @@ const CategoryRow = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  @media (max-width: 550px) {
+  @media (max-width: 670px) {
     margin-top: 10px;
     /* border: solid purple; */
   }
@@ -290,9 +292,12 @@ const CategoryRow = styled.div`
 const ExerciseRow = styled.div`
   display: flex;
   width: 100%;
-  padding: 0px 20px;
-  /* border: solid purple; */
-  @media (max-width: 550px) {
+  justify-content: space-between;
+  align-items: center;
+  i {
+    font-size: 22px;
+  }
+  @media (max-width: 670px) {
     justify-content: space-between;
     padding: 0px;
     padding-top: 10px;
@@ -302,10 +307,10 @@ const ExerciseRow = styled.div`
 const WorkoutRow = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   padding: 10px 0px;
   /* border: solid green; */
-  @media (max-width: 550px) {
+  @media (max-width: 670px) {
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
@@ -317,22 +322,21 @@ const WorkoutRow = styled.div`
 
 const TitleRow = styled.div`
   display: flex;
-  align-items: flex-end;
-  @media (max-width: 550px) {
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 670px) {
     flex-direction: column;
     align-items: flex-start;
   }
 `;
 
 const ExerciseTitleRow = styled.div`
-  /* border: solid red; */
-  @media (max-width: 550px) {
-  }
+  width: 100%;
 `;
 
 const CategoryDropdownContainer = styled.div`
-  padding: 0px 20px;
-  @media (max-width: 550px) {
+  @media (max-width: 670px) {
+    width: 100%;
     padding: 10px 0px;
   }
 `;

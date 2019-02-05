@@ -59,23 +59,37 @@ const StyledLabel = styled.span`
 `;
 
 const Container = styled.div`
-  width: ${props =>
-    props.size === 'large'
-      ? '245px'
-      : props.size === 'responsive'
-      ? '100%'
-      : props.size === 'medium'
-      ? '155px'
-      : props.size === 'small'
-      ? '80px'
-      : '100px'};
-  ${props => (props.size === 'responsive' ? 'margin: 10px 0px;' : '')}
-  ${props => (props.size === 'small' ? 'margin-right: 20px;' : '')}
   height: 62px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  width: 100px;
+  ${props => props.size === "small" && css`
+    width: 80px;
+    /* margin-right: 20px; */
+  `}
+  
+  ${props => props.size === "medium" && css`
+    width: 155px;
+  `}
+
+  ${props => props.size === "large" && css`
+    width: 245px;
+  `}
+  ${props => props.size === "responsive" && css`
+    width: 100%;
+    margin: 10px 0px;
+  `}
+
+  @media (max-width: 670px) {
+    ${props => props.size === "large" && css`
+      width: 100%;
+    `}
+    ${props => props.size === "small" && css`
+      margin-right: 0px;
+    `}
+  }
 `;
 
 const StyledInput = styled.input`

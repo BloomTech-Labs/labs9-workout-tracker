@@ -158,6 +158,7 @@ const WorkoutDetails = props => {
                     }
                     <Button
                       type="button"
+                      scheme="cancel"
                       onClick={e => unscheduleWorkout(e, scheduleWorkout)}
                     >
                       Unschedule

@@ -32,6 +32,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  @media (max-width: 670px) {
+      width: 100%;
+  }
 `;
 
 
