@@ -246,7 +246,6 @@ const EditWorkout = () => {
 
 export default EditWorkout;
 
-
 const Row = styled.div`
   height: 62px;
   display: flex;
@@ -284,7 +283,6 @@ const ExerciseRow = styled.div`
     padding-top: 10px;
   }
 `;
-
 const WorkoutRow = styled.div`
   display: flex;
   justify-content: space-between;
