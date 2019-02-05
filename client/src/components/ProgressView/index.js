@@ -14,7 +14,12 @@ const ProgressView = props => {
   return (
     <ProgressViewStyle>
       <h1>Progress</h1>
-      <ProgressGraph />
+      {
+        !metrics || !metrics.length
+        ? (<StyledError>No progress to be shown!</StyledError>)
+        : <ProgressGraph />
+
+      }
       <ProgressDayView />
 
       {state.showMetricForm ? <MetricModule /> : null}
@@ -23,6 +28,12 @@ const ProgressView = props => {
 };
 
 export default requireAuth(ProgressView);
+
+const StyledError = styled.p`
+  color: ${props => props.theme.primaryDark};
+  font-size: 18px;
+  font-weight: 600;
+`;
 
 const ProgressViewStyle = styled.div`
   width: 100%;
