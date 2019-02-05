@@ -1,9 +1,11 @@
-# fitmetrix 
+# fitmetrix
+
 #### fitmetrix.herokuapp.com
 
 # Back-End
 
 #### Dependencies
+
 - cors
 - express
 - faker
@@ -12,10 +14,12 @@
 - morgan
 
 ## Scripts
+
 `npm run start`: Runs server once using node index.js
 `npm run server`: Runs server using nodemon for auto updating
 
 ## Enviroment Variables
+
 `DATABASE_URL`: Databse URI for postgress database
 `DB_ENGINE`: Databse engine to use 'production' for deployment
 `FIREBASE_CLIENT_EMAIL`: Firebase client email necessary to initialize firebase app
@@ -24,13 +28,16 @@
 ## API Documentation
 
 ### EndPoints
+
 #### [User Route Endpoints](#user-routes)
+
 - [GET `/api/user/all`](#get-all-users)
 - [GET `/api/user/info`](#get-user-details)
 - [PUT `/api/user/edit`](#edit-user-details)
 - [DELETE `/api/user/delete`](#delete-user)
 
 #### [Metrics Route Endpoints](#metrics-routes)
+
 - [GET `/api/progress/metrics/all`](#get-all-metrics)
 - [GET `/api/progress/metrics/get`](#get-metrics-info)
 - [POST `/api/progress/metrics/create`](#create-metrics-info)
@@ -38,6 +45,7 @@
 - DELETE `/api/progress/metrics/delete/:id`
 
 #### [Category Route Endpoints](#category-routes)
+
 - [GET `/api/category/all`](#get-all-categories)
 - [GET `/api/category/getbyuser/:id`](#get-category-info)
 - [POST `/api/category/create/:id`](#create-category)
@@ -45,36 +53,50 @@
 - [DELETE `/api/category/delete/:id`](#delete-category)
 
 #### Workouts Route Endpoints:
+
 - GET `/api/workouts/all`
 - GET `/api/workouts/`
 - POST `/api/workouts/`
 - PUT `/api/workouts/edit/:id`
 
 #### [Schedule Workouts Route Endpoints](#scheduledWorkouts-routes)
+
 - [GET `/api/schedule/all`](#get-all-schedule-workouts)
 - [GET `/api/schedule/`](#get-schedule-workout)
 - [POST `/api/schedule/create/:id`](#create-schedule-workout)
 - [PUT `/api/schedule/edit/workout/:id`](#edit-schedule-workout)
 - [PUT `/api/schedule/edit/excercise/:id`](#edit-schedule-workout-exercise)
 
-
 ### User Routes
 
 #### Get All Users
 
 GET `/api/user/all`
+
 - Gets a list of all users (testing purposes)
-- Response is an array  with user objects
+- Response is an array with user objects
 
 ```
 users : [
-    {}, {},
-] 
+    {
+    "id": 2,
+    "uid": "MUiqaWxf0nN8ZE81yueX2KyscTC2",
+    "name": "Test",
+    "email": "Test@test.test",
+    "phone": null,
+    "recieves_text": false,
+    "recieves_email": false,
+    "created_at": "2019-01-31T21:08:52.910Z",
+    "updated_at": "2019-01-31T21:08:52.910Z",
+    "premium": false
+  }, {},
+]
 ```
 
 #### Get User Details
 
 GET `/api/user`
+
 - Gets all the info of a single user with given id in req.params.
 - Response is basic user object of Users table with all associated data.
 
@@ -83,13 +105,14 @@ Response:
 ```
 {
   "id": 1,
-  "name": 
-  "email": 
-  "phone": 
-  "recieves_text": 
-  "recieves_email": 
-  "created_at": 
-  "updated_at": 
+  "uid": "w5iY6dJDISWE17ZbaO72QZWLTi62",
+  "name":
+  "email":
+  "phone":
+  "recieves_text":
+  "recieves_email":
+  "created_at":
+  "updated_at":
   "metrics": [{ },{ }],
   "workouts": [
     {
@@ -125,25 +148,18 @@ Response:
 
 ```
 {
-  "updateduserCount": 1
+  "id": 1,
+  "uid": "w5iY6dJDISWE17ZbaO72QZWLTi62",
+  "name": "edited elvis",
+  "email": "elvis@elvis.com",
+  "phone": null,
+  "recieves_text": true,
+  "recieves_email": false,
+  "created_at": "2019-01-31T18:44:18.107Z",
+  "updated_at": "2019-01-31T18:44:18.107Z",
+  "premium": false
 }
 ```
-
-#### Delete User
-
-DELETE `/api/user/delete`
-
-- Deletes the user with given id in req.params
-- Response includes an object with the deleteduserCount of 1
-
-Response:
-
-```
-{
-  "deleteduserCount": 1
-}
-```
-
 
 ### Metrics Routes
 
@@ -159,35 +175,20 @@ Response:
 ```
 [
   {
-    "id": 0,
-    "created_at": "2019-01-10 17:13:09",
-    "updated_at": "2019-01-10 17:13:09",
-    "weight": 10.079924625003855,
-    "hips": 3.355836598475216,
-    "waist": 8.609838928827488,
-    "arm_right": 6.5808771055066675,
-    "arm_left": 7.311579244382037,
-    "leg_right": 7.546573227382904,
-    "leg_left": 9.951484413530151,
-    "date": "2019-01-10 17:13:09",
-    "user_id": 0
-  },
-  {
     "id": 1,
-    "created_at": "2019-01-10 17:13:09",
-    "updated_at": "2019-01-10 17:13:09",
-    "weight": 5.948854770374069,
-    "hips": 8.213643664668455,
-    "waist": 1.4806847756526245,
-    "arm_right": 7.022097727831248,
-    "arm_left": 2.635112317202456,
-    "leg_right": 2.611580422143979,
-    "leg_left": 1.8865857463905291,
-    "date": "2019-01-10 17:13:09",
-    "user_id": 1
+    "weight": "185.00",
+    "hips": "3.36",
+    "waist": "2.03",
+    "arm_right": "10.68",
+    "arm_left": "8.44",
+    "leg_right": "9.31",
+    "leg_left": "10.46",
+    "date": "2019-01-16T00:00:00.000Z",
+    "user_id": "1"
   }
 ]
 ```
+
 #### Get Metrics Info
 
 GET `/api/progress/metrics/get/`
@@ -278,7 +279,6 @@ Response:
 }
 ```
 
-
 ### Category Routes
 
 #### Get All Categories
@@ -366,16 +366,16 @@ Response:
 Category has been deleted
 ```
 
-
 ### ScheduledWorkouts Routes
 
 #### Get All Schedule Workouts
 
 GET `/api/schedule/all`
 
-- Retrieves all schedule workouts 
-- Response is an array  of scheduled workout objects. 
- Response: 
+- Retrieves all schedule workouts
+- Response is an array of scheduled workout objects.
+  Response:
+
 ```
 [
   {
@@ -398,7 +398,8 @@ GET `/api/schedule/`
 - Response is the scheduled workout and the exercises assigned to it
 - Also returns scheduled exercises for the corresponding scheduled workout
 
-Response: 
+Response:
+
 ```
 {
   "id": 0,
@@ -460,7 +461,6 @@ POST `/api/schedule/create/:id`
 }
 ```
 
-
 #### Edit Schedule Workout
 
 Put `/api/schedule/edit/workout`
@@ -468,7 +468,7 @@ Put `/api/schedule/edit/workout`
 - Edits the selected scheduled workout
 - Response is the newly edited schedules workout
 
-``` 
+```
 {
   "id": 1,
   "date": "2019-12-12",
@@ -484,7 +484,7 @@ Put `/api/schedule/edit/workout`
 
 PUT `/api/schedule/edit/exercise`
 
-- Edits the scheduled exercise 
+- Edits the scheduled exercise
 - Response is the newly-edited scheduled exercise
 
 ```
@@ -497,5 +497,4 @@ PUT `/api/schedule/edit/exercise`
   "reps": 8,
   "completed": 0
 }
- ```
-
+```
