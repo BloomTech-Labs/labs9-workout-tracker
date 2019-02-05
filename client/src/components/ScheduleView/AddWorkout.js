@@ -9,7 +9,6 @@ import Button from "../../shared/Button";
 import Input from "../../shared/Input";
 
 const AddWorkout = props => {
-
   const { state, dispatch } = useContext(Store);
 
   const getOptions = () => {
@@ -40,6 +39,7 @@ const AddWorkout = props => {
 
   const [recurring, setRecurring] = useState(false);
   const [recurringWeeks, setRecurringWeeks] = useState(0);
+  const [workoutPicked, setWorkoutPicked] = useState(null);
 
   //handler to schedule the workout and add it to Sworkout Database
   const scheduleWorkoutHandler = async (e, workout, date, recurringWeeks) => {
@@ -111,40 +111,86 @@ const AddWorkout = props => {
         payload: newSW.data
       });
       dispatch({ type: "UPDATE_DATE_SELECTED" });
-      dispatch({type:"UPDATE_SELECTED_DATE"});
+      dispatch({ type: "UPDATE_SELECTED_DATE" });
     }
   };
 
   return (
     <FormModal
       onSubmit={{ scheduleWorkoutHandler }}
-      closeModal={() => {dispatch({ type: "UPDATE_DATE_SELECTED" });  dispatch({type:"UPDATE_SELECTED_DATE"})}}
+      closeModal={() => {
+        dispatch({ type: "UPDATE_DATE_SELECTED" });
+        dispatch({ type: "UPDATE_SELECTED_DATE" });
+      }}
       title={"Schedule Workout"}
     >
       <AddWorkoutStyle>
         <div>
-          <DropDown
-            label={"Select Category"}
-            options={getOptions()}
-            onChange={handleChange}
-            value={state.selectedWorkoutCategory}
-          />
+          <DropDownDiv>
+            <DropDown
+              label={"Select Category"}
+              options={getOptions()}
+              onChange={handleChange}
+              value={state.selectedWorkoutCategory}
+            />
+            {workoutPicked !== null ? (
+              <Button
+                onClick={e => {
+                  scheduleWorkoutHandler(
+                    e,
+                    workoutPicked,
+                    state.currentDate,
+                    recurringWeeks
+                  );
+                }}
+              >
+                Schedule
+              </Button>
+            ) : null}
+          </DropDownDiv>
           {state.workouts &&
             state.workouts.map(workout => {
               const wCat = workout.category_id;
               const swCat = Number(state.selectedWorkoutCategory);
-              if ( wCat === swCat ||  state.selectedWorkoutCategory === "all") {
+              if (wCat === swCat || state.selectedWorkoutCategory === "all") {
                 return (
-                  <WorkoutsMenu key={workout.id}>
-                    <h3>{workout.title}</h3>
-                    <p>Recurring ?</p>
-                    <input
-                      size="medium"
-                      type="checkbox"
-                      checked={recurring}
-                      onChange={e => setRecurring(e.target.checked)}
-                    />
-                    {recurring ? (
+                  <WorkoutsMenu
+                    key={workout.id}
+                    onClick={() => {
+                      setWorkoutPicked(workout);
+                    }}
+                  >
+                    <TitleDiv>
+                      <TitleP>{workout.title}</TitleP>
+                      <p>Weight</p>
+                      <p>Sets</p>
+                      <p>Reps</p>
+                    </TitleDiv>
+                    <ExerciseListDiv>
+                      {workout.exercises.map(exercise => {
+                        return (
+                          <ExerciseList>
+                            <TitleP>{exercise.name}</TitleP>
+                            <p>{exercise.weight} lbs</p>
+                            <p>{exercise.sets}</p>
+                            <p>{exercise.reps}</p>
+                          </ExerciseList>
+                        );
+                      })}
+                    </ExerciseListDiv>
+                    {workoutPicked !== null &&
+                    workoutPicked.id === workout.id ? (
+                      <RecurringDiv>
+                        <TitleP>Recurring ?</TitleP>
+                        <input
+                          size="medium"
+                          type="checkbox"
+                          checked={recurring}
+                          onChange={e => setRecurring(e.target.checked)}
+                        />
+                    {workoutPicked !== null &&
+                    recurring === true &&
+                    workoutPicked.id === workout.id ? (
                       <Input
                         name="recurringWeeks"
                         placeholder="?"
@@ -153,30 +199,9 @@ const AddWorkout = props => {
                         value={recurringWeeks}
                         onChange={e => setRecurringWeeks(e.target.value)}
                       />
-                    ) : (
-                      <Input
-                        name="recurringWeeks"
-                        placeholder="?"
-                        isDisabled="true"
-                        label="Weeks"
-                        type="number"
-                        value={recurringWeeks}
-                        onChange={e => setRecurringWeeks(e.target.value)}
-                      />
-                    )}
-
-                    <Button
-                      onClick={e => {
-                        scheduleWorkoutHandler(
-                          e,
-                          workout,
-                          state.currentDate,
-                          recurringWeeks
-                        );
-                      }}
-                    >
-                      Schedule
-                    </Button>
+                    ) : null}
+                      </RecurringDiv>
+                    ) : null}
                   </WorkoutsMenu>
                 );
               }
@@ -190,27 +215,72 @@ const AddWorkout = props => {
 
 const AddWorkoutStyle = styled.div``;
 
+const DropDownDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  button {
+    margin-top: 11px;
+  }
+`;
 const WorkoutsMenu = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   width: 100%;
   text-align: left;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 5px;
   margin: 10px 0;
+
+  :hover {
+    background-color: rgb(253, 143, 37, 0.6);
+    color: white;
+    transition: 0.4s ease-in;
+  }
+
   h3 {
-    width: 25%;
-    max-width: 200px;
   }
   input {
   }
-  button {
-    margin: 0 5%;
-  }
+`;
+
+const RecurringDiv = styled.div`
+  display: flex;
+  justify-content: initial;
+  align-items:center;
   p {
-    margin-left: 10%;
+    margin-right: 5%;
+  }
+  input{
+    zoom:1.5margin-bottom:5px;
   }
 `;
 
+const TitleP = styled.p`
+  font-weight: bold;
+`;
 
+const TitleDiv = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  p {
+    width: 25%;
+    font-weight: bold;
+
+  }
+`;
+const ExerciseListDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+const ExerciseList = styled.div`
+  display: flex;
+  justify-content: space-around;
+  p {
+    width: 25%;
+  }
+`;
 
 export default AddWorkout;

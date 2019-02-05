@@ -73,11 +73,13 @@ const SettingsView = props => {
             placeholder={"Enter Password"}
             onChange={e => setcurrentPassword(e.target.value)}
             type="password"
-            lableColor="white"
+            lableColor="#2B3A42"
             secureTextEntry={true}
           />
+          <ResponsiveBtn>
           <Button>Update Info</Button>
-        </ChangePasswordDiv>
+          </ResponsiveBtn>
+          </ChangePasswordDiv>
       );
     } else {
       return (
@@ -88,7 +90,7 @@ const SettingsView = props => {
             placeholder={"Enter Password"}
             onChange={e => setcurrentPassword(e.target.value)}
             type="password"
-            lableColor="white"
+            lableColor="#2B3A42"
             secureTextEntry={true}
           />
           <Button>Update Info</Button>
@@ -141,7 +143,7 @@ const SettingsView = props => {
             placeholder={"jack@fitmetrix.me"}
             onChange={e => setEmail(e.target.value)}
             type="email"
-            lableColor="white"
+            lableColor="#2B3A42"
           />
           <FormInput 
             label={"Phone"}
@@ -149,7 +151,7 @@ const SettingsView = props => {
             placeholder={"555-555-555"}
             onChange={e => setPhone(e.target.value)}
             type="tel"
-            lableColor="white"
+            lableColor="#2B3A42"
           />
           <RecEmailDiv>
             <LabelStyle>Recieve Email?</LabelStyle>
@@ -172,6 +174,18 @@ const SettingsView = props => {
 };
 
 export default requireAuth(SettingsView);
+
+const ResponsiveBtn = styled.div`
+  @media (max-width:768px) {
+    width: 92%;
+  }
+  @media (max-width:375px) {
+    width:77%;
+  }
+  @media (max-width:414px) {
+    width:70%;
+  }
+`;
 
 const ContainerDiv = styled.div`
   width: 100%;
@@ -210,10 +224,11 @@ const FormStyle = styled.form`
 const ChangePasswordDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   justify-content: space-evenly;
   align-items: center;
   margin-top: 20px;
+  transition: 0.4s ease-in
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -227,6 +242,7 @@ const ChangePasswordDivInvis = styled.div`
   justify-content: space-evenly;
   align-items: center;
   margin-top: 20px;
+  transition: 0.4s ease-in
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -254,7 +270,7 @@ const ButtonDiv = styled.div`
 const LabelStyle = styled.label`
   display: flex;
   align-self: flex-start;
-  color: ${props => props.theme.themeWhite};
+  color: ${props => props.theme.primaryDark};
 `;
 
 const PremiumDiv = styled.div`
