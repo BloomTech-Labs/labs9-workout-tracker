@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from './Loading';
+import { Store } from '../index';
 
 import barbell from "./assets/barbell.jpeg";
 
+
 const Register = props => {
+
+  const { state, dispatch } = useContext(Store);
+
+  
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,10 +46,10 @@ const Register = props => {
               );
             })
             .then(() => {
-              props.history.push("/login")
+              dispatch({type: 'USER_JUST_REGISTERED', payload: true})
               setLoading(false)
+              props.history.push("/login")
             })
-            .catch();
         })
         .catch(function(error) {
           var errorMessage = error.message;

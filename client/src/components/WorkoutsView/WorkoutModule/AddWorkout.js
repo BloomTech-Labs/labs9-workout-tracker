@@ -12,20 +12,6 @@ const AddWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
 
-  const { category } = state;
-
-  //A useState Hook to update the selected category on state.
-  const [selectedCategory, setSelectedCategory] = useState('');
-
-  //Maps through the user's categories on state and returns the category names. Is used in the dropdown onChange.
-  const categoryOptions = category.map(cate => {
-    return {
-      key: cate.id,
-      text: cate.name,
-      value: cate.id
-    };
-  });
-
   //Hook to set workout Title
   const [title, setTitle] = useState('');
   const [exerciseName, setExerciseName] = useState('');
@@ -105,7 +91,6 @@ const AddWorkout = () => {
     }
     //Resets the title and category after workout is added
     setTitle('');
-    setSelectedCategory('default');
     dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
@@ -142,12 +127,26 @@ const AddWorkout = () => {
       }
     });
 
-    dispatch({
-      type: 'UPDATE_CATEGORIES',
-      payload: newCategory
-    });
+    if (res.status === 201) {
+      const newCategories = await axios.get('https://fitmetrix.herokuapp.com/api/category/user', {
+        headers: {
+          Authorization: token
+        }
+      })
+      console.log(newCategories.data);
 
-    dispatch({ type: 'ADD_CATEGORY' });
+      const newCatId = newCategories.data[newCategories.data.length-1].id
+
+      dispatch({
+        type: 'UPDATE_CATEGORIES',
+        payload: newCategories.data
+      });
+      dispatch({
+        type: 'UPDATE_SELECTED_CATEGORY',
+        payload: newCatId
+      });
+
+    }
   };
 
   const removeExercise = async (e, index) => {
