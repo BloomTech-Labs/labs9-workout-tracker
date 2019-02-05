@@ -224,7 +224,7 @@ const FormStyle = styled.form`
 const ChangePasswordDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   justify-content: space-evenly;
   align-items: center;
   margin-top: 20px;
