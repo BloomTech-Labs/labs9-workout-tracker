@@ -139,6 +139,7 @@
       @media(max-width: 690px) {
         .calendar {
           border:none;
+          border-bottom:1px solid var(--border-color);
       }
     }
   

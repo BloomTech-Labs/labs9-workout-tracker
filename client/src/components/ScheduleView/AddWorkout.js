@@ -133,7 +133,7 @@ const AddWorkout = props => {
             state.workouts.map(workout => {
               const wCat = workout.category_id;
               const swCat = Number(state.selectedWorkoutCategory);
-              if ( wCat === swCat ) {
+              if ( wCat === swCat ||  state.selectedWorkoutCategory === "all") {
                 return (
                   <WorkoutsMenu key={workout.id}>
                     <h3>{workout.title}</h3>

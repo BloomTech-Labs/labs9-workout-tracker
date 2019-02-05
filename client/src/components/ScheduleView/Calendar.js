@@ -5,13 +5,14 @@ import dateFns from "date-fns";
 import AddWorkout from "./AddWorkout";
 import styled from "styled-components";
 import WorkoutDetails from "./WorkoutDetails";
+import WeeklyWorkouts from "./WeeklyWorkouts";
 import "./Calendar.css";
 
 const HooksCalendar = props => {
   const { state, dispatch } = useContext(Store);
 
   // const { selectedDate } = state;
-  const { currentDay, datePopulated, dateSelected } = state;
+  const { currentDate, datePopulated, dateSelected } = state;
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -97,7 +98,7 @@ const HooksCalendar = props => {
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
                     ? "disabled"
-                    : dateFns.isSameDay(day, currentDay)
+                    : dateFns.isSameDay(day, currentDate)
                     ? "selected"
                     : ""
                 }`}
@@ -112,7 +113,7 @@ const HooksCalendar = props => {
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
                     ? "disabled"
-                    : dateFns.isSameDay(day, currentDay)
+                    : dateFns.isSameDay(day, currentDate)
                     ? "selected"
                     : ""
                 }`}
@@ -215,27 +216,7 @@ const HooksCalendar = props => {
   return (
     <div className="calendar-div">
       <h3>Upcoming workouts</h3>
-      <DisplayWorkouts>
-        {state.scheduleWorkouts.map((sworkout, i) => {
-          if (i % 2 === 0 && i < 7) {
-            return (
-              <GrayWorkoutCard key={sworkout.id}>
-                <h3>{sworkout.title}</h3>
-                <p>{sworkout.category.name}</p>
-                <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-              </GrayWorkoutCard>
-            );
-          } else if (i % 2 === 1 && i < 7) {
-            return (
-              <WorkoutCard key={sworkout.id}>
-                <h3>{sworkout.title}</h3>
-                <p>{sworkout.category.name}</p>
-                <p>{dateFns.format(sworkout.date, "YYYY-MM-DD")}</p>
-              </WorkoutCard>
-            );
-          }
-        })}
-      </DisplayWorkouts>
+      <WeeklyWorkouts/>
       <Legend>
         <i className="fas fa-dumbbell completed" />
         <p>Complete</p>
@@ -275,39 +256,8 @@ const Legend = styled.div`
   }
 `;
 
-const DisplayWorkouts = styled.div`
-  margin-bottom: 20px;
-  display:flex;
-  align-items:center;
 
-  @media (max-width: 690px) {
-    flex-direction:column;
-    justify-content: center;
-  }
 
-`;
-
-const WorkoutCard = styled.div`
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-width: 70%;
-align-items:center;
-padding: 5px 0;
-
-h3 {
-  margin-left: 5%;
-  margin-top: 7px;
-}
-
-@media(max-width:690px) {
-  width:100%;
-}
-`;
-
-const GrayWorkoutCard = styled(WorkoutCard)`
-background-color:rgb(43, 58, 66, 0.1);
-`;
 
 const CellDiv = styled.div`
   display: flex;
