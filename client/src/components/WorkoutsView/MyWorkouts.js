@@ -126,7 +126,7 @@ const Header = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 20px;
-  @media (max-width: 800px) {
+  @media (max-width: 670px) {
     flex-direction: column;
     align-items: center;
   }
@@ -137,12 +137,16 @@ const DropDownContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  @media (max-width: 800px) {
+  width: 100%;
+  @media (max-width: 670px) {
   }
 `;
 
 const ButtonContainer = styled.div`
-  margin: 0;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const Workout = styled.div`
@@ -162,7 +166,7 @@ const Workout = styled.div`
     margin-left: 20px;
     cursor: pointer;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 670px) {
   }
 `;
 
@@ -173,6 +177,6 @@ const HeaderContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   height: auto;
-  @media (max-width: 800px) {
+  @media (max-width: 670px) {
   }
 `;

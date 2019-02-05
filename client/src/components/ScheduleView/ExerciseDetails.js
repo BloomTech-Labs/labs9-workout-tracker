@@ -46,12 +46,13 @@ const updateScheduledWorkout = async (e) => {
 
   return (
     <ExerciseDetailsDiv key={props.exercise.id}>
-      <h3> {props.exercise.name}</h3>
+      <ExerciseDetailsP className='name'> {props.exercise.name}</ExerciseDetailsP>
       <ExerciseDetailsListDiv>
       <ExerciseDetailsP>Weight: {props.exercise.weight}</ExerciseDetailsP>
       <ExerciseDetailsP>Sets: {props.exercise.sets}</ExerciseDetailsP>
       <ExerciseDetailsP>Reps: {props.exercise.reps}</ExerciseDetailsP>
-      <p>Done</p>
+      <ExerciseDetailsP>
+      <span>Done</span>
       <input
         type="checkbox"
         checked={status}
@@ -59,6 +60,7 @@ const updateScheduledWorkout = async (e) => {
             updateScheduledWorkout(e)
         } }
       />
+      </ExerciseDetailsP>
       </ExerciseDetailsListDiv>
     </ExerciseDetailsDiv>
   );
@@ -71,19 +73,36 @@ display:flex;
 border-bottom:1px solid #eee;
 align-items:center;
 justify-content:space-around;
-padding: 20px 0;
+height:60px;
+h3 {
+  width: calc(100%/5)
+}
 `;
 
 const ExerciseDetailsP= styled.p`
-width: calc(100%/5)`;
+width: 17%;
+display:flex;
+justify-content:center;
+align-items:center;
+`;
 
 const ExerciseDetailsListDiv= styled.div`
 display:flex;
 align-items:center;
 justify-content: space-around;
 width: 60%;
+
+.name {
+  font-weight:bold;
+}
+span {
+  margin-right:15px;
+  margin-bottom: 1em;
+}
+
 input {
-   margin-left: 3%;
-   margin-bottom:12px;
- }
+   zoom: 1.5;
+   margin-bottom: .5em;
+
+   }
 `;

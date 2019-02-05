@@ -15,7 +15,6 @@ const StyledButton = styled.button`
   text-transform: uppercase;
   letter-spacing: 1px;
   display: inline-block;
-  margin: 10px auto;
   height: 50px;
   line-height: 50px;
   padding: 0 60px;
@@ -70,4 +69,7 @@ const StyledButton = styled.button`
         margin-left: auto;
       }
     `}
+    @media (max-width: 670px) {
+      width: 100%;
+    }
 `;

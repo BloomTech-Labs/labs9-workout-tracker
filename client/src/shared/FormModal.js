@@ -65,8 +65,4 @@ const ModalForm = styled.form`
   right: -450px;
   top: 0;
   animation: ${slideIn} 250ms ease-in forwards;
-  @media(max-width: 800px) {
-    width:100%;
-    max-width: 500px;
-  }
 `;
