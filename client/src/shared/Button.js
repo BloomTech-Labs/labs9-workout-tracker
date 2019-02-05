@@ -1,11 +1,13 @@
 import React from 'react';
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components';
 
 const Button = props => {
-    return (
-        <StyledButton type={props.type} size={props.size} scheme={props.scheme} onClick={props.onClick}>{props.children}</StyledButton>
-    );
-}
+  return (
+    <StyledButton type={props.type} size={props.size} scheme={props.scheme} onClick={props.onClick}>
+      {props.children}
+    </StyledButton>
+  );
+};
 
 export default Button;
 
@@ -30,21 +32,42 @@ const StyledButton = styled.button`
   background: ${props => props.theme.accent};
   border: none;
   color: #FFF;
-  ${props => props.scheme === "cancel" && css`
-    background: ${props => props.theme.primaryDark};
-  `}
-  ${props => props.scheme === "delete" && css`
-    background: white;
-    color: ${props => props.theme.accent};
-    border: 2px solid ${props => props.theme.accent};
-  `}
-  ${props => props.size === "responsive" && css`
-    width: 100%;
-  `}
-  ${props => props.size === "large" && css`
-    width: 245px;
-  `}
-  ${props => props.size === "medium" && css`
-    width: 155px;
-  `}
+  ${props =>
+    props.scheme === 'cancel' &&
+    css`
+      background: ${props => props.theme.primaryDark};
+    `}
+  ${props =>
+    props.scheme === 'delete' &&
+    css`
+      background: white;
+      color: ${props => props.theme.accent};
+      border: 2px solid ${props => props.theme.accent};
+    `}
+  ${props =>
+    props.size === 'responsive' &&
+    css`
+      width: 100%;
+    `}
+  ${props =>
+    props.size === 'large' &&
+    css`
+      width: 245px;
+    `}
+  ${props =>
+    props.size === 'medium' &&
+    css`
+      width: 155px;
+    `}
+  ${props =>
+    props.size === 'category' &&
+    css`
+      width: 245px;
+      margin-left: 0px;
+      margin-top: 20px;
+      padding: 0 20px;
+      @media (max-width: 550px) {
+        margin-left: auto;
+      }
+    `}
 `;

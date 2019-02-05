@@ -97,10 +97,8 @@ const SettingsViewStyle = styled.div`
 `;
 
 const FormStyle = styled.form`
-  border: 1px solid ${props => props.theme.primaryDark};
   border-top: 0px;
-  border-radius: 0 6px 6px 6px;
-  background-color: ${props => props.theme.primary};
+  border-radius: 0 0 6px 6px;
   margin: 0 2%;
   display: flex;
   flex-direction: column;
@@ -113,6 +111,7 @@ const FormStyle = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:100%;
   }
 `;
 

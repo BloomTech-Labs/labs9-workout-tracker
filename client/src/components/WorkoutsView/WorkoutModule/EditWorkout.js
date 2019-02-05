@@ -23,20 +23,17 @@ const EditWorkout = () => {
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  useEffect(
-    () => {
-      const editWorkout = state.editWorkout;
-      if (editWorkout !== null) {
-        setTitle(editWorkout.title);
-        setExercises(editWorkout.exercises);
-        dispatch({
-          type: 'UPDATE_SELECTED_CATEGORY',
-          payload: editWorkout.category_id
-        });
-      }
-    },
-    [state.editWorkout]
-  );
+  useEffect(() => {
+    const editWorkout = state.editWorkout;
+    if (editWorkout !== null) {
+      setTitle(editWorkout.title);
+      setExercises(editWorkout.exercises);
+      dispatch({
+        type: 'UPDATE_SELECTED_CATEGORY',
+        payload: editWorkout.category_id
+      });
+    }
+  }, [state.editWorkout]);
 
   //add Exercise handler
   const addExercise = async e => {
@@ -147,6 +144,20 @@ const EditWorkout = () => {
     dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
+  const removeExercise = async (e, index) => {
+    console.log('exercises length is:', exercises.length);
+    console.log('exercises are:', exercises);
+    console.log('index is:', index);
+
+    const newExercises = exercises;
+
+    if (!isNaN(index)) {
+      newExercises.splice(index, 1);
+      setExercises(newExercises);
+      console.log('exercises are: ', exercises);
+    }
+  };
+
   return (
     <FormModal
       onSubmit={e => editWorkout(e)}
@@ -157,54 +168,65 @@ const EditWorkout = () => {
         {confirmDelete ? 'Click to confirm' : 'Delete'}
       </Button>
 
-      <Row>
-        <Input
-          value={title}
-          placeholder="Legs"
-          onChange={e => setTitle(e.target.value)}
-          size="large"
-          label="Workout Title"
-        />
-        <CategoryDropDown />
-      </Row>
+      <TitleRow>
+        <Row>
+          <Input
+            value={title}
+            placeholder="Legs"
+            onChange={e => setTitle(e.target.value)}
+            size="large"
+            label="Workout Title"
+          />
+        </Row>
+        <CategoryDropdownContainer>
+          <CategoryDropDown />
+        </CategoryDropdownContainer>
+      </TitleRow>
 
       {/* Conditional that renders the exercises that have been added to the workout that is being created */}
 
       {exercises &&
         exercises.map((ex, index) => {
           return (
-            <Row>
-              <Input
-                name="name"
-                value={ex.name}
-                placeholder="Exercise Name"
-                onChange={e => inputOnChange(e, index)}
-                label="Exercise Name"
-                size="large"
-              />
-              <Input
-                name="weight"
-                onChange={e => inputOnChange(e, index)}
-                value={ex.weight}
-                placeholder="Weight"
-                label="Weight"
-              />
-              <Input
-                name="sets"
-                onChange={e => inputOnChange(e, index)}
-                value={ex.sets}
-                placeholder="Sets"
-                label="Sets"
-              />
-              <Input
-                name="reps"
-                onChange={e => inputOnChange(e, index)}
-                value={ex.reps}
-                placeholder="Reps"
-                label="Reps"
-              />
-              <span>x</span>
-            </Row>
+            <WorkoutRow>
+              <ExerciseTitleRow>
+                <Input
+                  name="name"
+                  value={ex.name}
+                  placeholder="Exercise Name"
+                  onChange={e => inputOnChange(e, index)}
+                  label="Exercise Name"
+                  size="large"
+                />
+              </ExerciseTitleRow>
+              <ExerciseRow>
+                <Input
+                  name="weight"
+                  onChange={e => inputOnChange(e, index)}
+                  value={ex.weight}
+                  placeholder="Weight"
+                  label="Weight"
+                  size="small"
+                />
+                <Input
+                  name="sets"
+                  onChange={e => inputOnChange(e, index)}
+                  value={ex.sets}
+                  placeholder="Sets"
+                  label="Sets"
+                  size="small"
+                />
+                <Input
+                  name="reps"
+                  onChange={e => inputOnChange(e, index)}
+                  value={ex.reps}
+                  placeholder="Reps"
+                  label="Reps"
+                  size="small"
+                />
+                <i onClick={e => removeExercise(e, index)} className="fas fa-times" />
+              </ExerciseRow>
+            </WorkoutRow>
           );
         })}
       <Row>
@@ -224,39 +246,60 @@ const EditWorkout = () => {
 
 export default EditWorkout;
 
-// const AddExerciseButton = styled.button`
-//   width: 100%;
-//   height: 36px;
-//   background-color: white;
-//   box-shadow: ${props => props.theme.boxShadow};
-//   border: none;
-//   border-radius: 4px;
-//   cursor: none;
-// `;
-
-// const SubmitButton = styled.button`
-//   width: 100%;
-//   height: 36px;
-//   color: white;
-//   background-color: ${props => props.theme.accent};
-//   border-radius: 4px;
-//   box-shadow: ${props => props.theme.boxShadow};
-//   border: none;
-// `;
-
-const Container = styled.form`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
-
 const Row = styled.div`
-  width: 100%;
   height: 75px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+`;
+
+const WorkoutRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px 0px;
+  /* border: solid green; */
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0px;
+    margin-top: 10px;
+    /* border: solid purple; */
+  }
+`;
+
+const ExerciseRow = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 0px 20px;
+  /* border: solid purple; */
+  @media (max-width: 550px) {
+    justify-content: space-between;
+    padding: 0px;
+    padding-top: 10px;
+  }
+`;
+
+const TitleRow = styled.div`
+  display: flex;
+  align-items: flex-end;
+  /* border: solid purple; */
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const CategoryDropdownContainer = styled.div`
+  padding: 0px 20px;
+  @media (max-width: 550px) {
+    padding: 10px 0px;
+  }
+`;
+
+const ExerciseTitleRow = styled.div`
+  /* border: solid red; */
+  @media (max-width: 550px) {
+  }
 `;
