@@ -10,6 +10,8 @@ const MyWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
 
+  const [showId, setShowId] = useState(null);
+
   const getOptions = () => {
     let options = state.category.map((cat, i) => {
       return {
@@ -26,6 +28,24 @@ const MyWorkouts = () => {
     });
 
     return options;
+  };
+
+  const getExercises = workout => {
+    let exercises = workout.exercises.map((ex, i) => {
+      return {
+        name: ex.name,
+        value: ex.id,
+        key: ex.id
+      };
+    });
+
+    exercises.unshift({
+      name: workout.title,
+      value: workout.title,
+      key: workout.title
+    });
+
+    return exercises;
   };
 
   const handleChange = value => {
@@ -59,6 +79,26 @@ const MyWorkouts = () => {
     });
   };
 
+  const handleDown = async (workoutID, i) => {
+    console.log('in handleDown');
+
+    setShowId(i);
+
+    dispatch({
+      type: 'SHOW_EXERCISES'
+    });
+  };
+
+  const handleUp = async (workoutID, i) => {
+    console.log('in handleDown');
+
+    setShowId(null);
+
+    dispatch({
+      type: 'SHOW_EXERCISES'
+    });
+  };
+
   return (
     <HeaderContainer>
       <Header>
@@ -80,25 +120,85 @@ const MyWorkouts = () => {
       {state.workouts.map((workout, i) => {
         if (state.selectedWorkoutCategory === 'all') {
           return (
-            <Workout key={i}>
-              <h3>{workout.title}</h3>
-              <div>
+            <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+              <WorkoutsTitle className={`workoutsTitle`}>
+                <WorkoutsCard className="test">
+                  <h3>{workout.title}</h3>
+                </WorkoutsCard>
                 <span>
-                  <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
+                  {showId === i ? (
+                    <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
+                  ) : (
+                    <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
+                  )}
                 </span>
-              </div>
+              </WorkoutsTitle>
+              <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                <ExDetailsTitle>
+                  <ExDetailsP className="name">Exercise</ExDetailsP>
+                  <ExDetailsP>Weight</ExDetailsP>
+                  <ExDetailsP>Sets</ExDetailsP>
+                  <ExDetailsP>Reps</ExDetailsP>
+                </ExDetailsTitle>
+                {workout.exercises.map((ex, i) => {
+                  return (
+                    <ExDetailsDiv key={ex.id}>
+                      <ExDetailsListDiv>
+                        <ExDetailsP className="name"> {ex.name}</ExDetailsP>
+                        <ExDetailsP>{ex.weight}</ExDetailsP>
+                        <ExDetailsP>{ex.sets}</ExDetailsP>
+                        <ExDetailsP>{ex.reps}</ExDetailsP>
+                      </ExDetailsListDiv>
+                    </ExDetailsDiv>
+                  );
+                })}
+
+                <span className="upArrow">
+                  <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
+                </span>
+              </ExercisesCard>
             </Workout>
           );
         }
         if (workout.category_id == state.selectedWorkoutCategory) {
           return (
-            <Workout key={i}>
-              <h3>{workout.title}</h3>
-              <div>
+            <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+              <WorkoutsTitle className={`workoutsTitle`}>
+                <WorkoutsCard className="test">
+                  <h3>{workout.title}</h3>
+                </WorkoutsCard>
                 <span>
-                  <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
+                  {showId === i ? (
+                    <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
+                  ) : (
+                    <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
+                  )}
                 </span>
-              </div>
+              </WorkoutsTitle>
+              <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                <ExDetailsTitle>
+                  <ExDetailsP className="name">Exercise</ExDetailsP>
+                  <ExDetailsP>Weight</ExDetailsP>
+                  <ExDetailsP>Sets</ExDetailsP>
+                  <ExDetailsP>Reps</ExDetailsP>
+                </ExDetailsTitle>
+                {workout.exercises.map((ex, i) => {
+                  return (
+                    <ExDetailsDiv key={ex.id}>
+                      <ExDetailsListDiv>
+                        <ExDetailsP className="name"> {ex.name}</ExDetailsP>
+                        <ExDetailsP>{ex.weight}</ExDetailsP>
+                        <ExDetailsP>{ex.sets}</ExDetailsP>
+                        <ExDetailsP>{ex.reps}</ExDetailsP>
+                      </ExDetailsListDiv>
+                    </ExDetailsDiv>
+                  );
+                })}
+
+                <span className="upArrow">
+                  <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
+                </span>
+              </ExercisesCard>
             </Workout>
           );
         }
@@ -110,15 +210,18 @@ const MyWorkouts = () => {
 
 export default MyWorkouts;
 
-// const AddWorkoutButton = styled.button`
-//   height: 36px;
-//   width: 150px;
-//   background-color: ${props => props.theme.accent};
-//   border: none;
-//   border-radius: 4px;
-//   color: white;
-//   cursor: pointer;
-// `;
+const WorkoutsCard = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ExercisesCard = styled.div``;
+
+const WorkoutsTitle = styled.div`
+  width: 100%;
+  display: flex;
+`;
 
 const Header = styled.div`
   width: 100%;
@@ -151,13 +254,13 @@ const ButtonContainer = styled.div`
 
 const Workout = styled.div`
   width: 100%;
-  height: 46px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   background-color: #f1f4f8;
   margin-bottom: 20px;
-  padding: 0px 16px;
+  padding: 10px 16px;
   border-radius: 8px;
   h3 {
     margin: 0px;
@@ -179,4 +282,47 @@ const HeaderContainer = styled.div`
   height: auto;
   @media (max-width: 670px) {
   }
+`;
+
+const ExDetailsDiv = styled.div`
+  display: flex;
+  border-bottom: 1px solid #eee;
+  justify-content: space-around;
+  height: 60px;
+  width: 100%;
+  flex-wrap: wrap;
+  text-align: left;
+  align-items: center;
+  h3 {
+    width: calc(100% / 5);
+  }
+`;
+
+const ExDetailsTitle = styled.div`
+  display: flex;
+  border-bottom: 1px solid #eee;
+  justify-content: space-around;
+  height: 60px;
+  width: 100%;
+  flex-wrap: wrap;
+  font-weight: bold;
+  align-items: center;
+  h3 {
+    width: calc(100% / 5);
+  }
+`;
+
+const ExDetailsP = styled.p`
+  width: 17%;
+  display: flex;
+  font-size: 1.4rem;
+  margin-bottom: 0px;
+  text-align: left;
+`;
+
+const ExDetailsListDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
 `;
