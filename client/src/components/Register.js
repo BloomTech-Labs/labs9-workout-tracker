@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
+import Loading from './Loading';
 
 import barbell from "./assets/barbell.jpeg";
 
@@ -11,10 +12,16 @@ const Register = props => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false)
 
   
   const registerUser = e => {
     e.preventDefault();
+    setError(false)
+    setErrorMessage('')
+    setLoading(true)
     // Initialize Firebase
     console.log("email: ", email, "password: ", password, "name: ", name);
     if (password === confirmPassword) {
@@ -32,17 +39,28 @@ const Register = props => {
                 { headers: { Authorization: token } }
               );
             })
-            .then(props.history.push("/login"))
+            .then(() => {
+              props.history.push("/login")
+              setLoading(false)
+            })
             .catch();
         })
         .catch(function(error) {
-          var errorCode = error.code;
-          console.log(errorCode);
           var errorMessage = error.message;
           console.log(errorMessage);
+          setError(true)
+          setErrorMessage(errorMessage)
+          setEmail('')
+          setPassword('')
+          setConfirmPassword('')
+          setLoading(false)
         });
     } else {
-      alert("Passwords must match!")
+      setError(true)
+      setErrorMessage('Passwords must match')
+      setPassword('')
+      setConfirmPassword('')
+      setLoading(false)
     }
   };
 
@@ -51,54 +69,58 @@ const Register = props => {
         <SideImage/>
         <FormContainer>
           <FormStyle onSubmit={e => registerUser(e)}>
-            <h1>Start tracking now!</h1>
-            <p>Enter details below</p>
-            
-            <InputContainer>
-              <h3>EMAIL ADDRESS</h3>
-              <input
-                type="text"
-                value={email}
-                placeholder="jack@fitmetrix.me"
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-            </InputContainer>
+          {loading ? (<Loading/>) : (
+            <>
+              <h1>Start tracking now!</h1>
+              <p>Enter details below</p>
+              {error ? (<StyledError>{errorMessage}</StyledError>) : null}
+              <InputContainer>
+                <h3>EMAIL ADDRESS</h3>
+                <input
+                  type="email"
+                  value={email}
+                  placeholder="jack@fitmetrix.me"
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+              </InputContainer>
 
-            <InputContainer>
-              <h3>Name</h3>
-              <input
-                type="text"
-                value={name}
-                placeholder="Jack"
-                onChange={e => setName(e.target.value)}
-                required
-              />
-            </InputContainer>
+              <InputContainer>
+                <h3>Name</h3>
+                <input
+                  type="text"
+                  value={name}
+                  placeholder="Jack"
+                  onChange={e => setName(e.target.value)}
+                  required
+                />
+              </InputContainer>
 
-            <InputContainer>
-              <h3>PASSWORD</h3>
-              <input
-                type="password"
-                value={password}
-                placeholder="Enter your password"
-                onChange={e => setPassword(e.target.value)}
-                required
-              />
-            </InputContainer>
+              <InputContainer>
+                <h3>PASSWORD</h3>
+                <input
+                  type="password"
+                  value={password}
+                  placeholder="Enter your password"
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                />
+              </InputContainer>
 
-            <InputContainer>
-              <h3>CONFIRM PASSWORD</h3>
-              <input
-                type="password"
-                value={confirmPassword}
-                placeholder="Confirm your password"
-                onChange={e => setConfirmPassword(e.target.value)}
-                required
-              />
-            </InputContainer>
+              <InputContainer>
+                <h3>CONFIRM PASSWORD</h3>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  placeholder="Confirm your password"
+                  onChange={e => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </InputContainer>
 
-            <Button type="submit">Register</Button>
+              <Button type="submit">Register</Button>
+            </>
+          )}
           </FormStyle>
         </FormContainer>
       </Container>
@@ -107,6 +129,9 @@ const Register = props => {
 
 export default Register;
 
+const StyledError = styled.p`
+  
+`;
 
 const InputContainer = styled.div`
   color: #5f697a;
@@ -178,6 +203,10 @@ const FormStyle = styled.form`
     color: #596377;
     font-weight: 400;
     margin-bottom: 50px;
+  }
+  ${StyledError} {
+    color: rgba(225,0,0,1);
+    margin-bottom: 20px;
   }
 `;
 

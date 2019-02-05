@@ -1,22 +1,25 @@
 import React, { useState } from "react";
-import { NavLink, Link, Route } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
+import * as firebase from 'firebase';
 
 const Navigation = props => {
-  const [account, setAccount] = useState(false);
+  const [loggedOut, setLoggedOut] = useState(false);
 
   const logOut = () => {
-    setAccount(!account);
+    setLoggedOut(true);
     window.localStorage.removeItem("login_token");
-
+    firebase.auth().signOut();
     props.history.push("/");
   };
 
   const renderRoutes = () => {
     if (
-      props.location.pathname === "/" ||
+      (props.location.pathname === "/" ||
       props.location.pathname === "/login" ||
-      props.location.pathname === "/register"
+      props.location.pathname === "/register") 
+      && (!localStorage.getItem('login_token') || loggedOut)
+
     ) {
       return (
         <NavStyle>
