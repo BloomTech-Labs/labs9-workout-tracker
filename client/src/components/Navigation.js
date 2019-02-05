@@ -18,7 +18,7 @@ const Navigation = props => {
       (props.location.pathname === "/" ||
       props.location.pathname === "/login" ||
       props.location.pathname === "/register") 
-      && (!localStorage.getItem('login_token') || loggedOut)
+      && (!window.localStorage.getItem('login_token'))
 
     ) {
       return (
