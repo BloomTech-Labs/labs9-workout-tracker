@@ -16,13 +16,17 @@
 ## Scripts
 
 `npm run start`: Runs server once using node index.js
+
 `npm run server`: Runs server using nodemon for auto updating
 
 ## Enviroment Variables
 
 `DATABASE_URL`: Databse URI for postgress database
+
 `DB_ENGINE`: Databse engine to use 'production' for deployment
+
 `FIREBASE_CLIENT_EMAIL`: Firebase client email necessary to initialize firebase app
+
 `FIREBASE_PRIVATE_KEY`: Firebase private key necessary to initialize firebase app
 
 ## API Documentation
