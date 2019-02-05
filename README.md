@@ -9,6 +9,7 @@
 
 File Structure:
 - Major component folders are organized based on Page View (Landing Page, Progress Page, Schedule Page, Workout Page).
+- Shared components are contained in shared folder.
 - Where applicable, lists and list items are contained in folders inside of the component that they relate to.
 
 # Deployment
@@ -27,14 +28,5 @@ Used to run knex migrations and seeds for postgress database
 Specifies the commands that are executed by the app on startup for heroku deployment
 
 
-# Frontend
-
-## Photo Credits
-Photos on the website taken from  - 
-[Pexels](https://www.pexels.com/photo/barbell-on-the-floor-1552252/)
-[Pexels](https://www.pexels.com/photo/man-carrying-barbel-791763/)
-[Pexels](https://www.pexels.com/photo/rope-jumping-ropes-human-training-28080/)
-
-Pexels License - Free for personal and commercial use; no attribution required.
 
 
