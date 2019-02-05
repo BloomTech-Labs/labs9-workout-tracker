@@ -7,7 +7,7 @@ const Loading = () => {
             <svg className="load" x="0px" y="0px" viewBox="0 0 150 150">
                 <circle className="circle" cx="75" cy="75" r="60"></circle>
             </svg>
-            <p data-text="loading...">loading...</p>
+            <p data-text="Loading...">Loading...</p>
         </StyledLoading>
     );
 }
@@ -15,28 +15,35 @@ const Loading = () => {
 export default Loading;
 
 const StyledLoading = styled.div`
-    position: fixed;
+    /* position: fixed;
     z-index: 99;
     width: 100vw;
     height: 100vh;
     top: 0px;
-    left: 0px;
+    left: 0px; */
+    /* background-color: rgba(0,0,0,0.6); */
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
     p {
-        color: rgba(150,150,150,1);
-        font-family: Helvetica;
+        color: ${props => props.theme.primaryDark} !important;
+        font-family: ${props => props.theme.opensans};
         position: relative;
+        font-size: 22px !important;
+        font-weight: 600 !important;
         :before {
             content: attr(data-text);
             position: absolute;
+            font-size: 22px;
+            font-weight: 600;
             overflow: hidden;
-            max-width: 4.2em;
+            max-width: 6.2em;
             white-space: nowrap;
-            color: rgba(255,255,255,1);
+            color: ${props => props.theme.accent};
             animation: text 3s linear infinite;
         }
     }
@@ -47,7 +54,7 @@ const StyledLoading = styled.div`
     }
     
     .circle {
-        stroke: white;
+        stroke: ${props => props.theme.accent};
         fill: transparent;
         animation: circle 3s linear infinite;
         stroke-dashoffset: 0;

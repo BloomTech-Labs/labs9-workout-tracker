@@ -14,11 +14,12 @@ const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLooding] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const loginUser = e => {
     e.preventDefault();
     setError(false)
+    setLoading(true)
     // Initialize Firebase
     firebase
       .auth()
@@ -37,15 +38,18 @@ const Login = props => {
                 console.log(res.data);
                 dispatch({ type: "USER_MODEL", payload: res.data });
                 props.history.push("/schedule");
+                setLoading(false)
               })
               .catch(err => {
                 console.log(err);
+                setLoading(false)
               });
           })
           .catch(err => console.log(err));
       })
       .catch(error => {
         setError(true)
+        setLoading(false)
         console.log(error.code, error.message);
       });
   };
@@ -54,35 +58,37 @@ const Login = props => {
       <Container>
         <SideImage/>
         <FormContainer>
-          <FormStyle onSubmit={e => loginUser(e)}>
+          {loading ? (<Loading/>) : (
+            <FormStyle onSubmit={e => loginUser(e)}>
             <h1>Sign into fitmetrix.</h1>
             <p>Enter details below</p>
             {error ? (<StyledError>Oops! That email / password combination is not valid.</StyledError>) : null}
             <InputContainer>
-              <h3>EMAIL ADDRESS</h3>
+            <h3>EMAIL ADDRESS</h3>
               <input
-                type="text"
-                value={email}
+              type="text"
+              value={email}
                 placeholder="jack@fitmetrix.me"
                 onChange={e => setEmail(e.target.value)}
                 required
-              />
+                />
             </InputContainer>
-
+            
             <InputContainer>
-              <h3>PASSWORD</h3>
-              <input
+            <h3>PASSWORD</h3>
+            <input
                 type="password"
                 value={password}
                 placeholder="Enter your password"
                 onChange={e => setPassword(e.target.value)}
                 required
-              />
+                />
             </InputContainer>
             <ButtonContainer>
-              <Button type="submit">Sign In</Button>
+            <Button type="submit">Sign In</Button>
             </ButtonContainer>
-          </FormStyle>
+            </FormStyle>
+          )}
         </FormContainer>
       </Container>
   );
