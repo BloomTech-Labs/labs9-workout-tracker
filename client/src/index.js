@@ -23,6 +23,7 @@ const initialState = {
   showWorkoutForm: false,
   editMetric: null,
   showMetricForm: false,
+  showExercises: false,
   addingCategory: false,
   newCategory: '',
   selectedCategory: 'default',
@@ -58,6 +59,10 @@ const reducer = (state, action) => {
       return { ...state, showMetricForm: !state.showMetricForm };
     case 'SHOW_WORKOUT_FORM':
       return { ...state, showWorkoutForm: !state.showWorkoutForm };
+    case 'SHOW_EXERCISES':
+      return { ...state, showExercises: !state.showExercises };
+    case 'ADD_CATEGORY':
+      return { ...state, showCategoryInput: !state.addingCategory };
     case 'ADDING_CATEGORY':
       return { ...state, addingCategory: !state.addingCategory };
     case 'UPDATE_SELECTED_CATEGORY':
@@ -69,11 +74,11 @@ const reducer = (state, action) => {
     case 'UPDATE_DATE_SELECTED':
       return { ...state, dateSelected: !state.dateSelected };
     case 'UPDATE_CURRENT_DAY':
-      return { ...state, currentDate: action.payload};
+      return { ...state, currentDate: action.payload };
     case 'UPDATE_IS_POPULATED':
-      return { ...state, datePopulated: action.payload};
+      return { ...state, datePopulated: action.payload };
     case 'USER_JUST_REGISTERED':
-      return { ...state, userJustRegistered: action.payload};
+      return { ...state, userJustRegistered: action.payload };
     default:
       return state;
   }
