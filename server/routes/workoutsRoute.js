@@ -182,13 +182,18 @@ router.put('/edit', async (req, res) => {
     for (const ex of body.exercises) {
       const id = ex.id;
       const workout_id = ex.workout_id;
-      delete ex.id;
-      delete ex.workout_id;
 
-      const updateExercises = await 
-        db('exercises')
-        .whereIn(["id", "workout_id"], [[id, workout_id]])
-        .update(ex)
+      if (id) {
+        delete ex.id;
+        delete ex.workout_id;
+  
+        const updateExercises = await 
+          db('exercises')
+          .whereIn(["id", "workout_id"], [[id, workout_id]])
+          .update(ex)
+      } else {
+        await db('exercises').returning('id').insert(ex)
+      }
 
     }
 
