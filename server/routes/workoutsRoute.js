@@ -161,54 +161,62 @@ router.post('/', async (req, res) => {
 });
 
 // EDIT set of workouts
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit', async (req, res) => {
   //Grab workout ID from req.params.id
-  const workoutID = req.params.id;
+  const body = req.body;
+  const workoutID = body.id;
+
   try {
-    //Grab workout that matches ID in order to update it
-    const workoutInfo = await db('workouts').where('id', '=', workoutID);
-
-    //This should be the workout
-    console.log('workout to edit: ', workoutInfo);
-
-    //pull the userID off the workout
-    workoutUserID = workoutInfo[0].user_id;
-
     //Create object from req.body data and user_id
     const editWorkout = {
-      title: req.body.title,
-      category_id: req.body.category_id,
-      exercises: req.body.exercises,
-      user_id: workoutUserID
+      title: body.title,
+      category_id: body.category_id,
     };
-
-    if (!req.body.title) {
-      res.status(400).json({
-        errorMessage: 'No workout title provided'
-      });
-    }
 
     //Update workouts table with new editWorkout object
     const updatedWorkout = await db('workouts')
-      .where('id', '=', req.params.id)
+      .where('id', '=', workoutID)
       .update(editWorkout);
 
-    const workout = {
-      ...editWorkout,
-      id: updatedWorkout[0]
-    };
-    console.log('workout: ', workout);
+    // Update each exercise in exercises array
+    for (const ex of body.exercises) {
+      const id = ex.id;
+      const workout_id = ex.workout_id;
 
-    //Return edit workout object
-    {
-      updatedWorkout === 0
-        ? res.status(404).json({
-            message: 'The workout with the specified ID does not exist.'
-          })
-        : res.status(200).json(editWorkout);
+      if (id) {
+        delete ex.id;
+        delete ex.workout_id;
+  
+        const updateExercises = await 
+          db('exercises')
+          .whereIn(["id", "workout_id"], [[id, workout_id]])
+          .update(ex)
+      } else {
+        await db('exercises').returning('id').insert(ex)
+      }
+
     }
+
+    const workouts = await db('workouts').where('id', '=', workoutID);
+
+    let workoutsArray = [];
+
+    for (const workout of workouts) {
+      //gets exercises that for the corresponding workout
+      const exercises = await db('exercises').where('workout_id', '=', workout.id);
+      const category = await db('category').where('id', '=', workout.category_id);
+      const workObj = {
+        ...workout,
+        exercises: [...exercises],
+        category: category[0]
+      };
+      workoutsArray.push(workObj);
+    }
+
+    res.status(200).json(workoutsArray);
+
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({error});
   }
 });
 
@@ -255,6 +263,21 @@ router.put('/edit/exercise/:id', async (req, res) => {
 
   res.status(200).json(newEx[0]);
 });
+
+router.delete('/exercise/delete/:id', async (req, res) => {
+  try {
+    const deleteWorkoutData = await db('exercises')
+      .whereIn(['id'], [[req.params.id]])
+      .del();
+    {
+      deleteWorkoutData === 0
+        ? res.status(404).json({ message: 'Workout ID does not exist' })
+        : res.status(200).json({ deleteWorkoutData });
+    }
+  } catch (error) {
+    res.status(500).json(error, 'error message');
+  }
+})
 
 //Delete workout
 router.delete('/delete/:id', async (req, res) => {

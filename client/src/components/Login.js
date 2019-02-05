@@ -9,7 +9,7 @@ import Button from '../shared/Button';
 import ropeImg from "./assets/rope.jpg";
 
 const Login = props => {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,19 +37,16 @@ const Login = props => {
               .then(res => {
                 console.log(res.data);
                 dispatch({ type: "USER_MODEL", payload: res.data });
+                dispatch({type: 'USER_JUST_REGISTERED', payload: false})
+                setLoading(false)
                 props.history.push("/schedule");
-                setLoading(false)
               })
-              .catch(err => {
-                console.log(err);
-                setLoading(false)
-              });
           })
-          .catch(err => console.log(err));
       })
       .catch(error => {
         setError(true)
         setLoading(false)
+        dispatch({type: 'USER_JUST_REGISTERED', payload: false})
         console.log(error.code, error.message);
       });
   };
@@ -60,33 +57,34 @@ const Login = props => {
         <FormContainer>
           {loading ? (<Loading/>) : (
             <FormStyle onSubmit={e => loginUser(e)}>
-            <h1>Sign into fitmetrix.</h1>
-            <p>Enter details below</p>
-            {error ? (<StyledError>Oops! That email / password combination is not valid.</StyledError>) : null}
-            <InputContainer>
-            <h3>EMAIL ADDRESS</h3>
+              {state.userJustRegistered ? (<RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess>): null}
+              <h1>Sign into fitmetrix.</h1>
+              <p>Enter details below</p>
+              {error ? (<StyledError>Oops! That email / password combination is not valid.</StyledError>) : null}
+              <InputContainer>
+              <h3>EMAIL ADDRESS</h3>
+                <input
+                type="text"
+                value={email}
+                  placeholder="jack@fitmetrix.me"
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  />
+              </InputContainer>
+              
+              <InputContainer>
+              <h3>PASSWORD</h3>
               <input
-              type="text"
-              value={email}
-                placeholder="jack@fitmetrix.me"
-                onChange={e => setEmail(e.target.value)}
-                required
-                />
-            </InputContainer>
-            
-            <InputContainer>
-            <h3>PASSWORD</h3>
-            <input
-                type="password"
-                value={password}
-                placeholder="Enter your password"
-                onChange={e => setPassword(e.target.value)}
-                required
-                />
-            </InputContainer>
-            <ButtonContainer>
-            <Button type="submit">Sign In</Button>
-            </ButtonContainer>
+                  type="password"
+                  value={password}
+                  placeholder="Enter your password"
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  />
+              </InputContainer>
+              <ButtonContainer>
+                <Button type="submit">Sign In</Button>
+              </ButtonContainer>
             </FormStyle>
           )}
         </FormContainer>
@@ -96,8 +94,10 @@ const Login = props => {
 
 export default Login;
 
+const RegisterSuccess = styled.p`
+`;
+
 const StyledError = styled.p`
-  
 `;
 
 const ButtonContainer = styled.div`
@@ -158,6 +158,10 @@ const FormStyle = styled.form`
   }
   ${StyledError} {
     color: rgba(225,0,0,1);
+    margin-bottom: 20px;
+  }
+  ${RegisterSuccess} {
+    color: ${props => props.theme.accent};
     margin-bottom: 20px;
   }
 `;

@@ -42,7 +42,7 @@ const LandingPage = () => {
         <ProgressPic src={ProgressView} alt="A picture of the progress view." />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
-      <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5>
+      {/* <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5> */}
     </LandingContainer>
   );
 };
@@ -65,6 +65,8 @@ const LandingStyle = styled.div`
     min-height: 600px;
   }
 `;
+
+
 
 const ArrowDiv = styled.div`
   margin-top: 15%;
@@ -154,7 +156,7 @@ const CalendarPic = styled.img`
   align-items: center;
   border-radius: 6px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
-  // border: 1px solid red;
+  background-color: white;
   @media (max-width: 900px) {
     width: 100%;
   }
@@ -188,7 +190,7 @@ const Part3 = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: transparent;
+  background-color: white;
   @media (max-width: 900px) {
     flex-direction: column;
   }
@@ -241,7 +243,7 @@ const Part4 = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: transparent;
+  background-color: rgb(245 245 245);
   @media (max-width: 900px) {
     flex-direction: column;
   }

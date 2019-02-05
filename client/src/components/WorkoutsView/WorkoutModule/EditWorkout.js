@@ -20,6 +20,7 @@ const EditWorkout = () => {
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
   const [exercises, setExercises] = useState([]);
+  const [deleteArray, setDeleteArray] = useState([]);
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -43,7 +44,8 @@ const EditWorkout = () => {
       name: exerciseName,
       weight: Number(weight),
       sets: Number(sets),
-      reps: Number(reps)
+      reps: Number(reps),
+      workout_id: state.editWorkout.id
     };
 
     //adds exercise to exercises array in the workout being created/edited and resets the input fields
@@ -69,11 +71,25 @@ const EditWorkout = () => {
       id: state.editWorkout.id
     };
 
-    console.log('editedWorkout: ', editedWorkout);
 
     if (token !== undefined) {
+
+      if (deleteArray.length) {
+        for (const ex of deleteArray) {
+          const delRes = await axios.delete(
+            `https://fitmetrix.herokuapp.com/api/workouts/exercise/delete/${ex.id}`,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: token
+              }
+            }
+          );
+        }
+      }
+
       const res = await axios.put(
-        `https://fitmetrix.herokuapp.com/api/workouts/edit/${state.editWorkout.id}`,
+        `https://fitmetrix.herokuapp.com/api/workouts/edit`,
         editedWorkout,
         {
           headers: {
@@ -82,8 +98,16 @@ const EditWorkout = () => {
           }
         }
       );
-      console.log('res: ', res);
-      // console.log('the current editedWorkout is: ', editedWorkout);
+
+      if(res.status === 200) {
+        const newWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/workouts/', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+          }
+        });
+        dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+      }
     }
     //Resets the title and category after workout is added
     setTitle('');
@@ -144,12 +168,13 @@ const EditWorkout = () => {
     dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
-  const removeExercise = async (e, index) => {
-    console.log('exercises length is:', exercises.length);
-    console.log('exercises are:', exercises);
-    console.log('index is:', index);
+  const removeExercise = async (e, index, exercise) => {
 
     const newExercises = exercises;
+
+    if (exercise.id) {
+      setDeleteArray([...deleteArray, exercise])
+    }
 
     if (!isNaN(index)) {
       newExercises.splice(index, 1);
@@ -224,7 +249,7 @@ const EditWorkout = () => {
                   label="Reps"
                   size="small"
                 />
-                <i onClick={e => removeExercise(e, index)} className="fas fa-times" />
+                <i onClick={e => removeExercise(e, index, ex)} className="fas fa-times" />
               </ExerciseRow>
             </WorkoutRow>
           );
