@@ -38,7 +38,7 @@
 - [GET `/api/user/all`](#get-all-users)
 - [GET `/api/user/info`](#get-user-details)
 - [PUT `/api/user/edit`](#edit-user-details)
-- [DELETE `/api/user/delete`](#delete-user)
+<!-- - [DELETE `/api/user/delete`](#delete-user) -->
 
 #### [Metrics Route Endpoints](#metrics-routes)
 
@@ -46,28 +46,28 @@
 - [GET `/api/progress/metrics/get`](#get-metrics-info)
 - [POST `/api/progress/metrics/create`](#create-metrics-info)
 - [PUT `/api/progress/metrics/edit`](#edit-metrics-info)
-- DELETE `/api/progress/metrics/delete/:id`
+- [DELETE `/api/progress/metrics/delete/:id`](#delete-metrics-info)
 
 #### [Category Route Endpoints](#category-routes)
 
 - [GET `/api/category/all`](#get-all-categories)
-- [GET `/api/category/getbyuser/:id`](#get-category-info)
-- [POST `/api/category/create/:id`](#create-category)
+- [GET `/api/category/user`](#get-category-info)
+- [POST `/api/category/create`](#create-category)
 - [PUT `/api/category/edit/:id`](#edit-category)
-- [DELETE `/api/category/delete/:id`](#delete-category)
+<!-- - [DELETE `/api/category/delete/:id`](#delete-category) -->
 
-#### Workouts Route Endpoints:
+#### [Workouts Route Endpoints](#workouts-routes)
 
-- GET `/api/workouts/all`
-- GET `/api/workouts/`
-- POST `/api/workouts/`
-- PUT `/api/workouts/edit/:id`
+- [GET `/api/workouts/all`](#get-all-workouts)
+- [GET `/api/workouts/`](#get-all-workouts-by-user-id)
+- [POST `/api/workouts/`](#create-new-workout)
+- [PUT `/api/workouts/edit/:id`](#edit-workout)
 
 #### [Schedule Workouts Route Endpoints](#scheduledWorkouts-routes)
 
 - [GET `/api/schedule/all`](#get-all-schedule-workouts)
 - [GET `/api/schedule/`](#get-schedule-workout)
-- [POST `/api/schedule/create/:id`](#create-schedule-workout)
+- [POST `/api/schedule/create/`](#create-schedule-workout)
 - [PUT `/api/schedule/edit/workout/:id`](#edit-schedule-workout)
 - [PUT `/api/schedule/edit/excercise/:id`](#edit-schedule-workout-exercise)
 
@@ -77,8 +77,8 @@
 
 GET `/api/user/all`
 
-- Gets a list of all users (testing purposes)
-- Response is an array with user objects
+- Gets a list of all users and user settings (testing purposes)
+- Response is an array of user Objects
 
 ```
 users : [
@@ -93,60 +93,46 @@ users : [
     "created_at": "2019-01-31T21:08:52.910Z",
     "updated_at": "2019-01-31T21:08:52.910Z",
     "premium": false
-  }, {},
+  }, 
+  {},
+  {}
 ]
 ```
-
+---
 #### Get User Details
 
 GET `/api/user`
 
-- Gets all the info of a single user with given id in req.params.
-- Response is basic user object of Users table with all associated data.
+- Gets all the info of a single user based on UID which is taken from firebase authorization.
+- Response is user object with all associated data from all referenced tables.
 
 Response:
 
 ```
 {
-  "id": 1,
-  "uid": "w5iY6dJDISWE17ZbaO72QZWLTi62",
-  "name":
-  "email":
-  "phone":
-  "recieves_text":
-  "recieves_email":
-  "created_at":
-  "updated_at":
-  "metrics": [{ },{ }],
-  "workouts": [
-    {
-      "exercises": [
-        { },
-        { },
-        { }
-      ],
-      "category": { }
-    }
-  ],
-  "scheduleWorkouts": [
-    {
-      "exercises": [
-        { },
-        { },
-        { }
-      ],
-      "category": {  }
-    }
-  ]
+  "id": 2,
+  "uid": "USQMQyOiOfgaL7x3duJdlIHyz6K2",
+  "name": "j",
+  "email": "j@j.com",
+  "phone": null,
+  "recieves_text": false,
+  "recieves_email": false,
+  "created_at": "2019-02-05T21:52:48.309Z",
+  "updated_at": "2019-02-05T21:52:48.309Z",
+  "premium": false,
+  "metrics": [{}],
+  "category": [{}],
+  "workouts": [{}],
+  "scheduleWorkouts": [{}]
 }
 ```
-
+---
 #### Edit User Details
 
 PUT `/api/user/edit`
 
-- Edits the user with given id in req.params
-- Response includes an object with the updateduserCount of 1
+- Edits the info of a single user based on UID which is taken from firebase authorization
+- Response is the newly edited user Object with all data from users table. 
 
 Response:
 
@@ -155,7 +141,7 @@ Response:
   "id": 1,
   "uid": "w5iY6dJDISWE17ZbaO72QZWLTi62",
   "name": "edited elvis",
-  "email": "elvis@elvis.com",
+  "email": "test@test.com",
   "phone": null,
   "recieves_text": true,
   "recieves_email": false,
@@ -165,6 +151,14 @@ Response:
 }
 ```
 
+<!-- #### Delete User
+
+DELETE `/api/user/delete`
+
+- Deletes a single user based on UID which is taken from firebase authorization.
+- Response is  -->
+---
+---
 ### Metrics Routes
 
 #### Get All Metrics
@@ -192,12 +186,12 @@ Response:
   }
 ]
 ```
-
+---
 #### Get Metrics Info
 
 GET `/api/progress/metrics/get/`
 
-- Gets the metrics of the given user id in req.params
+- Gets the metrics of the given user based on ID from the user's table, which is taken from firebase authorization.
 - Response is an array of all metrics objects that match the user ID
 
 Response:
@@ -234,12 +228,12 @@ Response:
   }
 ]
 ```
-
+---
 #### Create Metrics Info
 
 POST `/api/progress/metrics/create`
 
-- Creates a metric object for the given user id in req.params
+- Creates a metric object for the given user based on ID from the user's table, which is taken from firebase authorization.
 - Response is the created metric object
 
 Response:
@@ -253,13 +247,14 @@ Response:
   "arm_left": 22,
   "leg_right": 22,
   "leg_left": 22,
+  "date": "12-12-2019",
   "user_id": 1
 }
 ```
-
+---
 #### Edit Metrics Info
 
-PUT `/api/progress/metrics/edit`
+PUT `/api/progress/metrics/edit/:id`
 
 - Edits the metric with the given metric id in req.params
 - Response is an object with updated user count of 1
@@ -269,6 +264,8 @@ PUT `/api/progress/metrics/edit`
   "updateduserCount": 1
 }
 ```
+---
+#### Delete Metrics Info
 
 DELETE `/api/progress/metrics/delete/:id`
 
@@ -282,7 +279,8 @@ Response:
   "deleteMetricData": 1
 }
 ```
-
+---
+---
 ### Category Routes
 
 #### Get All Categories
@@ -303,13 +301,13 @@ Response:
   }
 ]
 ```
+---
+#### Get Category by User
 
-#### Get Category Info
+GET `/api/category/user`
 
-GET `/api/category/getbyuser/:id`
-
-- gets category by user id given by req.params
-- Response is an array of categories that match the user ID
+- gets categories  based on ID from the user's table, which is taken from firebase authorization.
+- Response is an array of categories that match the user ID.
 
 Response:
 
@@ -322,23 +320,23 @@ Response:
   }
 ]
 ```
-
+---
 #### Create Category
 
-POST `/api/category/create/:id`
+POST `/api/category/create/`
 
-- Creates a new category for a specifc user id given by req.params
-- Response is the category Object that was just created
+- Creates a new category for a specifc user based on ID from the user's table, which is taken from firebase authorization.
+- Response is the category Object that was just created.
 
 Response:
 
 ```
 {
     "name": "New Category",
-    "user_id": "w5iY6dJDISWE17ZbaO72QZWLTi62"
+    "user_id": 1
 }
 ```
-
+---
 #### Edit Category
 
 PUT `/api/category/edit/:id`
@@ -352,12 +350,12 @@ Response:
 {
     "name": "New Category2",
     "id": 1,
-    "user_id": "w5iY6dJDISWE17ZbaO72QZWLTi62"
+    "user_id": "1"
 }
 
 ```
 
-#### Delete Category
+<!-- #### Delete Category
 
 DELETE `/api/category/delete/:id`
 
@@ -368,8 +366,98 @@ Response:
 
 ```
 Category has been deleted
+``` -->
+---
+---
+### Workouts Routes
+
+#### Get All Workouts
+
+GET `/api/workouts/all`
+
+- gets all workouts for all users
+- Response is an array of workout Objects
+
+```
+[
+  {
+    "id": 1,
+    "user_id": "1",
+    "category_id": 1,
+    "title": "Deadlift Day #55",
+    "exercises": [],
+    "category": {}
+  },
+  { }
+]
+```
+---
+#### Get All Workouts by User ID
+
+GET `/api/workouts`
+
+- gets all workouts for a given user based on ID from the user's table, which is taken from firebase authorization.
+- Response is an array of workout Objects that match the user ID.
+
+```
+[
+  {
+    "id": 1,
+    "user_id": "1",
+    "category_id": 1,
+    "title": "Deadlift Day #55",
+    "exercises": [],
+    "category": {}
+  },
+  { }
+]
+```
+---
+#### Create New Workout
+
+POST `/api/workouts`
+
+- Creates new workout for given user based on user ID
+- Response is the created workout object.
+
+```
+{
+  "title": "Foot Day",
+  "category_id": 1,
+  "user_id": 1
+}
 ```
 
+---
+#### Edit Workout
+
+POST `/api/workouts/edit/:id`
+
+- Edits workout based on workout ID passed from req.params
+- Response is the edited workout.
+
+```
+{
+  "title": "Foot Day",
+  "category_id": 1,
+  "user_id": 1
+}
+```
+---
+#### Delete Workout
+
+POST `/api/workouts/delete/:id`
+
+- Deletes given based on workout ID passed from req.params
+- Response is object with deleteWorkoutData count of 1.
+
+```
+{
+  "deleteWorkoutData": 1
+}
+```
+---
+---
 ### ScheduledWorkouts Routes
 
 #### Get All Schedule Workouts
@@ -393,14 +481,13 @@ GET `/api/schedule/all`
   }
 ]
 ```
-
+---
 #### Get Schedule Workouts
 
 GET `/api/schedule/`
 
-- Returns workouts associated with user
+- Returns scheduled workouts associated with user
 - Response is the scheduled workout and the exercises assigned to it
-- Also returns scheduled exercises for the corresponding scheduled workout
 
 Response:
 
@@ -444,12 +531,12 @@ Response:
   ]
 }
 ```
-
+---
 #### Create Schedule Workout
 
-POST `/api/schedule/create/:id`
+POST `/api/schedule/create/`
 
-- Creates a new scheduled workout
+- Creates a copy of a workout given by the workout_id, and adds it to the scheduled workouts table
 - Response is the newly created scheduled workout
 
 ```
@@ -464,12 +551,12 @@ POST `/api/schedule/create/:id`
   "exercises": []
 }
 ```
-
+---
 #### Edit Schedule Workout
 
-Put `/api/schedule/edit/workout`
+PUT `/api/schedule/edit/workout/:id`
 
-- Edits the selected scheduled workout
+- Edits the selected scheduled workout based on the id given in req.params
 - Response is the newly edited schedules workout
 
 ```
@@ -483,7 +570,21 @@ Put `/api/schedule/edit/workout`
   "user_id": "w5iY6dJDISWE17ZbaO72QZWLTi62"
 }
 ```
+---
+#### Delete Scheduled Workout
 
+Put `/api/schedule/delete/workout/:id`
+
+- Deletes the selected scheduled workout based on the id given in req.params
+- Response is an object with deleteScheduleWorkout count of 1
+
+```
+{
+  "deleteScheduleWorkout": 1
+}
+```
+
+---
 #### Edit Schedule Workout Exercise
 
 PUT `/api/schedule/edit/exercise`

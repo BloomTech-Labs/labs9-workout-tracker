@@ -16,9 +16,11 @@ To get the project up and running, and view components in the browser, complete 
 
 1. Download and install Node: https://nodejs.org/
 2. Clone this repo ```git clone https://github.com/Lambda-School-Labs/labs9-workout-tracker.git```
-3. Install project dependancies: ```npm i``` or ```npm install```
-4. Start the development environment: ```npm run start```
-5. Open your browser and visit http://localhost:3000
+3. cd into client folder
+4. Install project dependancies: ```npm i``` or ```npm install```
+5. Start the development environment: ```npm run start```
+6. Open your browser and visit http://localhost:3000
+---
 
 #### Built With
 
@@ -29,6 +31,7 @@ To get the project up and running, and view components in the browser, complete 
 * react-chartjs-2
 * react-datepicker
 * react-stripe-checkout
+---
 
 #### Authors
 
@@ -37,6 +40,7 @@ To get the project up and running, and view components in the browser, complete 
 * Christopher Cedeno https://github.com/reynld
 * Matt Wright https://github.com/mattwright42
 * Elvis Ibarra https://github.com/ielvisd
+---
 
 #### Photo Credits
 
@@ -46,5 +50,5 @@ Photos on the website taken from  -
 [Pexels](https://www.pexels.com/photo/rope-jumping-ropes-human-training-28080/)
 
 Pexels License - Free for personal and commercial use; no attribution required.
-
+---
 
