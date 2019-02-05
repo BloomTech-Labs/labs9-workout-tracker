@@ -270,7 +270,7 @@ const ButtonDiv = styled.div`
 const LabelStyle = styled.label`
   display: flex;
   align-self: flex-start;
-  color: ${props => props.theme.themeWhite};
+  color: ${props => props.theme.primaryDark};
 `;
 
 const PremiumDiv = styled.div`

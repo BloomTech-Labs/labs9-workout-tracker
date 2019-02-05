@@ -59,7 +59,7 @@ const PasswordView = props => {
             value={currentPassword}
             placeholder="Current Password"
             onChange={e => setcurrentPassword(e.target.value)}
-            lableColor="white"
+            lableColor="#2B3A42"
           />
           <FormInput 
             label={"new password"}
@@ -67,7 +67,7 @@ const PasswordView = props => {
             value={newPassword}
             placeholder="New Password"
             onChange={e => setPassword(e.target.value)}
-            lableColor="white"
+            lableColor="#2B3A42"
           />
           <FormInput 
             label={"confirm password"}
@@ -75,7 +75,7 @@ const PasswordView = props => {
             value={confirmNewPassword}
             placeholder="Confirm Password"
             onChange={e => setConfirmNewPassword(e.target.value)}
-            lableColor="white"
+            lableColor="#2B3A42"
           />
         <Button type="button" onClick={e => changePassword(e)}>Update Info</Button>
       </FormStyle>
