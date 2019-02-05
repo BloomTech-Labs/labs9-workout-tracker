@@ -119,9 +119,9 @@ const ProgressDayView = props => {
                       <Percentage>
                         {progressL}%
                         {isPositiveL ? (
-                          <i class="fas fa-arrow-up" />
+                          <i className="fas fa-arrow-up" />
                         ) : (
-                          <i class="fas fa-arrow-down" />
+                          <i className="fas fa-arrow-down" />
                         )}
                       </Percentage>
                     </StyledStats>
@@ -138,9 +138,9 @@ const ProgressDayView = props => {
                       <Percentage>
                         {progressR}%
                         {isPositiveR ? (
-                          <i class="fas fa-arrow-up" />
+                          <i className="fas fa-arrow-up" />
                         ) : (
-                          <i class="fas fa-arrow-down" />
+                          <i className="fas fa-arrow-down" />
                         )}
                       </Percentage>
                     </StyledStats>
@@ -205,9 +205,9 @@ const ProgressDayView = props => {
                       <Percentage>
                         {progressL}%
                         {isPositiveL ? (
-                          <i class="fas fa-arrow-up" />
+                          <i className="fas fa-arrow-up" />
                         ) : (
-                          <i class="fas fa-arrow-down" />
+                          <i className="fas fa-arrow-down" />
                         )}
                       </Percentage>
                     </StyledStats>
@@ -224,9 +224,9 @@ const ProgressDayView = props => {
                       <Percentage>
                         {progressR}%
                         {isPositiveR ? (
-                          <i class="fas fa-arrow-up" />
+                          <i className="fas fa-arrow-up" />
                         ) : (
-                          <i class="fas fa-arrow-down" />
+                          <i className="fas fa-arrow-down" />
                         )}
                       </Percentage>
                     </StyledStats>
@@ -271,9 +271,9 @@ const ProgressDayView = props => {
                   <Percentage>
                     {progress}%
                     {isPositive ? (
-                      <i class="fas fa-arrow-up" />
+                      <i className="fas fa-arrow-up" />
                     ) : (
-                      <i class="fas fa-arrow-down" />
+                      <i className="fas fa-arrow-down" />
                     )}
                   </Percentage>
                 </StyledStats>

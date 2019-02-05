@@ -3,21 +3,23 @@ import { Store } from "../index";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
-// import Input from '../shared/Input';
+import Loading from './Loading';
 import Button from '../shared/Button';
 
 import ropeImg from "./assets/rope.jpg";
 
 const Login = props => {
-  const { state, dispatch } = useContext(Store);
+  const { dispatch } = useContext(Store);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLooding] = useState(false)
 
   const loginUser = e => {
     e.preventDefault();
+    setError(false)
     // Initialize Firebase
-    console.log("email: ", email, "password: ", password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -26,7 +28,6 @@ const Login = props => {
         res.user
           .getIdToken()
           .then(idToken => {
-            console.log(idToken);
             window.localStorage.setItem("login_token", idToken);
             axios
               .get("https://fitmetrix.herokuapp.com/api/user", {
@@ -44,6 +45,7 @@ const Login = props => {
           .catch(err => console.log(err));
       })
       .catch(error => {
+        setError(true)
         console.log(error.code, error.message);
       });
   };
@@ -55,7 +57,7 @@ const Login = props => {
           <FormStyle onSubmit={e => loginUser(e)}>
             <h1>Sign into fitmetrix.</h1>
             <p>Enter details below</p>
-            
+            {error ? (<StyledError>Oops! That email / password combination is not valid.</StyledError>) : null}
             <InputContainer>
               <h3>EMAIL ADDRESS</h3>
               <input
@@ -77,8 +79,9 @@ const Login = props => {
                 required
               />
             </InputContainer>
-
-            <Button type="submit">Sign In</Button>
+            <ButtonContainer>
+              <Button type="submit">Sign In</Button>
+            </ButtonContainer>
           </FormStyle>
         </FormContainer>
       </Container>
@@ -86,6 +89,16 @@ const Login = props => {
 };
 
 export default Login;
+
+const StyledError = styled.p`
+  
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
 
 
 const InputContainer = styled.div`
@@ -136,6 +149,10 @@ const FormStyle = styled.form`
     color: #596377;
     font-weight: 400;
     margin-bottom: 50px;
+  }
+  ${StyledError} {
+    color: rgba(225,0,0,1);
+    margin-bottom: 20px;
   }
 `;
 

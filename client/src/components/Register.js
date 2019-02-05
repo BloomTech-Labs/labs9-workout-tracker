@@ -11,10 +11,14 @@ const Register = props => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   
   const registerUser = e => {
     e.preventDefault();
+    setError(false)
+    setErrorMessage('')
     // Initialize Firebase
     console.log("email: ", email, "password: ", password, "name: ", name);
     if (password === confirmPassword) {
@@ -36,13 +40,19 @@ const Register = props => {
             .catch();
         })
         .catch(function(error) {
-          var errorCode = error.code;
-          console.log(errorCode);
           var errorMessage = error.message;
           console.log(errorMessage);
+          setError(true)
+          setErrorMessage(errorMessage)
+          setEmail('')
+          setPassword('')
+          setConfirmPassword('')
         });
     } else {
-      alert("Passwords must match!")
+      setError(true)
+      setErrorMessage('Passwords must match')
+      setPassword('')
+      setConfirmPassword('')
     }
   };
 
@@ -53,11 +63,11 @@ const Register = props => {
           <FormStyle onSubmit={e => registerUser(e)}>
             <h1>Start tracking now!</h1>
             <p>Enter details below</p>
-            
+            {error ? (<StyledError>{errorMessage}</StyledError>) : null}
             <InputContainer>
               <h3>EMAIL ADDRESS</h3>
               <input
-                type="text"
+                type="email"
                 value={email}
                 placeholder="jack@fitmetrix.me"
                 onChange={e => setEmail(e.target.value)}
@@ -107,6 +117,9 @@ const Register = props => {
 
 export default Register;
 
+const StyledError = styled.p`
+  
+`;
 
 const InputContainer = styled.div`
   color: #5f697a;
@@ -178,6 +191,10 @@ const FormStyle = styled.form`
     color: #596377;
     font-weight: 400;
     margin-bottom: 50px;
+  }
+  ${StyledError} {
+    color: rgba(225,0,0,1);
+    margin-bottom: 20px;
   }
 `;
 

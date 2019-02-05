@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Button from '../../shared/Button';
 import deadliftImg from '../assets/deadlift-filter.jpg';
 import squatImg from '../assets/squat-filter.jpg';
-import fitnesstrackerImg from '../assets/fitness-tracker.svg';
 import CalendarView from '../assets/CalendarView.png';
 import ProgressView from '../assets/ProgressView.png';
 import WorkoutsView from '../assets/WorkoutsView.png';
@@ -21,7 +20,7 @@ const LandingPage = () => {
           <CallToAction>
             <Action>{preCallToAction}</Action>
             <Action>{callToAction}</Action>
-            <Link to="/register">
+            <Link to={localStorage.getItem('login_token') ? '/schedule' : '/register'}>
               <Button>START TRACKING NOW</Button>
             </Link>
           </CallToAction>
@@ -89,7 +88,8 @@ const BackgroundImage = styled.span`
 `;
 
 const CtaDiv = styled.div`
-  display:flex @media(max-width:900px) {
+  display:flex;
+  @media(max-width:900px) {
     flex-direction: column;
     align-items: center;
   }
@@ -110,7 +110,7 @@ const CallToAction = styled.div`
     top:200px;
     margin: 0 auto;
     display:flex;
-    align-items:center
+    align-items:center;
     width:100%;
   }
 `;
@@ -144,7 +144,8 @@ const Part2 = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  align-items: center @media (max-width: 900px) {
+  align-items: center;
+  @media (max-width: 900px) {
     flex-direction: column;
   }
   @media (max-width: 500px) {
@@ -176,7 +177,7 @@ const CalendarDemo = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 40%;
-  height: 350px
+  height: 350px;
   align-items: center;
   color: ${props => props.theme.primaryDark};
   // border: 1px solid red;
@@ -195,7 +196,8 @@ const Part3 = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: transparent @media (max-width: 900px) {
+  background-color: transparent;
+  @media (max-width: 900px) {
     flex-direction: column;
   }
 
@@ -223,7 +225,7 @@ const WorkoutPic = styled.img`
 const WorkoutDemo = styled.div`
   font-family: ${props => props.theme.roboto};
   font-weight: bold;
-  align-item: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -247,7 +249,8 @@ const Part4 = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: transparen @media (max-width: 900px) {
+  background-color: transparent;
+  @media (max-width: 900px) {
     flex-direction: column;
   }
 

@@ -26,9 +26,9 @@ const TabSelection = ({setType}) => {
       {
         tabs.map((tab, i) => {
           if (tab.name === state.graphType) {
-            return (<Metric onClick={e => updateGraphType(tab.name)} selected>{tab.value}</Metric>)
+            return (<Metric key={i} onClick={e => updateGraphType(tab.name)} selected>{tab.value}</Metric>)
           }
-          return (<Metric onClick={e => updateGraphType(tab.name)}>{tab.value}</Metric>)
+          return (<Metric key={i} onClick={e => updateGraphType(tab.name)}>{tab.value}</Metric>)
         })
       }
     </MetricContainer>
