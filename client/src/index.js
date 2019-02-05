@@ -31,12 +31,8 @@ const initialState = {
   graphType: 'weight',
   currentDate: new Date(),
   dateSelected: false,
-<<<<<<< HEAD
-  datePopulated: false
-=======
   datePopulated: false,
   userJustRegistered: false
->>>>>>> 53878564cb49149a4e807a98321db69c94b0c7f6
 };
 
 const reducer = (state, action) => {
@@ -63,13 +59,10 @@ const reducer = (state, action) => {
       return { ...state, showMetricForm: !state.showMetricForm };
     case 'SHOW_WORKOUT_FORM':
       return { ...state, showWorkoutForm: !state.showWorkoutForm };
-<<<<<<< HEAD
     case 'SHOW_EXERCISES':
       return { ...state, showExercises: !state.showExercises };
     case 'ADD_CATEGORY':
       return { ...state, showCategoryInput: !state.addingCategory };
-=======
->>>>>>> 53878564cb49149a4e807a98321db69c94b0c7f6
     case 'ADDING_CATEGORY':
       return { ...state, addingCategory: !state.addingCategory };
     case 'UPDATE_SELECTED_CATEGORY':
@@ -83,13 +76,9 @@ const reducer = (state, action) => {
     case 'UPDATE_CURRENT_DAY':
       return { ...state, currentDate: action.payload };
     case 'UPDATE_IS_POPULATED':
-<<<<<<< HEAD
       return { ...state, datePopulated: action.payload };
-=======
-      return { ...state, datePopulated: action.payload};
     case 'USER_JUST_REGISTERED':
-      return { ...state, userJustRegistered: action.payload};
->>>>>>> 53878564cb49149a4e807a98321db69c94b0c7f6
+      return { ...state, userJustRegistered: action.payload };
     default:
       return state;
   }
