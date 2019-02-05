@@ -23,10 +23,13 @@ const LandingPage = () => {
             <Link to={localStorage.getItem('login_token') ? '/schedule' : '/register'}>
               <Button>START TRACKING NOW</Button>
             </Link>
+            <ArrowDiv>
+              <i class="fas fa-chevron-down" />
+            </ArrowDiv>
           </CallToAction>
-          {/* <BlankImage /> */}
         </CtaDiv>
       </LandingStyle>
+
       <Part2>
         <CalendarPic src={CalendarView} alt="A picture of the calendar view." />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
@@ -56,9 +59,17 @@ const LandingStyle = styled.div`
   position: relative;
   background-color: transparent;
   margin: 0 auto;
+
   @media (max-width: 900px) {
     flex-direction: column;
     min-height: 600px;
+  }
+`;
+
+const ArrowDiv = styled.div`
+  margin-top: 15%;
+  i {
+    font-size: 6em;
   }
 `;
 
@@ -114,25 +125,6 @@ const CallToAction = styled.div`
     width:100%;
   }
 `;
-
-// const BlankImage = styled.div`
-//   width: 400px;
-//   height: 400px;
-//   border-radius: 18px;
-//   position: absolute;
-//   margin-right: 2%;
-//   top: 360px;
-//   right: 0px;
-//   background-color: ${props => props.theme.primaryDark};
-//   background-image: url(${fitnesstrackerImg});
-//   background-size: 400px 400px;
-//   background-repeat: no-repeat;
-//   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
-
-//   @media (max-width: 900px) {
-//     display: none;
-//   }
-// `;
 
 const Part2 = styled.div`
   width: 100vw;
