@@ -31,6 +31,7 @@ const initialState = {
   currentDate: new Date(),
   dateSelected: false,
   datePopulated: false,
+  userJustRegistered: false
 };
 
 const reducer = (state, action) => {
@@ -73,6 +74,8 @@ const reducer = (state, action) => {
       return { ...state, currentDate: action.payload};
     case 'UPDATE_IS_POPULATED':
       return { ...state, datePopulated: action.payload};
+    case 'USER_JUST_REGISTERED':
+      return { ...state, userJustRegistered: action.payload};
     default:
       return state;
   }
