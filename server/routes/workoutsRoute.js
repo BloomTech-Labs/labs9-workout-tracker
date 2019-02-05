@@ -264,10 +264,10 @@ router.put('/edit/exercise/:id', async (req, res) => {
   res.status(200).json(newEx[0]);
 });
 
-router.delete('/exercise/delete', async (req, res) => {
+router.delete('/exercise/delete/:id', async (req, res) => {
   try {
     const deleteWorkoutData = await db('exercises')
-      .whereIn(['id', 'workout_id'], [[req.body.id, req.body.workout_id]])
+      .whereIn(['id'], [[req.params.id]])
       .del();
     {
       deleteWorkoutData === 0
