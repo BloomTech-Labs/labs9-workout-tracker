@@ -19,8 +19,14 @@ const SettingsView = props => {
   const [newPassword, setPassword] = useState("");
   const [currentPassword, setcurrentPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  const [settingsUpdated, setSettingsUpdated] = useState(false)
+  const [loggedOut, setLoggedOut] = useState(false);
 
+  const logOut = () => {
+    setLoggedOut(true);
+    window.localStorage.removeItem('login_token');
+    firebase.auth().signOut();
+    props.history.push('/');
+  };
 
   const updateUser = async e => {
     e.preventDefault();
@@ -87,6 +93,7 @@ const SettingsView = props => {
       );
     } else {
       return (
+        <LogOutDiv>
         <ChangePasswordDivInvis>
           <FormInput 
             label={"Verify password"}
@@ -99,6 +106,8 @@ const SettingsView = props => {
           />
           <Button>Update Info</Button>
         </ChangePasswordDivInvis>
+        <StyledBtn onClick={() => logOut()}>Logout</StyledBtn>
+        </LogOutDiv>
       );
     }
   };
@@ -107,10 +116,10 @@ const SettingsView = props => {
     if (props.user.premium === true) {
       return (
         <PremiumDiv>
-          <div>
+          <div className="status-div">
             <PremiumStyle>Account Status:</PremiumStyle>
             <p>Premium</p>
-          </div>
+          </div>          
         </PremiumDiv>
       );
     } else {
@@ -206,7 +215,6 @@ const SettingsViewStyle = styled.div`
   justify-content: center;
   font-size: 1.6rem;
   align-items: center;
-  height: 651px;
   padding-bottom: 100px;
 `;
 
@@ -233,7 +241,6 @@ const FormStyle = styled.form`
   padding: 20px 7%;
   align-items: center;
   border-top: 0px;
-  height: 651px;
   @media (max-width: 550px) {
     width:100%;
   }
@@ -254,7 +261,7 @@ const ChangePasswordDiv = styled.div`
 
 const ChangePasswordDivInvis = styled.div`
   display: flex;
-  visibility: hidden;
+  display:none
   flex-direction: column;
   width: 50%;
   justify-content: space-evenly;
@@ -279,7 +286,6 @@ const ButtonDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 70px;
   justify-content: space-around;
   align-items: center;
   margin-top: 25px;
@@ -312,13 +318,14 @@ const PremiumDiv = styled.div`
     font-size:1.5rem;
     font-weight: normal;
   }
-  p {
-    width:50%;
-    margin: 0 auto;
-    color: ${props => props.theme.accent};  }
+  p {    
+    color: ${props => props.theme.accent}; 
+    margin:0;
+    font-weight:bold
+  }
 `;
 const PremiumStyle = styled.div`
-  color: ${props => props.theme.themeWhite};
+  color: #2B3A42
   display: flex;
   justify-content: flex-start;
 `;
@@ -329,3 +336,37 @@ const StripeStyle = styled.div`
   width: 100%;
   margin-top: 10px;
 `;
+
+const StyledBtn = styled.button`
+width:42%;
+text-transform: uppercase;
+letter-spacing: 1px;
+display: inline-block;
+height: 50px;
+line-height: 50px;
+padding: 0 50px;
+font-size: 12px;
+font-weight: 700;
+transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
+border-radius: 100px;
+outline: none;
+background: white;
+border: none;
+color: #FD8F25;
+margin:20px 0;
+border: 1px solid #FD8F25
+:hover {
+  cursor:pointer;
+}
+@media(max-width:414px){
+  width:65%;
+}
+@media(max-width:375px){
+  width:70%;
+}
+`;
+
+const LogOutDiv = styled.div`
+width:100%;
+`;
+

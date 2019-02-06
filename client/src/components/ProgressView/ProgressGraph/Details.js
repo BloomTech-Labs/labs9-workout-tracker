@@ -161,6 +161,7 @@ const RadarContianer = styled.div`
     position: absolute;
     right: -90px;
     top: 240px;
+    overflow: hidden;
     @media (max-width: 1040px) {
       top: 10px;
     }
@@ -215,6 +216,7 @@ const DetailsContainer = styled.div`
   width: 20%;
   position: relative;
   padding: 20px 10px;
+  overflow: hidden;
   h2 {
       font-size: 20px;
       font-weight: 600;
