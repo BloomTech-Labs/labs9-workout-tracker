@@ -182,7 +182,7 @@ const AddWorkout = () => {
         <Row>
           <Input
             value={title}
-            placeholder="Legs"
+            placeholder="Leg Day #1"
             onChange={e => setTitle(e.target.value)}
             size="large"
             label="Workout Title"
@@ -199,7 +199,7 @@ const AddWorkout = () => {
         <CategoryRow>
           <Input
             value={newCategory}
-            placeholder="Arms #2"
+            placeholder="Legs"
             onChange={e => categoryOnChange(e)}
             label="New Category Name"
             size="large"
@@ -300,7 +300,7 @@ const CategoryRow = styled.div`
   display: flex;
   margin-top: 20px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   @media (max-width: 670px) {
     margin-top: 10px;

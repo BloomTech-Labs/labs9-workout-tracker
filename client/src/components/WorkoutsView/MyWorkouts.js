@@ -117,93 +117,99 @@ const MyWorkouts = () => {
           </Button>
         </ButtonContainer>
       </Header>
-      {state.workouts.length !== 0 && state.workouts.map((workout, i) => {
-        if (state.selectedWorkoutCategory === 'all') {
-          return (
-            <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
-              <WorkoutsTitle className={`workoutsTitle`}>
-                <WorkoutsCard className="test">
-                  <h3>{workout.title}</h3>
-                </WorkoutsCard>
-                <span>
-                  {showId === i ? (
-                    <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
-                  ) : (
-                    <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
-                  )}
-                </span>
-              </WorkoutsTitle>
-              <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
-                <ExDetailsTitle>
-                  <ExDetailsP className="name">Exercise</ExDetailsP>
-                  <ExDetailsP>Weight</ExDetailsP>
-                  <ExDetailsP>Sets</ExDetailsP>
-                  <ExDetailsP>Reps</ExDetailsP>
-                </ExDetailsTitle>
-                {workout.exercises.map((ex, i) => {
-                  return (
-                    <ExDetailsDiv key={ex.id}>
-                      <ExDetailsListDiv>
-                        <ExDetailsP className="name"> {ex.name}</ExDetailsP>
-                        <ExDetailsP>{ex.weight}</ExDetailsP>
-                        <ExDetailsP>{ex.sets}</ExDetailsP>
-                        <ExDetailsP>{ex.reps}</ExDetailsP>
-                      </ExDetailsListDiv>
-                    </ExDetailsDiv>
-                  );
-                })}
+      {/* I would try to start it here */}
+      {/* Something like.... state.workouts.length === 0 ? render something : null */}{' '}
+      {state.workouts.length === 0 ? <div>No workouts scheduled. Create a workout!</div> : null}
+      {state.workouts.length !== 0 &&
+        state.workouts.map((workout, i) => {
+          if (state.selectedWorkoutCategory === 'all') {
+            return (
+              <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                <WorkoutsTitle className={`workoutsTitle`}>
+                  <WorkoutsCard onClick={() => handleDown(workout.id, i)} className="test">
+                    <h3>{workout.title}</h3>
+                  </WorkoutsCard>
+                  <span>
+                    {showId === i ? (
+                      <span className="upArrow">
+                        <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
+                      </span>
+                    ) : (
+                      <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
+                    )}
+                  </span>
+                </WorkoutsTitle>
+                <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                  <ExDetailsTitle>
+                    <ExDetailsP className="name">Exercise</ExDetailsP>
+                    <ExDetailsP>Weight</ExDetailsP>
+                    <ExDetailsP>Sets</ExDetailsP>
+                    <ExDetailsP>Reps</ExDetailsP>
+                  </ExDetailsTitle>
+                  {workout.exercises.map((ex, i) => {
+                    return (
+                      <ExDetailsDiv key={ex.id}>
+                        <ExDetailsListDiv>
+                          <ExDetailsP className="name"> {ex.name}</ExDetailsP>
+                          <ExDetailsP>{ex.weight}</ExDetailsP>
+                          <ExDetailsP>{ex.sets}</ExDetailsP>
+                          <ExDetailsP>{ex.reps}</ExDetailsP>
+                        </ExDetailsListDiv>
+                      </ExDetailsDiv>
+                    );
+                  })}
 
-                <span className="upArrow">
-                  <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
-                </span>
-              </ExercisesCard>
-            </Workout>
-          );
-        }
-        if (workout.category_id == state.selectedWorkoutCategory) {
-          return (
-            <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
-              <WorkoutsTitle className={`workoutsTitle`}>
-                <WorkoutsCard className="test">
-                  <h3>{workout.title}</h3>
-                </WorkoutsCard>
-                <span>
-                  {showId === i ? (
-                    <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" />
-                  ) : (
-                    <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
-                  )}
-                </span>
-              </WorkoutsTitle>
-              <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
-                <ExDetailsTitle>
-                  <ExDetailsP className="name">Exercise</ExDetailsP>
-                  <ExDetailsP>Weight</ExDetailsP>
-                  <ExDetailsP>Sets</ExDetailsP>
-                  <ExDetailsP>Reps</ExDetailsP>
-                </ExDetailsTitle>
-                {workout.exercises.map((ex, i) => {
-                  return (
-                    <ExDetailsDiv key={ex.id}>
-                      <ExDetailsListDiv>
-                        <ExDetailsP className="name"> {ex.name}</ExDetailsP>
-                        <ExDetailsP>{ex.weight}</ExDetailsP>
-                        <ExDetailsP>{ex.sets}</ExDetailsP>
-                        <ExDetailsP>{ex.reps}</ExDetailsP>
-                      </ExDetailsListDiv>
-                    </ExDetailsDiv>
-                  );
-                })}
-
-                <span className="upArrow">
-                  <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
-                </span>
-              </ExercisesCard>
-            </Workout>
-          );
-        }
-        return null;
-      })}
+                  <ButtonContainer>
+                    <Button onClick={() => handleEdit(workout.id, i)} className="fas fa-edit">
+                      Edit Workout
+                    </Button>
+                  </ButtonContainer>
+                </ExercisesCard>
+              </Workout>
+            );
+          }
+          if (workout.category_id == state.selectedWorkoutCategory) {
+            return (
+              <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                <WorkoutsTitle className={`workoutsTitle`}>
+                  <WorkoutsCard onClick={() => handleDown(workout.id, i)} className="test">
+                    <h3>{workout.title}</h3>
+                  </WorkoutsCard>
+                  <span>
+                    {showId === i ? (
+                      <span className="upArrow">
+                        <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
+                      </span>
+                    ) : (
+                      <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
+                    )}
+                  </span>
+                </WorkoutsTitle>
+                <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                  <ExDetailsTitle>
+                    <ExDetailsP className="name">Exercise</ExDetailsP>
+                    <ExDetailsP>Weight</ExDetailsP>
+                    <ExDetailsP>Sets</ExDetailsP>
+                    <ExDetailsP>Reps</ExDetailsP>
+                  </ExDetailsTitle>
+                  {workout.exercises.map((ex, i) => {
+                    return (
+                      <ExDetailsDiv key={ex.id}>
+                        <ExDetailsListDiv>
+                          <ExDetailsP className="name"> {ex.name}</ExDetailsP>
+                          <ExDetailsP>{ex.weight}</ExDetailsP>
+                          <ExDetailsP>{ex.sets}</ExDetailsP>
+                          <ExDetailsP>{ex.reps}</ExDetailsP>
+                        </ExDetailsListDiv>
+                      </ExDetailsDiv>
+                    );
+                  })}
+                </ExercisesCard>
+              </Workout>
+            );
+          }
+          return null;
+        })}
     </HeaderContainer>
   );
 };
@@ -222,6 +228,8 @@ const WorkoutsTitle = styled.div`
   width: 100%;
   display: flex;
 `;
+
+const SchedulePrompt = styled.div``;
 
 const Header = styled.div`
   width: 100%;
@@ -249,7 +257,7 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 const Workout = styled.div`
@@ -326,3 +334,7 @@ const ExDetailsListDiv = styled.div`
   justify-content: space-around;
   width: 100%;
 `;
+
+{
+  /* <i onClick={() => handleEdit(workout.id, i)} className="fas fa-edit" /> */
+}

@@ -372,6 +372,7 @@ const ExDetailsP = styled.p`
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: left;
+width:20%;
 `;
 
 const ExDetailsListDiv = styled.div`

@@ -55,6 +55,7 @@ const SettingsView = props => {
               props.dispatch({ type: "USER_MODEL", payload: res.data });
 
               setcurrentPassword("");
+              setSettingsUpdated(true)
             }
           })
           .catch(error => {
@@ -148,6 +149,7 @@ const SettingsView = props => {
   return (
     <ContainerDiv>
       <SettingsViewStyle>
+        {settingsUpdated === true ? <SettingsUpdated>Settings Updated Successfully!</SettingsUpdated>: <SettingsUpdatedHidden>Settings Updated Successfully!</SettingsUpdatedHidden>}
         <FormStyle onSubmit={e => updateUser(e)}>
           <FormInput 
             label={"Email"}
@@ -216,6 +218,19 @@ const SettingsViewStyle = styled.div`
   padding-bottom: 100px;
 `;
 
+const SettingsUpdated = styled.p`
+color:green;
+text-align:center;
+background-color:lightgreen;
+border-radius: 5px;
+width: 56%;
+margin-top:10px;
+`;
+
+const SettingsUpdatedHidden = styled(SettingsUpdated)`
+visibility:hidden;
+`;
+
 const FormStyle = styled.form`
   border-radius: 0 0 6px 6px;
   background-color: white;;
@@ -279,6 +294,7 @@ const ButtonDiv = styled.div`
 const LabelStyle = styled.label`
   display: flex;
   align-self: flex-start;
+  width:50%;
   color: ${props => props.theme.primaryDark};
 `;
 
@@ -287,6 +303,7 @@ const PremiumDiv = styled.div`
   flex-direction: column;
   width: 50%;
   align-items: center;
+  margin-bottom:20px;
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -294,14 +311,14 @@ const PremiumDiv = styled.div`
     width:100%;
     display:flex;
     justify-content:space-between;
+    margin-bottom:20px;
   }
   h4 {
     color: ${props => props.theme.themeWhite};
     font-size:1.5rem;
     font-weight: normal;
   }
-  p {
-    
+  p {    
     color: ${props => props.theme.accent}; 
     margin:0;
     font-weight:bold

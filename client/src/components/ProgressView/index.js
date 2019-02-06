@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Store } from "../../index";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import requireAuth from "../../requireAuth";
 
 import ProgressGraph from "./ProgressGraph";
@@ -12,7 +12,7 @@ const ProgressView = props => {
   const { metrics } = state || [];
 
   return (
-    <ProgressViewStyle>
+    <ProgressViewStyle showScrollBar={state.showMetricForm}>
       <h1>Progress</h1>
       {
         !metrics || !metrics.length
