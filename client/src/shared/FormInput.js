@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components'
 
 const FormInput = ({label, value, placeholder, onChange, type, lableColor}) => {
     return (
-        <InputContainer lableColor={lableColor}r>
+        <InputContainer lableColor={lableColor}>
             <h3>{label}</h3>
             <input
                 type={type}

@@ -19,6 +19,8 @@ const SettingsView = props => {
   const [newPassword, setPassword] = useState("");
   const [currentPassword, setcurrentPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  const [settingsUpdated, setSettingsUpdated] = useState(false)
+
 
   const updateUser = async e => {
     e.preventDefault();
@@ -47,6 +49,7 @@ const SettingsView = props => {
               props.dispatch({ type: "USER_MODEL", payload: res.data });
 
               setcurrentPassword("");
+              setSettingsUpdated(true)
             }
           })
           .catch(error => {
@@ -137,6 +140,7 @@ const SettingsView = props => {
   return (
     <ContainerDiv>
       <SettingsViewStyle>
+        {settingsUpdated === true ? <SettingsUpdated>Settings Updated Successfully!</SettingsUpdated>: <SettingsUpdatedHidden>Settings Updated Successfully!</SettingsUpdatedHidden>}
         <FormStyle onSubmit={e => updateUser(e)}>
           <FormInput 
             label={"Email"}
@@ -204,6 +208,19 @@ const SettingsViewStyle = styled.div`
   align-items: center;
   height: 651px;
   padding-bottom: 100px;
+`;
+
+const SettingsUpdated = styled.p`
+color:green;
+text-align:center;
+background-color:lightgreen;
+border-radius: 5px;
+width: 56%;
+margin-top:10px;
+`;
+
+const SettingsUpdatedHidden = styled(SettingsUpdated)`
+visibility:hidden;
 `;
 
 const FormStyle = styled.form`
