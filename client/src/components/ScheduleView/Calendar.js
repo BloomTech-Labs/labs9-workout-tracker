@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { Store } from "../../index";
 import dateFns from "date-fns";
-import AddWorkout from "./AddWorkout";
+import ScheduleWorkout from "./ScheduleWorkout";
 import styled from "styled-components";
 import WorkoutDetails from "./WorkoutDetails";
 import WeeklyWorkouts from "./WeeklyWorkouts";
@@ -231,7 +231,7 @@ const HooksCalendar = props => {
       {dateSelected === false ? null : datePopulated === true ? (
         <WorkoutDetails/>
       ) : (
-        <AddWorkout/>
+        <ScheduleWorkout/>
       )}
     </div>
   );

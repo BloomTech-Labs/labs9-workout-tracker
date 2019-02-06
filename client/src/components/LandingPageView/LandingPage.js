@@ -56,7 +56,7 @@ export default LandingPage;
 const LandingStyle = styled.div`
   width: 100%;
   max-width: ${props => props.theme.containingWidth};
-  height: calc(100% - 54px);
+  height: calc(100vh - 54px);
   min-height: 900px;
   color: white;
   font-family: ${props => props.theme.roboto};
@@ -67,6 +67,9 @@ const LandingStyle = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     min-height: 600px;
+  }
+  @media (max-width: 320px) {
+    min-height: 450px;
   }
 `;
 
@@ -126,6 +129,14 @@ const CallToAction = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
+  }
+
+  @media(max-width:420px) {
+    top:100px
+  }
+
+  @media(max-width:320px) {
+    top:50px
   }
 `;
 
@@ -270,6 +281,9 @@ const ProgressDemo = styled.div`
   @media (max-width: 900px) {
     width: 65%;
     height: 200px;
+  }
+  @media (max-width:500px) {
+    margin-bottom:20px;
   }
 `;
 

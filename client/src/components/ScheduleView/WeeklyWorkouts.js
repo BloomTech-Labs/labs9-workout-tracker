@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Store } from '../../index';
 import styled from "styled-components";
 import dateFns from "date-fns";
@@ -8,8 +8,13 @@ const WeeklyWorkotus = () => {
     const { state, dispatch } = useContext(Store);
 
     const { scheduleWorkouts, currentDate } = state;
+    const [sortedWorkouts, setSortedWorkouts ] = useState([]);
 
-    const sortedWorkouts = () => {
+    useEffect(() => {
+        getSortedWorkouts();
+    }, [state.scheduleWorkouts]);
+
+    const getSortedWorkouts = () => {
         const copy = scheduleWorkouts;
         
         copy.sort((a, b) => {
@@ -36,11 +41,19 @@ const WeeklyWorkotus = () => {
             };
         }
 
-        if (currentIndex !== 0 ) {
-            const copySlice = copy.slice(currentIndex === null ? 0 : currentIndex)
-            return copySlice;
+        console.log(currentIndex);
+        
+        if (currentIndex === -1){ 
+            setSortedWorkouts([]);
         }
-        return copy;
+
+
+        if (currentIndex !== 0) {
+            const copySlice = copy.slice(currentIndex === null ? 0 : currentIndex)
+            setSortedWorkouts(copySlice);
+        }
+
+        setSortedWorkouts(copy);
 
     }
 
@@ -62,7 +75,7 @@ const WeeklyWorkotus = () => {
     return (
         <DisplayWorkouts>
         {
-            sortedWorkouts().map((sworkout, i,) => {
+            sortedWorkouts && sortedWorkouts.map((sworkout, i,) => {
                 console.log("sworkout", sworkout.date)
                 if (i % 2 === 0 && i < 7) {
                     return (
@@ -109,6 +122,7 @@ display:flex;
 flex-direction:column;
 justify-content:space-between;
 width: 70%;
+max-width: 130px;
 align-items:center;
 padding: 5px 0;
 
@@ -119,6 +133,7 @@ h3 {
 
 @media(max-width:690px) {
   width:100%;
+  max-width:100%;
 }
 `;
 

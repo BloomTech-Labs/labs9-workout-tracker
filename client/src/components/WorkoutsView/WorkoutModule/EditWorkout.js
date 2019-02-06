@@ -159,7 +159,13 @@ const EditWorkout = () => {
             Authorization: token
           }
         });
-        dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+
+        console.log('newWorkouts.data: ', newWorkouts.data);
+        if (Array.isArray(newWorkouts.data)) {
+          dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+        } else {
+          dispatch({ type: 'UPDATE_WORKOUTS', payload: [] });
+        }
       } else {
         console.log('error deleting');
       }

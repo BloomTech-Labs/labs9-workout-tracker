@@ -6,6 +6,7 @@ import * as firebase from "firebase";
 import requireAuth from "../../requireAuth";
 import MainSettings from "./MainSettings";
 import "./settings.css";
+import FormInputTwo from '../../shared/FormInputTwo'
 import FormInput from '../../shared/FormInput'
 import Button from '../../shared/Button';
 //working on updating info
@@ -145,7 +146,7 @@ const SettingsView = props => {
             type="email"
             lableColor="#2B3A42"
           />
-          <FormInput 
+          <FormInputTwo 
             label={"Phone"}
             value={phone}
             placeholder={"555-555-555"}

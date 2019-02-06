@@ -117,7 +117,7 @@ const MyWorkouts = () => {
           </Button>
         </ButtonContainer>
       </Header>
-      {state.workouts.map((workout, i) => {
+      {state.workouts.length !== 0 && state.workouts.map((workout, i) => {
         if (state.selectedWorkoutCategory === 'all') {
           return (
             <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import firebase from "firebase";
+import styled from 'styled-components';
 import { Store } from "../../../index";
 import { dateFormat} from "../../../shared";
 import {
@@ -182,9 +183,18 @@ const AddMetric = () => {
       </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}
       <Button type="submit" size="responsive">Submit</Button>
-      <Button type="button" scheme="cancel" size="responsive" onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>Cancel</Button>
+      <ButtonContainer>
+        <Button type="button" scheme="cancel" size="responsive" onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>Cancel</Button>
+      </ButtonContainer>
     </FormModal>
   );
 };
 
 export default AddMetric;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+`

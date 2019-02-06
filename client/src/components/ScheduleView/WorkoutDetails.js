@@ -60,11 +60,14 @@ const WorkoutDetails = props => {
           Authorization: token
         }
       });
-      dispatch({ type: 'UPDATE_DATE_SELECTED' });
-      dispatch({
-        type: 'UPDATE_SCHEDULE_WORKOUTS',
-        payload: newScheduleWorkouts.data
-      });
+
+      if (Array.isArray(newScheduleWorkouts.data)) {
+        dispatch({ type: 'UPDATE_DATE_SELECTED' });
+        dispatch({ type: 'UPDATE_SCHEDULE_WORKOUTS', payload: newScheduleWorkouts.data });
+      } else {
+        dispatch({ type: 'UPDATE_DATE_SELECTED' });
+        dispatch({ type: 'UPDATE_SCHEDULE_WORKOUTS', payload: [] });
+      }
     }
   };
 

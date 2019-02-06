@@ -57,7 +57,7 @@ const ProgressDayView = props => {
           <h2>Daily Entrys: {state.graphType}</h2>
           <ButtonContainer>
             <Button onClick={() => dispatch({ type: 'SHOW_METRIC_FORM' })}>
-              Add Progress
+              Add Metrics
             </Button>
           </ButtonContainer>
         </StyledHeader>
