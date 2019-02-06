@@ -21,6 +21,6 @@ export default requireAuth(WorkoutsView);
 const Container = styled.div`
   border: ${props => props.theme.primaryDark};
   width: 100%;
-  max-width: 950px;
+  max-width: 1040px;
   padding: 0px 30px;
 `;

@@ -29,7 +29,7 @@ const initialState = {
   selectedCategory: 'default',
   selectedWorkoutCategory: 'all',
   graphType: 'weight',
-  currentDate: new Date(),
+  currentDate: null,
   dateSelected: false,
   datePopulated: false,
   userJustRegistered: false

@@ -116,13 +116,14 @@
     display:flex;
     width:100%;
     height:auto;
+    margin-bottom: 50px;
     justify-content: space-around;
     flex-direction:column;
   }
      @media(max-width: 690px) {
         .calendar-div {
         flex-direction: column-reverse;
-        width:100vw;
+        width:100%;
         border:none;
       }
     }
@@ -140,6 +141,7 @@
         .calendar {
           border:none;
           border-bottom:1px solid var(--border-color);
+          margin-bottom:20px;
       }
     }
   
@@ -189,7 +191,7 @@
     justify-content: center;
     align-items: center;
   }
-      @media(max-width:500px) {
+      @media(max-width:600px) {
         .calendar .body .cell {
           height: 5.5em;
 
@@ -245,12 +247,12 @@
     position: absolute;
     font-size: 62.5%;
     line-height: 1;
-    top: 0.75em;
-    right: 0.75em;
+    top: 2px;
+    right: 2%;
     font-weight: 700;
     background: rgb(26, 143, 255, 0.65);
-    padding: 3%;
-    border-radius:10px;
+    padding: 4% 6%;
+    border-radius: 10px;
     color:white;
   }
   .calendar .body .cell:hover .number,
