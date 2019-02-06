@@ -39,7 +39,7 @@ const Login = props => {
                 dispatch({ type: "USER_MODEL", payload: res.data });
                 dispatch({type: 'USER_JUST_REGISTERED', payload: false})
                 setLoading(false)
-                props.history.push("/schedule");
+                props.history.push("/workouts");
               })
           })
       })
