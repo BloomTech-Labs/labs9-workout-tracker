@@ -20,7 +20,11 @@ const LandingPage = () => {
           <CallToAction>
             <Action>{preCallToAction}</Action>
             <Action>{callToAction}</Action>
-            <Link to={localStorage.getItem('login_token') ? '/schedule' : '/register'}>
+            <Link
+              to={
+                localStorage.getItem('login_token') ? '/schedule' : '/register'
+              }
+            >
               <Button>START TRACKING NOW</Button>
             </Link>
             <ArrowDiv>
@@ -42,7 +46,7 @@ const LandingPage = () => {
         <ProgressPic src={ProgressView} alt="A picture of the progress view." />
         <ProgressDemo>Track your progress, meet your goals.</ProgressDemo>
       </Part4>
-      {/* <Part5>Copyright 2019 fitmetrix. All rights reserved.</Part5> */}
+      {/* <Part5>Copyright 2019 FlexLog. All rights reserved.</Part5> */}
     </LandingContainer>
   );
 };
@@ -65,8 +69,6 @@ const LandingStyle = styled.div`
     min-height: 600px;
   }
 `;
-
-
 
 const ArrowDiv = styled.div`
   margin-top: 15%;
@@ -101,8 +103,8 @@ const BackgroundImage = styled.span`
 `;
 
 const CtaDiv = styled.div`
-  display:flex;
-  @media(max-width:900px) {
+  display: flex;
+  @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;
   }
@@ -117,14 +119,13 @@ const CallToAction = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  
-  
-  @media(max-width:900px){
-    top:200px;
+
+  @media (max-width: 900px) {
+    top: 200px;
     margin: 0 auto;
-    display:flex;
-    align-items:center;
-    width:100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
 `;
 
