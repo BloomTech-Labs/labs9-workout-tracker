@@ -119,7 +119,7 @@ const MyWorkouts = () => {
       </Header>
       {/* I would try to start it here */}
       {/* Something like.... state.workouts.length === 0 ? render something : null */}{' '}
-      {state.workouts.length === 0 ? <div>No workouts scheduled. Create a workout!</div> : null}
+      {state.workouts.length === 0 ? <SchedulePrompt>No workouts scheduled. Create a workout!</SchedulePrompt> : null}
       {state.workouts.length !== 0 &&
         state.workouts.map((workout, i) => {
           if (state.selectedWorkoutCategory === 'all') {
@@ -229,7 +229,12 @@ const WorkoutsTitle = styled.div`
   display: flex;
 `;
 
-const SchedulePrompt = styled.div``;
+const SchedulePrompt = styled.div`
+  color: ${props => props.theme.accent};
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+`;
 
 const Header = styled.div`
   width: 100%;
