@@ -18,7 +18,7 @@ const MainSettingsView = props => {
      <SubNav>
      <HeaderTab>
      <HeaderBlank
-     onClick={() => {
+        onClick={() => {
          accountClick();
         }}
         >
@@ -57,6 +57,7 @@ const MainSettingsView = props => {
             )  
     }
   };
+  ///////////end of tabs
 
   const passwordClick = () => {
     setpasswordFlag(true);
@@ -153,3 +154,5 @@ const HeaderBlank = styled.h1`
     font-size:1.1rem;
   }
   `;
+
+

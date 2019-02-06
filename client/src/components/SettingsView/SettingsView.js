@@ -19,6 +19,14 @@ const SettingsView = props => {
   const [newPassword, setPassword] = useState("");
   const [currentPassword, setcurrentPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  const [loggedOut, setLoggedOut] = useState(false);
+
+  const logOut = () => {
+    setLoggedOut(true);
+    window.localStorage.removeItem('login_token');
+    firebase.auth().signOut();
+    props.history.push('/');
+  };
 
   const updateUser = async e => {
     e.preventDefault();
@@ -84,6 +92,7 @@ const SettingsView = props => {
       );
     } else {
       return (
+        <LogOutDiv>
         <ChangePasswordDivInvis>
           <FormInput 
             label={"Verify password"}
@@ -96,6 +105,8 @@ const SettingsView = props => {
           />
           <Button>Update Info</Button>
         </ChangePasswordDivInvis>
+        <StyledBtn onClick={() => logOut()}>Logout</StyledBtn>
+        </LogOutDiv>
       );
     }
   };
@@ -107,7 +118,7 @@ const SettingsView = props => {
           <div className="status-div">
             <PremiumStyle>Account Status:</PremiumStyle>
             <p>Premium</p>
-          </div>
+          </div>          
         </PremiumDiv>
       );
     } else {
@@ -235,7 +246,7 @@ const ChangePasswordDiv = styled.div`
 
 const ChangePasswordDivInvis = styled.div`
   display: flex;
-  visibility: hidden;
+  display:none
   flex-direction: column;
   width: 50%;
   justify-content: space-evenly;
@@ -308,3 +319,28 @@ const StripeStyle = styled.div`
   width: 100%;
   margin-top: 10px;
 `;
+
+const StyledBtn = styled.button`
+width:86%;
+text-transform: uppercase;
+letter-spacing: 1px;
+display: inline-block;
+height: 50px;
+line-height: 50px;
+padding: 0 50px;
+font-size: 12px;
+font-weight: 700;
+transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
+border-radius: 100px;
+outline: none;
+background: white;
+border: none;
+color: #FD8F25;
+margin:20px 0;
+border: 1px solid #FD8F25
+`;
+
+const LogOutDiv = styled.div`
+
+`;
+
