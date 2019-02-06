@@ -77,6 +77,8 @@ const StyledApp = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 105px;
-  padding: 0 20px;
   font-family: ${props => props.theme.opensans};
+  @media (max-width: 768px) {
+    padding:0 20px;
+  }
 `;

@@ -188,7 +188,6 @@ const CalendarDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
-    height: 200px;
   }
 `;
 
@@ -240,7 +239,6 @@ const WorkoutDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
-    height: 200px;
   }
 `;
 
@@ -278,7 +276,6 @@ const ProgressDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
-    height: 200px;
   }
   @media (max-width:500px) {
     margin-bottom:20px;
@@ -301,5 +298,5 @@ const ProgressPic = styled.img`
 
 
 const LandingContainer = styled.div`
-  width: calc(100vw - 18px);
+  width: 100vw
 `;
