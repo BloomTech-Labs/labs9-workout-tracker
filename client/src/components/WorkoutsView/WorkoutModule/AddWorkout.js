@@ -61,9 +61,9 @@ const AddWorkout = () => {
     e.preventDefault();
 
     console.log(state.selectedCategory);
-    if (state.selectedCategory === "default" || state.selectedCategory === "add") {
+    if (state.selectedCategory === 'default' || state.selectedCategory === 'add') {
       setError(true);
-      setErrorM('Category is required')
+      setErrorM('Category is required');
       return;
     }
     const token = window.localStorage.getItem('login_token');
@@ -99,7 +99,7 @@ const AddWorkout = () => {
     //Resets the title and category after workout is added
     setTitle('');
     setError(false);
-    setErrorM('')
+    setErrorM('');
     dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
@@ -141,10 +141,10 @@ const AddWorkout = () => {
         headers: {
           Authorization: token
         }
-      })
+      });
       console.log(newCategories.data);
 
-      const newCatId = newCategories.data[newCategories.data.length-1].id
+      const newCatId = newCategories.data[newCategories.data.length - 1].id;
 
       dispatch({
         type: 'UPDATE_CATEGORIES',
@@ -154,7 +154,6 @@ const AddWorkout = () => {
         type: 'UPDATE_SELECTED_CATEGORY',
         payload: newCatId
       });
-
     }
   };
 
@@ -211,7 +210,6 @@ const AddWorkout = () => {
       ) : null}
 
       {/* Conditional that renders the exercises that have been added to the workout that is being created */}
-
       {exercises &&
         exercises.map((ex, index) => {
           return (
@@ -257,16 +255,17 @@ const AddWorkout = () => {
           );
         })}
 
-      {
-        error ? (
-          <StyledError>{errorM}</StyledError>
-        ) : null
-      }
-      <Row>
-        <Button type="button" scheme="delete" size="responsive" onClick={e => addExercise(e)}>
-          Add Exercise
-        </Button>
-      </Row>
+      {error ? <StyledError>{errorM}</StyledError> : null}
+
+      {exercises && exercises.length > 9 ? (
+        <h3>10 exercise limit reached</h3>
+      ) : (
+        <Row>
+          <Button type="button" scheme="delete" size="responsive" onClick={e => addExercise(e)}>
+            Add Exercise
+          </Button>
+        </Row>
+      )}
 
       <Row>
         <Button type="submit" size="responsive">
@@ -280,7 +279,7 @@ const AddWorkout = () => {
 export default AddWorkout;
 
 const StyledError = styled.p`
-  color: rgb(225,0,0);
+  color: rgb(225, 0, 0);
   font-weight: 500;
   font-size: 18px;
 `;
