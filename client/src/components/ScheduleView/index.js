@@ -17,11 +17,7 @@ const ScheduleViewStyle = styled.div`
   display: flex;
   flex-direction:column;
   position: absolute;
-  padding: 0 2%;
   h2 {
-    align-self:baseline;
-    margin-left: 2%;
-
     @media(max-width:690px) {
       align-self:center;
     }

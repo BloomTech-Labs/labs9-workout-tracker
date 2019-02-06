@@ -18,6 +18,8 @@ const AddWorkout = () => {
   const [weight, setWeight] = useState('');
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
+  const [error, setError] = useState(false);
+  const [errorM, setErrorM] = useState('');
   const [exercises, setExercises] = useState([
     {
       name: '',
@@ -57,9 +59,14 @@ const AddWorkout = () => {
   // add new workout handler to add workout to database
   const addNewWorkout = async e => {
     e.preventDefault();
-    console.log('hello from addNewWorkout');
+
+    console.log(state.selectedCategory);
+    if (state.selectedCategory === "default" || state.selectedCategory === "add") {
+      setError(true);
+      setErrorM('Category is required')
+      return;
+    }
     const token = window.localStorage.getItem('login_token');
-    console.log('the state.selectedCategory is: ', state.selectedCategory);
 
     //Sets the workout title and category id and sends a POST request to the backend to add the created workout
 
@@ -91,6 +98,8 @@ const AddWorkout = () => {
     }
     //Resets the title and category after workout is added
     setTitle('');
+    setError(false);
+    setErrorM('')
     dispatch({ type: 'SHOW_WORKOUT_FORM' });
   };
 
@@ -248,6 +257,11 @@ const AddWorkout = () => {
           );
         })}
 
+      {
+        error ? (
+          <StyledError>{errorM}</StyledError>
+        ) : null
+      }
       <Row>
         <Button type="button" scheme="delete" size="responsive" onClick={e => addExercise(e)}>
           Add Exercise
@@ -264,6 +278,12 @@ const AddWorkout = () => {
 };
 
 export default AddWorkout;
+
+const StyledError = styled.p`
+  color: rgb(225,0,0);
+  font-weight: 500;
+  font-size: 18px;
+`;
 
 const Row = styled.div`
   height: 62px;

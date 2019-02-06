@@ -43,7 +43,6 @@ const updateScheduledWorkout = async (e) => {
   setStatus(e.target.checked);
   const token = await firebase.auth().currentUser.getIdToken();
 }
-
   return (
     <ExerciseDetailsDiv key={props.exercise.id}>
       <ExerciseDetailsP className='name'> {props.exercise.name}</ExerciseDetailsP>
@@ -80,10 +79,10 @@ h3 {
 `;
 
 const ExerciseDetailsP= styled.p`
-width: 17%;
-display:flex;
-justify-content:center;
-align-items:center;
+  font-weight: 600;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 `;
 
 const ExerciseDetailsListDiv= styled.div`
