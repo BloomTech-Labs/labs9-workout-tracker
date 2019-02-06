@@ -202,7 +202,6 @@ const SettingsViewStyle = styled.div`
   justify-content: center;
   font-size: 1.6rem;
   align-items: center;
-  height: 651px;
   padding-bottom: 100px;
 `;
 
@@ -216,7 +215,6 @@ const FormStyle = styled.form`
   padding: 20px 7%;
   align-items: center;
   border-top: 0px;
-  height: 651px;
   @media (max-width: 550px) {
     width:100%;
   }
@@ -262,7 +260,6 @@ const ButtonDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 70px;
   justify-content: space-around;
   align-items: center;
   margin-top: 25px;
