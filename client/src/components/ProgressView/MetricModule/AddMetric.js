@@ -125,7 +125,7 @@ const AddMetric = () => {
           />
         <Input
           placeholder="Weight"
-          label="Weight"
+          label="Weight: lbs"
           value={weight}
           size="medium"
           name="weight"
@@ -136,7 +136,7 @@ const AddMetric = () => {
       <Row>
         <Input
           placeholder="Hips"
-          label="Hips"
+          label="Hips: in"
           value={hips}
           name="hips"
           size="medium"
@@ -145,7 +145,7 @@ const AddMetric = () => {
         />
         <Input
           placeholder="Waist"
-          label="Waist"
+          label="Waist: in"
           value={waist}
           name="waist"
           size="medium"
@@ -157,7 +157,7 @@ const AddMetric = () => {
       <Row>
         <Input
           placeholder="Arm Left"
-          label="Arm Left"
+          label="Arm Left: in"
           value={arm_left}
           name="arm_left"
           size="medium"
@@ -166,7 +166,7 @@ const AddMetric = () => {
           />
         <Input
           placeholder="Arm Right"
-          label="Arm Right"
+          label="Arm Right: in"
           value={arm_right}
           name="arm_right"
           size="medium"
@@ -178,7 +178,7 @@ const AddMetric = () => {
       <Row>
         <Input
           placeholder="Leg Left"
-          label="Leg Left"
+          label="Leg Left: in"
           value={leg_left}
           name="leg_left"
           size="medium"
@@ -187,7 +187,7 @@ const AddMetric = () => {
           />
         <Input
           placeholder="Leg Right"
-          label="Leg Right"
+          label="Leg Right: in"
           value={leg_right}
           name="leg_right"
           size="medium"

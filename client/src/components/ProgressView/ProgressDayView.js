@@ -107,7 +107,7 @@ const ProgressDayView = props => {
 
               return (
                 <>
-                  <DayItem key={i}>
+                  <DayItem index={i} key={i}>
                     <StyledDate>
                       <span>{day.toDateString()} </span>
                       <StyledIcon onClick={() => editMetric(m)}>
@@ -193,7 +193,7 @@ const ProgressDayView = props => {
 
               return (
                 <>
-                  <DayItem key={i}>
+                  <DayItem index={i} key={i}>
                     <StyledDate>
                       <span>{day.toDateString()} </span>
                       <StyledIcon onClick={() => editMetric(m)}>
@@ -260,7 +260,7 @@ const ProgressDayView = props => {
             }
 
             return (
-              <DayItem key={i}>
+              <DayItem index={i} key={i}>
                 <StyledDate>
                   <span>{day.toDateString()} </span>
                   <StyledIcon onClick={() => editMetric(m)}>
@@ -305,10 +305,21 @@ const StyledHeader = styled.div`
     margin: 0;
     text-transform: capitalize;
   }
+  @media (max-width: 500px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    h2 {
+      height: 65px;
+    }
+  }
 `;
 
 const ButtonContainer = styled.div`
   margin: 0;
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const Percentage = styled.span``;
@@ -357,6 +368,6 @@ const DayItem = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-top: solid 1px ${props => props.theme.primaryDark};
   padding: 10px;
+  background-color: ${props => Number(props.index) % 2 === 0 ? 'rgb(245,245,245)': "white"}
 `;

@@ -60,7 +60,7 @@ const ModalForm = styled.form`
   background-color: white;
   box-shadow: 1px 0px 10px 1px rgba(0, 0, 0, 0.75);
   padding: 0px 40px;
-  overflow: scroll;
+  overflow-y: auto;
   position: fixed;
   right: -450px;
   top: 0;
