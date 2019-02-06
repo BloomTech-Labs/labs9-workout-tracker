@@ -141,7 +141,7 @@ const CallToAction = styled.div`
 `;
 
 const Part2 = styled.div`
-  width: 100vw;
+  width: 100%;
   margin: 0 auto;
   height: auto;
   padding: 50px;
@@ -302,19 +302,7 @@ const ProgressPic = styled.img`
   }
 `;
 
-const Part5 = styled.div`
-  width: 100%;
-  background: no-repeat center center fixed;
-  src: url(${deadliftImg});
-  background-size: cover;
-  color: white;
-  font-size: 1.6rem;
-  justify-content: center;
-  align-items: center;
 
-  @media (max-width: 900px) {
-    flex-direction: column;
-  }
+const LandingContainer = styled.div`
+  width: calc(100vw - 18px);
 `;
-
-const LandingContainer = styled.div``;

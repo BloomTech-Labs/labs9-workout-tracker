@@ -56,12 +56,21 @@ const EditMetric = () => {
     e.preventDefault();
 
     const token = await firebase.auth().currentUser.getIdToken();
+    
+    let copyMetrics = {...currentMetric};
+
+    Object.keys(currentMetric).forEach(m => {
+      if (currentMetric[m] === "") {
+        copyMetrics[m] = 0
+      }
+    })
+
 
     const res = await axios.put(
       `https://fitmetrix.herokuapp.com/api/progress/metrics/edit/${
         state.editMetric.id
       }`,
-      { ...currentMetric },
+      { ...copyMetrics },
       {
         headers: {
           Authorization: token
@@ -189,6 +198,7 @@ const EditMetric = () => {
           name="hips"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
         />
         <Input
           placeholder="Waist"
@@ -197,6 +207,7 @@ const EditMetric = () => {
           name="waist"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
         />
       </Row>
 
@@ -208,6 +219,7 @@ const EditMetric = () => {
           name="arm_left"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
           />
         <Input
           placeholder="Arm Right"
@@ -216,6 +228,7 @@ const EditMetric = () => {
           name="arm_right"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
         />
       </Row>
 
@@ -227,6 +240,7 @@ const EditMetric = () => {
           name="leg_left"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
           />
         <Input
           placeholder="Leg Right"
@@ -235,6 +249,7 @@ const EditMetric = () => {
           name="leg_right"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
           />
       </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}
