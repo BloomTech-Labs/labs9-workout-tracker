@@ -69,7 +69,6 @@ const StyledApp = styled.div`
   margin: 0 auto;
   font-size: 62.5%;
   font-size: 1.2rem;
-  height: 100vh;
   max-width: 1040px;
   position: relative;
   background-color: transparent;

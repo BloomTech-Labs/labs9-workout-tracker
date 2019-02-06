@@ -97,15 +97,15 @@ export default Login;
 const RegisterSuccess = styled.p`
 `;
 
-const StyledError = styled.p`
-`;
-
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
 `;
 
+const StyledError = styled.p`
+  
+`;
 
 const InputContainer = styled.div`
   color: #5f697a;
@@ -143,7 +143,6 @@ const FormStyle = styled.form`
   align-items: flex-start;
   width: 90%;
   max-width: 540px;
-  margin: 0 auto;
   h1 {
     font-size: 28px;
     font-weight: 400;
@@ -167,31 +166,32 @@ const FormStyle = styled.form`
 `;
 
 const FormContainer = styled.div`
-  width: calc(100% - 460px);
-  height: 100%;
+  width: calc(100vw - 460px);
+  margin-top: 100px;
   margin-left: 460px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 100px;
   @media (max-width: 1076px) {
     width: 100%;
     margin-left: 0px;
+    margin-bottom: 80px;
   }
 `;
 
 const SideImage = styled.div`
-  width: calc(460px + 150px);
+  width: calc(460px + 260px);
   height: 100%;
   position: absolute;
   top: 0;
-  left: -150px;
+  left: -260px;
   background: no-repeat left left fixed;
   background-image: url(${ropeImg});
   background-size: cover;
   @media (max-width: 1076px) {
     width: 0px;
+    display: none;
   }
 `;
 
@@ -206,5 +206,5 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   font-family: "Open Sans";
+  overflow: auto;
 `;
-

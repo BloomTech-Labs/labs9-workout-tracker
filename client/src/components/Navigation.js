@@ -75,11 +75,12 @@ const NavContainer = styled.div`
   width: 100%;
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
-  z-index: 99;
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;
   margin: 0 auto;
+  overflow: hidden;
 `;
 
 const NavStyle = styled.div`
@@ -151,5 +152,7 @@ const NavBar = styled.div`
   height: 100%;
   @media (max-width: 560px) {
       height: 42px;
+      width: 100%;
+      justify-content: space-evenly;
   }
 `;

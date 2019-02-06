@@ -123,8 +123,9 @@ const Register = props => {
                   required
                 />
               </InputContainer>
-
-              <Button type="submit">Register</Button>
+              <ButtonContainer>
+                <Button type="submit">Register</Button>
+              </ButtonContainer>
             </>
           )}
           </FormStyle>
@@ -134,6 +135,12 @@ const Register = props => {
 };
 
 export default Register;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
 
 const StyledError = styled.p`
   
@@ -197,7 +204,6 @@ const FormStyle = styled.form`
   align-items: flex-start;
   width: 90%;
   max-width: 540px;
-  margin: 0 auto;
   h1 {
     font-size: 28px;
     font-weight: 400;
@@ -217,17 +223,17 @@ const FormStyle = styled.form`
 `;
 
 const FormContainer = styled.div`
-  width: calc(100% - 460px);
-  height: 100%;
+  width: calc(100vw - 460px);
+  margin-top: 100px;
   margin-left: 460px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 100px;
   @media (max-width: 1076px) {
     width: 100%;
     margin-left: 0px;
+    margin-bottom: 80px;
   }
 `;
 
@@ -242,6 +248,7 @@ const SideImage = styled.div`
   background-size: cover;
   @media (max-width: 1076px) {
     width: 0px;
+    display: none;
   }
 `;
 
@@ -256,5 +263,6 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   font-family: "Open Sans";
+  overflow: auto;
 `;
 
