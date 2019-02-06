@@ -64,6 +64,9 @@ const LandingStyle = styled.div`
     flex-direction: column;
     min-height: 600px;
   }
+  @media (max-width: 320px) {
+    min-height: 450px;
+  }
 `;
 
 
@@ -125,6 +128,14 @@ const CallToAction = styled.div`
     display:flex;
     align-items:center;
     width:100%;
+  }
+
+  @media(max-width:420px) {
+    top:100px
+  }
+
+  @media(max-width:320px) {
+    top:50px
   }
 `;
 
@@ -269,6 +280,9 @@ const ProgressDemo = styled.div`
   @media (max-width: 900px) {
     width: 65%;
     height: 200px;
+  }
+  @media (max-width:500px) {
+    margin-bottom:20px;
   }
 `;
 

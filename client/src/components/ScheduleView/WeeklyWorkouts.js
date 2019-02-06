@@ -133,6 +133,7 @@ h3 {
 
 @media(max-width:690px) {
   width:100%;
+  max-width:100%;
 }
 `;
 
