@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import styled from 'styled-components';
 import * as firebase from 'firebase';
 
 const Navigation = props => {
@@ -8,18 +8,17 @@ const Navigation = props => {
 
   const logOut = () => {
     setLoggedOut(true);
-    window.localStorage.removeItem("login_token");
+    window.localStorage.removeItem('login_token');
     firebase.auth().signOut();
-    props.history.push("/");
+    props.history.push('/');
   };
 
   const renderRoutes = () => {
     if (
-      (props.location.pathname === "/" ||
-      props.location.pathname === "/login" ||
-      props.location.pathname === "/register") 
-      && (!window.localStorage.getItem('login_token'))
-
+      (props.location.pathname === '/' ||
+        props.location.pathname === '/login' ||
+        props.location.pathname === '/register') &&
+      !window.localStorage.getItem('login_token')
     ) {
       return (
         <NavStyle>
@@ -38,7 +37,7 @@ const Navigation = props => {
 
     return (
       <NavStyle isApp="true">
-        <Logo to="/">fitmetrix</Logo>
+        <Logo to="/">FlexLog</Logo>
         <NavBar>
           <StyledLink to="/schedule" activeClassName="active">
             <i className="far fa-calendar-alt" />
@@ -53,10 +52,14 @@ const Navigation = props => {
             <span>Progress</span>
           </StyledLink>
           <StyledLink to="/settings" activeClassName="active">
-            <i className="fas fa-user"  />
+            <i className="fas fa-user" />
             <span>Account</span>
           </StyledLink>
-          <StyledLink to="/login" onClick={() => logOut()} activeClassName="active">
+          <StyledLink
+            to="/login"
+            onClick={() => logOut()}
+            activeClassName="active"
+          >
             <i className="fas fa-sign-out-alt" />
             <span>Logout</span>
           </StyledLink>
@@ -86,7 +89,7 @@ const NavContainer = styled.div`
 const NavStyle = styled.div`
   width: 100%;
   max-width: ${props =>
-  props.isApp ? "1200 px" : props.theme.containingWidth};
+    props.isApp ? '1200 px' : props.theme.containingWidth};
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -94,10 +97,10 @@ const NavStyle = styled.div`
   margin: 0 auto;
   padding: 0 20px;
   @media (max-width: 560px) {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
   }
 `;
 
@@ -107,7 +110,7 @@ const StyledLink = styled(NavLink)`
   color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
-  font-size: ${props => (props.landing ? "16px" : "26px")};
+  font-size: ${props => (props.landing ? '16px' : '26px')};
   font-family: ${props => props.theme.roboto};
   font-weight: 500;
   display: flex;

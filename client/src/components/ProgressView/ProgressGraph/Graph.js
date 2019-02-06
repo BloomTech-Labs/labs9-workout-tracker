@@ -139,7 +139,7 @@ const Graph = () => {
             return split.join('')
         }
 
-        const nData = sortedMetrics.map(m => m[type]);
+        let nData = sortedMetrics.map(m => m[type]);
 
 
         return {
@@ -194,13 +194,11 @@ const Graph = () => {
         if (!state.metrics) return;
 
         const nDates = state.metrics.map(m => dateParser(m.date));
-        console.log(nDates)
         nDates.sort((a, b) => {
             const newA = Number(a.split('/').join(''))
             const newB = Number(b.split('/').join(''))
             return newA - newB;
         });
-        console.log(nDates)
         setLabels(nDates);
 
 
@@ -209,12 +207,32 @@ const Graph = () => {
 
     return (
         <StyledGraph>
-            <Line data={getLineData()} options={options}/>
+            {
+                !state.premium &&  state.graphType !== "weight"
+                ? (<StyledFeatureBlock>
+                    Pro feature
+                    </StyledFeatureBlock>)
+                : <Line data={getLineData()} options={options}/>
+            }
         </StyledGraph>
     );
 }
 
 export default Graph;
+
+const StyledFeatureBlock = styled.div`
+    width: 95%;
+    height: 100%;
+    background-color: #EBEBE4;
+    color: #B1B1AD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 55px;
+    font-weight: 600;
+    height: 400px;
+    border-radius: 12px;
+`;
 
 const StyledGraph = styled.div`
   display: flex;

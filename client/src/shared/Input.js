@@ -41,7 +41,12 @@ const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabl
   return (
     <Container size={size}>
       <StyledLabel labelColor={labelColor}>{label}</StyledLabel>
-      <StyledInput value={value} name={name} onChange={onChange} placeholder={placeholder} required />
+      {
+        isDisabled === 'true' 
+        ? (<StyledInput value={''} name={name} onChange={onChange} placeholder={"Pro Feature"} disabled />)
+        : (<StyledInput value={value} name={name} onChange={onChange} placeholder={placeholder} required />)
+      }
+      
     </Container>
   );
 };
@@ -64,6 +69,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  position: relative;
   width: 100px;
   ${props => props.size === "small" && css`
     width: 80px;

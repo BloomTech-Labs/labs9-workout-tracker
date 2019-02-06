@@ -38,7 +38,7 @@ const StyledError = styled.p`
 const ProgressViewStyle = styled.div`
   width: 100%;
   h1 {
-    position: absolute;
     left: 20px;
+    text-align: left;
   }
 `;
