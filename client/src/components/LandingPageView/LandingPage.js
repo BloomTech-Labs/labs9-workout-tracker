@@ -8,6 +8,7 @@ import CalendarView from '../assets/CalendarView.png';
 import ProgressView from '../assets/ProgressView.png';
 import WorkoutsView from '../assets/WorkoutsView.png';
 
+
 const LandingPage = () => {
   const preCallToAction = 'Progress starts with a plan.';
   const callToAction = 'Track your fitness journey with us.';
@@ -27,14 +28,14 @@ const LandingPage = () => {
             >
               <Button>START TRACKING NOW</Button>
             </Link>
-            <ArrowDiv>
+            <Arrow href="#middle"><ArrowDiv>
               <i class="fas fa-chevron-down" />
-            </ArrowDiv>
+            </ArrowDiv></Arrow>
           </CallToAction>
         </CtaDiv>
       </LandingStyle>
 
-      <Part2>
+      <Part2 id="middle">
         <CalendarPic src={CalendarView} alt="A picture of the calendar view." />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
@@ -74,11 +75,39 @@ const LandingStyle = styled.div`
 `;
 
 const ArrowDiv = styled.div`
+color:white;
   margin-top: 15%;
   i {
     font-size: 6em;
   }
 `;
+
+const Arrow = styled.a`
+  color:white;
+  margin-top: 15%;
+  i {
+    font-size: 6em;
+  }
+    -moz-animation: arrow 2s infinite;
+    -webkit-animation: arrow 2s infinite;
+    animation: arrow 2s infinite;
+  
+  @keyframes arrow {
+    0%, 20% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-30px);
+    }
+    60% {
+      transform: translateY(-15px);
+    }
+    50%, 80%, 100% {
+      transform:translateY(0);
+    }
+  }
+`;
+
 
 const Action = styled.div`
   font-size: 2.8rem;
@@ -90,6 +119,7 @@ const Action = styled.div`
   @media (max-width: 900px) {
     text-align: center;
   }
+  
 `;
 
 const BackgroundImage = styled.span`

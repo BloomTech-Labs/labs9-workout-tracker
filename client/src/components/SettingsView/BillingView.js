@@ -32,10 +32,10 @@ const StripeButton = () => {
   return (
     <StyleCheckout
       label="Upgrade" //Component button text
-      name="fitmetrix" //Modal Header
-      description="Upgrade to a premium account today."
-      panelLabel="Upgrade" //Submit button in modal
-      amount={500} //Amount in cents $5.00
+      name="flexlog" //Modal Header
+      description="Upgrade to a PRO account today!"
+      panelLabel="Upgrade Monthly / " //Submit button in modal
+      amount={499} //Amount in cents $5.00
       token={onToken}
       stripeKey={publishableKey}
       image="https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" //Pop-in header image
@@ -63,6 +63,9 @@ outline: none;
 background: #FD8F25;
 border: none;
 color: #FFF;
+:hover {
+  cursor:pointer;
+}
 `;
 
 const StyleCheckout = styled(StripeCheckout)`
