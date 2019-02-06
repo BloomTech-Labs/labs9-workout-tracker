@@ -88,22 +88,22 @@ const Arrow = styled.a`
   i {
     font-size: 6em;
   }
-    -moz-animation: arrow 2s infinite;
-    -webkit-animation: arrow 2s infinite;
-    animation: arrow 2s infinite;
+  -moz-animation: arrow 3s infinite;
+  -webkit-animation: arrow 3s infinite;
+  animation: arrow 3s infinite;
   
   @keyframes arrow {
-    0%, 20% {
+    0%, 10% {
       transform: translateY(0);
     }
     40% {
-      transform: translateY(-30px);
-    }
-    60% {
-      transform: translateY(-15px);
+      transform: translateY(15px);
     }
     50%, 80%, 100% {
       transform:translateY(0);
+    }
+    60% {
+      transform: translateY(15px);
     }
   }
 `;
