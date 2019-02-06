@@ -321,7 +321,7 @@ const StripeStyle = styled.div`
 `;
 
 const StyledBtn = styled.button`
-width:86%;
+width:42%;
 text-transform: uppercase;
 letter-spacing: 1px;
 display: inline-block;
@@ -338,9 +338,15 @@ border: none;
 color: #FD8F25;
 margin:20px 0;
 border: 1px solid #FD8F25
+@media(max-width:414px){
+  width:65%;
+}
+@media(max-width:375px){
+  width:70%;
+}
 `;
 
 const LogOutDiv = styled.div`
-
+width:100%;
 `;
 
