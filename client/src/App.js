@@ -69,7 +69,6 @@ const StyledApp = styled.div`
   margin: 0 auto;
   font-size: 62.5%;
   font-size: 1.2rem;
-  max-width: 1040px;
   position: relative;
   background-color: transparent;
   display: flex;
@@ -79,6 +78,5 @@ const StyledApp = styled.div`
   margin-top: 105px;
   font-family: ${props => props.theme.opensans};
   @media (max-width: 768px) {
-    padding:0 20px;
   }
 `;
