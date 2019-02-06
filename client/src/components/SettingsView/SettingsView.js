@@ -291,7 +291,9 @@ const PremiumDiv = styled.div`
   }
   p {
     
-    color: ${props => props.theme.accent};  }
+    color: ${props => props.theme.accent}; 
+    margin:0;
+  }
 `;
 const PremiumStyle = styled.div`
   color: ${props => props.theme.themeWhite};
