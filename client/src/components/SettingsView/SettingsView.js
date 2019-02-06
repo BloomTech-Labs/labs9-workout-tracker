@@ -288,6 +288,7 @@ const ButtonDiv = styled.div`
 const LabelStyle = styled.label`
   display: flex;
   align-self: flex-start;
+  width:50%;
   color: ${props => props.theme.primaryDark};
 `;
 
@@ -296,6 +297,7 @@ const PremiumDiv = styled.div`
   flex-direction: column;
   width: 50%;
   align-items: center;
+  margin-bottom:20px;
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -303,6 +305,7 @@ const PremiumDiv = styled.div`
     width:100%;
     display:flex;
     justify-content:space-between;
+    margin-bottom:20px;
   }
   h4 {
     color: ${props => props.theme.themeWhite};
@@ -310,7 +313,8 @@ const PremiumDiv = styled.div`
     font-weight: normal;
   }
   p {
-    
+    width:50%;
+    margin: 0 auto;
     color: ${props => props.theme.accent};  }
 `;
 const PremiumStyle = styled.div`

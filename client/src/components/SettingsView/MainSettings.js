@@ -10,6 +10,7 @@ import SettingsView from "./SettingsView";
 const MainSettingsView = props => {
   const [passwordFlag, setpasswordFlag] = useState(false);
   const [accountFlag, setaccountFlag] = useState(true);
+
   
 
   const renderTab = () => {
