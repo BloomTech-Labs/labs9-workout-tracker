@@ -52,7 +52,7 @@ export default LandingPage;
 const LandingStyle = styled.div`
   width: 100%;
   max-width: ${props => props.theme.containingWidth};
-  height: calc(100% - 54px);
+  height: calc(100vh - 54px);
   min-height: 900px;
   color: white;
   font-family: ${props => props.theme.roboto};
