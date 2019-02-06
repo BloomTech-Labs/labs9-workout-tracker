@@ -51,11 +51,11 @@ export default LandingPage;
 
 const LandingStyle = styled.div`
   width: 100%;
-  max-width: ${props => props.theme.containingWidth};
+  max-width: 960px;
   height: calc(100vh - 54px);
   min-height: 900px;
   color: white;
-  font-family: ${props => props.theme.roboto};
+  font-family: "'Roboto', sans-serif",
   position: relative;
   background-color: transparent;
   margin: 0 auto;
@@ -144,7 +144,7 @@ const Part2 = styled.div`
   margin: 0 auto;
   height: auto;
   padding: 50px;
-  background-color: rgb(245 245 245);
+  background-color: #f5f5f5;
   font-size: 3.3rem;
   display: flex;
   align-items: center;
@@ -163,7 +163,6 @@ const CalendarPic = styled.img`
   justify-content: flex-start;
   align-items: flex-start;
   width: 40%;
-  height: 100%;
   align-items: center;
   border-radius: 6px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
@@ -174,7 +173,7 @@ const CalendarPic = styled.img`
 `;
 
 const CalendarDemo = styled.div`
-  font-family: ${props => props.theme.roboto};
+  font-family: "'Roboto', sans-serif",
   font-weight: bold;
   display: flex;
   flex-direction: column;
@@ -184,7 +183,7 @@ const CalendarDemo = styled.div`
   width: 40%;
   height: 350px;
   align-items: center;
-  color: ${props => props.theme.primaryDark};
+  color: #2B3A42
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
@@ -217,7 +216,6 @@ const WorkoutPic = styled.img`
   justify-content: flex-start;
   align-items: flex-start;
   width: 50%;
-  height: 100%;
   align-items: center;
   border-radius: 6px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
@@ -228,7 +226,7 @@ const WorkoutPic = styled.img`
 `;
 
 const WorkoutDemo = styled.div`
-  font-family: ${props => props.theme.roboto};
+  font-family: "'Roboto', sans-serif",
   font-weight: bold;
   align-items: center;
   display: flex;
@@ -237,7 +235,7 @@ const WorkoutDemo = styled.div`
   align-items: center;
   width: 40%;
   height: 350px;
-  color: ${props => props.theme.primaryDark};
+  color: #2B3A42
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
@@ -249,12 +247,12 @@ const Part4 = styled.div`
   width: 100%;
   height: auto;
   padding: 50px;
-  background-color: rgb(245 245 245);
+  background-color: #f5f5f5;
   font-size: 3.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(245 245 245);
+  background-color: #f5f5f5;
   @media (max-width: 900px) {
     flex-direction: column;
   }
@@ -266,7 +264,7 @@ const Part4 = styled.div`
 `;
 
 const ProgressDemo = styled.div`
-  font-family: ${props => props.theme.roboto};
+  font-family: "'Roboto', sans-serif",
   font-weight: bold;
   display: flex;
   flex-direction: column;
@@ -275,7 +273,7 @@ const ProgressDemo = styled.div`
   align-items: flex-start;
   width: 40%;
   height: 350px;
-  color: ${props => props.theme.primaryDark};
+  color: #2B3A42
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
@@ -291,7 +289,6 @@ const ProgressPic = styled.img`
   justify-content: flex-start;
   align-items: flex-start;
   width: 50%;
-  height: 100%;
   align-items: center;
   border-radius: 6px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
