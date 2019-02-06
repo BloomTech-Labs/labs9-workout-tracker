@@ -78,7 +78,7 @@ const NavContainer = styled.div`
   width: 100%;
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
-  z-index: 1;
+  z-index: 99;
   position: fixed;
   top: 0;
   left: 0;
