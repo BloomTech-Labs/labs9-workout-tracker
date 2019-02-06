@@ -60,22 +60,6 @@ router.post("/metrics/create", async (req, res) => {
   }
 });
 
-//Delete metrics
-router.delete("/metrics/delete/:id", async (req, res) => {
-  try {
-    const deleteMetricData = await db("metrics")
-      .where("id", "=", req.params.id)
-      .del();
-    {
-      deleteMetricData === 0
-        ? res.status(404).json({ message: "Those metrics do not exist" })
-        : res.status(200).json({ deleteMetricData });
-    }
-  } catch (error) {
-    res.status(500).json(error, "error message");
-  }
-});
-
 //Edit set of metrics by ID
 router.put("/metrics/edit/:id", async (req, res) => {
 
@@ -105,5 +89,23 @@ router.put("/metrics/edit/:id", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+//Delete metrics
+router.delete("/metrics/delete/:id", async (req, res) => {
+  try {
+    const deleteMetricData = await db("metrics")
+      .where("id", "=", req.params.id)
+      .del();
+    {
+      deleteMetricData === 0
+        ? res.status(404).json({ message: "Those metrics do not exist" })
+        : res.status(200).json({ deleteMetricData });
+    }
+  } catch (error) {
+    res.status(500).json(error, "error message");
+  }
+});
+
+
 
 module.exports = router;
