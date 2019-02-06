@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DropDown from '../../shared/DropDown';
 import Button from '../../shared/Button';
 import axios from 'axios';
+import Loading from '../Loading';
 
 const MyWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
@@ -111,15 +112,17 @@ const MyWorkouts = () => {
             value={state.selectedWorkoutCategory}
           />
         </DropDownContainer>
-        <ButtonContainer>
+        <AddButtonContainer>
           <Button onClick={() => handleAdd()} type="button">
             Add Workout
           </Button>
-        </ButtonContainer>
+        </AddButtonContainer>
       </Header>
-      {/* I would try to start it here */}
-      {/* Something like.... state.workouts.length === 0 ? render something : null */}{' '}
-      {state.workouts.length === 0 ? <div>No workouts scheduled. Create a workout!</div> : null}
+      {state.workouts.length === 0 ? (
+        <SchedulePrompt>No workouts scheduled. Create a workout!</SchedulePrompt>
+      ) : (
+        Loading
+      )}
       {state.workouts.length !== 0 &&
         state.workouts.map((workout, i) => {
           if (state.selectedWorkoutCategory === 'all') {
@@ -196,7 +199,7 @@ const MyWorkouts = () => {
                     return (
                       <ExDetailsDiv key={ex.id}>
                         <ExDetailsListDiv>
-                          <ExDetailsP className="name"> {ex.name}</ExDetailsP>
+                          <ExDetailsP className="name">{ex.name}</ExDetailsP>
                           <ExDetailsP>{ex.weight}</ExDetailsP>
                           <ExDetailsP>{ex.sets}</ExDetailsP>
                           <ExDetailsP>{ex.reps}</ExDetailsP>
@@ -229,7 +232,12 @@ const WorkoutsTitle = styled.div`
   display: flex;
 `;
 
-const SchedulePrompt = styled.div``;
+const SchedulePrompt = styled.div`
+  color: ${props => props.theme.accent};
+  font-size: 3em;
+  font-weight: bold;
+  margin-top: 100px;
+`;
 
 const Header = styled.div`
   width: 100%;
@@ -258,6 +266,13 @@ const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+`;
+
+const AddButtonContainer = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const Workout = styled.div`
@@ -322,10 +337,13 @@ const ExDetailsTitle = styled.div`
 
 const ExDetailsP = styled.p`
   width: 17%;
-  display: flex;
+  display: block;
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const ExDetailsListDiv = styled.div`
