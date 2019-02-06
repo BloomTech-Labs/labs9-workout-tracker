@@ -104,7 +104,7 @@ const SettingsView = props => {
     if (props.user.premium === true) {
       return (
         <PremiumDiv>
-          <div>
+          <div className="status-div">
             <PremiumStyle>Account Status:</PremiumStyle>
             <p>Premium</p>
           </div>
@@ -293,10 +293,11 @@ const PremiumDiv = styled.div`
     
     color: ${props => props.theme.accent}; 
     margin:0;
+    font-weight:bold
   }
 `;
 const PremiumStyle = styled.div`
-  color: ${props => props.theme.themeWhite};
+  color: #2B3A42
   display: flex;
   justify-content: flex-start;
 `;
