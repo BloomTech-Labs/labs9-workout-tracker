@@ -173,6 +173,7 @@ const FormContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: calc(100% - 72px);
   @media (max-width: 1076px) {
     width: 100%;
     margin-left: 0px;
