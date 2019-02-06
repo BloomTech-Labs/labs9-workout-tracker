@@ -20,6 +20,7 @@ const SettingsView = props => {
   const [currentPassword, setcurrentPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [loggedOut, setLoggedOut] = useState(false);
+  const [settingsUpdated, setSettingsUpdated] = useState(false);
 
   const logOut = () => {
     setLoggedOut(true);
