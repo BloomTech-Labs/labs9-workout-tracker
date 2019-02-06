@@ -55,14 +55,6 @@ const Navigation = props => {
             <i className="fas fa-user" />
             <span>Account</span>
           </StyledLink>
-          <StyledLink
-            to="/login"
-            onClick={() => logOut()}
-            activeClassName="active"
-          >
-            <i className="fas fa-sign-out-alt" />
-            <span>Logout</span>
-          </StyledLink>
         </NavBar>
       </NavStyle>
     );
@@ -78,7 +70,7 @@ const NavContainer = styled.div`
   width: 100%;
   background-color: ${props => props.theme.primaryDark};
   color: ${props => props.theme.white};
-  z-index: 99;
+  z-index: 3;
   position: fixed;
   top: 0;
   left: 0;

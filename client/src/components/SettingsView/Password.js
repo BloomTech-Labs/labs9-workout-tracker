@@ -92,7 +92,6 @@ const SettingsViewStyle = styled.div`
   align-items: center;
   flex-direction: column;
   font-size: 1.6rem;
-  height: 651px;
   padding-bottom: 100px;
 `;
 

@@ -8,6 +8,7 @@ import CalendarView from '../assets/CalendarView.png';
 import ProgressView from '../assets/ProgressView.png';
 import WorkoutsView from '../assets/WorkoutsView.png';
 
+
 const LandingPage = () => {
   const preCallToAction = 'Progress starts with a plan.';
   const callToAction = 'Track your fitness journey with us.';
@@ -27,14 +28,14 @@ const LandingPage = () => {
             >
               <Button>START TRACKING NOW</Button>
             </Link>
-            <ArrowDiv>
+            <Arrow href="#middle"><ArrowDiv>
               <i class="fas fa-chevron-down" />
-            </ArrowDiv>
+            </ArrowDiv></Arrow>
           </CallToAction>
         </CtaDiv>
       </LandingStyle>
 
-      <Part2>
+      <Part2 id="middle">
         <CalendarPic src={CalendarView} alt="A picture of the calendar view." />
         <CalendarDemo>Your workout, on your time.</CalendarDemo>
       </Part2>
@@ -74,11 +75,39 @@ const LandingStyle = styled.div`
 `;
 
 const ArrowDiv = styled.div`
+color:white;
   margin-top: 15%;
   i {
     font-size: 6em;
   }
 `;
+
+const Arrow = styled.a`
+  color:white;
+  margin-top: 15%;
+  i {
+    font-size: 6em;
+  }
+  -moz-animation: arrow 3s infinite;
+  -webkit-animation: arrow 3s infinite;
+  animation: arrow 3s infinite;
+  
+  @keyframes arrow {
+    0%, 10% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(15px);
+    }
+    50%, 80%, 100% {
+      transform:translateY(0);
+    }
+    60% {
+      transform: translateY(15px);
+    }
+  }
+`;
+
 
 const Action = styled.div`
   font-size: 2.8rem;
@@ -90,6 +119,7 @@ const Action = styled.div`
   @media (max-width: 900px) {
     text-align: center;
   }
+  
 `;
 
 const BackgroundImage = styled.span`
@@ -188,7 +218,6 @@ const CalendarDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
-    height: 200px;
   }
 `;
 
@@ -240,7 +269,6 @@ const WorkoutDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
-    height: 200px;
   }
 `;
 
@@ -278,7 +306,6 @@ const ProgressDemo = styled.div`
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
-    height: 200px;
   }
   @media (max-width:500px) {
     margin-bottom:20px;
@@ -301,5 +328,5 @@ const ProgressPic = styled.img`
 
 
 const LandingContainer = styled.div`
-  width: calc(100vw - 18px);
+  width: 100vw
 `;
