@@ -6,7 +6,7 @@ import requireAuth from "../../requireAuth";
 const ScheduleView = () => {
   return (
     <ScheduleViewStyle>
-      <h2>My Scheduled Workouts</h2>
+      <h1>My Scheduled Workouts</h1>
       <Calendar/>
     </ScheduleViewStyle>
   );
@@ -14,16 +14,19 @@ const ScheduleView = () => {
 
 const ScheduleViewStyle = styled.div`
   width: 95%;
+  max-width: 1040px;
   display: flex;
   flex-direction:column;
   position: absolute;
-  h2 {
+  h1 {
+    align-self:baseline;
+
     @media(max-width:690px) {
       align-self:center;
     }
   }
   @media(max-width:690px) {
-    width:100vw;
+    width:100%;
     padding:0;
   }
 `;

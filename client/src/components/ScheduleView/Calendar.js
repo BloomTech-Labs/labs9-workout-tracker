@@ -162,7 +162,6 @@ const HooksCalendar = props => {
                         <CellDiv key={sworkout.id}>
                           <i
                             className="fas fa-dumbbell"
-                            key={`${day}${Math.random()}`}
                           />
                           <p>{sworkout.title.substring(0, 13)}...</p>
                         </CellDiv>
@@ -215,12 +214,11 @@ const HooksCalendar = props => {
 
   return (
     <div className="calendar-div">
-      <h3>Upcoming workouts</h3>
       <WeeklyWorkouts/>
       <Legend>
-        <i className="fas fa-dumbbell completed" />
-        <p>Complete</p>
-        <i className="fas fa-dumbbell 3x" />
+        <i className="fas fa-dumbbell fa-2x completed" />
+        <p className="completed">Complete</p>
+        <i className="fas fa-dumbbell fa-2x" />
         <p>Incomplete</p>
       </Legend>
       <div className="calendar">
@@ -243,6 +241,11 @@ const Legend = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+
+  @media(max-width:690px) {
+    margin-bottom: 20px;
+    justify-content:center;
+  }
   i {
     color: rgb(253, 143, 37);
     margin-left: 4%;
@@ -251,8 +254,15 @@ const Legend = styled.div`
     color: rgb(64, 88, 101);
     margin-left: 2%;
   }
+
   p {
     margin: 0 2% 0 1%;
+    font-size: 1.6rem;
+    font-weight:bold;
+    color: rgb(253, 143, 37);
+  }
+  p.completed {
+    color: rgb(64, 88, 101);
   }
 `;
 
