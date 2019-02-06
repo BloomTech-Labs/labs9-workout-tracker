@@ -39,10 +39,18 @@ const AddMetric = () => {
 
     const token = await firebase.auth().currentUser.getIdToken();
 
+    let copyMetrics = {...currentMetric};
+
+    Object.keys(currentMetric).forEach(m => {
+      if (currentMetric[m] === "") {
+        copyMetrics[m] = 0
+      }
+    })
+
     console.log(currentMetric);
     const res = await axios.post(
       "https://fitmetrix.herokuapp.com/api/progress/metrics/create/",
-      { ...currentMetric, date: dateFormat(currentMetric.date) },
+      { ...copyMetrics, date: dateFormat(currentMetric.date) },
       {
         headers: {
           Authorization: token
@@ -133,6 +141,7 @@ const AddMetric = () => {
           name="hips"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
         />
         <Input
           placeholder="Waist"
@@ -141,6 +150,7 @@ const AddMetric = () => {
           name="waist"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
         />
       </Row>
 
@@ -152,6 +162,7 @@ const AddMetric = () => {
           name="arm_left"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
           />
         <Input
           placeholder="Arm Right"
@@ -160,6 +171,7 @@ const AddMetric = () => {
           name="arm_right"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
         />
       </Row>
 
@@ -171,6 +183,7 @@ const AddMetric = () => {
           name="leg_left"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
           />
         <Input
           placeholder="Leg Right"
@@ -179,6 +192,7 @@ const AddMetric = () => {
           name="leg_right"
           size="medium"
           onChange={e => setMetric(e)}
+          isDisabled={state.premium ? 'false' : 'true'}
           />
       </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}

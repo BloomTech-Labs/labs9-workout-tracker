@@ -13,7 +13,7 @@ const initialState = {
   id: null,
   name: '',
   phone: null,
-  premium: null,
+  premium: false,
   recieves_email: false,
   recieves_text: false,
   editWorkout: null,

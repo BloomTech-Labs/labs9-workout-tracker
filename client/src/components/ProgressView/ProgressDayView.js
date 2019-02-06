@@ -240,12 +240,15 @@ const ProgressDayView = props => {
             let isPositive = true;
             if (i !== state.metrics.length - 1) {
               const cur = Number(m[state.graphType]);
+              console.log('cur: ', cur)
               const prev = Number(
                 sortMetrics(state.metrics)[i + 1][state.graphType]
               );
+              console.log('prev: ', prev)
 
-              const percentage =
-                (Math.abs(cur - prev) / ((cur + prev) / 2)) * 100;
+              const percentage = !cur && !prev ? 0 : (Math.abs(cur - prev) / ((cur + prev) / 2)) * 100;
+
+              console.log('percentage ', percentage)
 
               const rounded = Math.round(100 * percentage) / 100;
               if (cur < prev) {
@@ -255,6 +258,7 @@ const ProgressDayView = props => {
                 progress = '+' + rounded.toString();
               }
             }
+
             return (
               <DayItem key={i}>
                 <StyledDate>
@@ -306,15 +310,6 @@ const StyledHeader = styled.div`
 const ButtonContainer = styled.div`
   margin: 0;
 `;
-
-// const StyledButton = styled.button`
-//     width: 120px;
-//     height: 36px;
-//     background-color: ${props => props.theme.accent};
-//     color: white;
-//     border-radius: 8px;
-//     border: none;
-// `;
 
 const Percentage = styled.span``;
 
