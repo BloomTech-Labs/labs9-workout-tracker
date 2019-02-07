@@ -216,7 +216,6 @@ const SettingsViewStyle = styled.div`
   justify-content: center;
   font-size: 1.6rem;
   align-items: center;
-  padding-bottom: 100px;
 `;
 
 const SettingsUpdated = styled.p`
