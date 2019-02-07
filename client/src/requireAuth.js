@@ -28,7 +28,6 @@ export default ComposedComponent => {
           headers: { Authorization: token }
         })
         .then(res => {
-          console.log(res.data);
           dispatch({ type: "USER_MODEL", payload: res.data });
         })
         .catch(err => {

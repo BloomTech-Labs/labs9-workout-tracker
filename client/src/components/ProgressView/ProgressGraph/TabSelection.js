@@ -41,11 +41,11 @@ const Metric = styled.div`
   width: 20%;
   height: 100%;
   display: flex;
-  font-size: 18px;
+  font-size: 1.8rem;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1.6rem;
   cursor: pointer;
   border-bottom: 2px solid ${props => props.theme.accent};
   ${props => props.selected && css`

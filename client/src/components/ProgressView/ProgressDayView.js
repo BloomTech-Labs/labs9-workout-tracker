@@ -2,9 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Store } from '../../index';
 import styled from 'styled-components';
 import Button from '../../shared/Button';
-import axios from 'axios';
-import firebase from 'firebase';
-
 const ProgressDayView = props => {
   const { state, dispatch } = useContext(Store);
 
@@ -240,15 +237,11 @@ const ProgressDayView = props => {
             let isPositive = true;
             if (i !== state.metrics.length - 1) {
               const cur = Number(m[state.graphType]);
-              console.log('cur: ', cur)
               const prev = Number(
                 sortMetrics(state.metrics)[i + 1][state.graphType]
               );
-              console.log('prev: ', prev)
 
               const percentage = !cur && !prev ? 0 : (Math.abs(cur - prev) / ((cur + prev) / 2)) * 100;
-
-              console.log('percentage ', percentage)
 
               const rounded = Math.round(100 * percentage) / 100;
               if (cur < prev) {
@@ -300,7 +293,7 @@ const StyledHeader = styled.div`
   align-items: center;
   margin-bottom: 20px;
   h2 {
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 600;
     margin: 0;
     text-transform: capitalize;
@@ -330,7 +323,7 @@ const StyledStats = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 40px;
-  font-size: 22px;
+  font-size: 2.2rem;
   font-weight: 600;
   ${Percentage} {
     width: 150px;
@@ -346,12 +339,12 @@ const StyledDate = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 20px;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 500;
 `;
 
 const StyledIcon = styled.span`
-  font-size: 18px;
+  font-size: 1.8rem;
   cursor: pointer;
   color: ${props => (props.delete ? 'red' : 'black')};
 `;

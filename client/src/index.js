@@ -12,7 +12,7 @@ const initialState = {
   email: '',
   id: null,
   name: '',
-  phone: null,
+  phone: "",
   premium: false,
   recieves_email: false,
   recieves_text: false,

@@ -39,7 +39,7 @@ const Container = styled.div`
 
 
 const StyledLabel = styled.span`
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
 `;
 

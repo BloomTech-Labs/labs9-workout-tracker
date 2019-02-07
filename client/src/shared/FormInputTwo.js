@@ -24,7 +24,7 @@ const InputContainer = styled.div`
   h3 {
     display: block;
     font-weight: 700;
-    font-size: 11px;
+    font-size: 1.1rem;
     margin-bottom: 8px;
     text-align: left;
     letter-spacing: 1px;
@@ -39,7 +39,7 @@ const InputContainer = styled.div`
     border: 1px solid #D4D9E2;
     border-radius: 3px;
     padding: 15px;
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #596377;
     outline: 0;
     width: 100%;
