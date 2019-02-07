@@ -124,5 +124,6 @@ const StyledApp = styled.div`
   margin-top: 105px;
   font-family: ${props => props.theme.opensans};
   @media (max-width: 768px) {
+    margin-top:75px;
   }
 `;
