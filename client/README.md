@@ -31,7 +31,7 @@ To get the project up and running, and view components in the browser, complete 
 * react-chartjs-2
 * react-datepicker
 * react-stripe-checkout
-* react-loader-spinners
+* react-loader-spinner
 ---
 
 #### Authors
