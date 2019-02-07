@@ -64,8 +64,10 @@ const WorkoutDetails = props => {
       if (Array.isArray(newScheduleWorkouts.data)) {
         dispatch({ type: 'UPDATE_DATE_SELECTED' });
         dispatch({ type: 'UPDATE_SCHEDULE_WORKOUTS', payload: newScheduleWorkouts.data });
+        dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
       } else {
         dispatch({ type: 'UPDATE_DATE_SELECTED' });
+        dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
         dispatch({ type: 'UPDATE_SCHEDULE_WORKOUTS', payload: [] });
       }
     }
@@ -100,6 +102,8 @@ const WorkoutDetails = props => {
         payload: newScheduleWorkouts.data
       });
       dispatch({ type: 'UPDATE_DATE_SELECTED' });
+      dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
+
     }
   };
 
@@ -107,6 +111,7 @@ const WorkoutDetails = props => {
     <FormModal
       closeModal={() => {
         dispatch({ type: 'UPDATE_DATE_SELECTED' });
+        dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
       }}
       title={'Workout Details'}
     >

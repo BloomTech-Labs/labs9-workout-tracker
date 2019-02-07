@@ -282,8 +282,7 @@ transition: 0.5s ease-in;
 
   @media(max-width:690px) {
     .calendar .body .cell .bg {
-      visibility:hidden;
-  }
+display:none  }
 }
   
   .calendar .body .cell:hover .bg,
