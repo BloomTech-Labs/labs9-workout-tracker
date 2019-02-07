@@ -37,7 +37,6 @@ const Details = () => {
         }
       }
 
-      console.log(radarData)
       return  radarData;
     }
 

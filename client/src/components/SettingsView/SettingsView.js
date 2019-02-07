@@ -341,7 +341,6 @@ const StripeStyle = styled.div`
 `;
 
 const StyledBtn = styled.button`
-width:42%;
 text-transform: uppercase;
 letter-spacing: 1px;
 display: inline-block;
@@ -357,7 +356,7 @@ background: white;
 border: none;
 color: #FD8F25;
 margin:20px 0;
-border: 1px solid #FD8F25;
+border: 2px solid #FD8F25;
 :hover {
   cursor:pointer;
 }

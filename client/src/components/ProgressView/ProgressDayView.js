@@ -2,9 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Store } from '../../index';
 import styled from 'styled-components';
 import Button from '../../shared/Button';
-import axios from 'axios';
-import firebase from 'firebase';
-
 const ProgressDayView = props => {
   const { state, dispatch } = useContext(Store);
 
@@ -240,15 +237,11 @@ const ProgressDayView = props => {
             let isPositive = true;
             if (i !== state.metrics.length - 1) {
               const cur = Number(m[state.graphType]);
-              console.log('cur: ', cur)
               const prev = Number(
                 sortMetrics(state.metrics)[i + 1][state.graphType]
               );
-              console.log('prev: ', prev)
 
               const percentage = !cur && !prev ? 0 : (Math.abs(cur - prev) / ((cur + prev) / 2)) * 100;
-
-              console.log('percentage ', percentage)
 
               const rounded = Math.round(100 * percentage) / 100;
               if (cur < prev) {
