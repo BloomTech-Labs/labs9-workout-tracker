@@ -114,7 +114,7 @@ const InputContainer = styled.div`
   h3 {
     display: block;
     font-weight: 700;
-    font-size: 11px;
+    font-size: 1.1rem;
     color: #434C5E;
     margin-bottom: 8px;
     text-align: left;
@@ -126,7 +126,7 @@ const InputContainer = styled.div`
     border: 1px solid #D4D9E2;
     border-radius: 3px;
     padding: 15px;
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #596377;
     outline: 0;
     width: 100%;
@@ -144,13 +144,13 @@ const FormStyle = styled.form`
   width: 90%;
   max-width: 540px;
   h1 {
-    font-size: 28px;
+    font-size: 2.8rem;
     font-weight: 400;
     color: #434C5F;
   }
   p {
     display: block;
-    font-size: 16px;
+    font-size: 1.6rem;
     color: #596377;
     font-weight: 400;
     margin-bottom: 50px;
@@ -184,12 +184,13 @@ const FormContainer = styled.div`
 const SideImage = styled.div`
   width: calc(460px + 260px);
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: -260px;
   background: no-repeat left left fixed;
   background-image: url(${ropeImg});
   background-size: cover;
+  background-position-x: 110px;
   @media (max-width: 1076px) {
     width: 0px;
     display: none;

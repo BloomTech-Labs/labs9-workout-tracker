@@ -216,7 +216,7 @@ const MyWorkouts = () => {
       ) : (
         Loading
       )}
-    </HeaderContainer>
+  </HeaderContainer>
   );
 };
 
@@ -290,6 +290,7 @@ const Workout = styled.div`
   margin-bottom: 20px;
   padding: 10px 16px;
   border-radius: 8px;
+  cursor: pointer;
   h3 {
     margin: 0px;
   }
@@ -342,10 +343,10 @@ const ExDetailsTitle = styled.div`
 
 const ExDetailsP = styled.p`
   width: 17%;
-  display: block;
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: left;
+  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -306,7 +306,7 @@ const ExerciseRow = styled.div`
   justify-content: space-between;
   align-items: center;
   i {
-    font-size: 22px;
+    font-size: 2.2rem;
   }
   @media (max-width: 670px) {
     justify-content: space-between;

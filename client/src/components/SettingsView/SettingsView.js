@@ -279,7 +279,7 @@ const RecEmailDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
+  width: 100%;
   margin-top: 25px;
   @media (max-width: 550px) {
     width: 100%;
@@ -297,16 +297,16 @@ const ButtonDiv = styled.div`
 const LabelStyle = styled.label`
   display: flex;
   align-self: flex-start;
-  width:50%;
   color: ${props => props.theme.primaryDark};
 `;
 
 const PremiumDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   align-items: center;
   margin-bottom:20px;
+
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -341,14 +341,13 @@ const StripeStyle = styled.div`
 `;
 
 const StyledBtn = styled.button`
-width:42%;
 text-transform: uppercase;
 letter-spacing: 1px;
 display: inline-block;
 height: 50px;
 line-height: 50px;
 padding: 0 50px;
-font-size: 12px;
+font-size: 1.2rem;
 font-weight: 700;
 transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
 border-radius: 100px;
@@ -357,7 +356,7 @@ background: white;
 border: none;
 color: #FD8F25;
 margin:20px 0;
-border: 1px solid #FD8F25;
+border: 2px solid #FD8F25;
 :hover {
   cursor:pointer;
 }

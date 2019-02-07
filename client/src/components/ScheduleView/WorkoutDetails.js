@@ -125,6 +125,13 @@ const WorkoutDetails = props => {
                     <h3>{sDay}</h3>
                   </WorkoutTitleDiv>
                   <ExerciseListDiv>
+                    <ExDetailsTitle>
+                      <ExDetailsP>Exercise</ExDetailsP>
+                      <ExDetailsP>Weight</ExDetailsP>
+                      <ExDetailsP>Sets</ExDetailsP>
+                      <ExDetailsP>Reps</ExDetailsP>
+                      <ExDetailsP>Done</ExDetailsP>
+                    </ExDetailsTitle>
                     {scheduleWorkout.exercises &&
                       scheduleWorkout.exercises.map(exercise => {
                         return <ExerciseDetails dispatch={props.dispatch} key={exercise.id} exercise={exercise} />;
@@ -132,11 +139,11 @@ const WorkoutDetails = props => {
                   </ExerciseListDiv>
 
                   {scheduleWorkout.completed ? null : (
-                    <Button type="button" onClick={e => completedWorkout(e, scheduleWorkout)}>
+                    <Button type="button" size="large" onClick={e => completedWorkout(e, scheduleWorkout)}>
                       Complete
                     </Button>
                   )}
-                  <Button type="button" scheme="cancel" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
+                  <Button type="button" size="large" scheme="cancel" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
                     Unschedule
                   </Button>
                 </WorkoutDetailsDiv>
@@ -150,6 +157,32 @@ const WorkoutDetails = props => {
 };
 
 export default WorkoutDetails;
+
+
+const ExDetailsTitle = styled.div`
+  display: flex;
+  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  height: 60px;
+  width: 100%;
+  flex-wrap: wrap;
+  font-weight: bold;
+  align-items: center;
+  h3 {
+    width: calc(100% / 5);
+  }
+`;
+
+const ExDetailsP = styled.p`
+  width: 20%;
+  font-size: 1.4rem;
+  margin-bottom: 0px;
+  text-align: center;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 const WorkoutContainer = styled.div`
   justify-content: space-around;

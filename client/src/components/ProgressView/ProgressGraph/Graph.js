@@ -238,7 +238,7 @@ const StyledFeatureBlock = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-size: 55px;
+    font-size: 5.5rem;
     font-weight: 600;
     height: 400px;
     border-radius: 12px;
@@ -249,7 +249,7 @@ const StyledFeatureBlock = styled.div`
     }
     @media (max-width: 600px) {
       padding: 0px 20px;
-      font-size: 40px;
+      font-size: 4.0rem;
     }
 `;
 

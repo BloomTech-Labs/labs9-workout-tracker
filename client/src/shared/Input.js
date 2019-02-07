@@ -54,7 +54,7 @@ const Input = ({ size, value, name, onChange, placeholder, label, type, isDisabl
 export default Input;
 
 const StyledLabel = styled.span`
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
   ${props =>
     props.labelColor &&
