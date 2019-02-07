@@ -8,11 +8,11 @@ const WeeklyWorkotus = () => {
 
   const { scheduleWorkouts, currentDate } = state;
   const [sortedWorkouts, setSortedWorkouts] = useState([]);
-  const [weekArray, setWeekArray] = useState([0,0,0,0,0,0,0])
+  const [weekArray, setWeekArray] = useState([0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     getSortedWorkouts();
-  }, [state.scheduleWorkouts]);      
+  }, [state.scheduleWorkouts]);
 
   const getSortedWorkouts = () => {
     const copy = scheduleWorkouts;
@@ -27,18 +27,21 @@ const WeeklyWorkotus = () => {
     for (let i = 0; i < copy.length; i++) {
       // ("0" + this.getDate()).slice(-2)
       // ("0" + (this.getMonth() + 1)).slice(-2)
-      const cDate = `${new Date(copy[i].date).getMonth() + 1}${("0" + (new Date(copy[i].date).getDate() + 1)).slice(-2)}`;
-      const currentD =  `${new Date().getMonth() + 1}${("0" + new Date().getDate()).slice(-2)}`;
+      const cDate = `${new Date(copy[i].date).getMonth() + 1}${(
+        "0" +
+        (new Date(copy[i].date).getDate() + 1)
+      ).slice(-2)}`;
+      const currentD = `${new Date().getMonth() + 1}${(
+        "0" + new Date().getDate()
+      ).slice(-2)}`;
 
-   
       if (cDate >= currentD) {
         currentIndex = i;
         break;
       }
     }
 
-
-    console.log("currentIntex", currentIndex)
+    console.log("currentIntex", currentIndex);
 
     if (currentIndex !== 0 && currentIndex !== null) {
       const copySlice = copy.slice(currentIndex);
@@ -69,13 +72,12 @@ const WeeklyWorkotus = () => {
     dispatch({ type: "UPDATE_IS_POPULATED", payload: true });
   };
 
-
   return (
     <DisplayWorkoutsDiv>
       <h3>Upcoming workouts</h3>
       <DisplayWorkouts>
-        {
-          sortedWorkouts && weekArray.map((_, i) => {
+        {sortedWorkouts &&
+          weekArray.map((_, i) => {
             if (i % 2 === 0 && i < 7) {
               if (sortedWorkouts[i]) {
                 return (
@@ -83,7 +85,14 @@ const WeeklyWorkotus = () => {
                     key={sortedWorkouts[i].id}
                     onClick={() => onDateClick(sortedWorkouts[i].date)}
                   >
-                     <h4>{(new Date(dateStringParser(sortedWorkouts[i].date))).toLocaleDateString('en-US',{ month: 'short', day: '2-digit'} )}</h4>
+                    <h4>
+                      {new Date(
+                        dateStringParser(sortedWorkouts[i].date)
+                      ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit"
+                      })}
+                    </h4>
                     <p>{sortedWorkouts[i].title}</p>
                     <p>{sortedWorkouts[i].category.name}</p>
                   </GrayWorkoutCard>
@@ -93,9 +102,8 @@ const WeeklyWorkotus = () => {
                   <EmptyGrayWorkoutCard key={Math.random()}>
                     <p>No Upcoming Workout</p>
                   </EmptyGrayWorkoutCard>
-                  )
+                );
               }
-
             } else if (i % 2 === 1 && i < 7) {
               if (sortedWorkouts[i]) {
                 return (
@@ -103,21 +111,27 @@ const WeeklyWorkotus = () => {
                     key={sortedWorkouts[i].id}
                     onClick={() => onDateClick(sortedWorkouts[i].date)}
                   >
-                    <h4>{(new Date(dateStringParser(sortedWorkouts[i].date))).toLocaleDateString('en-US',{ month: 'short', day: '2-digit'} )}</h4>
+                    <h4>
+                      {new Date(
+                        dateStringParser(sortedWorkouts[i].date)
+                      ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit"
+                      })}
+                    </h4>
                     <p>{sortedWorkouts[i].title}</p>
                     <p>{sortedWorkouts[i].category.name}</p>
                   </WorkoutCard>
-                )
+                );
               } else {
                 return (
                   <EmptyWorkoutCard key={Math.random()}>
                     <p>No Upcoming Workout</p>
                   </EmptyWorkoutCard>
-                )
+                );
               }
             }
-          }
-        )}
+          })}
       </DisplayWorkouts>
     </DisplayWorkoutsDiv>
   );
@@ -188,5 +202,4 @@ const GrayWorkoutCard = styled(WorkoutCard)`
 
 const EmptyGrayWorkoutCard = styled(GrayWorkoutCard)`
   padding: 5px 0;
-
 `;

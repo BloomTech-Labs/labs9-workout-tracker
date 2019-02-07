@@ -112,7 +112,7 @@ const ScheduleWorkout = props => {
         payload: newSW.data
       });
       dispatch({ type: "UPDATE_DATE_SELECTED" });
-      dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
+      dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
     }
   };
 
@@ -149,45 +149,17 @@ const ScheduleWorkout = props => {
       if (state.workouts.length === 0) {
         return (
           <FormModal
-          onSubmit={() => {
-            props.history.push("/workouts");
-            dispatch({ type: "UPDATE_DATE_SELECTED" });
-            dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
-          }}
-          closeModal={() => {
-            dispatch({ type: "UPDATE_DATE_SELECTED" });
-            dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
-          }}
-          title={"Schedule Workout"}
-        >
-          <Header>
-            <DropDownContainer>
-              <h1>My Workouts</h1>
-              <h2>
-                {state.currentDate.toLocaleString("en-us", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })}
-              </h2>
-            </DropDownContainer>
-          </Header>
-          <NoWorkoutsP>Oh no! No workouts created yet - Better go make some!</NoWorkoutsP>
-          <Button>Go to Workouts</Button>
-        </FormModal>
-        )
-      } else {
-        return (
-<FormModal
-          onSubmit={{ scheduleWorkoutHandler }}
-          closeModal={() => {
-            dispatch({ type: "UPDATE_DATE_SELECTED" });
-            dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
-          }}
-          title={"Schedule Workout"}
-        >
-          <HeaderContainer>
+            onSubmit={() => {
+              props.history.push("/workouts");
+              dispatch({ type: "UPDATE_DATE_SELECTED" });
+              dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
+            }}
+            closeModal={() => {
+              dispatch({ type: "UPDATE_DATE_SELECTED" });
+              dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
+            }}
+            title={"Schedule Workout"}
+          >
             <Header>
               <DropDownContainer>
                 <h1>My Workouts</h1>
@@ -199,158 +171,186 @@ const ScheduleWorkout = props => {
                     day: "numeric"
                   })}
                 </h2>
-                <DropDown
-                  label={"Filter by Category"}
-                  options={getOptions()}
-                  onChange={handleChange}
-                  value={state.selectedWorkoutCategory}
-                />
               </DropDownContainer>
             </Header>
-            {state.workouts &&
-              state.workouts.map((workout, i) => {
-                if (state.selectedWorkoutCategory === "all") {
-                  return (
-                    <Workout
-                      key={i}
-                      onClick={() => handleClick(workout.id, i)}
-                      className={`workoutsCard-${
-                        showId === i ? "showEx" : "hideEx"
-                      }`}
-                    >
-                      <WorkoutsTitle className={`workoutsTitle`}>
-                        <WorkoutsCard className="test">
-                          <h3>{workout.title}</h3>
-                        </WorkoutsCard>
-                        <span>
-                          {showId === i ? (
-                            <i className="fas fa-arrow-up" />
-                          ) : (
-                            <i className="fas fa-arrow-down" />
-                          )}
-                        </span>
-                      </WorkoutsTitle>
-                      <ExercisesCard
-                        className={`exerciseCard-${
+            <NoWorkoutsP>
+              Oh no! No workouts created yet - Better go make some!
+            </NoWorkoutsP>
+            <Button>Go to Workouts</Button>
+          </FormModal>
+        );
+      } else {
+        return (
+          <FormModal
+            onSubmit={{ scheduleWorkoutHandler }}
+            closeModal={() => {
+              dispatch({ type: "UPDATE_DATE_SELECTED" });
+              dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
+            }}
+            title={"Schedule Workout"}
+          >
+            <HeaderContainer>
+              <Header>
+                <DropDownContainer>
+                  <h1>My Workouts</h1>
+                  <h2>
+                    {state.currentDate.toLocaleString("en-us", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric"
+                    })}
+                  </h2>
+                  <DropDown
+                    label={"Filter by Category"}
+                    options={getOptions()}
+                    onChange={handleChange}
+                    value={state.selectedWorkoutCategory}
+                  />
+                </DropDownContainer>
+              </Header>
+              {state.workouts &&
+                state.workouts.map((workout, i) => {
+                  if (state.selectedWorkoutCategory === "all") {
+                    return (
+                      <Workout
+                        key={i}
+                        onClick={() => handleClick(workout.id, i)}
+                        className={`workoutsCard-${
                           showId === i ? "showEx" : "hideEx"
                         }`}
                       >
-                        <ExDetailsTitle>
-                          <ExDetailsP className="name">Exercise</ExDetailsP>
-                          <ExDetailsP>Weight</ExDetailsP>
-                          <ExDetailsP>Sets</ExDetailsP>
-                          <ExDetailsP>Reps</ExDetailsP>
-                        </ExDetailsTitle>
-                        {workout.exercises.map((ex, i) => {
-                          return (
-                            <ExDetailsDiv key={ex.id}>
-                              <ExDetailsListDiv>
-                                <ExDetailsP className="name">
-                                  {" "}
-                                  {ex.name}
-                                </ExDetailsP>
-                                <ExDetailsP>{ex.weight}</ExDetailsP>
-                                <ExDetailsP>{ex.sets}</ExDetailsP>
-                                <ExDetailsP>{ex.reps}</ExDetailsP>
-                              </ExDetailsListDiv>
-                            </ExDetailsDiv>
-                          );
-                        })}
-                        <ButtonContainer>
-                          <Button
-                            size="responsive"
-                            onClick={e =>
-                              scheduleWorkoutHandler(
-                                e,
-                                workout,
-                                state.currentDate,
-                                recurringWeeks
-                              )
-                            }
-                          >
-                            Schedule
-                          </Button>
-                        </ButtonContainer>
-                      </ExercisesCard>
-                    </Workout>
-                  );
-                }
-                if (workout.category_id == state.selectedWorkoutCategory) {
-                  return (
-                    <Workout
-                      key={i}
-                      onClick={() => handleClick(workout.id, i)}
-                      className={`workoutsCard-${
-                        showId === i ? "showEx" : "hideEx"
-                      }`}
-                    >
-                      <WorkoutsTitle className={`workoutsTitle`}>
-                        <WorkoutsCard className="test">
-                          <h3>{workout.title}</h3>
-                        </WorkoutsCard>
-                        <span>
-                          {showId === i ? null : (
-                            <i className="fas fa-arrow-down" />
-                          )}
-                        </span>
-                      </WorkoutsTitle>
-                      <ExercisesCard
-                        className={`exerciseCard-${
+                        <WorkoutsTitle className={`workoutsTitle`}>
+                          <WorkoutsCard className="test">
+                            <h3>{workout.title}</h3>
+                          </WorkoutsCard>
+                          <span>
+                            {showId === i ? (
+                              <i className="fas fa-arrow-up" />
+                            ) : (
+                              <i className="fas fa-arrow-down" />
+                            )}
+                          </span>
+                        </WorkoutsTitle>
+                        <ExercisesCard
+                          className={`exerciseCard-${
+                            showId === i ? "showEx" : "hideEx"
+                          }`}
+                        >
+                          <ExDetailsTitle>
+                            <ExDetailsP className="name">Exercise</ExDetailsP>
+                            <ExDetailsP>Weight</ExDetailsP>
+                            <ExDetailsP>Sets</ExDetailsP>
+                            <ExDetailsP>Reps</ExDetailsP>
+                          </ExDetailsTitle>
+                          {workout.exercises.map((ex, i) => {
+                            return (
+                              <ExDetailsDiv key={ex.id}>
+                                <ExDetailsListDiv>
+                                  <ExDetailsP className="name">
+                                    {" "}
+                                    {ex.name}
+                                  </ExDetailsP>
+                                  <ExDetailsP>{ex.weight}</ExDetailsP>
+                                  <ExDetailsP>{ex.sets}</ExDetailsP>
+                                  <ExDetailsP>{ex.reps}</ExDetailsP>
+                                </ExDetailsListDiv>
+                              </ExDetailsDiv>
+                            );
+                          })}
+                          <ButtonContainer>
+                            <Button
+                              size="responsive"
+                              onClick={e =>
+                                scheduleWorkoutHandler(
+                                  e,
+                                  workout,
+                                  state.currentDate,
+                                  recurringWeeks
+                                )
+                              }
+                            >
+                              Schedule
+                            </Button>
+                          </ButtonContainer>
+                        </ExercisesCard>
+                      </Workout>
+                    );
+                  }
+                  if (workout.category_id == state.selectedWorkoutCategory) {
+                    return (
+                      <Workout
+                        key={i}
+                        onClick={() => handleClick(workout.id, i)}
+                        className={`workoutsCard-${
                           showId === i ? "showEx" : "hideEx"
                         }`}
                       >
-                        <ExDetailsTitle>
-                          <ExDetailsP className="name">Exercise</ExDetailsP>
-                          <ExDetailsP>Weight</ExDetailsP>
-                          <ExDetailsP>Sets</ExDetailsP>
-                          <ExDetailsP>Reps</ExDetailsP>
-                        </ExDetailsTitle>
-                        {workout.exercises.map((ex, i) => {
-                          return (
-                            <ExDetailsDiv key={ex.id}>
-                              <ExDetailsListDiv>
-                                <ExDetailsP className="name">
-                                  {" "}
-                                  {ex.name}
-                                </ExDetailsP>
-                                <ExDetailsP>{ex.weight}</ExDetailsP>
-                                <ExDetailsP>{ex.sets}</ExDetailsP>
-                                <ExDetailsP>{ex.reps}</ExDetailsP>
-                              </ExDetailsListDiv>
-                            </ExDetailsDiv>
-                          );
-                        })}
-                        <ButtonContainer>
-                          <Button
-                            size="responsive"
-                            onClick={e =>
-                              scheduleWorkoutHandler(
-                                e,
-                                workout,
-                                state.currentDate,
-                                recurringWeeks
-                              )
-                            }
-                          >
-                            Schedule
-                          </Button>
-                        </ButtonContainer>
-                      </ExercisesCard>
-                    </Workout>
-                  );
-                }
-                return null;
-              })}
-          </HeaderContainer>
-        </FormModal>
-        )
+                        <WorkoutsTitle className={`workoutsTitle`}>
+                          <WorkoutsCard className="test">
+                            <h3>{workout.title}</h3>
+                          </WorkoutsCard>
+                          <span>
+                            {showId === i ? null : (
+                              <i className="fas fa-arrow-down" />
+                            )}
+                          </span>
+                        </WorkoutsTitle>
+                        <ExercisesCard
+                          className={`exerciseCard-${
+                            showId === i ? "showEx" : "hideEx"
+                          }`}
+                        >
+                          <ExDetailsTitle>
+                            <ExDetailsP className="name">Exercise</ExDetailsP>
+                            <ExDetailsP>Weight</ExDetailsP>
+                            <ExDetailsP>Sets</ExDetailsP>
+                            <ExDetailsP>Reps</ExDetailsP>
+                          </ExDetailsTitle>
+                          {workout.exercises.map((ex, i) => {
+                            return (
+                              <ExDetailsDiv key={ex.id}>
+                                <ExDetailsListDiv>
+                                  <ExDetailsP className="name">
+                                    {" "}
+                                    {ex.name}
+                                  </ExDetailsP>
+                                  <ExDetailsP>{ex.weight}</ExDetailsP>
+                                  <ExDetailsP>{ex.sets}</ExDetailsP>
+                                  <ExDetailsP>{ex.reps}</ExDetailsP>
+                                </ExDetailsListDiv>
+                              </ExDetailsDiv>
+                            );
+                          })}
+                          <ButtonContainer>
+                            <Button
+                              size="responsive"
+                              onClick={e =>
+                                scheduleWorkoutHandler(
+                                  e,
+                                  workout,
+                                  state.currentDate,
+                                  recurringWeeks
+                                )
+                              }
+                            >
+                              Schedule
+                            </Button>
+                          </ButtonContainer>
+                        </ExercisesCard>
+                      </Workout>
+                    );
+                  }
+                  return null;
+                })}
+            </HeaderContainer>
+          </FormModal>
+        );
       }
     }
   };
 
-  return (
-    checkWorkoutLength()
-  )
+  return checkWorkoutLength();
 };
 
 export default ScheduleWorkout;
@@ -401,8 +401,8 @@ const ButtonContainer = styled.div`
 `;
 
 const NoWorkoutsP = styled.p`
-font-weight:600;
-font-size:1.4rem;
+  font-weight: 600;
+  font-size: 1.4rem;
 `;
 
 const Workout = styled.div`

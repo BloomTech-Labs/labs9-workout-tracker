@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Store } from '../../../index';
+import { Store } from "../../../index";
 import styled from "styled-components";
 import * as d3 from "d3";
-
 
 import Details from "./Details";
 import TabSelection from "./TabSelection";
 import Graph from "./Graph";
 
 const ProgressGraph = props => {
-
   const { state } = useContext(Store);
 
   return (
@@ -36,7 +34,6 @@ const GraphContainer = styled.div`
     align-items: center;
   }
 `;
-
 
 // const Graph = styled.div`
 //   display: flex;

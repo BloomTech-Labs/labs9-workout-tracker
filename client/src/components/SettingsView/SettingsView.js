@@ -1,77 +1,71 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Store } from '../../index';
+import { Store } from "../../index";
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from "firebase";
 import requireAuth from "../../requireAuth";
 import "./settings.css";
-import FormInputTwo from '../../shared/FormInputTwo'
-import FormInput from '../../shared/FormInput'
-import Button from '../../shared/Button';
+import FormInputTwo from "../../shared/FormInputTwo";
+import FormInput from "../../shared/FormInput";
+import Button from "../../shared/Button";
 //working on updating info
 
 const SettingsView = props => {
-
-
-  const { state, dispatch } = useContext(Store)
+  const { state, dispatch } = useContext(Store);
 
   const [email, setEmail] = useState(state.email);
   const [phone, setPhone] = useState(state.phone);
   const [recieves_email, setRecieveEmail] = useState(state.recieves_email);
   const [currentPassword, setcurrentPassword] = useState("");
-  const [settingsUpdated, setSettingsUpdated] = useState(false)
+  const [settingsUpdated, setSettingsUpdated] = useState(false);
 
   useEffect(() => {
-    setEmail(state.email)
-    setPhone(state.phone)
-    setRecieveEmail(state.recieves_email)
-  }, [state])
+    setEmail(state.email);
+    setPhone(state.phone);
+    setRecieveEmail(state.recieves_email);
+  }, [state]);
 
   const logOut = () => {
-    window.localStorage.removeItem('login_token');
+    window.localStorage.removeItem("login_token");
     firebase.auth().signOut();
-    props.history.push('/');
+    props.history.push("/");
   };
 
   const updateUser = async e => {
     e.preventDefault();
-    setSettingsUpdated(false)
+    setSettingsUpdated(false);
     const token = window.localStorage.getItem("login_token");
     reauthenticate(currentPassword)
       .then(() => {
         var user = firebase.auth().currentUser;
-        user
-          .updateEmail(email)
-          .then(async () => {
-            if (token !== undefined) {
-              const res = await axios.put(
-                "https://fitmetrix.herokuapp.com/api/user/edit",
-                { email, phone, recieves_email },
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token
-                  }
+        user.updateEmail(email).then(async () => {
+          if (token !== undefined) {
+            const res = await axios.put(
+              "https://fitmetrix.herokuapp.com/api/user/edit",
+              { email, phone, recieves_email },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: token
                 }
-              );
-              if (state.email !== email) {
-                alert("Email has changed");
               }
-              console.log(res.data);
-              dispatch({ type: "USER_MODEL", payload: res.data });
-
-              setcurrentPassword("");
-              setSettingsUpdated(true)
+            );
+            if (state.email !== email) {
+              alert("Email has changed");
             }
-          })
+            console.log(res.data);
+            dispatch({ type: "USER_MODEL", payload: res.data });
+
+            setcurrentPassword("");
+            setSettingsUpdated(true);
+          }
+        });
       })
       .catch(error => {
         alert("not sure of this catch");
       });
   };
-
-  
 
   const renderVerifyPassword = () => {
     if (
@@ -81,7 +75,7 @@ const SettingsView = props => {
     ) {
       return (
         <ChangePasswordDiv>
-          <FormInput 
+          <FormInput
             label={"Verify password"}
             value={currentPassword}
             placeholder={"Enter Password"}
@@ -91,26 +85,26 @@ const SettingsView = props => {
             secureTextEntry={true}
           />
           <ResponsiveBtn>
-          <Button>Update Info</Button>
+            <Button>Update Info</Button>
           </ResponsiveBtn>
-          </ChangePasswordDiv>
+        </ChangePasswordDiv>
       );
     } else {
       return (
         <LogOutDiv>
-        <ChangePasswordDivInvis>
-          <FormInput 
-            label={"Verify password"}
-            value={currentPassword}
-            placeholder={"Enter Password"}
-            onChange={e => setcurrentPassword(e.target.value)}
-            type="password"
-            lableColor="#2B3A42"
-            secureTextEntry={true}
-          />
-          <Button>Update Info</Button>
-        </ChangePasswordDivInvis>
-        <StyledBtn onClick={() => logOut()}>Logout</StyledBtn>
+          <ChangePasswordDivInvis>
+            <FormInput
+              label={"Verify password"}
+              value={currentPassword}
+              placeholder={"Enter Password"}
+              onChange={e => setcurrentPassword(e.target.value)}
+              type="password"
+              lableColor="#2B3A42"
+              secureTextEntry={true}
+            />
+            <Button>Update Info</Button>
+          </ChangePasswordDivInvis>
+          <StyledBtn onClick={() => logOut()}>Logout</StyledBtn>
         </LogOutDiv>
       );
     }
@@ -123,7 +117,7 @@ const SettingsView = props => {
           <div className="status-div">
             <PremiumStyle>Account Status:</PremiumStyle>
             <p>Premium</p>
-          </div>          
+          </div>
         </PremiumDiv>
       );
     } else {
@@ -153,17 +147,23 @@ const SettingsView = props => {
   return (
     <ContainerDiv>
       <SettingsViewStyle>
-        { settingsUpdated ? <SettingsUpdated>Settings Updated Successfully!</SettingsUpdated>: <SettingsUpdatedHidden>Settings Updated Successfully!</SettingsUpdatedHidden>}
+        {settingsUpdated ? (
+          <SettingsUpdated>Settings Updated Successfully!</SettingsUpdated>
+        ) : (
+          <SettingsUpdatedHidden>
+            Settings Updated Successfully!
+          </SettingsUpdatedHidden>
+        )}
         <FormStyle onSubmit={e => updateUser(e)}>
-          <FormInput 
+          <FormInput
             label={"Email"}
             value={email}
-            placeholder={"jack@fitmetrix.me"}
+            placeholder={"jack@flexlog.app"}
             onChange={e => setEmail(e.target.value)}
             type="email"
             lableColor="#2B3A42"
           />
-          <FormInputTwo 
+          <FormInputTwo
             label={"Phone"}
             value={phone}
             placeholder={"555-555-555"}
@@ -194,14 +194,14 @@ const SettingsView = props => {
 export default requireAuth(SettingsView);
 
 const ResponsiveBtn = styled.div`
-  @media (max-width:768px) {
+  @media (max-width: 768px) {
     width: 92%;
   }
-  @media (max-width:375px) {
-    width:77%;
+  @media (max-width: 375px) {
+    width: 77%;
   }
-  @media (max-width:414px) {
-    width:70%;
+  @media (max-width: 414px) {
+    width: 70%;
   }
 `;
 
@@ -222,21 +222,21 @@ const SettingsViewStyle = styled.div`
 `;
 
 const SettingsUpdated = styled.p`
-color:green;
-text-align:center;
-background-color:lightgreen;
-border-radius: 5px;
-width: 56%;
-margin-top:10px;
+  color: green;
+  text-align: center;
+  background-color: lightgreen;
+  border-radius: 5px;
+  width: 56%;
+  margin-top: 10px;
 `;
 
 const SettingsUpdatedHidden = styled(SettingsUpdated)`
-visibility:hidden;
+  visibility: hidden;
 `;
 
 const FormStyle = styled.form`
   border-radius: 0 0 6px 6px;
-  background-color: white;;
+  background-color: white;
   margin: 0 2%;
   display: flex;
   width: 70%;
@@ -245,7 +245,7 @@ const FormStyle = styled.form`
   align-items: center;
   border-top: 0px;
   @media (max-width: 550px) {
-    width:100%;
+    width: 100%;
   }
 `;
 
@@ -264,7 +264,7 @@ const ChangePasswordDiv = styled.div`
 
 const ChangePasswordDivInvis = styled.div`
   display: flex;
-  display:none;
+  display: none;
   flex-direction: column;
   width: 50%;
   justify-content: space-evenly;
@@ -305,30 +305,30 @@ const PremiumDiv = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 
   @media (max-width: 550px) {
     width: 100%;
   }
   .status-div {
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
   h4 {
     color: ${props => props.theme.themeWhite};
-    font-size:1.5rem;
+    font-size: 1.5rem;
     font-weight: normal;
   }
-  p {    
-    color: ${props => props.theme.accent}; 
-    margin:0;
-    font-weight:bold
+  p {
+    color: ${props => props.theme.accent};
+    margin: 0;
+    font-weight: bold;
   }
 `;
 const PremiumStyle = styled.div`
-  color: #2B3A42;
+  color: #2b3a42;
   display: flex;
   justify-content: flex-start;
 `;
@@ -341,34 +341,34 @@ const StripeStyle = styled.div`
 `;
 
 const StyledBtn = styled.button`
-text-transform: uppercase;
-letter-spacing: 1px;
-display: inline-block;
-height: 50px;
-line-height: 50px;
-padding: 0 50px;
-font-size: 1.2rem;
-font-weight: 700;
-transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
-border-radius: 100px;
-outline: none;
-background: white;
-border: none;
-color: #FD8F25;
-margin:20px 0;
-border: 2px solid #FD8F25;
-:hover {
-  cursor:pointer;
-}
-@media(max-width:414px){
-  width:65%;
-}
-@media(max-width:375px){
-  width:70%;
-}
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: box-shadow 0.2s ease, border 0.2s ease,
+    -webkit-box-shadow 0.2s ease;
+  border-radius: 100px;
+  outline: none;
+  background: white;
+  border: none;
+  color: #fd8f25;
+  margin: 20px 0;
+  border: 2px solid #fd8f25;
+  :hover {
+    cursor: pointer;
+  }
+  @media (max-width: 414px) {
+    width: 65%;
+  }
+  @media (max-width: 375px) {
+    width: 70%;
+  }
 `;
 
 const LogOutDiv = styled.div`
-width:100%;
+  width: 100%;
 `;
-

@@ -1,39 +1,39 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../../index';
-import axios from 'axios';
-import * as firebase from 'firebase';
-import styled from 'styled-components';
-import CategoryDropDown from '../CategoryDropDown';
-import Input from '../../../shared/Input';
-import FormModal from '../../../shared/FormModal';
-import Button from '../../../shared/Button';
+import React, { useContext, useState, useEffect } from "react";
+import { Store } from "../../../index";
+import axios from "axios";
+import * as firebase from "firebase";
+import styled from "styled-components";
+import CategoryDropDown from "../CategoryDropDown";
+import Input from "../../../shared/Input";
+import FormModal from "../../../shared/FormModal";
+import Button from "../../../shared/Button";
 
 const AddWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
 
   //Hook to set workout Title
-  const [title, setTitle] = useState('');
-  const [exerciseName, setExerciseName] = useState('');
-  const [weight, setWeight] = useState('');
-  const [sets, setSets] = useState('');
-  const [reps, setReps] = useState('');
+  const [title, setTitle] = useState("");
+  const [exerciseName, setExerciseName] = useState("");
+  const [weight, setWeight] = useState("");
+  const [sets, setSets] = useState("");
+  const [reps, setReps] = useState("");
   const [error, setError] = useState(false);
-  const [errorM, setErrorM] = useState('');
+  const [errorM, setErrorM] = useState("");
   const [exercises, setExercises] = useState([
     {
-      name: '',
-      weight: '',
-      sets: '',
-      reps: ''
+      name: "",
+      weight: "",
+      sets: "",
+      reps: ""
     }
   ]);
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState("");
 
   useEffect(() => {
     const selectedWorkoutCategory = state.selectedWorkoutCategory;
-    if (selectedWorkoutCategory === 'add') {
-      dispatch({ type: 'ADDING_CATEGORY' });
+    if (selectedWorkoutCategory === "add") {
+      dispatch({ type: "ADDING_CATEGORY" });
     }
   }, [state.selectedWorkoutCategory]);
 
@@ -50,10 +50,10 @@ const AddWorkout = () => {
 
     //adds exercise to exercises array in the workout being created/edited and resets the input fields
     setExercises([...exercises, nExercise]);
-    setExerciseName('');
-    setWeight('');
-    setSets('');
-    setReps('');
+    setExerciseName("");
+    setWeight("");
+    setSets("");
+    setReps("");
   };
 
   // add new workout handler to add workout to database
@@ -61,12 +61,15 @@ const AddWorkout = () => {
     e.preventDefault();
 
     console.log(state.selectedCategory);
-    if (state.selectedCategory === 'default' || state.selectedCategory === 'add') {
+    if (
+      state.selectedCategory === "default" ||
+      state.selectedCategory === "add"
+    ) {
       setError(true);
-      setErrorM('Category is required');
+      setErrorM("Category is required");
       return;
     }
-    const token = window.localStorage.getItem('login_token');
+    const token = window.localStorage.getItem("login_token");
 
     //Sets the workout title and category id and sends a POST request to the backend to add the created workout
 
@@ -75,32 +78,39 @@ const AddWorkout = () => {
       category_id: Number(state.selectedCategory),
       exercises
     };
-    console.log('the current workout is: ', workout);
+    console.log("the current workout is: ", workout);
 
     if (token !== undefined) {
-      const res = await axios.post('https://fitmetrix.herokuapp.com/api/workouts/', workout, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token
-        }
-      });
-      console.log('the current workout is: ', workout);
-
-      if (res.status === 201) {
-        const newWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/workouts/', {
+      const res = await axios.post(
+        "https://fitmetrix.herokuapp.com/api/workouts/",
+        workout,
+        {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: token
           }
-        });
-        dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+        }
+      );
+      console.log("the current workout is: ", workout);
+
+      if (res.status === 201) {
+        const newWorkouts = await axios.get(
+          "https://fitmetrix.herokuapp.com/api/workouts/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token
+            }
+          }
+        );
+        dispatch({ type: "UPDATE_WORKOUTS", payload: newWorkouts.data });
       }
     }
     //Resets the title and category after workout is added
-    setTitle('');
+    setTitle("");
     setError(false);
-    setErrorM('');
-    dispatch({ type: 'SHOW_WORKOUT_FORM' });
+    setErrorM("");
+    dispatch({ type: "SHOW_WORKOUT_FORM" });
   };
 
   const inputOnChange = async (e, index) => {
@@ -121,61 +131,68 @@ const AddWorkout = () => {
 
   const addNewCategory = async e => {
     e.preventDefault();
-    console.log('event(e) is: ', e);
+    console.log("event(e) is: ", e);
 
     const newCatObj = {
       name: newCategory
     };
 
-    console.log('newCategory is: ', newCategory);
+    console.log("newCategory is: ", newCategory);
     const token = await firebase.auth().currentUser.getIdToken();
 
-    const res = await axios.post('https://fitmetrix.herokuapp.com/api/category/create/', newCatObj, {
-      headers: {
-        Authorization: token
-      }
-    });
-
-    if (res.status === 201) {
-      const newCategories = await axios.get('https://fitmetrix.herokuapp.com/api/category/user', {
+    const res = await axios.post(
+      "https://fitmetrix.herokuapp.com/api/category/create/",
+      newCatObj,
+      {
         headers: {
           Authorization: token
         }
-      });
+      }
+    );
+
+    if (res.status === 201) {
+      const newCategories = await axios.get(
+        "https://fitmetrix.herokuapp.com/api/category/user",
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
       console.log(newCategories.data);
 
       const newCatId = newCategories.data[newCategories.data.length - 1].id;
 
       dispatch({
-        type: 'UPDATE_CATEGORIES',
+        type: "UPDATE_CATEGORIES",
         payload: newCategories.data
       });
       dispatch({
-        type: 'UPDATE_SELECTED_CATEGORY',
+        type: "UPDATE_SELECTED_CATEGORY",
         payload: newCatId
       });
     }
   };
 
   const removeExercise = async (e, index) => {
-    console.log('exercises length is:', exercises.length);
-    console.log('exercises are:', exercises);
-    console.log('index is:', index);
+    console.log("exercises length is:", exercises.length);
+    console.log("exercises are:", exercises);
+    console.log("index is:", index);
 
     const newExercises = exercises;
 
     if (!isNaN(index)) {
       newExercises.splice(index, 1);
       setExercises(newExercises);
-      console.log('exercises are: ', exercises);
+      console.log("exercises are: ", exercises);
     }
   };
 
   return (
     <FormModal
       onSubmit={e => addNewWorkout(e)}
-      closeModal={() => dispatch({ type: 'SHOW_WORKOUT_FORM' })}
-      title={'Add a Workout'}
+      closeModal={() => dispatch({ type: "SHOW_WORKOUT_FORM" })}
+      title={"Add a Workout"}
     >
       <TitleRow>
         <Row>
@@ -194,7 +211,7 @@ const AddWorkout = () => {
 
       {/* Conditional that renders the category Input field when a user wants to add a category */}
 
-      {state.selectedCategory === 'add' ? (
+      {state.selectedCategory === "add" ? (
         <CategoryRow>
           <Input
             value={newCategory}
@@ -203,7 +220,11 @@ const AddWorkout = () => {
             label="New Category Name"
             size="large"
           />
-          <Button size="category" onClick={e => addNewCategory(e)} type="button">
+          <Button
+            size="category"
+            onClick={e => addNewCategory(e)}
+            type="button"
+          >
             Add Category
           </Button>
         </CategoryRow>
@@ -249,7 +270,12 @@ const AddWorkout = () => {
                   label="Reps"
                   size="small"
                 />
-                {exercises.length === 1 ? null : <i onClick={e => removeExercise(e, index)} className="fas fa-times" />}
+                {exercises.length === 1 ? null : (
+                  <i
+                    onClick={e => removeExercise(e, index)}
+                    className="fas fa-times"
+                  />
+                )}
               </ExerciseRow>
             </WorkoutRow>
           );
@@ -261,7 +287,12 @@ const AddWorkout = () => {
         <h3>10 exercise limit reached</h3>
       ) : (
         <Row>
-          <Button type="button" scheme="delete" size="responsive" onClick={e => addExercise(e)}>
+          <Button
+            type="button"
+            scheme="delete"
+            size="responsive"
+            onClick={e => addExercise(e)}
+          >
             Add Exercise
           </Button>
         </Row>

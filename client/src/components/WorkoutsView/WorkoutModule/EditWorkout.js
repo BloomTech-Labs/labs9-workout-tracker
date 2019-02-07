@@ -1,24 +1,27 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../../index';
-import axios from 'axios';
-import * as firebase from 'firebase';
-import styled from 'styled-components';
-import CategoryDropDown from '../CategoryDropDown';
-import Input from '../../../shared/Input';
-import FormModal from '../../../shared/FormModal';
-import { StyledError, DeleteButton } from '../../ProgressView/MetricModule/Style';
-import Button from '../../../shared/Button';
+import React, { useContext, useState, useEffect } from "react";
+import { Store } from "../../../index";
+import axios from "axios";
+import * as firebase from "firebase";
+import styled from "styled-components";
+import CategoryDropDown from "../CategoryDropDown";
+import Input from "../../../shared/Input";
+import FormModal from "../../../shared/FormModal";
+import {
+  StyledError,
+  DeleteButton
+} from "../../ProgressView/MetricModule/Style";
+import Button from "../../../shared/Button";
 
 const EditWorkout = () => {
   //Accesses state and dispatch with the useContext Hook.
   const { state, dispatch } = useContext(Store);
 
   //Hook to set workout Title
-  const [title, setTitle] = useState('');
-  const [exerciseName, setExerciseName] = useState('');
-  const [weight, setWeight] = useState('');
-  const [sets, setSets] = useState('');
-  const [reps, setReps] = useState('');
+  const [title, setTitle] = useState("");
+  const [exerciseName, setExerciseName] = useState("");
+  const [weight, setWeight] = useState("");
+  const [sets, setSets] = useState("");
+  const [reps, setReps] = useState("");
   const [exercises, setExercises] = useState([]);
   const [deleteArray, setDeleteArray] = useState([]);
 
@@ -30,7 +33,7 @@ const EditWorkout = () => {
       setTitle(editWorkout.title);
       setExercises(editWorkout.exercises);
       dispatch({
-        type: 'UPDATE_SELECTED_CATEGORY',
+        type: "UPDATE_SELECTED_CATEGORY",
         payload: editWorkout.category_id
       });
     }
@@ -50,10 +53,10 @@ const EditWorkout = () => {
 
     //adds exercise to exercises array in the workout being created/edited and resets the input fields
     setExercises([...exercises, nExercise]);
-    setExerciseName('');
-    setWeight('');
-    setSets('');
-    setReps('');
+    setExerciseName("");
+    setWeight("");
+    setSets("");
+    setReps("");
   };
 
   // add new workout handler to add workout to database
@@ -71,16 +74,16 @@ const EditWorkout = () => {
       id: state.editWorkout.id
     };
 
-
     if (token !== undefined) {
-
       if (deleteArray.length) {
         for (const ex of deleteArray) {
           const delRes = await axios.delete(
-            `https://fitmetrix.herokuapp.com/api/workouts/exercise/delete/${ex.id}`,
+            `https://fitmetrix.herokuapp.com/api/workouts/exercise/delete/${
+              ex.id
+            }`,
             {
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: token
               }
             }
@@ -93,26 +96,29 @@ const EditWorkout = () => {
         editedWorkout,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: token
           }
         }
       );
 
-      if(res.status === 200) {
-        const newWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/workouts/', {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token
+      if (res.status === 200) {
+        const newWorkouts = await axios.get(
+          "https://fitmetrix.herokuapp.com/api/workouts/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token
+            }
           }
-        });
-        dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+        );
+        dispatch({ type: "UPDATE_WORKOUTS", payload: newWorkouts.data });
       }
     }
     //Resets the title and category after workout is added
-    setTitle('');
+    setTitle("");
     setExercises([]);
-    dispatch({ type: 'SHOW_WORKOUT_FORM' });
+    dispatch({ type: "SHOW_WORKOUT_FORM" });
   };
 
   const inputOnChange = async (e, index) => {
@@ -127,13 +133,13 @@ const EditWorkout = () => {
   };
 
   const handleDelete = async e => {
-    console.log('are you sure?');
+    console.log("are you sure?");
     if (confirmDelete === false) {
       setConfirmDelete(true);
       return;
     }
 
-    console.log('trying to delete: state.editWorkout.id', state.editWorkout.id);
+    console.log("trying to delete: state.editWorkout.id", state.editWorkout.id);
 
     const deleteID = state.editWorkout.id;
 
@@ -144,59 +150,69 @@ const EditWorkout = () => {
     const token = await firebase.auth().currentUser.getIdToken();
 
     if (token !== undefined) {
-      const res = await axios.delete(`https://fitmetrix.herokuapp.com/api/workouts/delete/${deleteID}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token
-        }
-      });
-      console.log('the res is: ', res);
-
-      if (res.status === 200) {
-        const newWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/workouts/', {
+      const res = await axios.delete(
+        `https://fitmetrix.herokuapp.com/api/workouts/delete/${deleteID}`,
+        {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: token
           }
-        });
+        }
+      );
+      console.log("the res is: ", res);
 
-        console.log('newWorkouts.data: ', newWorkouts.data);
+      if (res.status === 200) {
+        const newWorkouts = await axios.get(
+          "https://fitmetrix.herokuapp.com/api/workouts/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token
+            }
+          }
+        );
+
+        console.log("newWorkouts.data: ", newWorkouts.data);
         if (Array.isArray(newWorkouts.data)) {
-          dispatch({ type: 'UPDATE_WORKOUTS', payload: newWorkouts.data });
+          dispatch({ type: "UPDATE_WORKOUTS", payload: newWorkouts.data });
         } else {
-          dispatch({ type: 'UPDATE_WORKOUTS', payload: [] });
+          dispatch({ type: "UPDATE_WORKOUTS", payload: [] });
         }
       } else {
-        console.log('error deleting');
+        console.log("error deleting");
       }
     }
 
-    dispatch({ type: 'SHOW_WORKOUT_FORM' });
+    dispatch({ type: "SHOW_WORKOUT_FORM" });
   };
 
   const removeExercise = async (e, index, exercise) => {
-
     const newExercises = exercises;
 
     if (exercise.id) {
-      setDeleteArray([...deleteArray, exercise])
+      setDeleteArray([...deleteArray, exercise]);
     }
 
     if (!isNaN(index)) {
       newExercises.splice(index, 1);
       setExercises(newExercises);
-      console.log('exercises are: ', exercises);
+      console.log("exercises are: ", exercises);
     }
   };
 
   return (
     <FormModal
       onSubmit={e => editWorkout(e)}
-      closeModal={() => dispatch({ type: 'SHOW_WORKOUT_FORM' })}
-      title={'Edit a Workout'}
+      closeModal={() => dispatch({ type: "SHOW_WORKOUT_FORM" })}
+      title={"Edit a Workout"}
     >
-      <Button type="button" scheme="delete" size="responsive" onClick={e => handleDelete(e)}>
-        {confirmDelete ? 'Click to confirm' : 'Delete'}
+      <Button
+        type="button"
+        scheme="delete"
+        size="responsive"
+        onClick={e => handleDelete(e)}
+      >
+        {confirmDelete ? "Click to confirm" : "Delete"}
       </Button>
 
       <TitleRow>
@@ -255,13 +271,21 @@ const EditWorkout = () => {
                   label="Reps"
                   size="small"
                 />
-                <i onClick={e => removeExercise(e, index, ex)} className="fas fa-times" />
+                <i
+                  onClick={e => removeExercise(e, index, ex)}
+                  className="fas fa-times"
+                />
               </ExerciseRow>
             </WorkoutRow>
           );
         })}
       <Row>
-        <Button type="button" size="responsive" scheme="delete" onClick={e => addExercise(e)}>
+        <Button
+          type="button"
+          size="responsive"
+          scheme="delete"
+          onClick={e => addExercise(e)}
+        >
           Add Exercise to Workout
         </Button>
       </Row>
@@ -350,4 +374,3 @@ const CategoryDropdownContainer = styled.div`
     padding: 10px 0px;
   }
 `;
-

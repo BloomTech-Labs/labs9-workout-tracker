@@ -2,32 +2,27 @@ import React, { useState, useContext } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
-import Loading from './Loading';
-import { Store } from '../index';
+import Loading from "./Loading";
+import { Store } from "../index";
 
 import barbell from "./assets/barbell.jpeg";
 
-
 const Register = props => {
-
   const { state, dispatch } = useContext(Store);
-
-  
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  
   const registerUser = e => {
     e.preventDefault();
-    setError(false)
-    setErrorMessage('')
-    setLoading(true)
+    setError(false);
+    setErrorMessage("");
+    setLoading(true);
     // Initialize Firebase
     console.log("email: ", email, "password: ", password, "name: ", name);
     if (password === confirmPassword) {
@@ -38,7 +33,7 @@ const Register = props => {
           res.user
             .getIdToken()
             .then(token => {
-              console.log(email, name, token)
+              console.log(email, name, token);
               axios.post(
                 "https://fitmetrix.herokuapp.com/auth/register",
                 { email, name },
@@ -46,46 +41,48 @@ const Register = props => {
               );
             })
             .then(() => {
-              dispatch({type: 'USER_JUST_REGISTERED', payload: true})
-              setLoading(false)
-              props.history.push("/login")
-            })
+              dispatch({ type: "USER_JUST_REGISTERED", payload: true });
+              setLoading(false);
+              props.history.push("/login");
+            });
         })
         .catch(function(error) {
           var errorMessage = error.message;
           console.log(errorMessage);
-          setError(true)
-          setErrorMessage(errorMessage)
-          setEmail('')
-          setPassword('')
-          setConfirmPassword('')
-          setLoading(false)
+          setError(true);
+          setErrorMessage(errorMessage);
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          setLoading(false);
         });
     } else {
-      setError(true)
-      setErrorMessage('Passwords must match')
-      setPassword('')
-      setConfirmPassword('')
-      setLoading(false)
+      setError(true);
+      setErrorMessage("Passwords must match");
+      setPassword("");
+      setConfirmPassword("");
+      setLoading(false);
     }
   };
 
   return (
-      <Container>
-        <SideImage/>
-        <FormContainer>
-          <FormStyle onSubmit={e => registerUser(e)}>
-          {loading ? (<Loading/>) : (
+    <Container>
+      <SideImage />
+      <FormContainer>
+        <FormStyle onSubmit={e => registerUser(e)}>
+          {loading ? (
+            <Loading />
+          ) : (
             <>
               <h1>Start tracking now!</h1>
               <p>Enter details below</p>
-              {error ? (<StyledError>{errorMessage}</StyledError>) : null}
+              {error ? <StyledError>{errorMessage}</StyledError> : null}
               <InputContainer>
                 <h3>EMAIL ADDRESS</h3>
                 <input
                   type="email"
                   value={email}
-                  placeholder="jack@fitmetrix.me"
+                  placeholder="jack@flexlog.app"
                   onChange={e => setEmail(e.target.value)}
                   required
                 />
@@ -128,9 +125,9 @@ const Register = props => {
               </ButtonContainer>
             </>
           )}
-          </FormStyle>
-        </FormContainer>
-      </Container>
+        </FormStyle>
+      </FormContainer>
+    </Container>
   );
 };
 
@@ -142,9 +139,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const StyledError = styled.p`
-  
-`;
+const StyledError = styled.p``;
 
 const InputContainer = styled.div`
   color: #5f697a;
@@ -154,7 +149,7 @@ const InputContainer = styled.div`
     display: block;
     font-weight: 700;
     font-size: 1.1rem;
-    color: #434C5E;
+    color: #434c5e;
     margin-bottom: 8px;
     text-align: left;
     letter-spacing: 1px;
@@ -162,7 +157,7 @@ const InputContainer = styled.div`
     text-transform: uppercase;
   }
   input {
-    border: 1px solid #D4D9E2;
+    border: 1px solid #d4d9e2;
     border-radius: 3px;
     padding: 15px;
     font-size: 1.4rem;
@@ -170,10 +165,10 @@ const InputContainer = styled.div`
     outline: 0;
     width: 100%;
     &::-webkit-input-placeholder {
-      opacity: 0.50;
+      opacity: 0.5;
     }
   }
-`
+`;
 
 const Button = styled.button`
   text-transform: uppercase;
@@ -188,12 +183,13 @@ const Button = styled.button`
   padding: 0 60px;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #FFF;
+  color: #fff;
   cursor: pointer;
-  transition: box-shadow .2s ease,border .2s ease;
-  transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
+  transition: box-shadow 0.2s ease, border 0.2s ease;
+  transition: box-shadow 0.2s ease, border 0.2s ease,
+    -webkit-box-shadow 0.2s ease;
   &:hover {
-    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.2)
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -207,7 +203,7 @@ const FormStyle = styled.form`
   h1 {
     font-size: 2.8rem;
     font-weight: 400;
-    color: #434C5F;
+    color: #434c5f;
   }
   p {
     display: block;
@@ -217,7 +213,7 @@ const FormStyle = styled.form`
     margin-bottom: 50px;
   }
   ${StyledError} {
-    color: rgba(225,0,0,1);
+    color: rgba(225, 0, 0, 1);
     margin-bottom: 20px;
   }
 `;
@@ -254,17 +250,15 @@ const SideImage = styled.div`
   }
 `;
 
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  display:flex;
+  display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   font-family: "Open Sans";
   overflow: auto;
 `;
-
