@@ -1,20 +1,25 @@
-import React, { useContext } from "react";
-import { Route } from "react-router-dom";
-import LandingPage from "./components/LandingPageView/LandingPage";
-import ScheduleView from "./components/ScheduleView";
-import ProgressView from "./components/ProgressView";
-import WorkoutsView from "./components/WorkoutsView";
-import SettingsView from "./components/SettingsView/SettingsView";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Navigation from "./components/Navigation";
-import styled, { ThemeProvider } from "styled-components";
-import { theme } from "./StyleTheme";
-import { Store } from "./index";
-import MainSettingsView from "./components/SettingsView/MainSettings";
+import React, { Suspense, useState, useContext, lazy } from 'react';
+import { Route } from 'react-router-dom';
 
+import Loader from 'react-loader-spinner';
+
+// import WorkoutsView from "./components/WorkoutsView";
+
+import styled, { ThemeProvider } from 'styled-components';
+import { theme } from './StyleTheme';
+import { Store } from './index';
 
 // export const AppState = createContext({ state: {}, dispatch: () => {} });
+
+const WorkoutsView = lazy(() => import('./components/WorkoutsView'));
+const LandingPage = lazy(() => import('./components/LandingPageView/LandingPage'));
+const ScheduleView = lazy(() => import('./components/ScheduleView'));
+const ProgressView = lazy(() => import('./components/ProgressView'));
+const SettingsView = lazy(() => import('./components/SettingsView/SettingsView'));
+const Login = lazy(() => import('./components/Login'));
+const Register = lazy(() => import('./components/Register'));
+const Navigation = lazy(() => import('./components/Navigation'));
+const MainSettingsView = lazy(() => import('./components/SettingsView/MainSettings'));
 
 const App = props => {
   // Similar to componentDidMount and componentDidUpdate:
@@ -23,37 +28,78 @@ const App = props => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Route path="/" render={props => <Navigation {...props} />} />
+        <Route
+          path="/"
+          render={props => (
+            <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+              <Navigation {...props} />
+            </Suspense>
+          )}
+        />
         <StyledApp>
-          <Route exact path="/" render={props => <LandingPage {...props} />} />
-          <Route exact path="/login" render={props => <Login {...props} />} />
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <LandingPage {...props} />
+              </Suspense>
+            )}
+          />
+          <Route
+            exact
+            path="/login"
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <Login {...props} />
+              </Suspense>
+            )}
+          />
           <Route
             exact
             path="/register"
-            render={props => <Register {...props} />}
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <Register {...props} />
+              </Suspense>
+            )}
           />
           <Route
             exact
             path="/schedule"
             render={props => (
-              <ScheduleView dispatch={dispatch} user={state} {...props} />
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <ScheduleView dispatch={dispatch} user={state} {...props} />
+              </Suspense>
             )}
           />
           <Route
             exact
             path="/progress"
-            render={props => <ProgressView {...props} />}
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <ProgressView {...props} />
+              </Suspense>
+            )}
           />
+
           <Route
             exact
             path="/workouts"
-            render={props => <WorkoutsView {...props} />}
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <WorkoutsView {...props} />
+              </Suspense>
+            )}
           />
+
           <Route
             exact
             path="/settings"
             render={props => (
-              <MainSettingsView dispatch={dispatch} user={state} {...props} />
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <MainSettingsView dispatch={dispatch} user={state} {...props} />
+              </Suspense>
             )}
           />
         </StyledApp>
