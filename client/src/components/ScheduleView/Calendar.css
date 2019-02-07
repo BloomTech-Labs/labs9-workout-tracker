@@ -274,11 +274,16 @@ transition: 0.5s ease-in;
     opacity: 0;
     font-size: 4.5em;
     position: absolute;
-    top: -0.2em;
-    right: -0.05em;
+    top: -.1em;
+    right: .1em;
     transition: 0.25s ease-out;
     letter-spacing: -0.07em;
   }
+
+  @media(max-width:690px) {
+    .calendar .body .cell .bg {
+display:none  }
+}
   
   .calendar .body .cell:hover .bg,
   .calendar .body .selected .bg {

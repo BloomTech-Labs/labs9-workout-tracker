@@ -151,7 +151,7 @@ const HooksCalendar = props => {
                       return (
                         <CellDiv key={sworkout.id}>
                           <i
-                            className="fas fa-dumbbell completed"
+                            className={`fas fa-dumbbell completed`}
                             key={`${day}${Math.random()}`}
                           />
                           <p className="completed">{sworkout.title}</p>
@@ -251,6 +251,7 @@ const Legend = styled.div`
   i {
     color: rgb(253, 143, 37);
     margin-left: 4%;
+
   }
   i.completed {
     color: rgb(64, 88, 101);

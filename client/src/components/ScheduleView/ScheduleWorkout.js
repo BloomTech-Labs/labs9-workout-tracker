@@ -112,7 +112,7 @@ const ScheduleWorkout = props => {
         payload: newSW.data
       });
       dispatch({ type: "UPDATE_DATE_SELECTED" });
-      dispatch({ type: "UPDATE_SELECTED_DATE" });
+      dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
     }
   };
 
@@ -152,11 +152,11 @@ const ScheduleWorkout = props => {
           onSubmit={() => {
             props.history.push("/workouts");
             dispatch({ type: "UPDATE_DATE_SELECTED" });
-            dispatch({ type: "UPDATE_SELECTED_DATE" });
+            dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
           }}
           closeModal={() => {
             dispatch({ type: "UPDATE_DATE_SELECTED" });
-            dispatch({ type: "UPDATE_SELECTED_DATE" });
+            dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
           }}
           title={"Schedule Workout"}
         >
@@ -183,7 +183,7 @@ const ScheduleWorkout = props => {
           onSubmit={{ scheduleWorkoutHandler }}
           closeModal={() => {
             dispatch({ type: "UPDATE_DATE_SELECTED" });
-            dispatch({ type: "UPDATE_SELECTED_DATE" });
+            dispatch({ type: "UPDATE_CURRENT_DAY", payload:null });
           }}
           title={"Schedule Workout"}
         >
