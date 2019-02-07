@@ -139,19 +139,19 @@ const WorkoutDetails = props => {
               return (
                 <WorkoutDetailsDiv key={scheduleWorkout.id}>
                   <WorkoutTitleDiv>
-                    <h3>{scheduleWorkout.title}</h3>
-
-                    <h3>
+                    <h1>{scheduleWorkout.title}</h1>
+                    <h2>
                       {newScheduleDate.toLocaleString("en-us", {
                         weekday: "long",
                         month: "long",
+                        year: "numeric",
                         day: "numeric"
                       })}
-                    </h3>
+                    </h2>
                   </WorkoutTitleDiv>
                   <ExerciseListDiv>
                     <ExDetailsTitle>
-                      <ExDetailsP>Exercise</ExDetailsP>
+                      <ExerciseDetailsP>Exercise</ExerciseDetailsP>
                       <ExDetailsP>Weight</ExDetailsP>
                       <ExDetailsP>Sets</ExDetailsP>
                       <ExDetailsP>Reps</ExDetailsP>
@@ -223,6 +223,10 @@ const ExDetailsP = styled.p`
   text-overflow: ellipsis;
 `;
 
+const ExerciseDetailsP = styled(ExDetailsP)`
+text-align: initial;
+`;
+
 const WorkoutContainer = styled.div`
   justify-content: space-around;
   background-color: white;
@@ -242,8 +246,9 @@ const WorkoutDetailsDiv = styled.div`
 const WorkoutTitleDiv = styled.div`
   display: flex;
   width: 100%;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
 `;
 
 const ExerciseListDiv = styled.div`

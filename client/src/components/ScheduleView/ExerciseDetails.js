@@ -47,7 +47,7 @@ const ExerciseDetails = props => {
   };
   return (
     <ExDetailsTitle key={props.exercise.id}>
-      <ExDetailsP> {props.exercise.name}</ExDetailsP>
+      <ExerciseDetailsP> {props.exercise.name}</ExerciseDetailsP>
       <ExDetailsP>{props.exercise.weight}</ExDetailsP>
       <ExDetailsP>{props.exercise.sets}</ExDetailsP>
       <ExDetailsP>{props.exercise.reps}</ExDetailsP>
@@ -89,6 +89,10 @@ const ExDetailsP = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const ExerciseDetailsP = styled(ExDetailsP)`
+text-align: initial;
 `;
 
 const CheckboxContainer = styled.div`

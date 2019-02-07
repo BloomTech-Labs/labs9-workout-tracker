@@ -238,7 +238,7 @@ const ScheduleWorkout = props => {
                           }`}
                         >
                           <ExDetailsTitle>
-                            <ExDetailsP className="name">Exercise</ExDetailsP>
+                            <ExerciseDetailsP className="name">Exercise</ExerciseDetailsP>
                             <ExDetailsP>Weight</ExDetailsP>
                             <ExDetailsP>Sets</ExDetailsP>
                             <ExDetailsP>Reps</ExDetailsP>
@@ -247,10 +247,10 @@ const ScheduleWorkout = props => {
                             return (
                               <ExDetailsDiv key={ex.id}>
                                 <ExDetailsListDiv>
-                                  <ExDetailsP className="name">
+                                  <ExerciseDetailsP className="name">
                                     {" "}
                                     {ex.name}
-                                  </ExDetailsP>
+                                  </ExerciseDetailsP>
                                   <ExDetailsP>{ex.weight}</ExDetailsP>
                                   <ExDetailsP>{ex.sets}</ExDetailsP>
                                   <ExDetailsP>{ex.reps}</ExDetailsP>
@@ -302,7 +302,7 @@ const ScheduleWorkout = props => {
                           }`}
                         >
                           <ExDetailsTitle>
-                            <ExDetailsP className="name">Exercise</ExDetailsP>
+                            <ExerciseDetailsP className="name">Exercise</ExerciseDetailsP>
                             <ExDetailsP>Weight</ExDetailsP>
                             <ExDetailsP>Sets</ExDetailsP>
                             <ExDetailsP>Reps</ExDetailsP>
@@ -311,10 +311,10 @@ const ScheduleWorkout = props => {
                             return (
                               <ExDetailsDiv key={ex.id}>
                                 <ExDetailsListDiv>
-                                  <ExDetailsP className="name">
+                                  <ExerciseDetailsP className="name">
                                     {" "}
                                     {ex.name}
-                                  </ExDetailsP>
+                                  </ExerciseDetailsP>
                                   <ExDetailsP>{ex.weight}</ExDetailsP>
                                   <ExDetailsP>{ex.sets}</ExDetailsP>
                                   <ExDetailsP>{ex.reps}</ExDetailsP>
@@ -473,6 +473,14 @@ const ExDetailsP = styled.p`
   margin-bottom: 0px;
   text-align: left;
   width: 20%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const ExerciseDetailsP = styled(ExDetailsP)`
+text-align: initial;
 `;
 
 const ExDetailsListDiv = styled.div`
