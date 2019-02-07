@@ -55,7 +55,7 @@ display: inline-block;
 height: 50px;
 line-height: 50px;
 padding: 0 50px;
-font-size: 12px;
+font-size: 1.2rem;
 font-weight: 700;
 transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
 border-radius: 100px;

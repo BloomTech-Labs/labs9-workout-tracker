@@ -33,12 +33,12 @@ const StyledLoading = styled.div`
         color: ${props => props.theme.primaryDark} !important;
         font-family: ${props => props.theme.opensans};
         position: relative;
-        font-size: 22px !important;
+        font-size: 1.4rem !important;
         font-weight: 600 !important;
         :before {
             content: attr(data-text);
             position: absolute;
-            font-size: 22px;
+            font-size: 1.4rem;
             font-weight: 600;
             overflow: hidden;
             max-width: 6.2em;

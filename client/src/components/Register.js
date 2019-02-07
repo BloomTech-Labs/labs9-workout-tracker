@@ -153,7 +153,7 @@ const InputContainer = styled.div`
   h3 {
     display: block;
     font-weight: 700;
-    font-size: 11px;
+    font-size: 1.1rem;
     color: #434C5E;
     margin-bottom: 8px;
     text-align: left;
@@ -165,7 +165,7 @@ const InputContainer = styled.div`
     border: 1px solid #D4D9E2;
     border-radius: 3px;
     padding: 15px;
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #596377;
     outline: 0;
     width: 100%;
@@ -186,7 +186,7 @@ const Button = styled.button`
   height: 50px;
   line-height: 50px;
   padding: 0 60px;
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #FFF;
   cursor: pointer;
@@ -205,13 +205,13 @@ const FormStyle = styled.form`
   width: 90%;
   max-width: 540px;
   h1 {
-    font-size: 28px;
+    font-size: 2.8rem;
     font-weight: 400;
     color: #434C5F;
   }
   p {
     display: block;
-    font-size: 16px;
+    font-size: 1.6rem;
     color: #596377;
     font-weight: 400;
     margin-bottom: 50px;
@@ -230,7 +230,7 @@ const FormContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 72px);
+  height: calc(100% - 100px);
   @media (max-width: 1076px) {
     width: 100%;
     margin-left: 0px;

@@ -300,7 +300,7 @@ const StyledHeader = styled.div`
   align-items: center;
   margin-bottom: 20px;
   h2 {
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 600;
     margin: 0;
     text-transform: capitalize;
@@ -330,7 +330,7 @@ const StyledStats = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 40px;
-  font-size: 22px;
+  font-size: 2.2rem;
   font-weight: 600;
   ${Percentage} {
     width: 150px;
@@ -346,12 +346,12 @@ const StyledDate = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 20px;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 500;
 `;
 
 const StyledIcon = styled.span`
-  font-size: 18px;
+  font-size: 1.8rem;
   cursor: pointer;
   color: ${props => (props.delete ? 'red' : 'black')};
 `;

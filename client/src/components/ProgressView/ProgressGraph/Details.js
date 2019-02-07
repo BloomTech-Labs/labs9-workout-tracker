@@ -182,12 +182,12 @@ const Row = styled.div`
   width: 100%;
   margin-bottom: 10px;
   h3 {
-    font-size: 15px;
+    font-size: 1.5rem;
     font-family: 600;
     margin: 0;
   }
   span{
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 600;
     margin-left: 20px;
     color: ${props => props.theme.accent};
@@ -217,7 +217,7 @@ const DetailsContainer = styled.div`
   position: relative;
   overflow: hidden;
   h2 {
-      font-size: 20px;
+    font-size: 2rem;
       font-weight: 600;
       text-transform: uppercase;
       color: ${props => props.theme.primaryDark};

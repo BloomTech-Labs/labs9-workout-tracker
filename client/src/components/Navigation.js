@@ -109,10 +109,10 @@ const StyledLink = styled(NavLink)`
   flex-direction: column;
   justify-content: center;
   i {
-    font-size: 22px;
+    font-size: 2.2rem;
   }
   span {
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 500;
   }
   &.active {

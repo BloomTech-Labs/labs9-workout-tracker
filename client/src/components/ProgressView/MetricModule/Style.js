@@ -15,7 +15,7 @@ export const CancelButton = styled.button`
   border: 2px solid ${props => props.theme.primaryDark};
   background-color: ${props => props.theme.primaryDark};
   color: white;
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -29,7 +29,7 @@ export const DeleteButton = styled.button`
   border: 2px solid ${props => props.theme.accent};
   color: ${props => props.theme.accent};
   background-color: white;
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -42,7 +42,7 @@ export const SubmitButton = styled.button`
   border: 2px solid ${props => props.theme.accent};
   background-color: ${props => props.theme.accent};
   color: white;
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -50,7 +50,7 @@ export const SubmitButton = styled.button`
 
 export const StyledError = styled.div`
   color: red;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 600;
 `;
 
@@ -61,7 +61,7 @@ export const StyledInput = styled.input`
   border: 1px solid rgba(0, 0, 0, 0.45);
   padding: 0px 15px;
   outline: none;
-  font-size: 18px;
+  font-size: 1.8rem;
 `;
 
 export const ModuleActions = styled.div`

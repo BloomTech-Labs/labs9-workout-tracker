@@ -25,7 +25,7 @@ const ModalHeader = styled.div`
   align-items: center;
   position: relative;
   i {
-    font-size: 22px;
+    font-size: 2.2rem;
     position: absolute;
     right: 10px;
     top: 15px;
