@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
-import { Store } from "../../index";
+import React, { useContext, useState } from 'react';
+import { Store } from '../../index';
 import { Redirect } from 'react-router-dom';
-import dateFns from "date-fns";
-import ScheduleWorkout from "./ScheduleWorkout";
-import styled from "styled-components";
-import WorkoutDetails from "./WorkoutDetails";
-import WeeklyWorkouts from "./WeeklyWorkouts";
-import "./Calendar.css";
+import dateFns from 'date-fns';
+import ScheduleWorkout from './ScheduleWorkout';
+import styled from 'styled-components';
+import WorkoutDetails from './WorkoutDetails';
+import WeeklyWorkouts from './WeeklyWorkouts';
+import './Calendar.css';
 
 const HooksCalendar = props => {
   const { state, dispatch } = useContext(Store);
@@ -17,7 +17,7 @@ const HooksCalendar = props => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const renderHeader = () => {
-    const dateFormat = "MMM YYYY";
+    const dateFormat = 'MMM YYYY';
 
     return (
       <div className="header row flex-middle">
@@ -37,7 +37,7 @@ const HooksCalendar = props => {
   };
 
   const renderDays = () => {
-    const dateFormat = "ddd";
+    const dateFormat = 'ddd';
     const days = [];
 
     let startDate = dateFns.startOfWeek(currentMonth);
@@ -59,19 +59,19 @@ const HooksCalendar = props => {
     const startDate = dateFns.startOfWeek(monthStart);
     const endDate = dateFns.endOfWeek(monthEnd);
 
-    const dateFormat = "D";
-    const dateMatch = "YYYY-MM-DD";
+    const dateFormat = 'D';
+    const dateMatch = 'YYYY-MM-DD';
     const rows = [];
 
     let days = [];
     let day = startDate;
-    let formattedDate = "";
-    let matchedDate = "";
+    let formattedDate = '';
+    let matchedDate = '';
 
     const arrayContains = (str, array) => {
       let populated = false;
       array.forEach(stringObj => {
-        if (stringObj.date.split("T")[0] === str) {
+        if (stringObj.date.split('T')[0] === str) {
           populated = true;
         }
       });
@@ -97,10 +97,10 @@ const HooksCalendar = props => {
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
-                    ? "disabled"
+                    ? 'disabled'
                     : dateFns.isSameDay(day, currentDate)
-                    ? "selected"
-                    : ""
+                    ? 'selected'
+                    : ''
                 }`}
                 key={`${day}${Math.random()}`}
                 onClick={() => onDateClick(dateFns.parse(cloneDay), false)}
@@ -112,20 +112,20 @@ const HooksCalendar = props => {
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
-                    ? "disabled"
+                    ? 'disabled'
                     : dateFns.isSameDay(day, currentDate)
-                    ? "selected"
-                    : ""
+                    ? 'selected'
+                    : ''
                 }`}
                 key={`${day}${Math.random()}`}
                 sworkout={state.scheduleWorkouts.filter(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
-                  const splitDate = sworkout.date.split("T")[0];
+                  const splitDate = sworkout.date.split('T')[0];
                   if (splitDate === matchedDate) return sworkout;
                 })}
                 completed={state.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
-                  const splitDate = sworkout.date.split("T")[0];
+                  const splitDate = sworkout.date.split('T')[0];
                   if (splitDate === matchedDate) return sworkout;
                 })}
                 onClick={
@@ -145,37 +145,26 @@ const HooksCalendar = props => {
                 {//maps through scheduleworkouts
                 state.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
-                  const splitDate = sworkout.date.split("T")[0];
+                  const splitDate = sworkout.date.split('T')[0];
                   if (splitDate === matchedDate) {
                     if (sworkout.completed === true) {
                       return (
                         <CellDiv key={sworkout.id}>
-                          <i
-                            className="fas fa-dumbbell completed"
-                            key={`${day}${Math.random()}`}
-                          />
+                          <i className="fas fa-dumbbell completed" key={`${day}${Math.random()}`} />
                           <p className="completed">{sworkout.title}</p>
                         </CellDiv>
                       );
                     } else {
                       return (
                         <CellDiv key={sworkout.id}>
-                          <i
-                            className="fas fa-dumbbell"
-                          />
+                          <i className="fas fa-dumbbell" />
                           <p>{sworkout.title.substring(0, 13)}...</p>
                         </CellDiv>
                       );
                     }
                   }
                 })}
-                <span
-                  className={`number ${
-                    dateFns.isSameDay(day, new Date()) ? "today" : null
-                  }`}
-                >
-                  {formattedDate}
-                </span>
+                <span className={`number ${dateFns.isSameDay(day, new Date()) ? 'today' : null}`}>{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
               </div>
             )}
@@ -199,11 +188,9 @@ const HooksCalendar = props => {
   };
 
   const onDateClick = (day, isPopulated) => {
-    
-      dispatch({ type: "UPDATE_CURRENT_DAY", payload: day })
-      dispatch({ type: "UPDATE_DATE_SELECTED" });
-      dispatch({ type: "UPDATE_IS_POPULATED", payload: isPopulated })
-    
+    dispatch({ type: 'UPDATE_CURRENT_DAY', payload: day });
+    dispatch({ type: 'UPDATE_DATE_SELECTED' });
+    dispatch({ type: 'UPDATE_IS_POPULATED', payload: isPopulated });
   };
 
   const nextMonth = () => {
@@ -216,7 +203,7 @@ const HooksCalendar = props => {
 
   return (
     <div className="calendar-div">
-      <WeeklyWorkouts/>
+      <WeeklyWorkouts />
       <Legend>
         <i className="fas fa-dumbbell fa-2x completed" />
         <p className="completed">Complete</p>
@@ -229,9 +216,9 @@ const HooksCalendar = props => {
         {renderCells()}
       </div>
       {dateSelected === false ? null : datePopulated === true ? (
-        <WorkoutDetails/>
+        <WorkoutDetails />
       ) : (
-        <ScheduleWorkout history={props.history}/>
+        <ScheduleWorkout history={props.history} />
       )}
     </div>
   );
@@ -244,9 +231,9 @@ const Legend = styled.div`
   align-items: center;
   margin-bottom: 10px;
 
-  @media(max-width:690px) {
+  @media (max-width: 690px) {
     margin-bottom: 20px;
-    justify-content:center;
+    justify-content: center;
   }
   i {
     color: rgb(253, 143, 37);
@@ -260,16 +247,13 @@ const Legend = styled.div`
   p {
     margin: 0 2% 0 1%;
     font-size: 1.6rem;
-    font-weight:bold;
+    font-weight: bold;
     color: rgb(253, 143, 37);
   }
   p.completed {
     color: rgb(64, 88, 101);
   }
 `;
-
-
-
 
 const CellDiv = styled.div`
   display: flex;
@@ -278,14 +262,15 @@ const CellDiv = styled.div`
   width: 100%;
   height: 100%;
   @media (max-width: 690px) {
-    justify-content: center;
+    justify-content: flex-end;
   }
   i {
     margin-right: 70%;
     margin-top: 5px;
     @media (max-width: 690px) {
       margin: 0;
-      align-self: center;
+      align-self: flex-start;
+      padding: 5px;
     }
   }
   p {
