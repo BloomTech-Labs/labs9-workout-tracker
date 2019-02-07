@@ -329,5 +329,5 @@ const ProgressPic = styled.img`
 
 const LandingContainer = styled.div`
 
-  width: calc(100vw-18px);
+  width: 100%
 `;
