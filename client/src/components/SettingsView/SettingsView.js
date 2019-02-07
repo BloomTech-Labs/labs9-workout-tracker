@@ -279,7 +279,7 @@ const RecEmailDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
+  width: 100%;
   margin-top: 25px;
   @media (max-width: 550px) {
     width: 100%;
@@ -297,16 +297,16 @@ const ButtonDiv = styled.div`
 const LabelStyle = styled.label`
   display: flex;
   align-self: flex-start;
-  width:50%;
   color: ${props => props.theme.primaryDark};
 `;
 
 const PremiumDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   align-items: center;
   margin-bottom:20px;
+
   @media (max-width: 550px) {
     width: 100%;
   }

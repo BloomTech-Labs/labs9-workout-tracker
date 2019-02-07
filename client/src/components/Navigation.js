@@ -22,7 +22,7 @@ const Navigation = props => {
     ) {
       return (
         <NavStyle>
-          <Logo to="/">fitmetrix</Logo>
+          <Logo to="/">FLEXLOG</Logo>
           <NavBar>
             <StyledLink to="/login" activeClassName="active" landing="true">
               Login
@@ -37,7 +37,7 @@ const Navigation = props => {
 
     return (
       <NavStyle isApp="true">
-        <Logo to="/">FlexLog</Logo>
+        <Logo to="/">FLEXLOG</Logo>
         <NavBar>
           <StyledLink to="/schedule" activeClassName="active">
             <i className="far fa-calendar-alt" />
