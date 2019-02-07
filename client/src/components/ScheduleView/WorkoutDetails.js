@@ -135,7 +135,7 @@ const WorkoutDetails = props => {
                       <ExDetailsP>Weight</ExDetailsP>
                       <ExDetailsP>Sets</ExDetailsP>
                       <ExDetailsP>Reps</ExDetailsP>
-                      <ExDetailsP>Done</ExDetailsP>
+                      {/* <ExDetailsP>Done</ExDetailsP> */}
                     </ExDetailsTitle>
                     {scheduleWorkout.exercises &&
                       scheduleWorkout.exercises.map(exercise => {
@@ -179,7 +179,7 @@ const ExDetailsTitle = styled.div`
 `;
 
 const ExDetailsP = styled.p`
-  width: 20%;
+  width: 25%;
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: center;

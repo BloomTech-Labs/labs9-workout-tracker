@@ -7,7 +7,8 @@ import axios from "axios";
 
 const ExerciseDetails = props => {
   //update state using hook
-  const { state, dispatch } = useContext(Store);
+
+  // const { state, dispatch } = useContext(Store);
 
   const [status, setStatus] = useState(props.exercise.completed);
 
@@ -49,7 +50,7 @@ const updateScheduledWorkout = async (e) => {
       <ExDetailsP>{props.exercise.weight}</ExDetailsP>
       <ExDetailsP>{props.exercise.sets}</ExDetailsP>
       <ExDetailsP>{props.exercise.reps}</ExDetailsP>
-      <CheckboxContainer>
+      {/* <CheckboxContainer>
         <input
           type="checkbox"
           checked={status}
@@ -57,7 +58,7 @@ const updateScheduledWorkout = async (e) => {
               updateScheduledWorkout(e)
           } }
         />
-      </CheckboxContainer>
+      </CheckboxContainer> */}
     </ExDetailsTitle>
   );
 };
@@ -80,7 +81,7 @@ const ExDetailsTitle = styled.div`
 `;
 
 const ExDetailsP = styled.p`
-  width: 20%;
+  width: 25%;
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: center;
