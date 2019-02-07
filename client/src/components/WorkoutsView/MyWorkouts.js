@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Store } from '../../index';
-import firebase from 'firebase';
-import styled from 'styled-components';
-import DropDown from '../../shared/DropDown';
-import Button from '../../shared/Button';
-import axios from 'axios';
-import Loading from '../Loading';
+import React, { useContext, useState, useEffect } from "react";
+import { Store } from "../../index";
+import firebase from "firebase";
+import styled from "styled-components";
+import DropDown from "../../shared/DropDown";
+import Button from "../../shared/Button";
+import axios from "axios";
+import Loading from "../Loading";
 
 const MyWorkouts = () => {
   //Accesses state and dispatch with the useContext Hook.
@@ -23,9 +23,9 @@ const MyWorkouts = () => {
     });
 
     options.unshift({
-      name: 'All',
-      value: 'all',
-      key: 'all'
+      name: "All",
+      value: "all",
+      key: "all"
     });
 
     return options;
@@ -51,52 +51,52 @@ const MyWorkouts = () => {
 
   const handleChange = value => {
     dispatch({
-      type: 'UPDATE_SELECTED_WORKOUTS_CATEGORY',
+      type: "UPDATE_SELECTED_WORKOUTS_CATEGORY",
       payload: value
     });
   };
 
   const handleAdd = e => {
-    console.log('in handleAdd');
-    dispatch({ type: 'RESET_EDIT_WORKOUT' });
+    console.log("in handleAdd");
+    dispatch({ type: "RESET_EDIT_WORKOUT" });
 
     dispatch({
-      type: 'SHOW_WORKOUT_FORM',
+      type: "SHOW_WORKOUT_FORM",
       payload: true
     });
   };
 
   const handleEdit = async (workoutID, i) => {
-    console.log('in handleEdit');
+    console.log("in handleEdit");
 
     dispatch({
-      type: 'SHOW_WORKOUT_FORM',
+      type: "SHOW_WORKOUT_FORM",
       payload: true
     });
 
     dispatch({
-      type: 'EDIT_WORKOUT',
+      type: "EDIT_WORKOUT",
       payload: state.workouts[i]
     });
   };
 
   const handleDown = async (workoutID, i) => {
-    console.log('in handleDown');
+    console.log("in handleDown");
 
     setShowId(i);
 
     dispatch({
-      type: 'SHOW_EXERCISES'
+      type: "SHOW_EXERCISES"
     });
   };
 
   const handleUp = async (workoutID, i) => {
-    console.log('in handleDown');
+    console.log("in handleDown");
 
     setShowId(null);
 
     dispatch({
-      type: 'SHOW_EXERCISES'
+      type: "SHOW_EXERCISES"
     });
   };
 
@@ -106,7 +106,7 @@ const MyWorkouts = () => {
         <DropDownContainer>
           <h1>My Workouts</h1>
           <DropDown
-            label={'Filter by Category'}
+            label={"Filter by Category"}
             options={getOptions()}
             onChange={handleChange}
             value={state.selectedWorkoutCategory}
@@ -121,24 +121,40 @@ const MyWorkouts = () => {
 
       {state.workouts.length !== 0 &&
         state.workouts.map((workout, i) => {
-          if (state.selectedWorkoutCategory === 'all') {
+          if (state.selectedWorkoutCategory === "all") {
             return (
-              <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+              <Workout
+                key={i}
+                className={`workoutsCard-${showId === i ? "showEx" : "hideEx"}`}
+              >
                 <WorkoutsTitle className={`workoutsTitle`}>
-                  <WorkoutsCard onClick={() => handleDown(workout.id, i)} className="test">
+                  <WorkoutsCard
+                    onClick={() => handleDown(workout.id, i)}
+                    className="test"
+                  >
                     <h3>{workout.title}</h3>
                   </WorkoutsCard>
                   <span>
                     {showId === i ? (
                       <span className="upArrow">
-                        <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
+                        <i
+                          onClick={() => handleUp(workout.id, i)}
+                          className="fas fa-arrow-up"
+                        />
                       </span>
                     ) : (
-                      <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
+                      <i
+                        onClick={() => handleDown(workout.id, i)}
+                        className="fas fa-arrow-down"
+                      />
                     )}
                   </span>
                 </WorkoutsTitle>
-                <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                <ExercisesCard
+                  className={`exerciseCard-${
+                    showId === i ? "showEx" : "hideEx"
+                  }`}
+                >
                   <ExDetailsTitle>
                     <ExDetailsP className="name">Exercise</ExDetailsP>
                     <ExDetailsP>Weight</ExDetailsP>
@@ -159,7 +175,10 @@ const MyWorkouts = () => {
                   })}
 
                   <ButtonContainer>
-                    <Button onClick={() => handleEdit(workout.id, i)} className="fas fa-edit">
+                    <Button
+                      onClick={() => handleEdit(workout.id, i)}
+                      className="fas fa-edit"
+                    >
                       Edit Workout
                     </Button>
                   </ButtonContainer>
@@ -169,22 +188,38 @@ const MyWorkouts = () => {
           }
           if (workout.category_id == state.selectedWorkoutCategory) {
             return (
-              <Workout key={i} className={`workoutsCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+              <Workout
+                key={i}
+                className={`workoutsCard-${showId === i ? "showEx" : "hideEx"}`}
+              >
                 <WorkoutsTitle className={`workoutsTitle`}>
-                  <WorkoutsCard onClick={() => handleDown(workout.id, i)} className="test">
+                  <WorkoutsCard
+                    onClick={() => handleDown(workout.id, i)}
+                    className="test"
+                  >
                     <h3>{workout.title}</h3>
                   </WorkoutsCard>
                   <span>
                     {showId === i ? (
                       <span className="upArrow">
-                        <i onClick={() => handleUp(workout.id, i)} className="fas fa-arrow-up" />
+                        <i
+                          onClick={() => handleUp(workout.id, i)}
+                          className="fas fa-arrow-up"
+                        />
                       </span>
                     ) : (
-                      <i onClick={() => handleDown(workout.id, i)} className="fas fa-arrow-down" />
+                      <i
+                        onClick={() => handleDown(workout.id, i)}
+                        className="fas fa-arrow-down"
+                      />
                     )}
                   </span>
                 </WorkoutsTitle>
-                <ExercisesCard className={`exerciseCard-${showId === i ? 'showEx' : 'hideEx'}`}>
+                <ExercisesCard
+                  className={`exerciseCard-${
+                    showId === i ? "showEx" : "hideEx"
+                  }`}
+                >
                   <ExDetailsTitle>
                     <ExDetailsP className="name">Exercise</ExDetailsP>
                     <ExDetailsP>Weight</ExDetailsP>
@@ -212,11 +247,10 @@ const MyWorkouts = () => {
 
       {state.workouts.length === 0 ? (
         <SchedulePrompt>No workouts made yet. Let's create one!</SchedulePrompt>
-
       ) : (
         Loading
       )}
-  </HeaderContainer>
+    </HeaderContainer>
   );
 };
 
@@ -236,7 +270,7 @@ const WorkoutsTitle = styled.div`
 `;
 
 const SchedulePrompt = styled.div`
-color: ${props => props.theme.primaryDark};
+  color: ${props => props.theme.primaryDark};
   font-size: 1.8rem;
   font-weight: 600;
   margin-top: 100px;

@@ -2,14 +2,12 @@ import React, { useContext } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import styled from "styled-components";
-import {Store} from '../../index'
-
-
+import { Store } from "../../index";
 
 const StripeButton = () => {
   const publishableKey = "pk_test_UoZqVOHUhJfAEAvXBPJyzYNZ";
 
-  const {state, dispatch} = useContext(Store);
+  const { state, dispatch } = useContext(Store);
 
   const onToken = token => {
     const body = {
@@ -21,7 +19,7 @@ const StripeButton = () => {
       .then(response => {
         console.log(response);
         alert("Payment Success");
-        dispatch({type: 'USER_MODEL', payload:{premium: true}})
+        dispatch({ type: "USER_MODEL", payload: { premium: true } });
       })
       .catch(error => {
         console.log("Payment Error: ", error);
@@ -48,26 +46,25 @@ const StripeButton = () => {
 export default StripeButton;
 
 const StripeStyle = styled.button`
-width:86%;
-text-transform: uppercase;
-letter-spacing: 1px;
-display: inline-block;
-height: 50px;
-line-height: 50px;
-padding: 0 50px;
-font-size: 1.2rem;
-font-weight: 700;
-transition: box-shadow .2s ease,border .2s ease,-webkit-box-shadow .2s ease;
-border-radius: 100px;
-outline: none;
-background: #FD8F25;
-border: none;
-color: #FFF;
-:hover {
-  cursor:pointer;
-}
+  width: 86%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: box-shadow 0.2s ease, border 0.2s ease,
+    -webkit-box-shadow 0.2s ease;
+  border-radius: 100px;
+  outline: none;
+  background: #fd8f25;
+  border: none;
+  color: #fff;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
-const StyleCheckout = styled(StripeCheckout)`
-
-`;
+const StyleCheckout = styled(StripeCheckout)``;

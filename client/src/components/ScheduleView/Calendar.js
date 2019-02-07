@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Store } from "../../index";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import dateFns from "date-fns";
 import ScheduleWorkout from "./ScheduleWorkout";
 import styled from "styled-components";
@@ -160,9 +160,7 @@ const HooksCalendar = props => {
                     } else {
                       return (
                         <CellDiv key={sworkout.id}>
-                          <i
-                            className="fas fa-dumbbell"
-                          />
+                          <i className="fas fa-dumbbell" />
                           <p>{sworkout.title.substring(0, 13)}...</p>
                         </CellDiv>
                       );
@@ -199,11 +197,9 @@ const HooksCalendar = props => {
   };
 
   const onDateClick = (day, isPopulated) => {
-    
-      dispatch({ type: "UPDATE_CURRENT_DAY", payload: day })
-      dispatch({ type: "UPDATE_DATE_SELECTED" });
-      dispatch({ type: "UPDATE_IS_POPULATED", payload: isPopulated })
-    
+    dispatch({ type: "UPDATE_CURRENT_DAY", payload: day });
+    dispatch({ type: "UPDATE_DATE_SELECTED" });
+    dispatch({ type: "UPDATE_IS_POPULATED", payload: isPopulated });
   };
 
   const nextMonth = () => {
@@ -216,7 +212,7 @@ const HooksCalendar = props => {
 
   return (
     <div className="calendar-div">
-      <WeeklyWorkouts/>
+      <WeeklyWorkouts />
       <Legend>
         <i className="fas fa-dumbbell fa-2x completed" />
         <p className="completed">Complete</p>
@@ -229,9 +225,9 @@ const HooksCalendar = props => {
         {renderCells()}
       </div>
       {dateSelected === false ? null : datePopulated === true ? (
-        <WorkoutDetails/>
+        <WorkoutDetails />
       ) : (
-        <ScheduleWorkout history={props.history}/>
+        <ScheduleWorkout history={props.history} />
       )}
     </div>
   );
@@ -244,14 +240,13 @@ const Legend = styled.div`
   align-items: center;
   margin-bottom: 10px;
 
-  @media(max-width:690px) {
+  @media (max-width: 690px) {
     margin-bottom: 20px;
-    justify-content:center;
+    justify-content: center;
   }
   i {
     color: rgb(253, 143, 37);
     margin-left: 4%;
-
   }
   i.completed {
     color: rgb(64, 88, 101);
@@ -261,16 +256,13 @@ const Legend = styled.div`
   p {
     margin: 0 2% 0 1%;
     font-size: 1.6rem;
-    font-weight:bold;
+    font-weight: bold;
     color: rgb(253, 143, 37);
   }
   p.completed {
     color: rgb(64, 88, 101);
   }
 `;
-
-
-
 
 const CellDiv = styled.div`
   display: flex;

@@ -1,16 +1,13 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import firebase from "firebase";
-import styled from 'styled-components';
+import styled from "styled-components";
 import { Store } from "../../../index";
-import { dateFormat} from "../../../shared";
-import {
-  StyledError,
-  Row
-} from "./Style";
-import Input from '../../../shared/Input';
-import FormModal from '../../../shared/FormModal';
-import Button from '../../../shared/Button';
+import { dateFormat } from "../../../shared";
+import { StyledError, Row } from "./Style";
+import Input from "../../../shared/Input";
+import FormModal from "../../../shared/FormModal";
+import Button from "../../../shared/Button";
 
 const AddMetric = () => {
   const { state, dispatch } = useContext(Store);
@@ -39,13 +36,13 @@ const AddMetric = () => {
 
     const token = await firebase.auth().currentUser.getIdToken();
 
-    let copyMetrics = {...currentMetric};
+    let copyMetrics = { ...currentMetric };
 
     Object.keys(currentMetric).forEach(m => {
       if (currentMetric[m] === "") {
-        copyMetrics[m] = 0
+        copyMetrics[m] = 0;
       }
-    })
+    });
 
     console.log(currentMetric);
     const res = await axios.post(
@@ -80,7 +77,6 @@ const AddMetric = () => {
   const changeDate = nDate => {
     const dates = state.metrics.map(m => dateFormat(new Date(m.date)));
 
-
     if (dates.includes(dateFormat(nDate))) {
       setError("Metric for date already exists");
       return;
@@ -108,7 +104,7 @@ const AddMetric = () => {
   } = currentMetric;
 
   return (
-    <FormModal 
+    <FormModal
       onSubmit={addMetric}
       closeModal={() => dispatch({ type: "SHOW_METRIC_FORM" })}
       title={"Update Progress"}
@@ -122,7 +118,7 @@ const AddMetric = () => {
           onChange={changeDate}
           value={date}
           type="calendar"
-          />
+        />
         <Input
           placeholder="Weight"
           label="Weight: lbs"
@@ -130,7 +126,7 @@ const AddMetric = () => {
           size="medium"
           name="weight"
           onChange={e => setMetric(e)}
-          />
+        />
       </Row>
 
       <Row>
@@ -141,7 +137,7 @@ const AddMetric = () => {
           name="hips"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
+          isDisabled={state.premium ? "false" : "true"}
         />
         <Input
           placeholder="Waist"
@@ -150,7 +146,7 @@ const AddMetric = () => {
           name="waist"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
+          isDisabled={state.premium ? "false" : "true"}
         />
       </Row>
 
@@ -162,8 +158,8 @@ const AddMetric = () => {
           name="arm_left"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
-          />
+          isDisabled={state.premium ? "false" : "true"}
+        />
         <Input
           placeholder="Arm Right"
           label="Arm Right: in"
@@ -171,7 +167,7 @@ const AddMetric = () => {
           name="arm_right"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
+          isDisabled={state.premium ? "false" : "true"}
         />
       </Row>
 
@@ -183,8 +179,8 @@ const AddMetric = () => {
           name="leg_left"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
-          />
+          isDisabled={state.premium ? "false" : "true"}
+        />
         <Input
           placeholder="Leg Right"
           label="Leg Right: in"
@@ -192,13 +188,22 @@ const AddMetric = () => {
           name="leg_right"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
-          />
+          isDisabled={state.premium ? "false" : "true"}
+        />
       </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}
-      <Button type="submit" size="responsive">Submit</Button>
+      <Button type="submit" size="responsive">
+        Submit
+      </Button>
       <ButtonContainer>
-        <Button type="button" scheme="cancel" size="responsive" onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}>Cancel</Button>
+        <Button
+          type="button"
+          scheme="cancel"
+          size="responsive"
+          onClick={() => dispatch({ type: "SHOW_METRIC_FORM" })}
+        >
+          Cancel
+        </Button>
       </ButtonContainer>
     </FormModal>
   );
@@ -211,4 +216,4 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
   display: flex;
   align-items: center;
-`
+`;

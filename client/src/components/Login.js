@@ -3,8 +3,8 @@ import { Store } from "../index";
 import firebase from "firebase";
 import styled from "styled-components";
 import axios from "axios";
-import Loading from './Loading';
-import Button from '../shared/Button';
+import Loading from "./Loading";
+import Button from "../shared/Button";
 
 import ropeImg from "./assets/rope.jpg";
 
@@ -14,88 +14,95 @@ const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const loginUser = e => {
     e.preventDefault();
-    setError(false)
-    setLoading(true)
+    setError(false);
+    setLoading(true);
     // Initialize Firebase
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         console.log(res);
-        res.user
-          .getIdToken()
-          .then(idToken => {
-            window.localStorage.setItem("login_token", idToken);
-            axios
-              .get("https://fitmetrix.herokuapp.com/api/user", {
-                headers: { Authorization: idToken }
-              })
-              .then(res => {
-                console.log(res.data);
-                dispatch({ type: "USER_MODEL", payload: res.data });
-                dispatch({type: 'USER_JUST_REGISTERED', payload: false})
-                setLoading(false)
-                props.history.push("/workouts");
-              })
-          })
+        res.user.getIdToken().then(idToken => {
+          window.localStorage.setItem("login_token", idToken);
+          axios
+            .get("https://fitmetrix.herokuapp.com/api/user", {
+              headers: { Authorization: idToken }
+            })
+            .then(res => {
+              console.log(res.data);
+              dispatch({ type: "USER_MODEL", payload: res.data });
+              dispatch({ type: "USER_JUST_REGISTERED", payload: false });
+              setLoading(false);
+              props.history.push("/workouts");
+            });
+        });
       })
       .catch(error => {
-        setError(true)
-        setLoading(false)
-        dispatch({type: 'USER_JUST_REGISTERED', payload: false})
+        setError(true);
+        setLoading(false);
+        dispatch({ type: "USER_JUST_REGISTERED", payload: false });
         console.log(error.code, error.message);
       });
   };
 
   return (
-      <Container>
-        <SideImage/>
-        <FormContainer>
-          {loading ? (<Loading/>) : (
-            <FormStyle onSubmit={e => loginUser(e)}>
-              {state.userJustRegistered ? (<RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess>): null}
-              <h1>Sign into fitmetrix.</h1>
-              <p>Enter details below</p>
-              {error ? (<StyledError>Oops! That email / password combination is not valid.</StyledError>) : null}
-              <InputContainer>
+    <Container>
+      <SideImage />
+      <FormContainer>
+        {loading ? (
+          <Loading />
+        ) : (
+          <FormStyle onSubmit={e => loginUser(e)}>
+            {state.userJustRegistered ? (
+              <RegisterSuccess>
+                Succesfully Registered! Please Login
+              </RegisterSuccess>
+            ) : null}
+            <h1>Sign into FLEXLOG</h1>
+            <p>Enter details below</p>
+            {error ? (
+              <StyledError>
+                Oops! That email / password combination is not valid.
+              </StyledError>
+            ) : null}
+            <InputContainer>
               <h3>EMAIL ADDRESS</h3>
-                <input
+              <input
                 type="text"
                 value={email}
-                  placeholder="jack@fitmetrix.me"
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  />
-              </InputContainer>
-              
-              <InputContainer>
+                placeholder="jack@flexlog.app"
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </InputContainer>
+
+            <InputContainer>
               <h3>PASSWORD</h3>
               <input
-                  type="password"
-                  value={password}
-                  placeholder="Enter your password"
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                  />
-              </InputContainer>
-              <ButtonContainer>
-                <Button type="submit">Sign In</Button>
-              </ButtonContainer>
-            </FormStyle>
-          )}
-        </FormContainer>
-      </Container>
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </InputContainer>
+            <ButtonContainer>
+              <Button type="submit">Sign In</Button>
+            </ButtonContainer>
+          </FormStyle>
+        )}
+      </FormContainer>
+    </Container>
   );
 };
 
 export default Login;
 
-const RegisterSuccess = styled.p`
-`;
+const RegisterSuccess = styled.p``;
 
 const ButtonContainer = styled.div`
   width: 100%;
@@ -103,9 +110,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const StyledError = styled.p`
-  
-`;
+const StyledError = styled.p``;
 
 const InputContainer = styled.div`
   color: #5f697a;
@@ -115,7 +120,7 @@ const InputContainer = styled.div`
     display: block;
     font-weight: 700;
     font-size: 1.1rem;
-    color: #434C5E;
+    color: #434c5e;
     margin-bottom: 8px;
     text-align: left;
     letter-spacing: 1px;
@@ -123,7 +128,7 @@ const InputContainer = styled.div`
     text-transform: uppercase;
   }
   input {
-    border: 1px solid #D4D9E2;
+    border: 1px solid #d4d9e2;
     border-radius: 3px;
     padding: 15px;
     font-size: 1.4rem;
@@ -131,10 +136,10 @@ const InputContainer = styled.div`
     outline: 0;
     width: 100%;
     &::-webkit-input-placeholder {
-      opacity: 0.50;
+      opacity: 0.5;
     }
   }
-`
+`;
 
 const FormStyle = styled.form`
   display: flex;
@@ -146,7 +151,7 @@ const FormStyle = styled.form`
   h1 {
     font-size: 2.8rem;
     font-weight: 400;
-    color: #434C5F;
+    color: #434c5f;
   }
   p {
     display: block;
@@ -156,7 +161,7 @@ const FormStyle = styled.form`
     margin-bottom: 50px;
   }
   ${StyledError} {
-    color: rgba(225,0,0,1);
+    color: rgba(225, 0, 0, 1);
     margin-bottom: 20px;
   }
   ${RegisterSuccess} {
@@ -197,14 +202,13 @@ const SideImage = styled.div`
   }
 `;
 
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  display:flex;
+  display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   font-family: "Open Sans";

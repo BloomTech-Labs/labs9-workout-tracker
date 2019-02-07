@@ -3,8 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import * as firebase from "firebase";
 import requireAuth from "../../requireAuth";
-import FormInput from '../../shared/FormInput'
-import Button from '../../shared/Button'
+import FormInput from "../../shared/FormInput";
+import Button from "../../shared/Button";
 
 const PasswordView = props => {
   const [currentPassword, setcurrentPassword] = useState("");
@@ -53,31 +53,33 @@ const PasswordView = props => {
   return (
     <SettingsViewStyle>
       <FormStyle onSubmit={e => changePassword(e)}>
-          <FormInput 
-            label={"old password"}
-            type="password"
-            value={currentPassword}
-            placeholder="Current Password"
-            onChange={e => setcurrentPassword(e.target.value)}
-            lableColor="#2B3A42"
-          />
-          <FormInput 
-            label={"new password"}
-            type="password"
-            value={newPassword}
-            placeholder="New Password"
-            onChange={e => setPassword(e.target.value)}
-            lableColor="#2B3A42"
-          />
-          <FormInput 
-            label={"confirm password"}
-            type="password"
-            value={confirmNewPassword}
-            placeholder="Confirm Password"
-            onChange={e => setConfirmNewPassword(e.target.value)}
-            lableColor="#2B3A42"
-          />
-        <Button type="button" onClick={e => changePassword(e)}>Update Info</Button>
+        <FormInput
+          label={"old password"}
+          type="password"
+          value={currentPassword}
+          placeholder="Current Password"
+          onChange={e => setcurrentPassword(e.target.value)}
+          lableColor="#2B3A42"
+        />
+        <FormInput
+          label={"new password"}
+          type="password"
+          value={newPassword}
+          placeholder="New Password"
+          onChange={e => setPassword(e.target.value)}
+          lableColor="#2B3A42"
+        />
+        <FormInput
+          label={"confirm password"}
+          type="password"
+          value={confirmNewPassword}
+          placeholder="Confirm Password"
+          onChange={e => setConfirmNewPassword(e.target.value)}
+          lableColor="#2B3A42"
+        />
+        <Button type="button" onClick={e => changePassword(e)}>
+          Update Info
+        </Button>
       </FormStyle>
     </SettingsViewStyle>
   );
@@ -110,7 +112,6 @@ const FormStyle = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width:100%;
+    width: 100%;
   }
 `;
-

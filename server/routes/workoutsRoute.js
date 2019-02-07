@@ -1,14 +1,14 @@
-const express = require('express');
-const db = require('../database/dbConfig');
+const express = require("express");
+const db = require("../database/dbConfig");
 const router = express.Router();
 
 //Get all workouts
-router.get('/all', async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const allworkouts = await db
-      .select('*')
-      .from('workouts')
-      .leftJoin('exercises', 'workouts.id', 'exercises.workout_id')
+      .select("*")
+      .from("workouts")
+      .leftJoin("exercises", "workouts.id", "exercises.workout_id")
       .reduce((workout, current) => {
         const { user_id, category_id, title, workout_id } = current;
 
@@ -43,51 +43,51 @@ router.get('/all', async (req, res) => {
     res.status(200).json(allworkouts);
   } catch (error) {
     res.status(500).json({
-      'Well this is embarrassing': 'Something went wrong',
+      "Well this is embarrassing": "Something went wrong",
       error
     });
   }
 });
 
 //Get all workouts (no exercises) TEST
-router.get('/all/workouts', async (req, res) => {
+router.get("/all/workouts", async (req, res) => {
   try {
-    const allworkouts = await db('workouts');
+    const allworkouts = await db("workouts");
 
     res.status(200).json(allworkouts);
     //I believe we need to add the workouts that come with the workout here
   } catch (error) {
     res.status(500).json({
-      'Well this is embarrassing': 'Something went wrong',
+      "Well this is embarrassing": "Something went wrong",
       error
     });
   }
 });
 
 //Get all exercises TEST
-router.get('/all/exercises', async (req, res) => {
+router.get("/all/exercises", async (req, res) => {
   try {
-    const allExercises = await db('exercises');
+    const allExercises = await db("exercises");
 
     res.status(200).json(allExercises);
     //I believe we need to add the exercises that come with the workout here
   } catch (error) {
     res.status(500).json({
-      'Well this is embarrassing': 'Something went wrong',
+      "Well this is embarrassing": "Something went wrong",
       error
     });
   }
 });
 
 //GET Workout set by user ID
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     //use the user ID to pull the workouts associated with the user
-    const workouts = await db('workouts').where('user_id', '=', req.id);
+    const workouts = await db("workouts").where("user_id", "=", req.id);
     console.log(workouts);
 
     if (!workouts[0]) {
-      res.status(200).json('You have no workouts');
+      res.status(200).json("You have no workouts");
       return;
     }
 
@@ -95,8 +95,16 @@ router.get('/', async (req, res) => {
 
     for (const workout of workouts) {
       //gets exercises that for the corresponding workout
-      const exercises = await db('exercises').where('workout_id', '=', workout.id);
-      const category = await db('category').where('id', '=', workout.category_id);
+      const exercises = await db("exercises").where(
+        "workout_id",
+        "=",
+        workout.id
+      );
+      const category = await db("category").where(
+        "id",
+        "=",
+        workout.category_id
+      );
       const workObj = {
         ...workout,
         exercises: [...exercises],
@@ -108,14 +116,14 @@ router.get('/', async (req, res) => {
     res.status(200).json(workoutsArray);
   } catch (error) {
     res.status(500).json({
-      'Well this is embarrassing': 'Something went wrong',
+      "Well this is embarrassing": "Something went wrong",
       error
     });
   }
 });
 
 // Create new workout for a given user ID
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     //Grab user_id from user table
     let userId = req.id;
@@ -126,8 +134,8 @@ router.post('/', async (req, res) => {
       user_id: userId
     };
     //Insert Obj into workout table to create the workout ID
-    const addWorkout = await db('workouts')
-      .returning('id')
+    const addWorkout = await db("workouts")
+      .returning("id")
       .insert(insertObj);
 
     const workout = {
@@ -141,13 +149,17 @@ router.post('/', async (req, res) => {
       exercisesArr.forEach(ex => (ex.workout_id = workout.id));
       console.log(exercisesArr);
 
-      const addExercises = await db('exercises')
-        .returning('id')
+      const addExercises = await db("exercises")
+        .returning("id")
         .insert(exercisesArr);
 
       console.log(addExercises);
 
-      const completeExercises = await db('exercises').where('workout_id', '=', workout.id);
+      const completeExercises = await db("exercises").where(
+        "workout_id",
+        "=",
+        workout.id
+      );
 
       console.log(completeExercises);
       insertObj.exercises = completeExercises;
@@ -155,13 +167,13 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(insertObj);
   } catch (error) {
-    console.log('the error posting a workout is: ', error);
+    console.log("the error posting a workout is: ", error);
     res.status(500).json({ error });
   }
 });
 
 // EDIT set of workouts
-router.put('/edit', async (req, res) => {
+router.put("/edit", async (req, res) => {
   //Grab workout ID from req.params.id
   const body = req.body;
   const workoutID = body.id;
@@ -170,12 +182,12 @@ router.put('/edit', async (req, res) => {
     //Create object from req.body data and user_id
     const editWorkout = {
       title: body.title,
-      category_id: body.category_id,
+      category_id: body.category_id
     };
 
     //Update workouts table with new editWorkout object
-    const updatedWorkout = await db('workouts')
-      .where('id', '=', workoutID)
+    const updatedWorkout = await db("workouts")
+      .where("id", "=", workoutID)
       .update(editWorkout);
 
     // Update each exercise in exercises array
@@ -186,25 +198,33 @@ router.put('/edit', async (req, res) => {
       if (id) {
         delete ex.id;
         delete ex.workout_id;
-  
-        const updateExercises = await 
-          db('exercises')
-          .whereIn(["id", "workout_id"], [[id, workout_id]])
-          .update(ex)
-      } else {
-        await db('exercises').returning('id').insert(ex)
-      }
 
+        const updateExercises = await db("exercises")
+          .whereIn(["id", "workout_id"], [[id, workout_id]])
+          .update(ex);
+      } else {
+        await db("exercises")
+          .returning("id")
+          .insert(ex);
+      }
     }
 
-    const workouts = await db('workouts').where('id', '=', workoutID);
+    const workouts = await db("workouts").where("id", "=", workoutID);
 
     let workoutsArray = [];
 
     for (const workout of workouts) {
       //gets exercises that for the corresponding workout
-      const exercises = await db('exercises').where('workout_id', '=', workout.id);
-      const category = await db('category').where('id', '=', workout.category_id);
+      const exercises = await db("exercises").where(
+        "workout_id",
+        "=",
+        workout.id
+      );
+      const category = await db("category").where(
+        "id",
+        "=",
+        workout.category_id
+      );
       const workObj = {
         ...workout,
         exercises: [...exercises],
@@ -214,21 +234,20 @@ router.put('/edit', async (req, res) => {
     }
 
     res.status(200).json(workoutsArray);
-
   } catch (error) {
-    res.status(500).json({error});
+    res.status(500).json({ error });
   }
 });
 
 //Edit Exercise
-router.put('/edit/exercise/:id', async (req, res) => {
+router.put("/edit/exercise/:id", async (req, res) => {
   const exerciseID = req.params.id;
   const { body } = req;
 
   // checks if proper id is passed
-  console.log('exerciseID is: ', exerciseID);
+  console.log("exerciseID is: ", exerciseID);
   if (Number.isInteger(exerciseID)) {
-    res.status(400).json({ message: 'id is required' });
+    res.status(400).json({ message: "id is required" });
     return;
   }
 
@@ -240,7 +259,7 @@ router.put('/edit/exercise/:id', async (req, res) => {
 
   const { name, reps, sets, id } = editedExercise;
   if (!name && !reps && sets) {
-    res.status(400).json({ message: 'nothing to update' });
+    res.status(400).json({ message: "nothing to update" });
     return;
   }
 
@@ -249,49 +268,49 @@ router.put('/edit/exercise/:id', async (req, res) => {
   delete insertObj.id;
 
   //Finds the scheduled exercise to update and updates that exercise with the insertObj
-  const updatedExercise = await db('exercises')
-    .whereIn(['id'], [[id]])
+  const updatedExercise = await db("exercises")
+    .whereIn(["id"], [[id]])
     .update(insertObj);
 
   if (updatedExercise < 1) {
-    res.status(400).json({ message: 'Nothing to update' });
+    res.status(400).json({ message: "Nothing to update" });
     return;
   }
 
   //Gets the updated exercies that we send back as the response
-  const newEx = await db('exercises').where('id', '=', id);
+  const newEx = await db("exercises").where("id", "=", id);
 
   res.status(200).json(newEx[0]);
 });
 
-router.delete('/exercise/delete/:id', async (req, res) => {
+router.delete("/exercise/delete/:id", async (req, res) => {
   try {
-    const deleteWorkoutData = await db('exercises')
-      .whereIn(['id'], [[req.params.id]])
+    const deleteWorkoutData = await db("exercises")
+      .whereIn(["id"], [[req.params.id]])
       .del();
     {
       deleteWorkoutData === 0
-        ? res.status(404).json({ message: 'Workout ID does not exist' })
+        ? res.status(404).json({ message: "Workout ID does not exist" })
         : res.status(200).json({ deleteWorkoutData });
     }
   } catch (error) {
-    res.status(500).json(error, 'error message');
+    res.status(500).json(error, "error message");
   }
-})
+});
 
 //Delete workout
-router.delete('/delete/:id', async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
-    const deleteWorkoutData = await db('workouts')
-      .where('id', '=', req.params.id)
+    const deleteWorkoutData = await db("workouts")
+      .where("id", "=", req.params.id)
       .del();
     {
       deleteWorkoutData === 0
-        ? res.status(404).json({ message: 'Workout ID does not exist' })
+        ? res.status(404).json({ message: "Workout ID does not exist" })
         : res.status(200).json({ deleteWorkoutData });
     }
   } catch (error) {
-    res.status(500).json(error, 'error message');
+    res.status(500).json(error, "error message");
   }
 });
 

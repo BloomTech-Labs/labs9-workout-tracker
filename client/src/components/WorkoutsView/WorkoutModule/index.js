@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { Store } from '../../../index';
-import AddWorkout from './AddWorkout';
-import EditWorkout from './EditWorkout';
+import React, { useContext } from "react";
+import { Store } from "../../../index";
+import AddWorkout from "./AddWorkout";
+import EditWorkout from "./EditWorkout";
 
 const WorkoutModule = props => {
   const { state } = useContext(Store);
