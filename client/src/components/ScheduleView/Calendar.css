@@ -279,6 +279,12 @@ transition: 0.5s ease-in;
     transition: 0.25s ease-out;
     letter-spacing: -0.07em;
   }
+
+  @media(max-width:690px) {
+    .calendar .body .cell .bg {
+      visibility:hidden;
+  }
+}
   
   .calendar .body .cell:hover .bg,
   .calendar .body .selected .bg {
