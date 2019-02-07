@@ -1,6 +1,6 @@
-/* eslint-disable no-loop-func */
 import React, { useContext, useState } from "react";
 import { Store } from "../../index";
+import { Redirect } from 'react-router-dom';
 import dateFns from "date-fns";
 import ScheduleWorkout from "./ScheduleWorkout";
 import styled from "styled-components";
@@ -199,9 +199,11 @@ const HooksCalendar = props => {
   };
 
   const onDateClick = (day, isPopulated) => {
+    
       dispatch({ type: "UPDATE_CURRENT_DAY", payload: day })
       dispatch({ type: "UPDATE_DATE_SELECTED" });
       dispatch({ type: "UPDATE_IS_POPULATED", payload: isPopulated })
+    
   };
 
   const nextMonth = () => {
@@ -229,7 +231,7 @@ const HooksCalendar = props => {
       {dateSelected === false ? null : datePopulated === true ? (
         <WorkoutDetails/>
       ) : (
-        <ScheduleWorkout/>
+        <ScheduleWorkout history={props.history}/>
       )}
     </div>
   );

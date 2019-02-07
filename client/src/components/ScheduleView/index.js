@@ -3,11 +3,11 @@ import Calendar from "./Calendar";
 import styled from "styled-components";
 import requireAuth from "../../requireAuth";
 
-const ScheduleView = () => {
+const ScheduleView = (props) => {
   return (
     <ScheduleViewStyle>
       <h1>My Scheduled Workouts</h1>
-      <Calendar/>
+      <Calendar history={props.history}/>
     </ScheduleViewStyle>
   );
 }
