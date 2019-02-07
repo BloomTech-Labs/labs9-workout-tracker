@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Store } from '../../index';
 import styled from "styled-components";
 import StripeButton from "./BillingView.js";
 import axios from "axios";
 import * as firebase from "firebase";
 import requireAuth from "../../requireAuth";
-import MainSettings from "./MainSettings";
 import "./settings.css";
 import FormInputTwo from '../../shared/FormInputTwo'
 import FormInput from '../../shared/FormInput'
@@ -12,17 +12,23 @@ import Button from '../../shared/Button';
 //working on updating info
 
 const SettingsView = props => {
-  const [email, setEmail] = useState(props.user.email);
-  const [phone, setPhone] = useState(props.user.phone);
-  const [recieves_email, setRecieveEmail] = useState(props.user.recieves_email);
-  const [premium, displayPremium] = useState(props.user.premium);
-  const [newPassword, setPassword] = useState("");
+
+
+  const { state, dispatch } = useContext(Store)
+
+  const [email, setEmail] = useState(state.email);
+  const [phone, setPhone] = useState(state.phone);
+  const [recieves_email, setRecieveEmail] = useState(state.recieves_email);
   const [currentPassword, setcurrentPassword] = useState("");
-  const [visible, setVisible] = useState(false);
-  const [loggedOut, setLoggedOut] = useState(false);
+  const [settingsUpdated, setSettingsUpdated] = useState(false)
+
+  useEffect(() => {
+    setEmail(state.email)
+    setPhone(state.phone)
+    setRecieveEmail(state.recieves_email)
+  }, [state])
 
   const logOut = () => {
-    setLoggedOut(true);
     window.localStorage.removeItem('login_token');
     firebase.auth().signOut();
     props.history.push('/');
@@ -30,6 +36,7 @@ const SettingsView = props => {
 
   const updateUser = async e => {
     e.preventDefault();
+    setSettingsUpdated(false)
     const token = window.localStorage.getItem("login_token");
     reauthenticate(currentPassword)
       .then(() => {
@@ -48,19 +55,16 @@ const SettingsView = props => {
                   }
                 }
               );
-              if (props.user.email !== email) {
+              if (state.email !== email) {
                 alert("Email has changed");
               }
               console.log(res.data);
-              props.dispatch({ type: "USER_MODEL", payload: res.data });
+              dispatch({ type: "USER_MODEL", payload: res.data });
 
               setcurrentPassword("");
               setSettingsUpdated(true)
             }
           })
-          .catch(error => {
-            alert("Reformat email to update email");
-          });
       })
       .catch(error => {
         alert("not sure of this catch");
@@ -71,9 +75,9 @@ const SettingsView = props => {
 
   const renderVerifyPassword = () => {
     if (
-      email !== props.user.email ||
-      phone !== props.user.phone ||
-      recieves_email !== props.user.recieves_email
+      email !== state.email ||
+      phone !== state.phone ||
+      recieves_email !== state.recieves_email
     ) {
       return (
         <ChangePasswordDiv>
@@ -113,7 +117,7 @@ const SettingsView = props => {
   };
 
   const renderPremium = () => {
-    if (props.user.premium === true) {
+    if (state.premium === true) {
       return (
         <PremiumDiv>
           <div className="status-div">
@@ -140,7 +144,7 @@ const SettingsView = props => {
   const reauthenticate = currentPassword => {
     var user = firebase.auth().currentUser;
     var cred = firebase.auth.EmailAuthProvider.credential(
-      props.user.email,
+      state.email,
       currentPassword
     );
     return user.reauthenticateWithCredential(cred);
@@ -149,7 +153,7 @@ const SettingsView = props => {
   return (
     <ContainerDiv>
       <SettingsViewStyle>
-        {settingsUpdated === true ? <SettingsUpdated>Settings Updated Successfully!</SettingsUpdated>: <SettingsUpdatedHidden>Settings Updated Successfully!</SettingsUpdatedHidden>}
+        { settingsUpdated ? <SettingsUpdated>Settings Updated Successfully!</SettingsUpdated>: <SettingsUpdatedHidden>Settings Updated Successfully!</SettingsUpdatedHidden>}
         <FormStyle onSubmit={e => updateUser(e)}>
           <FormInput 
             label={"Email"}
