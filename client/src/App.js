@@ -21,6 +21,10 @@ const Register = lazy(() => import('./components/Register'));
 const Navigation = lazy(() => import('./components/Navigation'));
 const MainSettingsView = lazy(() => import('./components/SettingsView/MainSettings'));
 
+const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
+
+const PasswordReset = lazy(() => import('./components/PasswordReset'));
+
 const App = props => {
   // Similar to componentDidMount and componentDidUpdate:
   const { state, dispatch } = useContext(Store);
@@ -99,6 +103,25 @@ const App = props => {
             render={props => (
               <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
                 <MainSettingsView dispatch={dispatch} user={state} {...props} />
+              </Suspense>
+            )}
+          />
+
+          <Route
+            exact
+            path="/forgot"
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <ForgotPassword {...props} />
+              </Suspense>
+            )}
+          />
+
+          <Route
+            path="/reset/"
+            render={props => (
+              <Suspense fallback={<Loader type="Ball-Triangle" color="#FD8F25" height="180" width="120" />}>
+                <PasswordReset {...props} />
               </Suspense>
             )}
           />

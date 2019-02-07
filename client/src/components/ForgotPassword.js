@@ -8,7 +8,7 @@ import Button from '../shared/Button';
 
 import ropeImg from './assets/rope.jpg';
 
-const Login = props => {
+const ForgotPassword = props => {
   const { state, dispatch } = useContext(Store);
 
   const [email, setEmail] = useState('');
@@ -16,42 +16,23 @@ const Login = props => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const loginUser = e => {
+  const SendPasswordEmail = e => {
     e.preventDefault();
     setError(false);
     setLoading(true);
     // Initialize Firebase
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .sendPasswordResetEmail(email)
       .then(res => {
         console.log(res);
-        res.user.getIdToken().then(idToken => {
-          window.localStorage.setItem('login_token', idToken);
-          axios
-            .get('https://fitmetrix.herokuapp.com/api/user', {
-              headers: { Authorization: idToken }
-            })
-            .then(res => {
-              console.log(res.data);
-              dispatch({ type: 'USER_MODEL', payload: res.data });
-              dispatch({ type: 'USER_JUST_REGISTERED', payload: false });
-              setLoading(false);
-              props.history.push('/workouts');
-            });
-        });
+        console.log(res.data);
+        setLoading(false);
+        props.history.push('/workouts');
       })
       .catch(error => {
-        setError(true);
-        setLoading(false);
-        dispatch({ type: 'USER_JUST_REGISTERED', payload: false });
         console.log(error.code, error.message);
       });
-  };
-
-  const onForgot = e => {
-    console.log('in onForgot');
-    props.history.push('/forgot');
   };
 
   return (
@@ -61,11 +42,11 @@ const Login = props => {
         {loading ? (
           <Loading />
         ) : (
-          <FormStyle onSubmit={e => loginUser(e)}>
-            {state.userJustRegistered ? <RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess> : null}
-            <h1>Sign into fitmetrix.</h1>
-            <p>Enter details below</p>
-            {error ? <StyledError>Oops! That email / password combination is not valid.</StyledError> : null}
+          <FormStyle onSubmit={e => SendPasswordEmail(e)}>
+            {/* {state.userJustRegistered ? <RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess> : null} */}
+            <h1>Forgot your password?</h1>
+            <p>Enter your email address below and we'll get you back to working out.</p>
+            {/* {error ? <StyledError>Oops! That email / password combination is not valid.</StyledError> : null} */}
             <InputContainer>
               <h3>EMAIL ADDRESS</h3>
               <input
@@ -77,19 +58,8 @@ const Login = props => {
               />
             </InputContainer>
 
-            <InputContainer>
-              <h3>PASSWORD</h3>
-              <p onClick={e => onForgot({ email })}>Forgot password?</p>
-              <input
-                type="password"
-                value={password}
-                placeholder="Enter your password"
-                onChange={e => setPassword(e.target.value)}
-                required
-              />
-            </InputContainer>
             <ButtonContainer>
-              <Button type="submit">Sign In</Button>
+              <Button type="submit">Request Reset Link</Button>
             </ButtonContainer>
           </FormStyle>
         )}
@@ -98,7 +68,7 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
 
 const RegisterSuccess = styled.p``;
 
