@@ -244,7 +244,7 @@ const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  width: 40%;
   align-items: center;
   border-radius: 6px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
@@ -314,7 +314,7 @@ const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  width: 40%;
   align-items: center;
   border-radius: 6px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
