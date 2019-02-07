@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import { Store } from '../../../index';
 import styled from "styled-components";
 import {Line} from 'react-chartjs-2';
+import Button from '../../../shared/Button';
+import { Link } from 'react-router-dom';
 
 const Graph = () => {
     const { state, dispatch } = useContext(Store);
@@ -211,6 +213,9 @@ const Graph = () => {
                 !state.premium &&  state.graphType !== "weight"
                 ? (<StyledFeatureBlock>
                     Pro feature
+                    <StyledLink to="/settings">
+                        <Button type="button" scheme="cancel"> Upgrade Now</Button>
+                    </StyledLink>
                     </StyledFeatureBlock>)
                 : <Line data={getLineData()} options={options}/>
             }
@@ -220,6 +225,10 @@ const Graph = () => {
 
 export default Graph;
 
+const StyledLink = styled(Link)`
+    margin-top: 20px;
+`;
+
 const StyledFeatureBlock = styled.div`
     width: 95%;
     height: 100%;
@@ -228,10 +237,20 @@ const StyledFeatureBlock = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     font-size: 55px;
     font-weight: 600;
     height: 400px;
     border-radius: 12px;
+    padding: 0px 100px;
+
+    @media (max-width: 1040px) {
+      width: 100%;
+    }
+    @media (max-width: 600px) {
+      padding: 0px 20px;
+      font-size: 40px;
+    }
 `;
 
 const StyledGraph = styled.div`

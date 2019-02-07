@@ -256,7 +256,7 @@ const ChangePasswordDiv = styled.div`
   justify-content: space-evenly;
   align-items: center;
   margin-top: 20px;
-  transition: 0.4s ease-in
+  transition: 0.4s ease-in;
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -264,13 +264,13 @@ const ChangePasswordDiv = styled.div`
 
 const ChangePasswordDivInvis = styled.div`
   display: flex;
-  display:none
+  display:none;
   flex-direction: column;
   width: 50%;
   justify-content: space-evenly;
   align-items: center;
   margin-top: 20px;
-  transition: 0.4s ease-in
+  transition: 0.4s ease-in;
   @media (max-width: 550px) {
     width: 100%;
   }
@@ -328,7 +328,7 @@ const PremiumDiv = styled.div`
   }
 `;
 const PremiumStyle = styled.div`
-  color: #2B3A42
+  color: #2B3A42;
   display: flex;
   justify-content: flex-start;
 `;
@@ -357,7 +357,7 @@ background: white;
 border: none;
 color: #FD8F25;
 margin:20px 0;
-border: 1px solid #FD8F25
+border: 1px solid #FD8F25;
 :hover {
   cursor:pointer;
 }
