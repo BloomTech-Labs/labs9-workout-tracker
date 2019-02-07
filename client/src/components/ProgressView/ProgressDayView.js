@@ -106,8 +106,8 @@ const ProgressDayView = props => {
               }
 
               return (
-                <>
-                  <DayItem index={i} key={i}>
+                <React.Fragment key={i}>
+                  <DayItem index={i} key={'left' +i}>
                     <StyledDate>
                       <span>{day.toDateString()} </span>
                       <StyledIcon onClick={() => editMetric(m)}>
@@ -126,7 +126,7 @@ const ProgressDayView = props => {
                       </Percentage>
                     </StyledStats>
                   </DayItem>
-                  <DayItem key={i}>
+                  <DayItem index={i} key={'right' + i}>
                     <StyledDate>
                       <span>{day.toDateString()} </span>
                       <StyledIcon onClick={() => editMetric(m)}>
@@ -145,7 +145,7 @@ const ProgressDayView = props => {
                       </Percentage>
                     </StyledStats>
                   </DayItem>
-                </>
+                </React.Fragment>
               );
             }
 
@@ -192,8 +192,8 @@ const ProgressDayView = props => {
               }
 
               return (
-                <>
-                  <DayItem index={i} key={i}>
+                <React.Fragment key={i}>
+                  <DayItem index={i} >
                     <StyledDate>
                       <span>{day.toDateString()} </span>
                       <StyledIcon onClick={() => editMetric(m)}>
@@ -212,7 +212,7 @@ const ProgressDayView = props => {
                       </Percentage>
                     </StyledStats>
                   </DayItem>
-                  <DayItem key={i}>
+                  <DayItem index={i}>
                     <StyledDate>
                       <span>{day.toDateString()} </span>
                       <StyledIcon onClick={() => editMetric(m)}>
@@ -231,7 +231,7 @@ const ProgressDayView = props => {
                       </Percentage>
                     </StyledStats>
                   </DayItem>
-                </>
+                </React.Fragment>
               );
             }
 

@@ -37,6 +37,7 @@ const Details = () => {
         }
       }
 
+      console.log(radarData)
       return  radarData;
     }
 
@@ -47,7 +48,6 @@ const Details = () => {
         borderColor: 'rgba(43, 58, 66, 1)',
         backgroundColor: 'rgba(43, 58, 66, 0.4)',
         pointBackgroundColor: 'rgba(43, 58, 66, 1)',
-        // data: [10.62, 20.57, 37, 20.01, 10.5, 20.01, 10.5]
         data: getData()
     }]}
 
@@ -158,11 +158,11 @@ export default Details;
 
 const RadarContianer = styled.div`
     width: 375px;
-    position: absolute;
-    right: -90px;
-    top: 240px;
-    overflow: hidden;
+    margin-left: -80px;
     @media (max-width: 1040px) {
+      position: absolute;
+      right: -90px;
+      top: 240px;
       top: 10px;
     }
     @media (max-width: 475px) {
@@ -215,7 +215,6 @@ const DetailsContainer = styled.div`
   align-items: flex-start;
   width: 20%;
   position: relative;
-  padding: 20px 10px;
   overflow: hidden;
   h2 {
       font-size: 20px;

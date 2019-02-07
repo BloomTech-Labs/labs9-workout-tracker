@@ -75,7 +75,7 @@ const MainSettingsView = props => {
       return <PasswordView {...props} />;
     }
     if (passwordFlag === false && accountFlag === true) {
-      return <SettingsView {...props} />;
+      return <SettingsView history={props.history}/>;
     }
   };
 

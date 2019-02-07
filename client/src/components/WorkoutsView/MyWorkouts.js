@@ -118,11 +118,7 @@ const MyWorkouts = () => {
           </Button>
         </AddButtonContainer>
       </Header>
-      {state.workouts.length === 0 ? (
-        <SchedulePrompt>No workouts scheduled. Create a workout!</SchedulePrompt>
-      ) : (
-        Loading
-      )}
+
       {state.workouts.length !== 0 &&
         state.workouts.map((workout, i) => {
           if (state.selectedWorkoutCategory === 'all') {
@@ -213,6 +209,12 @@ const MyWorkouts = () => {
           }
           return null;
         })}
+
+      {state.workouts.length === 0 ? (
+        <SchedulePrompt>No workouts scheduled. Create a workout!</SchedulePrompt>
+      ) : (
+        Loading
+      )}
     </HeaderContainer>
   );
 };
@@ -237,6 +239,8 @@ const SchedulePrompt = styled.div`
   font-size: 3em;
   font-weight: bold;
   margin-top: 100px;
+  text-align: center;
+  width: 100%;
 `;
 
 const Header = styled.div`
