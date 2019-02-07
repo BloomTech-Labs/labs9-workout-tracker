@@ -211,7 +211,7 @@ const MyWorkouts = () => {
         })}
 
       {state.workouts.length === 0 ? (
-        <SchedulePrompt>No workouts scheduled. Create a workout!</SchedulePrompt>
+        <SchedulePrompt>No workouts made yet. Let's create one!</SchedulePrompt>
       ) : (
         Loading
       )}
@@ -235,9 +235,9 @@ const WorkoutsTitle = styled.div`
 `;
 
 const SchedulePrompt = styled.div`
-  color: ${props => props.theme.accent};
-  font-size: 3em;
-  font-weight: bold;
+color: ${props => props.theme.primaryDark};
+  font-size: 1.8rem;
+  font-weight: 600;
   margin-top: 100px;
   text-align: center;
   width: 100%;

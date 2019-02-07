@@ -16,7 +16,7 @@ const ProgressView = props => {
       <h1>Progress</h1>
       {
         !metrics || !metrics.length
-        ? (<StyledError>No progress to be shown!</StyledError>)
+        ? (<StyledError>No progress to be shown. Let's start by adding your initial metrics!</StyledError>)
         : <ProgressGraph />
 
       }
