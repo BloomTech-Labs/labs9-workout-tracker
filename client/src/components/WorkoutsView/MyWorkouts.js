@@ -212,6 +212,7 @@ const MyWorkouts = () => {
 
       {state.workouts.length === 0 ? (
         <SchedulePrompt>No workouts made yet. Let's create one!</SchedulePrompt>
+
       ) : (
         Loading
       )}
