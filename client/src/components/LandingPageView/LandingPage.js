@@ -196,7 +196,7 @@ const CalendarPic = styled.img`
   width: 40%;
   align-items: center;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
+  border: 1px solid #405865
   background-color: white;
   @media (max-width: 900px) {
     width: 100%;
@@ -247,7 +247,7 @@ const WorkoutPic = styled.img`
   width: 40%;
   align-items: center;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
+  border: 1px solid #405865
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 100%;
@@ -317,7 +317,7 @@ const ProgressPic = styled.img`
   width: 40%;
   align-items: center;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
+  border: 1px solid #405865
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 100%;
