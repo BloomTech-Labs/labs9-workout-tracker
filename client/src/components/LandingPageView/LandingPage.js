@@ -29,7 +29,7 @@ const LandingPage = () => {
               <Button>START TRACKING NOW</Button>
             </Link>
             <Arrow href="#middle"><ArrowDiv>
-              <i class="fas fa-chevron-down" />
+              <i className="fas fa-chevron-down" />
             </ArrowDiv></Arrow>
           </CallToAction>
         </CtaDiv>
@@ -183,6 +183,7 @@ const Part2 = styled.div`
   align-items: center;
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 20px;
   }
   @media (max-width: 500px) {
     flex-direction: column-reverse;
@@ -193,10 +194,10 @@ const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 50%;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid #405865
+  border: 1px solid #BED3DD
   background-color: white;
   @media (max-width: 900px) {
     width: 100%;
@@ -232,6 +233,7 @@ const Part3 = styled.div`
   background-color: white;
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 20px;
   }
 
   @media (max-width: 500px) {
@@ -244,10 +246,10 @@ const WorkoutPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 50%;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid #405865
+  border: 1px solid #BED3DD
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 100%;
@@ -283,6 +285,7 @@ const Part4 = styled.div`
   background-color: #f5f5f5;
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 20px;
   }
 
   @media (max-width: 500px) {
@@ -314,10 +317,10 @@ const ProgressPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 50%;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid #405865
+  border: 1px solid #BED3DD
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 100%;
