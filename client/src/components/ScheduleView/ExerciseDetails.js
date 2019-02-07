@@ -44,64 +44,61 @@ const updateScheduledWorkout = async (e) => {
   const token = await firebase.auth().currentUser.getIdToken();
 }
   return (
-    <ExerciseDetailsDiv key={props.exercise.id}>
-      <ExerciseDetailsP className='name'> {props.exercise.name}</ExerciseDetailsP>
-      <ExerciseDetailsListDiv>
-      <ExerciseDetailsP>Weight: {props.exercise.weight}</ExerciseDetailsP>
-      <ExerciseDetailsP>Sets: {props.exercise.sets}</ExerciseDetailsP>
-      <ExerciseDetailsP>Reps: {props.exercise.reps}</ExerciseDetailsP>
-      <ExerciseDetailsP>
-      <span>Done</span>
-      <input
-        type="checkbox"
-        checked={status}
-        onChange={e => {
-            updateScheduledWorkout(e)
-        } }
-      />
-      </ExerciseDetailsP>
-      </ExerciseDetailsListDiv>
-    </ExerciseDetailsDiv>
+    <ExDetailsTitle key={props.exercise.id}>
+      <ExDetailsP> {props.exercise.name}</ExDetailsP>
+      <ExDetailsP>{props.exercise.weight}</ExDetailsP>
+      <ExDetailsP>{props.exercise.sets}</ExDetailsP>
+      <ExDetailsP>{props.exercise.reps}</ExDetailsP>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          checked={status}
+          onChange={e => {
+              updateScheduledWorkout(e)
+          } }
+        />
+      </CheckboxContainer>
+    </ExDetailsTitle>
   );
 };
 
 export default ExerciseDetails;
 
-const ExerciseDetailsDiv = styled.div`
-display:flex;
-border-bottom:1px solid #eee;
-align-items:center;
-justify-content:space-around;
-height:60px;
-h3 {
-  width: calc(100%/5)
-}
+
+const ExDetailsTitle = styled.div`
+  display: flex;
+  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  height: 60px;
+  width: 100%;
+  flex-wrap: wrap;
+  font-weight: bold;
+  align-items: center;
+  h3 {
+    width: calc(100% / 5);
+  }
 `;
 
-const ExerciseDetailsP= styled.p`
-  font-weight: 600;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+const ExDetailsP = styled.p`
+  width: 20%;
+  font-size: 1.4rem;
+  margin-bottom: 0px;
+  text-align: center;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const ExerciseDetailsListDiv= styled.div`
-display:flex;
-align-items:center;
-justify-content: space-around;
-width: 60%;
 
-.name {
-  font-weight:bold;
-}
-span {
-  margin-right:15px;
-  margin-bottom: 1em;
-}
-
-input {
-   zoom: 1.5;
-   margin-bottom: .5em;
-
-   }
+const CheckboxContainer = styled.div`
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: left;
+  width: 20%;
+  input {
+    zoom: 1.5;
+  }
 `;

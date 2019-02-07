@@ -241,11 +241,12 @@ const FormContainer = styled.div`
 const SideImage = styled.div`
   width: calc(460px + 260px);
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: -260px;
   background: no-repeat left left fixed;
   background-image: url(${barbell});
+  background-position-x: 110px;
   background-size: cover;
   @media (max-width: 1076px) {
     width: 0px;
