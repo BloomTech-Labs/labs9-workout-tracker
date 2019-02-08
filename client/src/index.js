@@ -32,7 +32,8 @@ const initialState = {
   currentDate: null,
   dateSelected: false,
   datePopulated: false,
-  userJustRegistered: false
+  userJustRegistered: false,
+  passwordReset: false
 };
 
 const reducer = (state, action) => {
@@ -55,6 +56,8 @@ const reducer = (state, action) => {
       return { ...state, editMetric: { ...action.payload } };
     case "RESET_EDIT_METRIC":
       return { ...state, editMetric: null };
+    case "PASSWORD_RESET":
+      return { ...state, passwordReset: !state.passwordReset };
     case "SHOW_METRIC_FORM":
       return { ...state, showMetricForm: !state.showMetricForm };
     case "SHOW_WORKOUT_FORM":

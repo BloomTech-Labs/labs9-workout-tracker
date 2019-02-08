@@ -17,7 +17,7 @@ const HooksCalendar = props => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const renderHeader = () => {
-    const dateFormat = "MMM YYYY";
+    const dateFormat = 'MMM YYYY';
 
     return (
       <div className="header row flex-middle">
@@ -37,7 +37,7 @@ const HooksCalendar = props => {
   };
 
   const renderDays = () => {
-    const dateFormat = "ddd";
+    const dateFormat = 'ddd';
     const days = [];
 
     let startDate = dateFns.startOfWeek(currentMonth);
@@ -59,19 +59,19 @@ const HooksCalendar = props => {
     const startDate = dateFns.startOfWeek(monthStart);
     const endDate = dateFns.endOfWeek(monthEnd);
 
-    const dateFormat = "D";
-    const dateMatch = "YYYY-MM-DD";
+    const dateFormat = 'D';
+    const dateMatch = 'YYYY-MM-DD';
     const rows = [];
 
     let days = [];
     let day = startDate;
-    let formattedDate = "";
-    let matchedDate = "";
+    let formattedDate = '';
+    let matchedDate = '';
 
     const arrayContains = (str, array) => {
       let populated = false;
       array.forEach(stringObj => {
-        if (stringObj.date.split("T")[0] === str) {
+        if (stringObj.date.split('T')[0] === str) {
           populated = true;
         }
       });
@@ -97,10 +97,10 @@ const HooksCalendar = props => {
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
-                    ? "disabled"
+                    ? 'disabled'
                     : dateFns.isSameDay(day, currentDate)
-                    ? "selected"
-                    : ""
+                    ? 'selected'
+                    : ''
                 }`}
                 key={`${day}${Math.random()}`}
                 onClick={() => onDateClick(dateFns.parse(cloneDay), false)}
@@ -112,20 +112,20 @@ const HooksCalendar = props => {
               <div
                 className={`col cell ${
                   !dateFns.isSameMonth(day, monthStart)
-                    ? "disabled"
+                    ? 'disabled'
                     : dateFns.isSameDay(day, currentDate)
-                    ? "selected"
-                    : ""
+                    ? 'selected'
+                    : ''
                 }`}
                 key={`${day}${Math.random()}`}
                 sworkout={state.scheduleWorkouts.filter(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
-                  const splitDate = sworkout.date.split("T")[0];
+                  const splitDate = sworkout.date.split('T')[0];
                   if (splitDate === matchedDate) return sworkout;
                 })}
                 completed={state.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
-                  const splitDate = sworkout.date.split("T")[0];
+                  const splitDate = sworkout.date.split('T')[0];
                   if (splitDate === matchedDate) return sworkout;
                 })}
                 onClick={
@@ -145,7 +145,7 @@ const HooksCalendar = props => {
                 {//maps through scheduleworkouts
                 state.scheduleWorkouts.map(sworkout => {
                   // returns the title of the scheduled workout if it matches matchedDate
-                  const splitDate = sworkout.date.split("T")[0];
+                  const splitDate = sworkout.date.split('T')[0];
                   if (splitDate === matchedDate) {
                     if (sworkout.completed === true) {
                       return (
@@ -167,13 +167,7 @@ const HooksCalendar = props => {
                     }
                   }
                 })}
-                <span
-                  className={`number ${
-                    dateFns.isSameDay(day, new Date()) ? "today" : null
-                  }`}
-                >
-                  {formattedDate}
-                </span>
+                <span className={`number ${dateFns.isSameDay(day, new Date()) ? 'today' : null}`}>{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
               </div>
             )}
@@ -271,14 +265,15 @@ const CellDiv = styled.div`
   width: 100%;
   height: 100%;
   @media (max-width: 690px) {
-    justify-content: center;
+    justify-content: flex-end;
   }
   i {
     margin-right: 70%;
     margin-top: 5px;
     @media (max-width: 690px) {
       margin: 0;
-      align-self: center;
+      align-self: flex-start;
+      padding: 5px;
     }
   }
   p {

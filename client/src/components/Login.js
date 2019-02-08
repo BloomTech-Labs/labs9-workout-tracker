@@ -15,7 +15,6 @@ const Login = props => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const loginUser = e => {
     e.preventDefault();
     setError(false);
@@ -36,6 +35,7 @@ const Login = props => {
               console.log(res.data);
               dispatch({ type: "USER_MODEL", payload: res.data });
               dispatch({ type: "USER_JUST_REGISTERED", payload: false });
+              dispatch({ type: "PASSWORD_RESET" });
               setLoading(false);
               props.history.push("/workouts");
             });
@@ -45,8 +45,14 @@ const Login = props => {
         setError(true);
         setLoading(false);
         dispatch({ type: "USER_JUST_REGISTERED", payload: false });
+        dispatch({ type: "PASSWORD_RESET" });
         console.log(error.code, error.message);
       });
+  };
+
+  const onForgot = e => {
+    console.log("in onForgot");
+    props.history.push("/forgot");
   };
 
   return (
@@ -64,6 +70,12 @@ const Login = props => {
             ) : null}
             <h1>Sign into FLEXLOG</h1>
             <p>Enter details below</p>
+            {state.passwordReset === true ? (
+              <ResetText>
+                If there's a FLEXLOG account linked to this email address, we'll
+                send over instructions to reset your password.
+              </ResetText>
+            ) : null}
             {error ? (
               <StyledError>
                 Oops! That email / password combination is not valid.
@@ -82,6 +94,7 @@ const Login = props => {
 
             <InputContainer>
               <h3>PASSWORD</h3>
+              <p onClick={e => onForgot({ email })}>Forgot password ?</p>
               <input
                 type="password"
                 value={password}
@@ -110,12 +123,20 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
+const ResetText = styled.p`
+  width: 100%;
+  font-size: 1.4rem !important;
+  text-align: left;
+  color: ${props => props.theme.accent} !important;
+`;
+
 const StyledError = styled.p``;
 
 const InputContainer = styled.div`
   color: #5f697a;
   width: 100%;
   margin-bottom: 23px;
+  position: relative;
   h3 {
     display: block;
     font-weight: 700;
@@ -139,6 +160,14 @@ const InputContainer = styled.div`
       opacity: 0.5;
     }
   }
+  p {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    font-size: 1.2rem !important;
+    color: #8c96a9;
+    font-weight: 400;
+  }
 `;
 
 const FormStyle = styled.form`
@@ -158,7 +187,7 @@ const FormStyle = styled.form`
     font-size: 1.6rem;
     color: #596377;
     font-weight: 400;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
   ${StyledError} {
     color: rgba(225, 0, 0, 1);

@@ -3,6 +3,10 @@ import { Route } from "react-router-dom";
 
 import Loader from "react-loader-spinner";
 
+import LandingPage from "./components/LandingPageView/LandingPage";
+
+import Navigation from "./components/Navigation";
+
 // import WorkoutsView from "./components/WorkoutsView";
 
 import styled, { ThemeProvider } from "styled-components";
@@ -12,9 +16,7 @@ import { Store } from "./index";
 // export const AppState = createContext({ state: {}, dispatch: () => {} });
 
 const WorkoutsView = lazy(() => import("./components/WorkoutsView"));
-const LandingPage = lazy(() =>
-  import("./components/LandingPageView/LandingPage")
-);
+
 const ScheduleView = lazy(() => import("./components/ScheduleView"));
 const ProgressView = lazy(() => import("./components/ProgressView"));
 const SettingsView = lazy(() =>
@@ -22,10 +24,14 @@ const SettingsView = lazy(() =>
 );
 const Login = lazy(() => import("./components/Login"));
 const Register = lazy(() => import("./components/Register"));
-const Navigation = lazy(() => import("./components/Navigation"));
+
 const MainSettingsView = lazy(() =>
   import("./components/SettingsView/MainSettings")
 );
+
+const ForgotPassword = lazy(() => import("./components/ForgotPassword"));
+
+const PasswordReset = lazy(() => import("./components/PasswordReset"));
 
 const App = props => {
   // Similar to componentDidMount and componentDidUpdate:
@@ -34,42 +40,9 @@ const App = props => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Route
-          path="/"
-          render={props => (
-            <Suspense
-              fallback={
-                <Loader
-                  type="Ball-Triangle"
-                  color="#FD8F25"
-                  height="180"
-                  width="120"
-                />
-              }
-            >
-              <Navigation {...props} />
-            </Suspense>
-          )}
-        />
+        <Route path="/" render={props => <Navigation {...props} />} />
         <StyledApp>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Suspense
-                fallback={
-                  <Loader
-                    type="Ball-Triangle"
-                    color="#FD8F25"
-                    height="180"
-                    width="120"
-                  />
-                }
-              >
-                <LandingPage {...props} />
-              </Suspense>
-            )}
-          />
+          <Route exact path="/" render={props => <LandingPage {...props} />} />
           <Route
             exact
             path="/login"
@@ -180,6 +153,43 @@ const App = props => {
               </Suspense>
             )}
           />
+
+          <Route
+            exact
+            path="/forgot"
+            render={props => (
+              <Suspense
+                fallback={
+                  <Loader
+                    type="Ball-Triangle"
+                    color="#FD8F25"
+                    height="180"
+                    width="120"
+                  />
+                }
+              >
+                <ForgotPassword {...props} />
+              </Suspense>
+            )}
+          />
+
+          <Route
+            path="/reset/"
+            render={props => (
+              <Suspense
+                fallback={
+                  <Loader
+                    type="Ball-Triangle"
+                    color="#FD8F25"
+                    height="180"
+                    width="120"
+                  />
+                }
+              >
+                <PasswordReset {...props} />
+              </Suspense>
+            )}
+          />
         </StyledApp>
       </div>
     </ThemeProvider>
@@ -202,6 +212,6 @@ const StyledApp = styled.div`
   margin-top: 105px;
   font-family: ${props => props.theme.opensans};
   @media (max-width: 768px) {
-    margin-top:75px;
+    margin-top: 75px;
   }
 `;

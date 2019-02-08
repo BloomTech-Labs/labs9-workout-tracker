@@ -17,7 +17,9 @@ const Navigation = props => {
     if (
       (props.location.pathname === "/" ||
         props.location.pathname === "/login" ||
-        props.location.pathname === "/register") &&
+        props.location.pathname === "/register" ||
+        props.location.pathname === "/reset" ||
+        props.location.pathname === "/forgot") &&
       !window.localStorage.getItem("login_token")
     ) {
       return (

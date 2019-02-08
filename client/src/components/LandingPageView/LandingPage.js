@@ -32,7 +32,6 @@ const LandingPage = () => {
                 <i class="fas fa-chevron-down" />
               </ArrowDiv>
             </Arrow>
-
           </CallToAction>
         </CtaDiv>
       </LandingStyle>
@@ -200,7 +199,7 @@ const CalendarPic = styled.img`
   width: 50%;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid #BED3DD
+  border: 1px solid #bed3dd;
   background-color: white;
   @media (max-width: 900px) {
     width: 100%;
@@ -252,8 +251,7 @@ const WorkoutPic = styled.img`
   width: 50%;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid #BED3DD
-  // border: 1px solid red;
+  border: 1px solid #bed3dd;
   @media (max-width: 900px) {
     width: 100%;
   }
@@ -323,8 +321,7 @@ const ProgressPic = styled.img`
   width: 50%;
   align-items: center;
   border-radius: 6px;
-  border: 1px solid #BED3DD
-  // border: 1px solid red;
+  border: 1px solid #bed3dd;
   @media (max-width: 900px) {
     width: 100%;
   }
