@@ -57,7 +57,7 @@ const reducer = (state, action) => {
     case "RESET_EDIT_METRIC":
       return { ...state, editMetric: null };
     case "PASSWORD_RESET":
-      return { ...state, passwordReset: !state.passwordReset };
+      return { ...state, passwordReset: action.payload };
     case "SHOW_METRIC_FORM":
       return { ...state, showMetricForm: !state.showMetricForm };
     case "SHOW_WORKOUT_FORM":

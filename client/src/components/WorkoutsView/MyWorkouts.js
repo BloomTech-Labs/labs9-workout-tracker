@@ -238,6 +238,14 @@ const MyWorkouts = () => {
                       </ExDetailsDiv>
                     );
                   })}
+                  <ButtonContainer>
+                    <Button
+                      onClick={() => handleEdit(workout.id, i)}
+                      className="fas fa-edit"
+                    >
+                      Edit Workout
+                    </Button>
+                  </ButtonContainer>
                 </ExercisesCard>
               </Workout>
             );
