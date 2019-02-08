@@ -62,14 +62,21 @@ router.post("/metrics/create", async (req, res) => {
 
 //Edit set of metrics by ID
 router.put("/metrics/edit/:id", async (req, res) => {
-
   const body = req.body;
 
-  if (!body.weight && !body.hips && !body.waist && !body.arm_right && !body.arm_left && !body.leg_right && !body.leg_left) {
+  if (
+    !body.weight &&
+    !body.hips &&
+    !body.waist &&
+    !body.arm_right &&
+    !body.arm_left &&
+    !body.leg_right &&
+    !body.leg_left
+  ) {
     res.status(400).json({
       errorMessage: "Please provide an update for atleast one field"
     });
-    return
+    return;
   }
 
   try {
@@ -105,7 +112,5 @@ router.delete("/metrics/delete/:id", async (req, res) => {
     res.status(500).json(error, "error message");
   }
 });
-
-
 
 module.exports = router;

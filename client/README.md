@@ -1,5 +1,5 @@
-# fitmetrix 
-#### www.fitmetrix.netlify.com
+# FLEXLOG 
+#### www.flexlog.netlify.com
 
 ### Front-End 
 

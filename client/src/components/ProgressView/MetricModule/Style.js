@@ -36,7 +36,7 @@ export const DeleteButton = styled.button`
 `;
 
 export const SubmitButton = styled.button`
-  width: ${props => props.small ? "165px" : "100%"};
+  width: ${props => (props.small ? "165px" : "100%")};
   height: 38px;
   border-radius: 8px;
   border: 2px solid ${props => props.theme.accent};

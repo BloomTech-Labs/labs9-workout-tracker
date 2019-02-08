@@ -1,28 +1,30 @@
 import React, { useState, useContext } from "react";
-import { Store } from '../../index';
-import styled from 'styled-components';
-import * as firebase from 'firebase';
+import { Store } from "../../index";
+import styled from "styled-components";
+import * as firebase from "firebase";
 import axios from "axios";
-
 
 const ExerciseDetails = props => {
   //update state using hook
-  const { state, dispatch } = useContext(Store);
+
+  // const { state, dispatch } = useContext(Store);
 
   const [status, setStatus] = useState(props.exercise.completed);
 
   const updateExercise = () => {
-      const key = window.localStorage.getItem("login_token")
+    const key = window.localStorage.getItem("login_token");
     axios
       .put(
-        `https://fitmetrix.herokuapp.com/api/schedule/edit/exercise/${props.exercise.id}`, 
-        {completed:!props.exercise.completed}, 
-        {headers:{Authorization:key}}
+        `https://fitmetrix.herokuapp.com/api/schedule/edit/exercise/${
+          props.exercise.id
+        }`,
+        { completed: !props.exercise.completed },
+        { headers: { Authorization: key } }
       )
       .then(response => {
         const exercise = response.data;
         console.log("exercise in axios call: ", exercise);
-        // DO NOT UPDATE WITH INCOMING EXERCISE 
+        // DO NOT UPDATE WITH INCOMING EXERCISE
         // JUST UPDATE THE VALUE ITSELF
         // TO DO ON MONDAY
         props.dispatch({
@@ -35,21 +37,21 @@ const ExerciseDetails = props => {
         });
       })
       .catch(err => {
-          console.log(err)
-      })
+        console.log(err);
+      });
   };
 
-const updateScheduledWorkout = async (e) => {
-  setStatus(e.target.checked);
-  const token = await firebase.auth().currentUser.getIdToken();
-}
+  const updateScheduledWorkout = async e => {
+    setStatus(e.target.checked);
+    const token = await firebase.auth().currentUser.getIdToken();
+  };
   return (
     <ExDetailsTitle key={props.exercise.id}>
-      <ExDetailsP> {props.exercise.name}</ExDetailsP>
+      <ExerciseDetailsP> {props.exercise.name}</ExerciseDetailsP>
       <ExDetailsP>{props.exercise.weight}</ExDetailsP>
       <ExDetailsP>{props.exercise.sets}</ExDetailsP>
       <ExDetailsP>{props.exercise.reps}</ExDetailsP>
-      <CheckboxContainer>
+      {/* <CheckboxContainer>
         <input
           type="checkbox"
           checked={status}
@@ -57,13 +59,12 @@ const updateScheduledWorkout = async (e) => {
               updateScheduledWorkout(e)
           } }
         />
-      </CheckboxContainer>
+      </CheckboxContainer> */}
     </ExDetailsTitle>
   );
 };
 
 export default ExerciseDetails;
-
 
 const ExDetailsTitle = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ const ExDetailsTitle = styled.div`
 `;
 
 const ExDetailsP = styled.p`
-  width: 20%;
+  width: 25%;
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: center;
@@ -90,13 +91,16 @@ const ExDetailsP = styled.p`
   text-overflow: ellipsis;
 `;
 
+const ExerciseDetailsP = styled(ExDetailsP)`
+text-align: initial;
+`;
 
 const CheckboxContainer = styled.div`
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: left;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
   width: 20%;
   input {
     zoom: 1.5;

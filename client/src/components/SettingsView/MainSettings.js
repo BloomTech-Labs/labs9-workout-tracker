@@ -11,51 +11,49 @@ const MainSettingsView = props => {
   const [passwordFlag, setpasswordFlag] = useState(false);
   const [accountFlag, setaccountFlag] = useState(true);
 
-  
-
   const renderTab = () => {
     if (passwordFlag === true && accountFlag === false) {
-     return (
-     <SubNav>
-     <HeaderTab>
-     <HeaderBlank
-        onClick={() => {
-         accountClick();
-        }}
-        >
-        Account
-        </HeaderBlank>
-        <HeaderBlue
-        onClick={() => {
-            passwordClick();
-        }}
-        >
-        Password
-        </HeaderBlue>
-        </HeaderTab>
+      return (
+        <SubNav>
+          <HeaderTab>
+            <HeaderBlank
+              onClick={() => {
+                accountClick();
+              }}
+            >
+              Account
+            </HeaderBlank>
+            <HeaderBlue
+              onClick={() => {
+                passwordClick();
+              }}
+            >
+              Password
+            </HeaderBlue>
+          </HeaderTab>
         </SubNav>
-     ) 
+      );
     } else if (passwordFlag === false && accountFlag === true) {
-        return (
-                <SubNav>
-                <HeaderTab>
-                <HeaderBlue
-                onClick={() => {
-                    accountClick();
-                }}
-                >
-                Account
-                </HeaderBlue>
-                <HeaderBlank
-                onClick={() => {
-                    passwordClick();
-                }}
-                >
-                Password
-                </HeaderBlank>
-                </HeaderTab>
-                </SubNav>
-            )  
+      return (
+        <SubNav>
+          <HeaderTab>
+            <HeaderBlue
+              onClick={() => {
+                accountClick();
+              }}
+            >
+              Account
+            </HeaderBlue>
+            <HeaderBlank
+              onClick={() => {
+                passwordClick();
+              }}
+            >
+              Password
+            </HeaderBlank>
+          </HeaderTab>
+        </SubNav>
+      );
     }
   };
   ///////////end of tabs
@@ -75,11 +73,11 @@ const MainSettingsView = props => {
       return <PasswordView {...props} />;
     }
     if (passwordFlag === false && accountFlag === true) {
-      return <SettingsView history={props.history}/>;
+      return <SettingsView history={props.history} />;
     }
   };
 
-return (
+  return (
     <MainSettingsDiv>
       {renderTab()}
       {renderView()}
@@ -100,18 +98,18 @@ const SubNav = styled.div`
   display: flex;
   width: 100%;
   max-width: 880px;
-  justify-content:center;
+  justify-content: center;
   height: 40px;
 `;
 
 const HeaderTab = styled.div`
-border-bottom: 2px solid ${props => props.theme.accent};
-display:flex;
-width:70%;
-height: 40px;
-@media(max-width: 550px) {
-  width:100%;
-}
+  border-bottom: 2px solid ${props => props.theme.accent};
+  display: flex;
+  width: 70%;
+  height: 40px;
+  @media (max-width: 550px) {
+    width: 100%;
+  }
 `;
 
 const HeaderBlue = styled.h1`
@@ -120,20 +118,20 @@ const HeaderBlue = styled.h1`
   margin: 0;
   width: 25%;
   border-radius: 6px 6px 0 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:1.5rem;
-  height:40px;
-  border-top:1px solid ${props => props.theme.accent};
-  border-left:1px solid ${props => props.theme.accent};
-  border-right:1px solid ${props => props.theme.accent};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  height: 40px;
+  border-top: 1px solid ${props => props.theme.accent};
+  border-left: 1px solid ${props => props.theme.accent};
+  border-right: 1px solid ${props => props.theme.accent};
   :hover {
     cursor: pointer;
-}
+  }
 
-  @media(max-width:420px) {
-    font-size:1.1rem;
+  @media (max-width: 420px) {
+    font-size: 1.1rem;
   }
 `;
 
@@ -141,19 +139,17 @@ const HeaderBlank = styled.h1`
   margin: 0;
   width: 25%;
   border-radius: 6px 6px 0 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:1.5rem;
-  color:black;
-  height:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: black;
+  height: 40px;
   :hover {
-      cursor: pointer;
+    cursor: pointer;
   }
 
-  @media(max-width:420px) {
-    font-size:1.1rem;
+  @media (max-width: 420px) {
+    font-size: 1.1rem;
   }
-  `;
-
-
+`;

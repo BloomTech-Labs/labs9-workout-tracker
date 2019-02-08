@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { Store } from '../../index';
-import FormModal from '../../shared/FormModal';
-import ExerciseDetails from './ExerciseDetails';
-import axios from 'axios';
-import styled from 'styled-components';
-import firebase from 'firebase';
-import Button from '../../shared/Button';
+import React, { useContext } from "react";
+import { Store } from "../../index";
+import FormModal from "../../shared/FormModal";
+import ExerciseDetails from "./ExerciseDetails";
+import axios from "axios";
+import styled from "styled-components";
+import firebase from "firebase";
+import Button from "../../shared/Button";
 
 const WorkoutDetails = props => {
   const { state, dispatch } = useContext(Store);
@@ -16,9 +16,9 @@ const WorkoutDetails = props => {
     if (date.length === 10) {
       return date;
     }
-    date = date.split('T')[0].split('-');
+    date = date.split("T")[0].split("-");
 
-    const newDate = date[0] + '/' + date[1] + '/' + date[2];
+    const newDate = date[0] + "/" + date[1] + "/" + date[2];
 
     return new Date(newDate);
   };
@@ -28,11 +28,11 @@ const WorkoutDetails = props => {
     let day = d.getDate();
 
     if (day < 10) {
-      day = '0' + day;
+      day = "0" + day;
     }
 
     if (month < 10) {
-      month = '0' + month;
+      month = "0" + month;
     }
 
     return `${d.getFullYear()}-${month}-${day}`;
@@ -43,7 +43,9 @@ const WorkoutDetails = props => {
     const token = await firebase.auth().currentUser.getIdToken();
 
     const deleteRes = await axios.delete(
-      `https://fitmetrix.herokuapp.com/api/schedule/delete/workout/${scheduleWorkout.id}`,
+      `https://fitmetrix.herokuapp.com/api/schedule/delete/workout/${
+        scheduleWorkout.id
+      }`,
       {
         headers: {
           Authorization: token
@@ -51,22 +53,30 @@ const WorkoutDetails = props => {
       }
     );
 
-    console.log('deleteRes:', deleteRes);
+    console.log("deleteRes:", deleteRes);
 
     if (deleteRes.status === 200) {
-      console.log('200 OK');
-      const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule', {
-        headers: {
-          Authorization: token
+      console.log("200 OK");
+      const newScheduleWorkouts = await axios.get(
+        "https://fitmetrix.herokuapp.com/api/schedule",
+        {
+          headers: {
+            Authorization: token
+          }
         }
-      });
+      );
 
       if (Array.isArray(newScheduleWorkouts.data)) {
-        dispatch({ type: 'UPDATE_DATE_SELECTED' });
-        dispatch({ type: 'UPDATE_SCHEDULE_WORKOUTS', payload: newScheduleWorkouts.data });
+        dispatch({ type: "UPDATE_DATE_SELECTED" });
+        dispatch({
+          type: "UPDATE_SCHEDULE_WORKOUTS",
+          payload: newScheduleWorkouts.data
+        });
+        dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
       } else {
-        dispatch({ type: 'UPDATE_DATE_SELECTED' });
-        dispatch({ type: 'UPDATE_SCHEDULE_WORKOUTS', payload: [] });
+        dispatch({ type: "UPDATE_DATE_SELECTED" });
+        dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
+        dispatch({ type: "UPDATE_SCHEDULE_WORKOUTS", payload: [] });
       }
     }
   };
@@ -74,11 +84,13 @@ const WorkoutDetails = props => {
   const completedWorkout = async (e, scheduleWorkout) => {
     e.preventDefault();
     const token = await firebase.auth().currentUser.getIdToken();
-    console.log('swkt:', scheduleWorkout);
+    console.log("swkt:", scheduleWorkout);
 
     const updateRes = await axios
       .put(
-        `https://fitmetrix.herokuapp.com/api/schedule/edit/workout/${scheduleWorkout.id}`,
+        `https://fitmetrix.herokuapp.com/api/schedule/edit/workout/${
+          scheduleWorkout.id
+        }`,
         { completed: true },
         {
           headers: {
@@ -86,64 +98,92 @@ const WorkoutDetails = props => {
           }
         }
       )
-      .catch(err => console.log('err', err));
+      .catch(err => console.log("err", err));
     if (updateRes.status === 200) {
-      console.log('200 OK');
-      const newScheduleWorkouts = await axios.get('https://fitmetrix.herokuapp.com/api/schedule', {
-        headers: {
-          Authorization: token
+      console.log("200 OK");
+      const newScheduleWorkouts = await axios.get(
+        "https://fitmetrix.herokuapp.com/api/schedule",
+        {
+          headers: {
+            Authorization: token
+          }
         }
-      });
+      );
 
       dispatch({
-        type: 'UPDATE_SCHEDULE_WORKOUTS',
+        type: "UPDATE_SCHEDULE_WORKOUTS",
         payload: newScheduleWorkouts.data
       });
-      dispatch({ type: 'UPDATE_DATE_SELECTED' });
+      dispatch({ type: "UPDATE_DATE_SELECTED" });
+      dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
     }
   };
 
   return (
     <FormModal
       closeModal={() => {
-        dispatch({ type: 'UPDATE_DATE_SELECTED' });
+        dispatch({ type: "UPDATE_DATE_SELECTED" });
+        dispatch({ type: "UPDATE_CURRENT_DAY", payload: null });
       }}
-      title={'Workout Details'}
+      title={"Workout Details"}
     >
       <WorkoutContainer>
         {state.scheduleWorkouts &&
           state.scheduleWorkouts.map(scheduleWorkout => {
+            const newScheduleDate = new Date(currentDate);
             const sDay = dateFormat(dateStringParser(scheduleWorkout.date));
             const cDay = dateFormat(new Date(currentDate));
-            console.log('sDay: ', sDay);
-            console.log('cDay: ', cDay);
+            console.log("sDay: ", sDay);
+            console.log("cDay: ", cDay);
             if (sDay === cDay) {
               return (
                 <WorkoutDetailsDiv key={scheduleWorkout.id}>
                   <WorkoutTitleDiv>
-                    <h3>{scheduleWorkout.title}</h3>
-                    <h3>{sDay}</h3>
+                    <h1>{scheduleWorkout.title}</h1>
+                    <h2>
+                      {newScheduleDate.toLocaleString("en-us", {
+                        weekday: "long",
+                        month: "long",
+                        year: "numeric",
+                        day: "numeric"
+                      })}
+                    </h2>
                   </WorkoutTitleDiv>
                   <ExerciseListDiv>
                     <ExDetailsTitle>
-                      <ExDetailsP>Exercise</ExDetailsP>
+                      <ExerciseDetailsP>Exercise</ExerciseDetailsP>
                       <ExDetailsP>Weight</ExDetailsP>
                       <ExDetailsP>Sets</ExDetailsP>
                       <ExDetailsP>Reps</ExDetailsP>
-                      <ExDetailsP>Done</ExDetailsP>
+                      {/* <ExDetailsP>Done</ExDetailsP> */}
                     </ExDetailsTitle>
                     {scheduleWorkout.exercises &&
                       scheduleWorkout.exercises.map(exercise => {
-                        return <ExerciseDetails dispatch={props.dispatch} key={exercise.id} exercise={exercise} />;
+                        return (
+                          <ExerciseDetails
+                            dispatch={props.dispatch}
+                            key={exercise.id}
+                            exercise={exercise}
+                          />
+                        );
                       })}
                   </ExerciseListDiv>
 
                   {scheduleWorkout.completed ? null : (
-                    <Button type="button" size="large" onClick={e => completedWorkout(e, scheduleWorkout)}>
+                    <Button
+                      type="button"
+                      size="large"
+                      onClick={e => completedWorkout(e, scheduleWorkout)}
+                    >
                       Complete
                     </Button>
                   )}
-                  <Button type="button" size="large" scheme="cancel" onClick={e => unscheduleWorkout(e, scheduleWorkout)}>
+                  <Button
+                    type="button"
+                    size="large"
+                    scheme="cancel"
+                    onClick={e => unscheduleWorkout(e, scheduleWorkout)}
+                  >
                     Unschedule
                   </Button>
                 </WorkoutDetailsDiv>
@@ -157,7 +197,6 @@ const WorkoutDetails = props => {
 };
 
 export default WorkoutDetails;
-
 
 const ExDetailsTitle = styled.div`
   display: flex;
@@ -174,7 +213,7 @@ const ExDetailsTitle = styled.div`
 `;
 
 const ExDetailsP = styled.p`
-  width: 20%;
+  width: 25%;
   font-size: 1.4rem;
   margin-bottom: 0px;
   text-align: center;
@@ -182,6 +221,10 @@ const ExDetailsP = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const ExerciseDetailsP = styled(ExDetailsP)`
+text-align: initial;
 `;
 
 const WorkoutContainer = styled.div`
@@ -203,8 +246,9 @@ const WorkoutDetailsDiv = styled.div`
 const WorkoutTitleDiv = styled.div`
   display: flex;
   width: 100%;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
 `;
 
 const ExerciseListDiv = styled.div`

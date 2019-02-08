@@ -3,7 +3,6 @@ const Router = express.Router();
 const db = require("../database/dbConfig");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-
 Router.route("/").get((req, res) => {
   res.send({
     message: "Hello Stripe checkout server!",
@@ -12,13 +11,13 @@ Router.route("/").get((req, res) => {
 });
 
 Router.route("/").post(async (req, res) => {
-    console.log(req.body.token.email);
+  console.log(req.body.token.email);
   // Find the current user
-  const user = await db('users').where('email', '=', req.body.token.email);
-    if (user.length === 0) {
-        return res.status(500).send('user not found');
-    }
-    console.log(user[0].email)
+  const user = await db("users").where("email", "=", req.body.token.email);
+  if (user.length === 0) {
+    return res.status(500).send("user not found");
+  }
+  console.log(user[0].email);
   // Create the customer in Stripe
   const customer = stripe.customers
     .create({
@@ -28,20 +27,10 @@ Router.route("/").post(async (req, res) => {
     })
     .catch(err => res.status(500).send(err));
   // Add the stripeID and premium status to user
-  await db('users').where('email', '=', req.body.token.email)
-    .update (
-    { premium: true }
-  );
+  await db("users")
+    .where("email", "=", req.body.token.email)
+    .update({ premium: true });
   res.status(200).send(customer);
 });
 
-
-
 module.exports = Router;
-
-
-
-
-
-
-

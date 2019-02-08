@@ -1,17 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Button from '../../shared/Button';
-import deadliftImg from '../assets/deadlift-filter.jpg';
-import squatImg from '../assets/squat-filter.jpg';
-import CalendarView from '../assets/CalendarView.png';
-import ProgressView from '../assets/ProgressView.png';
-import WorkoutsView from '../assets/WorkoutsView.png';
-
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Button from "../../shared/Button";
+import deadliftImg from "../assets/deadlift-filter.jpg";
+import squatImg from "../assets/squat-filter.jpg";
+import CalendarView from "../assets/CalendarView.png";
+import ProgressView from "../assets/ProgressView.png";
+import WorkoutsView from "../assets/WorkoutsView.png";
 
 const LandingPage = () => {
-  const preCallToAction = 'Progress starts with a plan.';
-  const callToAction = 'Track your fitness journey with us.';
+  const preCallToAction = "Progress starts with a plan.";
+  const callToAction = "Track your fitness journey with us.";
 
   return (
     <LandingContainer>
@@ -23,14 +22,16 @@ const LandingPage = () => {
             <Action>{callToAction}</Action>
             <Link
               to={
-                localStorage.getItem('login_token') ? '/schedule' : '/register'
+                localStorage.getItem("login_token") ? "/schedule" : "/register"
               }
             >
               <Button>START TRACKING NOW</Button>
             </Link>
-            <Arrow href="#middle"><ArrowDiv>
-              <i class="fas fa-chevron-down" />
-            </ArrowDiv></Arrow>
+            <Arrow href="#middle">
+              <ArrowDiv>
+                <i class="fas fa-chevron-down" />
+              </ArrowDiv>
+            </Arrow>
           </CallToAction>
         </CtaDiv>
       </LandingStyle>
@@ -60,7 +61,7 @@ const LandingStyle = styled.div`
   height: calc(100vh - 54px);
   min-height: 900px;
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   position: relative;
   background-color: transparent;
   margin: 0 auto;
@@ -75,7 +76,7 @@ const LandingStyle = styled.div`
 `;
 
 const ArrowDiv = styled.div`
-color:white;
+  color: white;
   margin-top: 15%;
   i {
     font-size: 6em;
@@ -83,7 +84,7 @@ color:white;
 `;
 
 const Arrow = styled.a`
-  color:white;
+  color: white;
   margin-top: 15%;
   i {
     font-size: 6em;
@@ -91,23 +92,25 @@ const Arrow = styled.a`
   -moz-animation: arrow 3s infinite;
   -webkit-animation: arrow 3s infinite;
   animation: arrow 3s infinite;
-  
+
   @keyframes arrow {
-    0%, 10% {
+    0%,
+    10% {
       transform: translateY(0);
     }
     40% {
       transform: translateY(15px);
     }
-    50%, 80%, 100% {
-      transform:translateY(0);
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
     }
     60% {
       transform: translateY(15px);
     }
   }
 `;
-
 
 const Action = styled.div`
   font-size: 2.8rem;
@@ -119,7 +122,6 @@ const Action = styled.div`
   @media (max-width: 900px) {
     text-align: center;
   }
-  
 `;
 
 const BackgroundImage = styled.span`
@@ -161,12 +163,12 @@ const CallToAction = styled.div`
     width: 100%;
   }
 
-  @media(max-width:420px) {
-    top:100px
+  @media (max-width: 420px) {
+    top: 100px;
   }
 
-  @media(max-width:320px) {
-    top:50px
+  @media (max-width: 320px) {
+    top: 50px;
   }
 `;
 
@@ -183,6 +185,7 @@ const Part2 = styled.div`
   align-items: center;
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 20px;
   }
   @media (max-width: 500px) {
     flex-direction: column-reverse;
@@ -193,10 +196,10 @@ const CalendarPic = styled.img`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 50%;
   align-items: center;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
+  border: 1px solid #bed3dd;
   background-color: white;
   @media (max-width: 900px) {
     width: 100%;
@@ -214,7 +217,7 @@ const CalendarDemo = styled.div`
   width: 40%;
   height: 350px;
   align-items: center;
-  color: #2B3A42;
+  color: #2b3a42;
   @media (max-width: 900px) {
     width: 65%;
   }
@@ -232,6 +235,7 @@ const Part3 = styled.div`
   background-color: white;
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 20px;
   }
 
   @media (max-width: 500px) {
@@ -247,8 +251,7 @@ const WorkoutPic = styled.img`
   width: 50%;
   align-items: center;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
-  // border: 1px solid red;
+  border: 1px solid #bed3dd;
   @media (max-width: 900px) {
     width: 100%;
   }
@@ -264,7 +267,7 @@ const WorkoutDemo = styled.div`
   align-items: center;
   width: 40%;
   height: 350px;
-  color: #2B3A42;
+  color: #2b3a42;
   // border: 1px solid red;
   @media (max-width: 900px) {
     width: 65%;
@@ -283,6 +286,7 @@ const Part4 = styled.div`
   background-color: #f5f5f5;
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 20px;
   }
 
   @media (max-width: 500px) {
@@ -301,12 +305,12 @@ const ProgressDemo = styled.div`
   align-items: flex-start;
   width: 40%;
   height: 350px;
-  color: #2B3A42;
+  color: #2b3a42;
   @media (max-width: 900px) {
     width: 65%;
   }
-  @media (max-width:500px) {
-    margin-bottom:20px;
+  @media (max-width: 500px) {
+    margin-bottom: 20px;
   }
 `;
 
@@ -317,14 +321,12 @@ const ProgressPic = styled.img`
   width: 50%;
   align-items: center;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.4);
-  // border: 1px solid red;
+  border: 1px solid #bed3dd;
   @media (max-width: 900px) {
     width: 100%;
   }
 `;
 
-
 const LandingContainer = styled.div`
-  width: 100%
+  width: 100%;
 `;

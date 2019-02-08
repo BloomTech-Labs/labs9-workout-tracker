@@ -1,77 +1,141 @@
-import React, { useState, useContext } from 'react';
-import { Store } from '../index';
-import firebase from 'firebase';
-import styled from 'styled-components';
-import axios from 'axios';
-import Loading from './Loading';
-import Button from '../shared/Button';
-import ropeImg from './assets/rope.jpg';
-import qs from 'qs';
+import React, { useState, useContext } from "react";
+import { Store } from "../index";
+import firebase from "firebase";
+import styled from "styled-components";
+import axios from "axios";
+import Loading from "./Loading";
+import Button from "../shared/Button";
+import qs from "qs";
 
 const PasswordReset = props => {
-  const { state, dispatch } = useContext(Store);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [successfulReset, setSuccessful] = useState(false);
+
+  const handleResetPassword = (auth, actionCode, continueUrl, lang) => {
+    // Localize the UI to the selected language as determined by the lang
+    // parameter.
+    // let accountEmail;
+    // Verify the password reset code is valid.
+    auth
+      .verifyPasswordResetCode(actionCode)
+      .then(function(email) {
+        // accountEmail = email;
+
+        // TODO: Show the reset screen with the user's email and ask the user for
+        // the new password.
+
+        // Save the new password.
+        auth
+          .confirmPasswordReset(actionCode, password)
+          .then(function(resp) {
+            // Password reset has been confirmed and new password updated.
+
+            // TODO: Display a link back to the app, or sign-in the user directly
+            // if the page belongs to the same domain as the app:
+            // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+            setSuccessful(true);
+            // TODO: If a continue URL is available, display a button which on
+            // click redirects the user back to the app via continueUrl with
+            // additional state determined from that URL's parameters.
+          })
+          .catch(function(error) {
+            // Error occurred during confirmation. The code might have expired or the
+            // password is too weak.
+          });
+      })
+      .catch(function(error) {
+        // Invalid or expired action code. Ask user to try to reset the password
+        // again.
+        setError(true);
+        setErrorMessage("Something went wrong please restart process");
+      });
+  };
 
   const SendPasswordReset = e => {
     e.preventDefault();
+    setError(false);
+    setErrorMessage("");
 
+    if (successfulReset === true) {
+      props.history.push("/login");
+    }
+
+    if (password !== confirmPassword) {
+      setError(true);
+      setErrorMessage("Passwords must match");
+      return;
+    }
     const hash = window.location.hash;
-    const query = qs.parse(hash.replace('#', ''));
+    const query = qs.parse(hash.replace("#", ""));
 
     console.log(query);
 
-    // // Initialize Firebase
-    // firebase
-    //   .auth()
-    //   .updatePassword(password)
-    //   .then(res => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //     props.history.push('/login');
-    //   })
-    //   .catch(error => {
-    //     console.log(error.code, error.message);
-    //   });
+    // Get the one-time code from the query parameter.
+    var actionCode = query.oobCode;
+    // (Optional) Get the continue URL from the query parameter if available.
+    var continueUrl = "http://localhost:3000/login";
+    // (Optional) Get the language code if available.
+    var lang = "en";
+
+    var auth = firebase.auth();
+
+    handleResetPassword(auth, actionCode, continueUrl, lang);
+
+    setError(false);
+    setErrorMessage("");
   };
 
   return (
     <Container>
-      <SideImage />
       <FormContainer>
         {loading ? (
           <Loading />
         ) : (
           <FormStyle onSubmit={e => SendPasswordReset(e)}>
-            {/* {state.userJustRegistered ? <RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess> : null} */}
-            <h1>Forgot your password?</h1>
-            <p>Enter your email address below and we'll get you back to working out.</p>
-            {/* {error ? <StyledError>Oops! That email / password combination is not valid.</StyledError> : null} */}
-            <InputContainer>
-              <h3>Password</h3>
-              <input
-                type="text"
-                value={password}
-                placeholder="Enter Password"
-                onChange={e => setPassword(e.target.value)}
-                required
-              />
-            </InputContainer>
+            {successfulReset ? (
+              <>
+                <h1>Successfully reset password</h1>
+              </>
+            ) : (
+              <>
+                <h1>Enter your new password</h1>
+              </>
+            )}
+            {successfulReset ? null : (
+              <>
+                {error ? <StyledError>{errorMessage}</StyledError> : null}
+                <InputContainer>
+                  <h3>Password</h3>
+                  <input
+                    type="password"
+                    value={password}
+                    placeholder="Enter Password"
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                  />
+                </InputContainer>
 
-            <InputContainer>
-              <h3>Confirm Password</h3>
-              <input
-                type="text"
-                value={password}
-                placeholder="Enter Password"
-                onChange={e => setPassword(e.target.value)}
-                required
-              />
-            </InputContainer>
+                <InputContainer>
+                  <h3>Confirm Password</h3>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    placeholder="Enter Password"
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </InputContainer>
+              </>
+            )}
 
             <ButtonContainer>
-              <Button type="submit">Request Reset Link</Button>
+              <Button type="submit" size="responsive">
+                {successfulReset ? "Go to Login" : "Submit"}
+              </Button>
             </ButtonContainer>
           </FormStyle>
         )}
@@ -102,9 +166,9 @@ const InputContainer = styled.div`
     font-size: 1.1rem;
     color: #434c5e;
     margin-bottom: 8px;
-    text-align: left;
+    text-align: center;
     letter-spacing: 1px;
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     text-transform: uppercase;
   }
   input {
@@ -125,8 +189,9 @@ const FormStyle = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  width: 90%;
+  align-items: center;
+  width: 100%;
+  padding: 0px 20px;
   max-width: 540px;
   h1 {
     font-size: 2.8rem;
@@ -138,7 +203,7 @@ const FormStyle = styled.form`
     font-size: 1.6rem;
     color: #596377;
     font-weight: 400;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
   ${StyledError} {
     color: rgba(225, 0, 0, 1);
@@ -151,9 +216,9 @@ const FormStyle = styled.form`
 `;
 
 const FormContainer = styled.div`
-  width: calc(100vw - 460px);
+  width: 100vw;
   margin-top: 100px;
-  margin-left: 460px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -166,22 +231,6 @@ const FormContainer = styled.div`
   }
 `;
 
-const SideImage = styled.div`
-  width: calc(460px + 260px);
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: -260px;
-  background: no-repeat left left fixed;
-  background-image: url(${ropeImg});
-  background-size: cover;
-  background-position-x: 110px;
-  @media (max-width: 1076px) {
-    width: 0px;
-    display: none;
-  }
-`;
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -191,6 +240,6 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   overflow: auto;
 `;

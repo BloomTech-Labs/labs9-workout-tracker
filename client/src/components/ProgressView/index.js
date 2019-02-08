@@ -14,12 +14,13 @@ const ProgressView = props => {
   return (
     <ProgressViewStyle showScrollBar={state.showMetricForm}>
       <h1>Progress</h1>
-      {
-        !metrics || !metrics.length
-        ? (<StyledError>No progress to be shown. Let's start by adding your initial metrics!</StyledError>)
-        : <ProgressGraph />
-
-      }
+      {!metrics || !metrics.length ? (
+        <StyledError>
+          No progress to be shown. Let's start by adding your initial metrics!
+        </StyledError>
+      ) : (
+        <ProgressGraph />
+      )}
       <ProgressDayView />
 
       {state.showMetricForm ? <MetricModule /> : null}

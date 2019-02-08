@@ -1,4 +1,4 @@
-# fitmetrix
+# FLEXLOG
 
 #### fitmetrix.herokuapp.com
 

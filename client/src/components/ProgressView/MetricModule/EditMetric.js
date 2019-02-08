@@ -3,14 +3,10 @@ import axios from "axios";
 import firebase from "firebase";
 import { Store } from "../../../index";
 import { dateFormat, dateStringParser } from "../../../shared";
-import {
-  StyledError,
-  DeleteButton,
-  Row
-} from "./Style";
-import Input from '../../../shared/Input';
-import FormModal from '../../../shared/FormModal';
-import Button from '../../../shared/Button';
+import { StyledError, DeleteButton, Row } from "./Style";
+import Input from "../../../shared/Input";
+import FormModal from "../../../shared/FormModal";
+import Button from "../../../shared/Button";
 
 const EditMetric = () => {
   const { state, dispatch } = useContext(Store);
@@ -28,43 +24,39 @@ const EditMetric = () => {
     date: new Date()
   });
 
-  useEffect(
-    () => {
-      const editMetric = state.editMetric;
-      if (editMetric !== null) {
-        setCurrentMetric({
-          id: editMetric.id,
-          weight: editMetric.weight,
-          hips: editMetric.hips,
-          waist: editMetric.waist,
-          arm_right: editMetric.arm_right,
-          arm_left: editMetric.arm_left,
-          leg_right: editMetric.leg_right,
-          leg_left: editMetric.leg_left,
-          date: new Date(editMetric.date)
-        });
-      }
-    },
-    [state.editMetric]
-  );
+  useEffect(() => {
+    const editMetric = state.editMetric;
+    if (editMetric !== null) {
+      setCurrentMetric({
+        id: editMetric.id,
+        weight: editMetric.weight,
+        hips: editMetric.hips,
+        waist: editMetric.waist,
+        arm_right: editMetric.arm_right,
+        arm_left: editMetric.arm_left,
+        leg_right: editMetric.leg_right,
+        leg_left: editMetric.leg_left,
+        date: new Date(editMetric.date)
+      });
+    }
+  }, [state.editMetric]);
 
   const closeModal = () => {
-    dispatch({ type: "SHOW_METRIC_FORM" })
-    dispatch({ type: "RESET_EDIT_METRIC" })
-  }
+    dispatch({ type: "SHOW_METRIC_FORM" });
+    dispatch({ type: "RESET_EDIT_METRIC" });
+  };
   const editMetric = async e => {
     e.preventDefault();
 
     const token = await firebase.auth().currentUser.getIdToken();
-    
-    let copyMetrics = {...currentMetric};
+
+    let copyMetrics = { ...currentMetric };
 
     Object.keys(currentMetric).forEach(m => {
       if (currentMetric[m] === "") {
-        copyMetrics[m] = 0
+        copyMetrics[m] = 0;
       }
-    })
-
+    });
 
     const res = await axios.put(
       `https://fitmetrix.herokuapp.com/api/progress/metrics/edit/${
@@ -117,39 +109,41 @@ const EditMetric = () => {
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-
   const deleteMetric = async e => {
     e.preventDefault();
 
-    if(confirmDelete === false) {
-      setConfirmDelete(true)
-      return
+    if (confirmDelete === false) {
+      setConfirmDelete(true);
+      return;
     }
 
-    const token = await firebase.auth().currentUser.getIdToken()
+    const token = await firebase.auth().currentUser.getIdToken();
     const deleteRes = await axios.delete(
-        `https://fitmetrix.herokuapp.com/api/progress/metrics/delete/${currentMetric.id}`,
-        {
-            headers: {
-              Authorization: token
-            }
+      `https://fitmetrix.herokuapp.com/api/progress/metrics/delete/${
+        currentMetric.id
+      }`,
+      {
+        headers: {
+          Authorization: token
         }
+      }
     );
 
-
     if (deleteRes.status === 200) {
-        const newMetrics = await axios.get('https://fitmetrix.herokuapp.com/api/progress/metrics/get',
+      const newMetrics = await axios.get(
+        "https://fitmetrix.herokuapp.com/api/progress/metrics/get",
         {
-            headers: {
-              Authorization: token
-            }
-        })
-        dispatch({type: "UPDATE_METRICS", payload: newMetrics.data})
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+      dispatch({ type: "UPDATE_METRICS", payload: newMetrics.data });
     }
 
     setConfirmDelete(false);
     closeModal();
-  }
+  };
 
   const {
     weight,
@@ -163,13 +157,20 @@ const EditMetric = () => {
   } = currentMetric;
 
   return (
-    <FormModal 
+    <FormModal
       onSubmit={editMetric}
       closeModal={e => closeModal()}
       title={"Edit Progress"}
       size="small"
     >
-      <Button type="button" scheme="delete" size="responsive" onClick={(e) => deleteMetric(e)}>{confirmDelete ? "Click to confirm" : "Delete"}</Button>
+      <Button
+        type="button"
+        scheme="delete"
+        size="responsive"
+        onClick={e => deleteMetric(e)}
+      >
+        {confirmDelete ? "Click to confirm" : "Delete"}
+      </Button>
       <Row>
         <Input
           label="Date"
@@ -179,7 +180,7 @@ const EditMetric = () => {
           value={date}
           type="calendar"
           isDisabled="true"
-          />
+        />
         <Input
           placeholder="Weight"
           label="Weight"
@@ -187,7 +188,7 @@ const EditMetric = () => {
           size="medium"
           name="weight"
           onChange={e => setMetric(e)}
-          />
+        />
       </Row>
 
       <Row>
@@ -198,7 +199,7 @@ const EditMetric = () => {
           name="hips"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
+          isDisabled={state.premium ? "false" : "true"}
         />
         <Input
           placeholder="Waist"
@@ -207,7 +208,7 @@ const EditMetric = () => {
           name="waist"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
+          isDisabled={state.premium ? "false" : "true"}
         />
       </Row>
 
@@ -219,8 +220,8 @@ const EditMetric = () => {
           name="arm_left"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
-          />
+          isDisabled={state.premium ? "false" : "true"}
+        />
         <Input
           placeholder="Arm Right"
           label="Arm Right"
@@ -228,7 +229,7 @@ const EditMetric = () => {
           name="arm_right"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
+          isDisabled={state.premium ? "false" : "true"}
         />
       </Row>
 
@@ -240,8 +241,8 @@ const EditMetric = () => {
           name="leg_left"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
-          />
+          isDisabled={state.premium ? "false" : "true"}
+        />
         <Input
           placeholder="Leg Right"
           label="Leg Right"
@@ -249,12 +250,21 @@ const EditMetric = () => {
           name="leg_right"
           size="medium"
           onChange={e => setMetric(e)}
-          isDisabled={state.premium ? 'false' : 'true'}
-          />
+          isDisabled={state.premium ? "false" : "true"}
+        />
       </Row>
       {error !== "" ? <StyledError>{error}</StyledError> : null}
-      <Button type="submit" size="responsive">Submit</Button>
-      <Button type="button" scheme="cancel" size="responsive" onClick={e => closeModal()}>Cancel</Button>
+      <Button type="submit" size="responsive">
+        Submit
+      </Button>
+      <Button
+        type="button"
+        scheme="cancel"
+        size="responsive"
+        onClick={e => closeModal()}
+      >
+        Cancel
+      </Button>
     </FormModal>
   );
 };

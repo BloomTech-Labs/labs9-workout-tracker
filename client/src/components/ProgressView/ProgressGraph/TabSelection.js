@@ -1,36 +1,41 @@
 import React, { useContext, useEffect } from "react";
-import { Store } from '../../../index';
-import styled, {css} from "styled-components";
+import { Store } from "../../../index";
+import styled, { css } from "styled-components";
 
-const TabSelection = ({setType}) => {
-
-  const { state, dispatch } = useContext(Store)
+const TabSelection = ({ setType }) => {
+  const { state, dispatch } = useContext(Store);
 
   const tabs = [
-    {name: "weight", value: "Weight"},
-    {name: "hips", value: "Hips"},
-    {name: "waist", value: "Waist"},
-    {name: "arms", value: "Arms"},
-    {name: "legs", value: "Legs"},
+    { name: "weight", value: "Weight" },
+    { name: "hips", value: "Hips" },
+    { name: "waist", value: "Waist" },
+    { name: "arms", value: "Arms" },
+    { name: "legs", value: "Legs" }
   ];
 
   const updateGraphType = name => {
     dispatch({
       type: "UPDATE_GRAPH_TYPE",
       payload: name
-    })
-  }
+    });
+  };
 
   return (
     <MetricContainer>
-      {
-        tabs.map((tab, i) => {
-          if (tab.name === state.graphType) {
-            return (<Metric key={i} onClick={e => updateGraphType(tab.name)} selected>{tab.value}</Metric>)
-          }
-          return (<Metric key={i} onClick={e => updateGraphType(tab.name)}>{tab.value}</Metric>)
-        })
-      }
+      {tabs.map((tab, i) => {
+        if (tab.name === state.graphType) {
+          return (
+            <Metric key={i} onClick={e => updateGraphType(tab.name)} selected>
+              {tab.value}
+            </Metric>
+          );
+        }
+        return (
+          <Metric key={i} onClick={e => updateGraphType(tab.name)}>
+            {tab.value}
+          </Metric>
+        );
+      })}
     </MetricContainer>
   );
 };
@@ -48,7 +53,9 @@ const Metric = styled.div`
   font-size: 1.6rem;
   cursor: pointer;
   border-bottom: 2px solid ${props => props.theme.accent};
-  ${props => props.selected && css`
+  ${props =>
+    props.selected &&
+    css`
     border-top: 2px solid ${props => props.theme.accent};
     border-left: 2px solid ${props => props.theme.accent};
     border-right: 2px solid ${props => props.theme.accent};
@@ -58,7 +65,6 @@ const Metric = styled.div`
     background: ${props => props.theme.accent}
     color: white;
   `}
-
 `;
 
 const MetricContainer = styled.div`

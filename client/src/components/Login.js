@@ -1,21 +1,20 @@
-import React, { useState, useContext } from 'react';
-import { Store } from '../index';
-import firebase from 'firebase';
-import styled from 'styled-components';
-import axios from 'axios';
-import Loading from './Loading';
-import Button from '../shared/Button';
+import React, { useState, useContext } from "react";
+import { Store } from "../index";
+import firebase from "firebase";
+import styled from "styled-components";
+import axios from "axios";
+import Loading from "./Loading";
+import Button from "../shared/Button";
 
-import ropeImg from './assets/rope.jpg';
+import ropeImg from "./assets/rope.jpg";
 
 const Login = props => {
   const { state, dispatch } = useContext(Store);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const loginUser = e => {
     e.preventDefault();
     setError(false);
@@ -27,31 +26,33 @@ const Login = props => {
       .then(res => {
         console.log(res);
         res.user.getIdToken().then(idToken => {
-          window.localStorage.setItem('login_token', idToken);
+          window.localStorage.setItem("login_token", idToken);
           axios
-            .get('https://fitmetrix.herokuapp.com/api/user', {
+            .get("https://fitmetrix.herokuapp.com/api/user", {
               headers: { Authorization: idToken }
             })
             .then(res => {
               console.log(res.data);
-              dispatch({ type: 'USER_MODEL', payload: res.data });
-              dispatch({ type: 'USER_JUST_REGISTERED', payload: false });
+              dispatch({ type: "USER_MODEL", payload: res.data });
+              dispatch({ type: "USER_JUST_REGISTERED", payload: false });
+              dispatch({ type: "PASSWORD_RESET" });
               setLoading(false);
-              props.history.push('/workouts');
+              props.history.push("/workouts");
             });
         });
       })
       .catch(error => {
         setError(true);
         setLoading(false);
-        dispatch({ type: 'USER_JUST_REGISTERED', payload: false });
+        dispatch({ type: "USER_JUST_REGISTERED", payload: false });
+        dispatch({ type: "PASSWORD_RESET" });
         console.log(error.code, error.message);
       });
   };
 
   const onForgot = e => {
-    console.log('in onForgot');
-    props.history.push('/forgot');
+    console.log("in onForgot");
+    props.history.push("/forgot");
   };
 
   return (
@@ -62,16 +63,30 @@ const Login = props => {
           <Loading />
         ) : (
           <FormStyle onSubmit={e => loginUser(e)}>
-            {state.userJustRegistered ? <RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess> : null}
-            <h1>Sign into fitmetrix.</h1>
+            {state.userJustRegistered ? (
+              <RegisterSuccess>
+                Succesfully Registered! Please Login
+              </RegisterSuccess>
+            ) : null}
+            <h1>Sign into FLEXLOG</h1>
             <p>Enter details below</p>
-            {error ? <StyledError>Oops! That email / password combination is not valid.</StyledError> : null}
+            {state.passwordReset === true ? (
+              <ResetText>
+                If there's a FLEXLOG account linked to this email address, we'll
+                send over instructions to reset your password.
+              </ResetText>
+            ) : null}
+            {error ? (
+              <StyledError>
+                Oops! That email / password combination is not valid.
+              </StyledError>
+            ) : null}
             <InputContainer>
               <h3>EMAIL ADDRESS</h3>
               <input
                 type="text"
                 value={email}
-                placeholder="jack@fitmetrix.me"
+                placeholder="jack@flexlog.app"
                 onChange={e => setEmail(e.target.value)}
                 required
               />
@@ -79,7 +94,7 @@ const Login = props => {
 
             <InputContainer>
               <h3>PASSWORD</h3>
-              <p onClick={e => onForgot({ email })}>Forgot password?</p>
+              <p onClick={e => onForgot({ email })}>Forgot password ?</p>
               <input
                 type="password"
                 value={password}
@@ -108,12 +123,20 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
+const ResetText = styled.p`
+  width: 100%;
+  font-size: 1.4rem !important;
+  text-align: left;
+  color: ${props => props.theme.accent} !important;
+`;
+
 const StyledError = styled.p``;
 
 const InputContainer = styled.div`
   color: #5f697a;
   width: 100%;
   margin-bottom: 23px;
+  position: relative;
   h3 {
     display: block;
     font-weight: 700;
@@ -122,7 +145,7 @@ const InputContainer = styled.div`
     margin-bottom: 8px;
     text-align: left;
     letter-spacing: 1px;
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     text-transform: uppercase;
   }
   input {
@@ -136,6 +159,14 @@ const InputContainer = styled.div`
     &::-webkit-input-placeholder {
       opacity: 0.5;
     }
+  }
+  p {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    font-size: 1.2rem !important;
+    color: #8c96a9;
+    font-weight: 400;
   }
 `;
 
@@ -156,7 +187,7 @@ const FormStyle = styled.form`
     font-size: 1.6rem;
     color: #596377;
     font-weight: 400;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
   ${StyledError} {
     color: rgba(225, 0, 0, 1);
@@ -209,6 +240,6 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   overflow: auto;
 `;

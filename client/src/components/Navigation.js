@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import styled from 'styled-components';
-import * as firebase from 'firebase';
+import React, { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import styled from "styled-components";
+import * as firebase from "firebase";
 
 const Navigation = props => {
   const [loggedOut, setLoggedOut] = useState(false);
 
   const logOut = () => {
     setLoggedOut(true);
-    window.localStorage.removeItem('login_token');
+    window.localStorage.removeItem("login_token");
     firebase.auth().signOut();
-    props.history.push('/');
+    props.history.push("/");
   };
 
   const renderRoutes = () => {
     if (
-      (props.location.pathname === '/' ||
-        props.location.pathname === '/login' ||
-        props.location.pathname === '/register') &&
-      !window.localStorage.getItem('login_token')
+      (props.location.pathname === "/" ||
+        props.location.pathname === "/login" ||
+        props.location.pathname === "/register" ||
+        props.location.pathname === "/reset" ||
+        props.location.pathname === "/forgot") &&
+      !window.localStorage.getItem("login_token")
     ) {
       return (
         <NavStyle>
@@ -81,7 +83,7 @@ const NavContainer = styled.div`
 const NavStyle = styled.div`
   width: 100%;
   max-width: ${props =>
-    props.isApp ? '1200 px' : props.theme.containingWidth};
+    props.isApp ? "1200 px" : props.theme.containingWidth};
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -102,7 +104,7 @@ const StyledLink = styled(NavLink)`
   color: ${props => props.theme.white};
   text-decoration: none;
   text-align: center;
-  font-size: ${props => (props.landing ? '16px' : '26px')};
+  font-size: ${props => (props.landing ? "16px" : "26px")};
   font-family: ${props => props.theme.roboto};
   font-weight: 500;
   display: flex;
@@ -146,8 +148,8 @@ const NavBar = styled.div`
   justify-content: flex-end;
   height: 100%;
   @media (max-width: 560px) {
-      height: 42px;
-      width: 100%;
-      justify-content: space-evenly;
+    height: 42px;
+    width: 100%;
+    justify-content: space-evenly;
   }
 `;

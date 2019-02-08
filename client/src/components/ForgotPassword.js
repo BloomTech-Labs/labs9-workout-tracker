@@ -1,54 +1,56 @@
-import React, { useState, useContext } from 'react';
-import { Store } from '../index';
-import firebase from 'firebase';
-import styled from 'styled-components';
-import axios from 'axios';
-import Loading from './Loading';
-import Button from '../shared/Button';
-
-import ropeImg from './assets/rope.jpg';
+import React, { useState, useContext } from "react";
+import { Store } from "../index";
+import firebase from "firebase";
+import styled from "styled-components";
+import Loading from "./Loading";
+import Button from "../shared/Button";
 
 const ForgotPassword = props => {
   const { state, dispatch } = useContext(Store);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [passwordReset, setPasswordReset] = useState(false);
 
   const SendPasswordEmail = e => {
     e.preventDefault();
     setError(false);
-    setLoading(true);
+
     // Initialize Firebase
     firebase
       .auth()
       .sendPasswordResetEmail(email)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
-        setLoading(false);
-        props.history.push('/workouts');
+        dispatch({ type: "PASSWORD_RESET" });
+        props.history.push("/login");
       })
       .catch(error => {
         console.log(error.code, error.message);
+        setPasswordReset(true);
+        props.history.push("/login");
+        dispatch({ type: "PASSWORD_RESET" });
       });
   };
 
   return (
     <Container>
-      <SideImage />
       <FormContainer>
         {loading ? (
           <Loading />
         ) : (
           <FormStyle onSubmit={e => SendPasswordEmail(e)}>
-            {/* {state.userJustRegistered ? <RegisterSuccess>Succesfully Registered! Please Login</RegisterSuccess> : null} */}
             <h1>Forgot your password?</h1>
-            <p>Enter your email address below and we'll get you back to working out.</p>
-            {/* {error ? <StyledError>Oops! That email / password combination is not valid.</StyledError> : null} */}
+            <p>
+              Enter your email address below and we'll get you back to working
+              out.
+            </p>
+
             <InputContainer>
               <h3>EMAIL ADDRESS</h3>
+
               <input
                 type="text"
                 value={email}
@@ -59,7 +61,9 @@ const ForgotPassword = props => {
             </InputContainer>
 
             <ButtonContainer>
-              <Button type="submit">Request Reset Link</Button>
+              <Button type="submit" size="responsive">
+                Request Reset Link
+              </Button>
             </ButtonContainer>
           </FormStyle>
         )}
@@ -90,9 +94,9 @@ const InputContainer = styled.div`
     font-size: 1.1rem;
     color: #434c5e;
     margin-bottom: 8px;
-    text-align: left;
+    text-align: center;
     letter-spacing: 1px;
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     text-transform: uppercase;
   }
   input {
@@ -113,10 +117,10 @@ const FormStyle = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  width: 90%;
+  align-items: center;
+  width: 100%;
   max-width: 540px;
-  h1 {
+  padding: 0px 20px h1 {
     font-size: 2.8rem;
     font-weight: 400;
     color: #434c5f;
@@ -126,7 +130,7 @@ const FormStyle = styled.form`
     font-size: 1.6rem;
     color: #596377;
     font-weight: 400;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
   ${StyledError} {
     color: rgba(225, 0, 0, 1);
@@ -139,9 +143,9 @@ const FormStyle = styled.form`
 `;
 
 const FormContainer = styled.div`
-  width: calc(100vw - 460px);
+  width: 100vw;
   margin-top: 100px;
-  margin-left: 460px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -154,22 +158,6 @@ const FormContainer = styled.div`
   }
 `;
 
-const SideImage = styled.div`
-  width: calc(460px + 260px);
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: -260px;
-  background: no-repeat left left fixed;
-  background-image: url(${ropeImg});
-  background-size: cover;
-  background-position-x: 110px;
-  @media (max-width: 1076px) {
-    width: 0px;
-    display: none;
-  }
-`;
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -179,6 +167,6 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   overflow: auto;
 `;

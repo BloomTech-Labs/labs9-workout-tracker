@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { Store } from '../../index';
-import requireAuth from '../../requireAuth';
-import MyWorkouts from './MyWorkouts';
-import styled from 'styled-components';
-import WorkoutModule from './WorkoutModule';
+import React, { useContext } from "react";
+import { Store } from "../../index";
+import requireAuth from "../../requireAuth";
+import MyWorkouts from "./MyWorkouts";
+import styled from "styled-components";
+import WorkoutModule from "./WorkoutModule";
 
 const WorkoutsView = props => {
   const { state, dispatch } = useContext(Store);
@@ -22,5 +22,5 @@ const Container = styled.div`
   border: ${props => props.theme.primaryDark};
   width: 80%;
   max-width: 1040px;
-  min-height:800px;
+  min-height: 800px;
 `;
