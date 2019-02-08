@@ -35,7 +35,7 @@ const Login = props => {
               console.log(res.data);
               dispatch({ type: "USER_MODEL", payload: res.data });
               dispatch({ type: "USER_JUST_REGISTERED", payload: false });
-              dispatch({ type: "PASSWORD_RESET" });
+              dispatch({ type: "PASSWORD_RESET", paylaod: false });
               setLoading(false);
               props.history.push("/workouts");
             });
@@ -45,7 +45,7 @@ const Login = props => {
         setError(true);
         setLoading(false);
         dispatch({ type: "USER_JUST_REGISTERED", payload: false });
-        dispatch({ type: "PASSWORD_RESET" });
+        dispatch({ type: "PASSWORD_RESET", paylaod: false });
         console.log(error.code, error.message);
       });
   };

@@ -4,6 +4,7 @@ import firebase from "firebase";
 import { Store } from "../../../index";
 import { dateFormat, dateStringParser } from "../../../shared";
 import { StyledError, DeleteButton, Row } from "./Style";
+import styled from "styled-components";
 import Input from "../../../shared/Input";
 import FormModal from "../../../shared/FormModal";
 import Button from "../../../shared/Button";
@@ -257,16 +258,26 @@ const EditMetric = () => {
       <Button type="submit" size="responsive">
         Submit
       </Button>
-      <Button
-        type="button"
-        scheme="cancel"
-        size="responsive"
-        onClick={e => closeModal()}
-      >
-        Cancel
-      </Button>
+      <ButtonContainer>
+        <Button
+          type="button"
+          scheme="cancel"
+          size="responsive"
+          onClick={e => closeModal()}
+        >
+          Cancel
+        </Button>
+      </ButtonContainer>
     </FormModal>
   );
 };
 
 export default EditMetric;
+
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+`;

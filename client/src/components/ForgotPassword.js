@@ -24,14 +24,14 @@ const ForgotPassword = props => {
       .auth()
       .sendPasswordResetEmail(email)
       .then(res => {
-        dispatch({ type: "PASSWORD_RESET" });
+        dispatch({ type: "PASSWORD_RESET", paylaod: true});
         props.history.push("/login");
       })
       .catch(error => {
         console.log(error.code, error.message);
         setPasswordReset(true);
         props.history.push("/login");
-        dispatch({ type: "PASSWORD_RESET" });
+        dispatch({ type: "PASSWORD_RESET", paylaod: true });
       });
   };
 
